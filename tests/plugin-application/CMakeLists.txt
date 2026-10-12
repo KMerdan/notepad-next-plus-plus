@@ -66,6 +66,9 @@ if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_PLUGIN_WEBVIEWS AND NOTEPADNEXT_TEST_NODE
     target_sources(PluginApplicationTests PRIVATE ApplicationExitProbe.cpp)
     target_compile_definitions(PluginApplicationTests PRIVATE PLUGIN_APPLICATION_EXIT_PROBE)
     add_executable(PluginApplicationExitTests ApplicationExitTests.cpp)
+    # This process-only driver depends on the UI test bundle but owns no forms.
+    # CMake 3.31 otherwise declares the dependency's UI outputs twice in Ninja.
+    set_target_properties(PluginApplicationExitTests PROPERTIES AUTOUIC OFF)
     target_link_libraries(PluginApplicationExitTests PRIVATE NotepadNextPluginPackages NotepadNextPluginData Qt6::Test)
     target_compile_definitions(PluginApplicationExitTests PRIVATE EXIT_APPLICATION="$<TARGET_FILE:PluginApplicationTests>")
     add_dependencies(PluginApplicationExitTests PluginApplicationTests)
