@@ -8,7 +8,7 @@ Notepad Next ++ 的第一方插件由 KMerdan 在同一公开仓库维护：
 
 ## 注册和使用
 
-使用本次构建的插件版开发应用，进入 Plugins → Plugin Manager → Register Resources，输入上述 URL，Git ref 留空。确认目录中两项元数据后，它们出现在 **Discover**。注册不安装、不启动插件。
+使用本次构建的插件版开发应用，进入 Plugins → Plugin Manager → Add Source…，输入上述 URL，Git ref 留空。确认目录中两项元数据后，它们出现在 **Discover**。注册不安装、不启动插件。
 
 - **Markdown Preview**：`kmerdan.markdown-preview`，当前版本 **0.1.5**。
 - **HTML Preview**：`kmerdan.html-preview`，当前版本 **0.1.1**，承载本地 Node.js HTTP 服务、HTML、JavaScript 和同服务 fetch。
