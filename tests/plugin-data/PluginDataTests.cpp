@@ -1,3 +1,4 @@
+#include "../PluginTestFilesystem.h"
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "PluginDataStore.h"
 #include "PluginDataService.h"
@@ -57,7 +58,7 @@ private slots:
         QFile corrupt(store.filePath("tests.one"));QVERIFY(corrupt.open(QIODevice::WriteOnly));corrupt.write("{broken");corrupt.close();
         QCOMPARE(store.access("tests.one","storage","safe",true,0).error["code"].toInt(),1010);QVERIFY(corrupt.open(QIODevice::ReadOnly));QCOMPARE(corrupt.readAll(),QByteArray("{broken"));corrupt.close();
         QVERIFY(store.erase("tests.one").error.isEmpty()); // Explicit deletion permits a corrupt regular file.
-        const auto outside=temp.path()+"/outside";QFile file(outside);QVERIFY(file.open(QIODevice::WriteOnly));file.write("untouched");file.close();QVERIFY(QFile::link(outside,store.filePath("tests.one")));
+        const auto outside=temp.path()+"/outside";QFile file(outside);QVERIFY(file.open(QIODevice::WriteOnly));file.write("untouched");file.close();QVERIFY(PluginTest::link(outside,store.filePath("tests.one")));
         QCOMPARE(store.access("tests.one","storage","safe",true,0).error["code"].toInt(),1010);QCOMPARE(store.erase("tests.one").error["code"].toInt(),1010);
         QVERIFY(file.open(QIODevice::ReadOnly));QCOMPARE(file.readAll(),QByteArray("untouched"));
     }
