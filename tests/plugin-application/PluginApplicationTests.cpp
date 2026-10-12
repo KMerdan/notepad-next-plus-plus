@@ -9,6 +9,7 @@
 #include <QTemporaryDir>
 #include <QTest>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QEvent>
 #include <QUuid>
 #include <memory>
@@ -132,7 +133,8 @@ private slots:
         auto *engine=app->getPluginEngine();auto *documents=app->getPluginDocumentBridge();auto *installer=app->getPluginInstaller();
         const auto id=QStringLiteral("test.native-tools"),package=directory+"/native-package";QVERIFY(QDir().mkpath(package+"/dist"));
         const auto cleanup=qScopeGuard([&]{
-            engine->uninstall(id,true);
+            for(const auto &installedId:{id,QStringLiteral("test.legacy-range")})
+                if(!app->getInstalledPluginRegistry()->plugin(installedId).id().isEmpty())engine->uninstall(installedId,true);
             QElapsedTimer deadline;deadline.start();
             while((!app->getInstalledPluginRegistry()->plugin(id).id().isEmpty()||!engine->isIdle())&&deadline.elapsed()<5000)QTest::qWait(10);
         });
