@@ -1,7 +1,7 @@
 {
   "date": "2026-10-13",
   "scope": "Native SDK phase A, three repository split, current macOS plugin manager and Marketplace consumer acceptance; no app signing/notarization/release.",
-  "validatedImplementationCommit": "83c0f8c4f2efb7bdf0d6b532d67e52c89c353735",
+  "validatedImplementationCommit": "9388876f53cb902766c5c7e969c0761ef2b4b280",
   "sourceHashes": {
     "src/dialogs/PluginReview.h": "1fe57d216743241ce9f97c2129316e504ac4f799aba32d78f5bf2244634fa372",
     "src/dialogs/PluginManagerDialog.cpp": "f8a8b88f50b01ada6ecf30644750a9d9c5a1459c2f7e7564bd4d48f14c0878a7",
@@ -9,7 +9,9 @@
     "src/plugins/runtime/PluginSession.cpp": "170013b5639c5d909adae60bd04d60d620a9331b1c7d689fa152164478e4063e",
     "src/plugins/webviews/WebviewService.cpp": "2fe83621018830adfc00c9f8f4f628daea1622db3dd4c889aa7b8b78cc4a287e",
     "src/plugins/documents/DocumentBridge.cpp": "2dc5e2f9a022e630bd83b287cbf8696c30c7fc15af02ca90bb852173ef7c1e4f",
-    "tests/plugin-application/PluginApplicationTests.cpp": "622d015d39b0011457702cfab9ffd1e4ed69f1797c8e56b4025c5e547a2dbe9c"
+    "tests/plugin-application/PluginApplicationTests.cpp": "622d015d39b0011457702cfab9ffd1e4ed69f1797c8e56b4025c5e547a2dbe9c",
+    "src/plugins/packages/PackageLease.cpp": "8541cff8ca178490e349abbb1c659940b948c546be9a80cc2a1c3b650c1a47bf",
+    "tests/plugin-packages/GitHubReleaseTests.cpp": "6971b56bfc0fae2b96b73427d5d09f05c40e784fb092c3235229edccceb036fa"
   },
   "nativeApplication": {
     "log": "native-sdk-final-live-acceptance.log",
@@ -82,5 +84,18 @@
       "12 host conformance profiles per PR"
     ],
     "consumerTestsRequiredInMainCI": false
+  },
+  "installationLockRegression": {
+    "changeCommit": "c9314f1",
+    "localMacResult": "43 passed, 0 failed, 0 skipped",
+    "log": "native-sdk-package-lock-regression.log",
+    "windowsCase": "localInstallationWaitsForMaintenance(release-delete-pending-lock)",
+    "windowsCaseStatus": "awaiting latest Windows CI",
+    "invariants": [
+      "bounded one-second worker lock retry",
+      "zero-wait GUI callers unchanged",
+      "cancellation and timeout checks retained",
+      "real Windows read handle holds deletion pending before timed release"
+    ]
   }
 }

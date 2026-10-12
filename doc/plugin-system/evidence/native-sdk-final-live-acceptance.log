@@ -34,5 +34,5 @@ PASS   : PluginApplicationTests::nativeSdkSelectionAndCoreLifecycle()
 PASS   : PluginApplicationTests::realGitHubMarkdownLifecycle()
 PASS   : PluginApplicationTests::realGitHubMarketplaceLifecycle()
 PASS   : PluginApplicationTests::cleanupTestCase()
-Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 18600ms
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 18707ms
 ********* Finished testing of PluginApplicationTests *********
