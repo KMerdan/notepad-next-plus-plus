@@ -1,0 +1,17 @@
+{
+  "compatVersion": "0.1.0",
+  "declarationBaseline": "1.100.0",
+  "originalManifestSha256": "def0ae38e023ed419f620bb874cc3a193323cec2355a72cec4ae55196c7c37e1",
+  "entrySha256": "2ddc085caa7e429483cbca6fc3ddf1e78a40a9acf1d76d8bb9bdb085d2273957",
+  "resourcePaths": [
+    "media"
+  ],
+  "capabilities": [
+    "messages@1",
+    "webviews@1",
+    "webviews.compat@1",
+    "webviews.restore@1"
+  ],
+  "builtCodeOnly": true,
+  "hooksExecuted": false
+}
