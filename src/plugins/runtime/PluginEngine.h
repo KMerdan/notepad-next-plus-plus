@@ -49,8 +49,8 @@ signals:
     void error(const QString &pluginId,const QString &message);
 private:
     void syncRegistry(bool activate=true);
-    void request(const QString &id,const QString &command,const QString &reason);
-    void startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease);
+    void request(const QString &id,const QString &command,const QString &reason,const QJsonObject &invocation={});
+    void startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease,const QJsonObject &invocation={});
     void afterStop(const QString &id,std::function<void()> action);
     void stopPreservingPanels(const QString &id,std::function<void()> action);
     void releasePreservedPanels(const QString &id);
@@ -74,7 +74,7 @@ private:
     QList<QPointer<QAction>> actions;
     QList<QPointer<QMenu>> pluginMenus;
     QHash<QString,PluginSession*> sessions;
-    struct Verification {std::shared_ptr<std::atomic_bool> cancel;QString command,reason;};
+    struct Verification {std::shared_ptr<std::atomic_bool> cancel;QString command,reason;QJsonObject invocation;};
     QHash<QString,Verification> verifying;
     QHash<QString,std::function<void()>> waiting;
     QHash<QString,QByteArray> logs;

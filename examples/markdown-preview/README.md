@@ -1,3 +1,5 @@
+**Host integration fixture.** The independently maintained first-party plugin source and Releases live in the [official Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview). This application example uses its own ID for repeatable host tests. Plugin authors should start from the [SDK templates](../../packages/plugin-sdk/README.md).
+
 # Native Markdown preview example
 
 This first-party TypeScript plugin uses the native `PluginContext` passed to `activate(context)`. It reads the editor buffer, including unsaved text, through host APIs. The production application's manager, menu, preview and exit path are exercised by Qt integration tests on macOS arm64. For a standalone author project, use the [SDK Markdown template and complete development walkthrough](../../packages/plugin-sdk/docs/MarkdownWalkthrough.zh-CN.md); it includes its own SDK, tests and source-map debugger.

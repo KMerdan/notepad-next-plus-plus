@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 'use strict';
-const { randomUUID,createHash } = require('node:crypto');
+const { randomUUID,createHash,randomBytes } = require('node:crypto');
 const {AsyncLocalStorage}=require('node:async_hooks');
 const { RpcError } = require('./rpc.cjs');
 const {requireValid,register}=require('./wire.cjs');
@@ -14,6 +14,7 @@ class ResourceScope {
   }
 }
 function createClient(endpoint, identity, manifest, canCall) {
+  const stopping=new AbortController();
   const scope = new ResourceScope(), commands = new Map(), watches = new Map(), panels = new Map();
   const restorers=new Map(),restoration=new AsyncLocalStorage();
   const earlyEvents = []; let awaitingWatch = 0;
@@ -24,7 +25,12 @@ function createClient(endpoint, identity, manifest, canCall) {
     if (!canCall(method)) return Promise.reject(new RpcError(1004,'PluginStopping'));
     const payload=envelope(params);
     try {requireValid(method,'params',payload);} catch(error) {return Promise.reject(error);}
-    return endpoint.call(method,payload,options).then(value=>{requireValid(method,'result',value);return value;});
+    const mutating=method==='nnp.documents.applyEdits'||method==='nnp.core.execute'||method==='nnp.editors.setSelections';
+    return endpoint.call(method,payload,options).then(value=>{requireValid(method,'result',value);return value;}).catch(error=>{
+      error.kind=error.message==='ReadOnlyDocument'?'ReadOnlyDocument':({1001:'VersionConflict',1011:'SelectionConflict',1002:'DocumentClosed',1003:'CapabilityDenied',1004:'PluginStopping',1005:'UnsupportedCapability',1006:error.message.includes('timed out')?'Timeout':'Cancelled',1007:'Overloaded',1008:'ContentTooLarge',1009:'UnsupportedEncoding'}[error.code]??'InternalError');
+      if(mutating)error.outcome=[1004,1006,-32603].includes(error.code)?'unknown':'notCommitted';
+      throw error;
+    });
   };
   function resource(id, onDispose = () => {}) {
     let disposed = false;
@@ -87,9 +93,21 @@ function createClient(endpoint, identity, manifest, canCall) {
     try {return await callback(...params.args);}
     catch(error) {console.error(error);throw error;}
   });
+  register(endpoint,'nnp.commands.invokeNative',async params=>{
+    if(identity.apiVersion!=='0.2.0'||params.sessionId!==identity.sessionId||params.generation!==identity.generation||!canCall('nnp.commands.invokeNative'))throw new RpcError(1004,'PluginStopping');
+    const callback=commands.get(params.callbackId);if(!callback)throw new RpcError(-32602,'Unknown command callback');
+    return callback(Object.freeze({...params.invocation,args:Object.freeze([...params.invocation.args])}));
+  });
   const api = {
     pluginId:identity.pluginId, sessionId:identity.sessionId, generation:identity.generation,
-    capabilities:Object.freeze([...identity.grantedCapabilities]), subscriptions:[],
+    capabilities:Object.freeze([...identity.grantedCapabilities]), subscriptions:[],stopping:stopping.signal,
+    host:Object.freeze({product:'Notepad Next ++',applicationVersion:identity.hostVersion,apiVersion:identity.apiVersion,
+      platform:process.platform==='darwin'?'macos':process.platform==='win32'?'windows':'linux',capabilities:Object.freeze([...identity.grantedCapabilities]),
+      limits:Object.freeze({...identity.limits,maxEditsPerTransaction:256,maxPanelStateBytes:65536}),supports:capability=>identity.grantedCapabilities.includes(capability)}),
+    log:Object.freeze(Object.fromEntries(['debug','info','warn','error'].map(level=>[level,(message,details)=>console[level](message,...(details===undefined?[]:[details]))]))),
+    editors:{getActive:options=>call('nnp.editors.getActive',{},options),capture:(invocation,options)=>call('nnp.editors.capture',{invocation},options),getSelections:(editorId,options)=>call('nnp.editors.getSelections',{editorId},options),
+      setSelections:(editorId,expectedDocumentVersion,expectedRevision,selections,mainIndex)=>call('nnp.editors.setSelections',{editorId,expectedDocumentVersion,expectedRevision,selections,mainIndex})},
+    core:{list:()=>call('nnp.core.list'),execute:(commandId,request,options)=>call('nnp.core.execute',{commandId,request},options)},
     commands:{ async register(commandId,callback) {
       if (typeof callback !== 'function' || !manifest.contributes?.commands?.some(command => command.id === commandId)) throw new RpcError(-32602,'Command is not declared by this plugin');
       const callbackId=randomUUID(); commands.set(callbackId,callback);
@@ -109,8 +127,9 @@ function createClient(endpoint, identity, manifest, canCall) {
     }},
     documents:{
       getActive: options=>call('nnp.documents.getActive',{},options),
+      list:options=>call('nnp.documents.list',{},options),getInfo:(documentId,options)=>call('nnp.documents.getInfo',{documentId},options),
       getSnapshot: (documentId,options)=>call('nnp.documents.getSnapshot',{documentId},options),
-      applyEdits: (documentId,expectedVersion,edits)=>call('nnp.documents.applyEdits',{documentId,expectedVersion,edits}),
+      applyEdits: (documentId,expectedVersion,edits,options={})=>call('nnp.documents.applyEdits',{documentId,expectedVersion,edits,...(options.selectionGuard?{selectionGuard:options.selectionGuard}:{})},options),
       async watch(listener) {
         if (typeof listener !== 'function') throw new RpcError(-32602,'Invalid document listener');
         ++awaitingWatch;
@@ -145,12 +164,13 @@ function createClient(endpoint, identity, manifest, canCall) {
         if(typeof viewType!=='string'||typeof callback!=='function'||restorers.has(viewType))throw new RpcError(-32602,'Invalid or duplicate panel restorer');
         restorers.set(viewType,callback);return {dispose:()=>restorers.delete(viewType)};
       },
-      async createCompatible(options,listener) {
+      async createHtml(options,listener){return this.createCompatible({panelId:randomBytes(16).toString('hex'),viewType:options.viewType,title:options.title,enableScripts:options.enableScripts,localResourceRoots:options.resourceRoots??[]},listener,'nnp.webviews.createHtml');},
+      async createCompatible(options,listener,method='nnp.webviews.createCompatible') {
         const scope=restoration.getStore(),restored=scope?.active?scope.panel:undefined;if(restored&&restored.viewType===options.viewType)options={...options,restorationKey:restored.panelId};
         const {panelId}=options;const listeners=new Set(listener?[listener]:[]),entry={listeners,handle:null,closed:false};
         if(panels.has(panelId))throw new RpcError(-32602,'Duplicate panel ID');panels.set(panelId,entry);
         try {
-          const result=await call('nnp.webviews.createCompatible',options);
+          const result=await call(method,options);
           if(result.panelId!==panelId)throw new RpcError(-32602,'Compatible panel ID mismatch');
           const handle=resource(panelId,()=>{panels.delete(panelId);listeners.clear();});entry.handle=handle;
           if(entry.closed)await handle.dispose();
@@ -195,7 +215,8 @@ function createClient(endpoint, identity, manifest, canCall) {
       try{await restoration.run(scope,()=>callback(descriptor));}finally{scope.active=false;}
     }
     return null;
-  },async dispose() {
+  },beginStopping(){stopping.abort();},async dispose() {
+    stopping.abort();
     for(const resource of api.subscriptions.splice(0).reverse()) { try { await resource.dispose(); } catch {} }
     await scope.dispose();restorers.clear(); commands.clear(); watches.clear();allWatches.clear(); panels.clear();messages.clear();earlyMessages.length=0;earlyEvents.length=0;earlyAllEvents.length=0;earlyAllBytes=0;
   } };

@@ -66,6 +66,10 @@ set(CPM_SOURCE_CACHE "${CMAKE_SOURCE_DIR}/.cpm-cache" CACHE PATH "CPM source cac
 option(NOTEPADNEXT_PLUGINS "Build the native plugin manager and process services" ON)
 option(NOTEPADNEXT_PLUGIN_WEBVIEWS "Build Qt WebEngine plugin panels" OFF)
 option(NOTEPADNEXT_BUILD_PLUGIN_TESTS "Build plugin contract and integration tests" OFF)
+if((NOTEPADNEXT_PLUGINS OR NOTEPADNEXT_BUILD_PLUGIN_TESTS) AND NOT EXISTS "${CMAKE_SOURCE_DIR}/packages/plugin-sdk/schemas/manifest.schema.json")
+    message(FATAL_ERROR "The pinned plugin SDK is missing. Run: git submodule update --init --recursive")
+endif()
+
 if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_PLUGIN_WEBVIEWS)
     find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets WebChannel)
 endif()

@@ -2,6 +2,7 @@
 #include "DocumentBridge.h"
 #include "RpcEndpoint.h"
 #include <QFontDatabase>
+#include <QJsonDocument>
 #include <QStringDecoder>
 #include <QThread>
 #include <QUuid>
@@ -27,6 +28,9 @@ QString DocumentBridge::attach(ScintillaEdit *editor, const QUrl &uri, const QSt
     const auto previous = idFor(editor); if (!previous.isEmpty()) return previous;
     const auto id = QUuid::createUuid().toString(QUuid::WithoutBraces);
     buffers.insert(id, {editor, uri.isEmpty() ? QUrl(QStringLiteral("untitled:") + id) : uri, language});
+    buffers[id].editorId = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    buffers[id].selectionBytes = rawSelections(editor);
+    buffers[id].connections.append(connect(editor, &ScintillaEdit::updateUi, this, [this, id](Scintilla::Update) { refreshSelection(id); }));
     buffers[id].connections.append(connect(editor, &ScintillaEdit::modified, this, [this, id](Scintilla::ModificationFlags type,sptr_t position,sptr_t length,sptr_t,const QByteArray &bytes) {
         if(!buffers.contains(id))return;
         using Flag=Scintilla::ModificationFlags;
@@ -43,6 +47,8 @@ QString DocumentBridge::attach(ScintillaEdit *editor, const QUrl &uri, const QSt
         const bool inserted=flags&static_cast<int>(Flag::InsertText),deleted=flags&static_cast<int>(Flag::DeleteText);
         if(!inserted&&!deleted)return;
         const auto base=buffer.version;++buffer.version;
+        // A selection guard must expire when its underlying text changes too.
+        ++buffer.selectionRevision;
         const auto pending=buffer.pending;buffer.pending={};
         if(!buffer.applying) {
             if(deltaObservers) {
@@ -99,6 +105,140 @@ void DocumentBridge::refreshAppearance() {
 }
 QJsonArray DocumentBridge::list() const {
     QJsonArray result; for (auto it = buffers.cbegin(); it != buffers.cend(); ++it) if (it->editor) result.append(info(it.key())); return result;
+}
+void DocumentBridge::setNativeServices(const QJsonArray &catalog,
+    std::function<QJsonObject(ScintillaEdit *, const QString &, const QJsonObject &, QJsonObject *)> execute,
+    std::function<QJsonObject(ScintillaEdit *)> metadata) {
+    nativeCatalog = catalog; nativeExecute = std::move(execute); nativeMetadata = std::move(metadata);
+}
+QJsonObject DocumentBridge::nativeInfo(const QString &id) const {
+    auto result = info(id); const auto editor = buffers.value(id).editor;
+    if (!editor) return {};
+    result["byteLength"] = qint64(editor->length()); result["lineCount"] = qint64(editor->lineCount());
+    result["lineEnding"] = editor->eOLMode() == SC_EOL_CRLF ? "crlf" : editor->eOLMode() == SC_EOL_CR ? "cr" : "lf";
+    result["name"] = buffers.value(id).uri.fileName();
+    result["encoding"] = editor->codePage() == SC_CP_UTF8 ? "utf-8" : "unknown"; result["bom"] = false;
+    if (nativeMetadata) { const auto metadata = nativeMetadata(editor); for (auto it=metadata.begin();it!=metadata.end();++it) result[it.key()]=it.value(); }
+    return result;
+}
+QJsonArray DocumentBridge::nativeList() const {
+    QJsonArray result; for (auto it=buffers.cbegin();it!=buffers.cend();++it) if(it->editor) result.append(nativeInfo(it.key())); return result;
+}
+QString DocumentBridge::documentForEditor(const QString &id) const {
+    for (auto it=buffers.cbegin();it!=buffers.cend();++it) if(it->editor && it->editorId==id) return it.key(); return {};
+}
+QJsonValue DocumentBridge::activeEditor() const {
+    const auto buffer=buffers.value(activeId); if(!buffer.editor) return QJsonValue(QJsonValue::Null);
+    return QJsonObject{{"editorId",buffer.editorId},{"documentId",activeId},{"windowId",windowId}};
+}
+QJsonObject DocumentBridge::invocation(const QString &command,const QJsonArray &args) const {
+    const auto editor=activeEditor().toObject();
+    return {{"commandId",command},{"windowId",windowId},{"editorId",editor.isEmpty()?QJsonValue(QJsonValue::Null):editor["editorId"]},
+        {"documentId",editor.isEmpty()?QJsonValue(QJsonValue::Null):editor["documentId"]},{"args",args}};
+}
+QJsonArray DocumentBridge::rawSelections(ScintillaEdit *editor) const {
+    QJsonArray result{qint64(editor->selectionMode()),qint64(editor->mainSelection())};
+    for(sptr_t n=0;n<editor->selections();++n) result.append(QJsonArray{qint64(editor->selectionNAnchor(n)),qint64(editor->selectionNCaret(n)),qint64(editor->selectionNAnchorVirtualSpace(n)),qint64(editor->selectionNCaretVirtualSpace(n))});
+    return result;
+}
+void DocumentBridge::refreshSelection(const QString &id) {
+    if(!buffers.contains(id)||!buffers[id].editor)return;
+    auto &buffer=buffers[id];const auto next=rawSelections(buffer.editor);
+    if(next!=buffer.selectionBytes){buffer.selectionBytes=next;++buffer.selectionRevision;}
+}
+QJsonObject DocumentBridge::selections(const QString &editorId,QJsonObject *error) {
+    *error={};const auto id=documentForEditor(editorId);
+    if(id.isEmpty()){*error=rpcError(1002,"DocumentClosed");return {};}
+    refreshSelection(id);const auto buffer=buffers.value(id);const auto editor=buffer.editor;
+    if(editor->selections()>256){*error=rpcError(1008,"Too many selections");return {};}
+    QJsonArray list;
+    for(sptr_t n=0;n<editor->selections();++n){
+        QJsonObject anchor,caret,start,end;
+        if(!deltaPosition(editor,editor->selectionNAnchor(n),&anchor)||!deltaPosition(editor,editor->selectionNCaret(n),&caret)||
+           !deltaPosition(editor,editor->selectionNStart(n),&start)||!deltaPosition(editor,editor->selectionNEnd(n),&end)){
+            *error=rpcError(1009,"Selection cannot be mapped to UTF-16");return {};
+        }
+        list.append(QJsonObject{{"range",QJsonObject{{"start",start},{"end",end}}},{"anchor",anchor},{"caret",caret},
+            {"anchorVirtualSpace",qint64(editor->selectionNAnchorVirtualSpace(n))},{"caretVirtualSpace",qint64(editor->selectionNCaretVirtualSpace(n))}});
+    }
+    return {{"editorId",editorId},{"documentId",id},{"documentVersion",buffer.version},{"revision",buffer.selectionRevision},
+        {"mode",editor->selectionMode()==SC_SEL_STREAM?"stream":editor->selectionMode()==SC_SEL_RECTANGLE?"rectangle":editor->selectionMode()==SC_SEL_THIN?"thin":"lines"},
+        {"mainIndex",qint64(editor->mainSelection())},{"selections",list}};
+}
+QJsonObject DocumentBridge::capture(const QJsonObject &target,QJsonObject *error) {
+    Q_ASSERT(QThread::currentThread()==thread());*error={};
+    const auto id=documentForEditor(target["editorId"].toString());
+    if(id.isEmpty()||id!=target["documentId"].toString()||target["windowId"]!=windowId){*error=rpcError(1002,"DocumentClosed");return {};}
+    const auto text=snapshot(id,error);if(!error->isEmpty())return {};
+    const auto selection=selections(target["editorId"].toString(),error);if(!error->isEmpty())return {};
+    QJsonArray selected;const auto editor=buffers.value(id).editor;qint64 selectedBytes=0;
+    for(sptr_t n=0;n<editor->selections();++n){
+        const auto begin=editor->selectionNStart(n),end=editor->selectionNEnd(n);selectedBytes+=end-begin;
+        if(selectedBytes>MaxSnapshotBytes){*error=rpcError(1008,"Selection capture exceeds its aggregate text budget");return {};}
+        selected.append(QString::fromUtf8(reinterpret_cast<const char*>(editor->rangePointer(begin,end-begin)),end-begin));
+    }
+    auto richText=nativeInfo(id);richText["text"]=text["text"];richText["positionEncoding"]="utf-16";
+    const QJsonObject result{{"editor",QJsonObject{{"editorId",target["editorId"]},{"documentId",id},{"windowId",windowId}}},
+        {"document",nativeInfo(id)},{"snapshot",richText},{"selection",selection},{"selectedText",selected}};
+    // JSON escaping can inflate valid control characters sixfold. Refuse a
+    // capture that would overflow the transport rather than fault its session.
+    if(QJsonDocument(result).toJson(QJsonDocument::Compact).size()>12*1024*1024){*error=rpcError(1008,"Encoded selection capture is too large");return {};}
+    return result;
+}
+bool DocumentBridge::checkSelection(const QString &id,const QJsonObject &guard,QJsonObject *error) {
+    *error={};if(documentForEditor(guard["editorId"].toString())!=id){*error=rpcError(1002,"DocumentClosed");return false;}
+    refreshSelection(id);
+    if(!nonnegativeInteger(guard["revision"])||buffers.value(id).selectionRevision!=guard["revision"].toInteger()){
+        *error=rpcError(1011,"SelectionConflict");return false;
+    }
+    return true;
+}
+bool DocumentBridge::checkTarget(const QJsonObject &target,QJsonObject *error) {
+    *error={};const auto id=target["documentId"].toString();
+    if(id.isEmpty()||documentForEditor(target["editorId"].toString())!=id){*error=rpcError(1002,"DocumentClosed");return false;}
+    if(!nonnegativeInteger(target["expectedVersion"])||buffers.value(id).version!=target["expectedVersion"].toInteger()){
+        *error=rpcError(1001,"VersionConflict");return false;
+    }
+    if(target.contains("selectionRevision")&&!checkSelection(id,{{"editorId",target["editorId"]},{"revision",target["selectionRevision"]}},error))return false;
+    return true;
+}
+QJsonObject DocumentBridge::setSelections(const QJsonObject &request,QJsonObject *error) {
+    Q_ASSERT(QThread::currentThread()==thread());*error={};
+    const auto id=documentForEditor(request["editorId"].toString());
+    if(!checkTarget({{"editorId",request["editorId"]},{"documentId",id},{"expectedVersion",request["expectedDocumentVersion"]},{"selectionRevision",request["expectedRevision"]}},error))return {};
+    snapshot(id,error);if(!error->isEmpty())return {};
+    const auto values=request["selections"].toArray();const auto main=request["mainIndex"].toInteger(-1);
+    if(values.isEmpty()||values.size()>256||main<0||main>=values.size()){*error=rpcError(-32602,"Invalid selections");return {};}
+    QVector<QPair<sptr_t,sptr_t>> prepared;
+    for(const auto &value:values){
+        const auto selection=value.toObject();sptr_t anchor,caret;
+        if(selection["anchorVirtualSpace"].toInteger()||selection["caretVirtualSpace"].toInteger()){*error=rpcError(-32602,"Setting virtual space is not supported");return {};}
+        if(!bytePosition(id,selection["anchor"].toObject(),&anchor,error)||!bytePosition(id,selection["caret"].toObject(),&caret,error))return {};
+        sptr_t start,end;if(!bytePosition(id,selection["range"].toObject()["start"].toObject(),&start,error)||!bytePosition(id,selection["range"].toObject()["end"].toObject(),&end,error))return {};
+        if(start!=qMin(anchor,caret)||end!=qMax(anchor,caret)){*error=rpcError(-32602,"Selection range disagrees with anchor/caret");return {};}
+        for(const auto &previous:prepared){const auto a=qMin(previous.first,previous.second),b=qMax(previous.first,previous.second);if((start<b&&end>a)||start==a){*error=rpcError(-32602,"Overlapping selections are not supported");return {};}}
+        prepared.append({anchor,caret});
+    }
+    const auto editor=buffers.value(id).editor;
+    editor->setSelectionMode(SC_SEL_STREAM);editor->clearSelections();
+    editor->setSelection(prepared[0].second,prepared[0].first);
+    for(qsizetype n=1;n<prepared.size();++n)editor->addSelection(prepared[n].second,prepared[n].first);
+    editor->setMainSelection(main);return selections(request["editorId"].toString(),error);
+}
+QJsonObject DocumentBridge::executeCore(const QString &command,const QJsonObject &request,QJsonObject *error) {
+    Q_ASSERT(QThread::currentThread()==thread());
+    if(!nativeExecute){*error=rpcError(1005,"UnsupportedCapability");return {};}
+    if(!checkTarget(request["target"].toObject(),error))return {};
+    const auto id=request["target"].toObject()["documentId"].toString();const auto editor=buffers.value(id).editor;
+    if(command.startsWith("edit.")){
+        if(editor->readOnly()){*error=rpcError(1003,"ReadOnlyDocument");return {};}
+        snapshot(id,error);if(!error->isEmpty())return {};
+        const auto selection=selections(buffers.value(id).editorId,error);if(!error->isEmpty())return {};
+        if(selection["mode"]!="stream"){*error=rpcError(-32602,"Native edits require stream selections");return {};}
+        for(const auto &value:selection["selections"].toArray()){const auto s=value.toObject();if(s["anchorVirtualSpace"].toInteger()||s["caretVirtualSpace"].toInteger()){*error=rpcError(-32602,"Native edits do not support virtual space");return {};}}
+    }
+    nativeExecute(editor,command,request,error);if(!error->isEmpty())return {};
+    return {{"version",buffers.value(id).version}};
 }
 void DocumentBridge::emitEvent(const QString &type, const QJsonValue &document) {
     if(type!="contentInvalidated"&&type!="reset")emitDelta({{"type",type},{"document",document}});

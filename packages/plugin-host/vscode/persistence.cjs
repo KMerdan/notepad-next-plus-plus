@@ -33,25 +33,11 @@ function accepts(definition,value) {
   const normalized=definition.enum?clone(value):value;
   return !definition.enum||definition.enum.some(item=>isDeepStrictEqual(item,normalized));
 }
-// Shared by the static importer and the adapter: unsupported schemas never
-// acquire guessed defaults or pretend to enforce constraints we don't support.
+// Historical adapter contract is isolated from the native SDK/runtime.
+const {configurationDefinitions:parseConfigurationDefinitions}=require('./configuration.cjs');
 function configurationDefinitions(contribution) {
-  const definitions=new Map();if(contribution===undefined)return definitions;
-  const blocks=Array.isArray(contribution)?contribution:[contribution];
-  if(!blocks.length||blocks.length>16)throw new Error('Unsupported configuration declaration');
-  for(const block of blocks) {
-    if(!plain(block)||!plain(block.properties)||Object.keys(block).some(name=>!['title','properties','order'].includes(name)))throw new Error('Unsupported configuration declaration');
-    for(const [name,definition] of Object.entries(block.properties)) {
-      if(!/^[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*$/.test(name)||Buffer.byteLength(name)>128||definitions.has(name)||[...definitions.keys()].some(other=>other.startsWith(name+'.')||name.startsWith(other+'.'))||definitions.size>=256)throw new Error('Invalid or overlapping configuration key');
-      if(!plain(definition)||Object.keys(definition).some(field=>!['type','default','description','markdownDescription','scope','enum','enumDescriptions'].includes(field))||!['string','boolean','number','integer','object','array','null'].includes(definition.type)||definition.scope!==undefined&&definition.scope!=='application')throw new Error('Unsupported configuration schema: '+name);
-      const fallback={string:'',boolean:false,number:0,integer:0,object:{},array:[],null:null};
-      const normalized={type:definition.type,default:clone(own(definition,'default')?definition.default:fallback[definition.type])};
-      if(own(definition,'enum')){if(!Array.isArray(definition.enum)||!definition.enum.length||definition.enum.length>256)throw new Error('Invalid configuration enum');normalized.enum=clone(definition.enum);if(normalized.enum.some(value=>!accepts({type:normalized.type},value)))throw new Error('Configuration enum type mismatch');}
-      if(!accepts(normalized,normalized.default))throw new Error('Configuration default type mismatch: '+name);
-      definitions.set(name,normalized);
-    }
-  }
-  envelope(Object.fromEntries([...definitions].map(([name,definition])=>[name,definition.default])));return definitions;
+  try{return parseConfigurationDefinitions(contribution);}
+  catch(error){if(typeof error.code==='number')throw new RpcError(error.code,error.message);throw error;}
 }
 function readDefinitions(extensionRoot) {
   const file=path.join(extensionRoot,'vscode-package.json');if(!fs.existsSync(file))return new Map();

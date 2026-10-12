@@ -1,0 +1,143 @@
+{
+  "status": "design-research",
+  "flows": [
+    {
+      "status": "ok",
+      "pattern": "callees_of",
+      "target": "/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp::MainWindow.saveFile(ScintillaNext*)",
+      "description": "Find all functions called by a given function",
+      "summary": "Found 6 call site(s) across 6 node(s) for callees_of('/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp::MainWindow.saveFile(ScintillaNext*)') — showing 5, 1 omitted",
+      "result_count": 6,
+      "results_omitted": 1,
+      "results": [
+        {
+          "name": "isSavedToDisk",
+          "kind": "Function",
+          "call_site": {
+            "line": 1441,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "isFile",
+          "kind": "Function",
+          "call_site": {
+            "line": 1444,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "switchToEditor",
+          "kind": "Function",
+          "call_site": {
+            "line": 1446,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "saveCurrentFileAsDialog",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp",
+          "call_site": {
+            "line": 1447
+          }
+        },
+        {
+          "name": "save",
+          "kind": "Function",
+          "call_site": {
+            "line": 1450,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp"
+          },
+          "target_resolution": "unresolved"
+        }
+      ],
+      "distinct_nodes": 6,
+      "resolution_split": {
+        "direct": 2,
+        "unresolved": 4
+      },
+      "_graph": {
+        "updated_at": "2026-10-12T20:04:57",
+        "age_seconds": 344,
+        "built_at_sha": "4bdf432780aec1c4191ce1bad6739244c0a457f2",
+        "built_on_branch": "codex/split-plugin-sdk",
+        "head_sha": "4bdf432780aec1c4191ce1bad6739244c0a457f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "callees_of",
+      "target": "/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp::PluginDocuments.DocumentBridge.applyEdits(const QString&,qint64,const QJsonArray&,QJsonObject*)",
+      "description": "Find all functions called by a given function",
+      "summary": "Found 56 call site(s) across 35 node(s) for callees_of('/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp::PluginDocuments.DocumentBridge.applyEdits(const QString&,qint64,const QJsonArray&,QJsonObject*)') — showing 5, 51 omitted",
+      "result_count": 56,
+      "results_omitted": 51,
+      "results": [
+        {
+          "name": "Q_ASSERT",
+          "kind": "Function",
+          "call_site": {
+            "line": 168,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "QThread::currentThread",
+          "kind": "Function",
+          "call_site": {
+            "line": 168,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "thread",
+          "kind": "Function",
+          "call_site": {
+            "line": 168,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "contains",
+          "kind": "Function",
+          "call_site": {
+            "line": 169,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp"
+          },
+          "target_resolution": "unresolved"
+        },
+        {
+          "name": "rpcError",
+          "kind": "Function",
+          "call_site": {
+            "line": 169,
+            "file": "/Users/merdankiji/localGit/NotepadNext/src/plugins/documents/DocumentBridge.cpp"
+          },
+          "target_resolution": "unresolved"
+        }
+      ],
+      "distinct_nodes": 35,
+      "resolution_split": {
+        "direct": 8,
+        "unresolved": 48
+      },
+      "_graph": {
+        "updated_at": "2026-10-12T20:04:57",
+        "age_seconds": 346,
+        "built_at_sha": "4bdf432780aec1c4191ce1bad6739244c0a457f2",
+        "built_on_branch": "codex/split-plugin-sdk",
+        "head_sha": "4bdf432780aec1c4191ce1bad6739244c0a457f2",
+        "head_matches_build": true
+      }
+    }
+  ],
+  "notes": "Incremental graph has unresolved Qt/Scintilla call sites; implementation was inspected separately."
+}

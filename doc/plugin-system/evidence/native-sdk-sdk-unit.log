@@ -1,0 +1,33 @@
+✔ generated project is self-contained with matching command identities, schema and editor source-map setup (34.566833ms)
+✔ creation refuses invalid identities, recursive destinations and existing projects without changing files (37.374583ms)
+✔ test host rejects early publication, delivers document events and releases resources after deactivation throws (0.873875ms)
+SDK simulated host; Qt, JSON-RPC, CSP and host quotas require editor integration testing.
+Rendered /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-sdk-dev-5g4ZOO/preview.html
+✔ debug runner loads built code from a standalone project and writes its preview (39.347334ms)
+✔ watch mode reloads changed code, survives atomic input saves and stops cleanly (847.678458ms)
+SDK simulated host; Qt, JSON-RPC, CSP and host quotas require editor integration testing.
+Rendered /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-sdk-dev-UvWNL1/preview.html
+✔ native debugger supplies API 0.2 invocation and renders the transformed text (2.754084ms)
+✔ configuration contract validates defaults, bounds and overlapping keys without a host checkout (0.954875ms)
+✔ importer runs independently and preserves configuration without executing extension code (8.42375ms)
+✔ local service proves activation ownership, isolates paths and closes all connections (25.809333ms)
+✔ service errors stay bounded and capability is explicit (3.21175ms)
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (15.43525ms)
+✔ rejects escaping entry and clears failed staging (5.196958ms)
+✔ rejects icon formats excluded by the registration metadata profile (4.893792ms)
+✔ rejects links and native addons (6.805375ms)
+✔ rejects missing production dependency and source-contained output (6.919041ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (26.209792ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (19.548125ms)
+✔ marketplace release accepts its plugin namespace and rejects another plugin (19.575375ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (12.183ms)
+✔ Python release vendors built modules without imports, bytecode or npm hooks (16.97975ms)
+✔ Python packages reject npm runtime dependencies and remove failed staging (3.949375ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1003.18875

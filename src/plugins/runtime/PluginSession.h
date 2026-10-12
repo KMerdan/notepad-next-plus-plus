@@ -23,7 +23,7 @@ public:
     PluginSession(const QJsonObject &manifest,const QString &packageRoot,const QString &node,const QString &hostEntry,
                   QMainWindow *window,PluginDocuments::DocumentBridge *documents,QObject *parent=nullptr,bool holdPublication=false,PluginData::Service *data=nullptr,QString dataRepository={},std::shared_ptr<PluginPackages::PackageLease> packageLease={},QString python={});
     ~PluginSession() override;
-    void invoke(const QString &commandId,const QJsonArray &args={});
+    void invoke(const QString &commandId,const QJsonArray &args={},const QJsonObject &invocation={});
     void activate(const QString &reason="startup");
     void stop(const QString &reason="disable");
     void forceStop() {process->terminate();}
@@ -61,6 +61,8 @@ private:
     std::shared_ptr<PluginPackages::PackageLease> packageLease;
     QString root,node,hostEntry,session,currentState="idle",activationReason,queuedCommand,dataRepository,python;
     QJsonArray queuedArgs;
+    QJsonObject queuedInvocation;
+    QString apiVersion="0.1.0";
     QStringList grants;
     QPointer<PluginDocuments::DocumentBridge> documents;
     QPointer<QMainWindow> window;

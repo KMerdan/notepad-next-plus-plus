@@ -1,53 +1,55 @@
 # Notepad Next ++
 
-**Notepad Next ++** is an independently maintained fork of [Notepad Next](https://github.com/dail8859/NotepadNext), maintained by [KMerdan](https://github.com/KMerdan). Notepad Next was created by Justin Dailey and contributors as a cross-platform reimplementation of Notepad++.
+An independently maintained fork of [NotepadNext](https://github.com/dail8859/NotepadNext), by KMerdan. A cross-platform Qt/Scintilla text editor with macOS UI improvements and a native plugin SDK for extending existing editing features.
 
-The fork includes the JSON-RPC plugin system, plugin SDK, Markdown Preview integration and revised macOS interface, universal plugin hot updates and a local Node.js HTML/JS service example. Fork modifications began in October 2026; the source in this repository is modified from upstream. Upstream copyright notices are retained. The application remains licensed under **GPL-3.0-or-later**, as stated in the upstream source notices; the complete license is in [LICENSE](LICENSE). Third-party components retain their own license notices.
+NotepadNext's original copyright notices are retained. This fork continues under **GPL-3.0-or-later**; see [LICENSE](LICENSE). This project and its Marketplace are maintained for this fork and are not official upstream projects.
 
-Development notes: [Hot update implementation and validation](doc/plugin-system/HotUpdateAndHtmlService.zh-CN.md), [Hot update SDK contract](packages/plugin-sdk/docs/HotUpdate.zh-CN.md), [HTML service plugin](examples/html-preview/README.md), [Plugin system](doc/PluginSystemPlan.zh-CN.md), [SDK](packages/plugin-sdk/README.md), [plugin lifecycle and fork](doc/plugin-system/LifecycleAndFork.zh-CN.md), [macOS UI review](doc/plugin-system/MacUiReview.zh-CN.md). Build instructions below retain technical target names used by upstream. The displayed product and executable are Notepad Next ++ / NotepadNextPlusPlus; the plugin manifest name and host API stay compatible with existing Notepad Next plugins.
+## Start here
 
-Though the application overall is stable and usable, it should not be considered safe for critically important work.
+| I want to… | Start with |
+| --- | --- |
+| Build the editor | [Build instructions](doc/Building.md), [plugin-enabled build](doc/plugin-system/Implementation.zh-CN.md) |
+| Install Markdown or HTML Preview | [Official Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview), [manager lifecycle](doc/plugin-system/OfficialMarketplace.zh-CN.md) |
+| Develop a plugin | [Independent SDK](https://github.com/KMerdan/notepadnext-plugin-sdk), [native API 0.2](packages/plugin-sdk/docs/NativeAPI.zh-CN.md) |
+| Understand current capability and limits | [Native SDK status](doc/plugin-system/NativeSDKStatus.zh-CN.md) |
+| Understand architecture and future APIs | [Native SDK design](doc/plugin-system/NativeSDKDesign.zh-CN.md) |
+| Find technical documentation | [Documentation index](doc/plugin-system/README.md) |
 
-There are numerous bugs and half working implementations. Pull requests are greatly appreciated.
+## Three repositories
 
-![Notepad Next ++ with Markdown Preview](doc/screenshot-fork.png)
+| Repository | Owns |
+| --- | --- |
+| [notepad-next-plus-plus](https://github.com/KMerdan/notepad-next-plus-plus) | Native editor services, Qt UI, JSON-RPC host, plugin install/update/lifecycle and native tests |
+| [notepadnext-plugin-sdk](https://github.com/KMerdan/notepadnext-plugin-sdk) | API types, metadata/wire contracts, templates, debugging/testing/service helpers and packaging tools |
+| [Official Plugin Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview) | Markdown/HTML plugin source, catalog and independent installable releases |
 
-# Installation
+The SDK is a Git submodule pinned to a reviewed commit. The Marketplace consumes an exact SDK Release tarball through locked development dependencies. Its original repository URL is retained so existing Markdown installations keep their trusted source and data.
 
-## Development builds
+## Build and validate
 
-The fork currently ships as source. Build it using the instructions below; a local macOS development build is also described in [the plugin development guide](doc/plugin-system/MacUiGitHub.zh-CN.md). Release packages will appear on [this fork’s Releases page](https://github.com/KMerdan/notepad-next-plus-plus/releases).
+The native SDK changes are developed on `codex/split-plugin-sdk` until the application PR is merged:
 
-The macOS interface uses the system UI font and native symbols. Change the document font and size in **Preferences → Editor**; new profiles default to Menlo. The fork uses its own application identity and preferences directory, so it can coexist with upstream.
+```sh
+git clone --branch codex/split-plugin-sdk --recurse-submodules https://github.com/KMerdan/notepad-next-plus-plus.git
+cd notepad-next-plus-plus
+cmake -S . -B build -DCMAKE_PREFIX_PATH=/path/to/Qt
+cmake --build build --parallel
+```
 
-# Translations
-The fork inherits upstream’s community translations. Report translation changes for this fork through [its own issues](https://github.com/KMerdan/notepad-next-plus-plus/issues); upstream’s translation project remains separate.
+Core plugin support is enabled by default. Preview panels require Qt WebEngine/WebChannel and `-DNOTEPADNEXT_PLUGIN_WEBVIEWS=ON`. Bundle the pinned Node 24 binary using `-DNOTEPADNEXT_PLUGIN_NODE=/absolute/path/to/node`; [runtime preparation](doc/plugin-system/CrossPlatformCI.zh-CN.md) verifies the controlled archive. Set `-DNOTEPADNEXT_PLUGINS=OFF` for an editor-only build. Local macOS development requires no Developer ID or notarization.
 
-# Development
-Current development is done using QtCreator with the Microsoft Visual C++ (msvc) compiler. Qt 6.5 is the currently supported Qt version. Older versions of Qt are likely to work but are not tested. Any fixes for older versions will be accepted as long as they do not introduce complex fixes. This application is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
+For contract/integration tests, configure `-DNOTEPADNEXT_BUILD_PLUGIN_TESTS=ON` and the explicit Node test runtime. Run `ctest --test-dir build --output-on-failure`. See the [conformance workflow](.github/workflows/plugin-conformance.yml) for WebEngine, core-only and disabled-plugin configurations. Local macOS verification does not establish released support on every platform.
 
-If you are familiar with building C++ Qt desktop applications with Qt Creator, then this should be as simple as opening `CMakeLists` and build/run the project.
+## Extend the editor
 
-If you are new to building C++ Qt desktop applications, there is a more detailed guide [here](/doc/Building.md).
+Native API 0.2 fixes the originating editor at command invocation, captures UTF-16 text/selections together, rejects stale document/selection writes, commits edit batches as one undo step and exposes eight existing editor operations through stable IDs. Native menus and plugins use the same `EditorOperations` implementation. Full HTML panels use `acquireNotepadNextApi()`; fragment and local Node service panels retain generic hot-update restoration.
 
-## Plugin system in development
+Existing API 0.1 Markdown/HTML packages keep their callback contract and IDs. Register a repository through **Plugin Manager → Add Source…**; then explicitly install from **Discover**, enable in **Installed**, and open its command. Updates restore owned panels; uninstall is separate from removing a source.
 
-The current working tree adds a native Plugin Manager and independent Node plugin processes connected through JSON-RPC. Single repositories and marketplaces register metadata first; users explicitly install resources from Discover. Installed plugins can be inspected, enabled, disabled, reloaded, updated, rolled back and uninstalled, with optional deletion of plugin-owned data. Background collection removes unused packages and interrupted staging while retaining rollback versions and code still used by another process. [Process supervision](doc/plugin-system/ProcessSupervision.zh-CN.md) covers abnormal parent death on macOS; [bounded diagnostics](doc/plugin-system/Diagnostics.zh-CN.md) preserve session logs and failure categories across restarts. The first-party [TypeScript Markdown preview](examples/markdown-preview/README.md) reads unsaved editor buffers. The [standalone plugin SDK](packages/plugin-sdk/README.md) includes hello/Markdown templates, typed API, source-map debugging, a test host and packaging tools; the [Markdown development walkthrough](packages/plugin-sdk/docs/MarkdownWalkthrough.zh-CN.md) covers creation through local installation. [Author release tools and a CI template](doc/plugin-system/AuthorRelease.zh-CN.md) prepare built ZIPs and same-release SHA-256 checksums; the public [official plugin Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview) contains Markdown and HTML previews that register through one repository URL and install/update independently. [Marketplace usage and validation](doc/plugin-system/OfficialMarketplace.zh-CN.md) describe the catalog and namespaced releases.
+The SDK's purpose is to enhance Notepad Next ++. Other editors' plugins may be studied and ported. A retained bounded VS Code adapter/importer is a historical experiment, isolated from the native SDK. File/search/language/bookmark/provider APIs in the larger design remain future work.
 
-Core plugin support is enabled by default; WebEngine panels require `NOTEPADNEXT_PLUGIN_WEBVIEWS=ON` and Qt WebEngine/WebChannel. Supply the verified pinned Node binary through `NOTEPADNEXT_PLUGIN_NODE` to bundle the runtime. A [Python adapter](doc/plugin-system/PythonAdapter.zh-CN.md) and [buffer-inspector example](examples/python-inspector/README.md) use the same RPC services; developer builds must explicitly configure `NOTEPADNEXT_PLUGIN_PYTHON` with an absolute Python 3.12 interpreter path. The interpreter is not bundled. Set `NOTEPADNEXT_PLUGINS=OFF` for the base editor. Local development does not require Developer ID or notarization. Formal [macOS distribution](doc/plugin-system/MacOSDeployment.zh-CN.md) is deferred; [platform acceptance](doc/plugin-system/PlatformCapabilities.zh-CN.md) records the outstanding platform checks.
+Trusted Node/Python plugins run in separate processes. Capabilities govern host RPC; they do not provide an operating-system sandbox. The Python prototype currently negotiates API 0.1 and needs an explicitly configured Python 3.12 interpreter.
 
-To try an unpublished plugin, choose **Add Source… → Local metadata file** in the manager and select the example's `notepadnext-plugin.json`. Registration adds it to **Discover** without installing or running it. Select **Local Package…** to install its built directory, then enable it and use its primary command button in **Installed**. Local sources can be refreshed and inspected through **Sources**. Follow the [Markdown example instructions](examples/markdown-preview/README.md) to build the package and try unsaved previews.
+## License and upstream
 
-[macOS editor and preview improvements](doc/plugin-system/MacUiGitHub.zh-CN.md) align the main workspace with the Figma layout, including system toolbar symbols, document tabs, light/dark editor colors and live preview context.
-
-See the [implementation and build instructions](doc/plugin-system/Implementation.zh-CN.md), [full technical plan](doc/PluginSystemPlan.zh-CN.md), [completion audit](doc/plugin-system/CompletionAudit.json) and [dependency inventory](doc/plugin-system/Dependencies.zh-CN.md) for evidence and remaining work.
-
-The dedicated [plugin conformance workflow](.github/workflows/plugin-conformance.yml) defines WebEngine, core-only and plugins-disabled checks on Linux, Windows and both Mac architectures. [Runtime preparation and CI evidence](doc/plugin-system/CrossPlatformCI.zh-CN.md) describe pinned archive verification and retained test artifacts. Remote runs are still pending; this workflow does not establish released platform support.
-
-[Reference performance and lifecycle measurements](doc/plugin-system/evidence/MarkdownPerformanceValidation.json) cover 1/5/10 Markdown processes, real editor previews, native handles and process exit. Historical signing records are retained, but formal signing, notarization and publication are outside the current development phase.
-
-A bounded [VS Code adapter](doc/plugin-system/VSCodeCompatibility.zh-CN.md) imports built CommonJS extensions, provides synchronous command disposables and document reads, applies Unicode edit transactions, and owns Qt messages and full HTML Webviews. The unmodified MIT [official HelloWorld sample](examples/vscode-hello-world/README.md) runs through the actual manager and bundled host; an explicitly [adapted MIT Cat Coding sample](examples/vscode-webview/README.md) exercises local JS/CSS/images and browser messaging. Compatibility is limited to the documented API subset. Bounded [context persistence and private plugin configuration](doc/plugin-system/VSCodePersistence.zh-CN.md) are also available; local macOS relocation passes, while named workspaces, broader acceptance and a notarized release remain pending.
-
-
-# License
-This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
+[GPL-3.0-or-later](LICENSE). Based on [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext), copyright Justin Dailey and contributors. Fork modifications are maintained by KMerdan. Original notices and third-party licenses remain intact. Upstream build names such as the `NotepadNext` CMake target are retained; displayed product/executable are Notepad Next ++ / NotepadNextPlusPlus.

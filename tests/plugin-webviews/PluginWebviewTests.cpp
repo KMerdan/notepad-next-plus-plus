@@ -87,6 +87,9 @@ private slots:
         QMainWindow window;
         auto *editor=new QPlainTextEdit(&window);window.setCentralWidget(editor);
         editor->setPlainText("Unsaved Markdown 😀\n");editor->document()->setModified(true);
+        // This fixture verifies programmatic preservation, not keyboard input.
+        // setPlainText still works when read-only; desktop typing cannot race it.
+        editor->setReadOnly(true);
         prepareWindow(&window);
         window.resize(900,600);window.show();QVERIFY(QTest::qWaitForWindowExposed(&window));
         const auto nativeId=window.winId();const auto geometry=window.geometry();
@@ -955,6 +958,9 @@ exports.activate=async ctx=>{
 };
 int main(int argc,char **argv) {
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts); registerScheme(); ObservedTestApplication app(argc,argv);
-    PluginWebviewTests tests; return QTest::qExec(&tests,argc,argv);
+    PluginWebviewTests tests;
+    const auto selected=qEnvironmentVariable("NNP_TEST_WEBVIEW_FUNCTIONS");
+    if(!selected.isEmpty())return QTest::qExec(&tests,QStringList{QString::fromLocal8Bit(argv[0])}+selected.split(',',Qt::SkipEmptyParts));
+    return QTest::qExec(&tests,argc,argv);
 }
 #include "PluginWebviewTests.moc"

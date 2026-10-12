@@ -755,7 +755,7 @@
       "kind": "request",
       "paramsSchema": "#/$defs/nnp.webviews.setDocument.params",
       "resultSchema": "#/$defs/nnp.webviews.setDocument.result",
-      "capability": "webviews.compat@1",
+      "capability": "webviews.html@1 or legacy webviews.compat@1",
       "states": [
         "activating",
         "active"
@@ -779,7 +779,7 @@
       "kind": "request",
       "paramsSchema": "#/$defs/nnp.webviews.mapAsset.params",
       "resultSchema": "#/$defs/nnp.webviews.mapAsset.result",
-      "capability": "webviews.compat@1",
+      "capability": "webviews.html@1 or legacy webviews.compat@1",
       "states": [
         "activating",
         "active"
@@ -803,7 +803,7 @@
       "kind": "request",
       "paramsSchema": "#/$defs/nnp.webviews.setTitle.params",
       "resultSchema": "#/$defs/nnp.webviews.setTitle.result",
-      "capability": "webviews.compat@1",
+      "capability": "webviews.html@1 or legacy webviews.compat@1",
       "states": [
         "activating",
         "active"
@@ -868,6 +868,293 @@
         1009
       ],
       "budget": "8 panels, loopback ownership probe 4 KiB / 2 seconds"
+    },
+    "nnp.documents.list": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.list.params",
+      "resultSchema": "#/$defs/nnp.documents.list.result",
+      "capability": "documents.read@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.documents.getInfo": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.getInfo.params",
+      "resultSchema": "#/$defs/nnp.documents.getInfo.result",
+      "capability": "documents.read@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.editors.getActive": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.getActive.params",
+      "resultSchema": "#/$defs/nnp.editors.getActive.result",
+      "capability": "editors.selection.read@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.editors.getSelections": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.getSelections.params",
+      "resultSchema": "#/$defs/nnp.editors.getSelections.result",
+      "capability": "editors.selection.read@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.editors.capture": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.capture.params",
+      "resultSchema": "#/$defs/nnp.editors.capture.result",
+      "capability": "editors.selection.read@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.editors.setSelections": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.setSelections.params",
+      "resultSchema": "#/$defs/nnp.editors.setSelections.result",
+      "capability": "editors.selection.write@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "view",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.core.list": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.core.list.params",
+      "resultSchema": "#/$defs/nnp.core.list.result",
+      "capability": "core.commands@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.core.execute": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.core.execute.params",
+      "resultSchema": "#/$defs/nnp.core.execute.result",
+      "capability": "core.commands@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "nativeOperation",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.commands.invokeNative": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.commands.invokeNative.params",
+      "resultSchema": "#/$defs/nnp.commands.invokeNative.result",
+      "capability": "commands@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "active"
+      ],
+      "effect": "command",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.webviews.createHtml": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.createHtml.params",
+      "resultSchema": "#/$defs/nnp.webviews.createHtml.result",
+      "capability": "webviews.html@1",
+      "apiVersion": "0.2.0",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedHtmlPanel",
+      "cancellation": "Caller may stop waiting. Already committed effects are not reversed; uncertain writes are never retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011
+      ],
+      "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
     }
   },
   "errors": {
@@ -880,6 +1167,7 @@
     "1007": "Overloaded",
     "1008": "ContentTooLarge",
     "1009": "UnsupportedEncoding",
-    "1010": "DataUnavailable"
+    "1010": "DataUnavailable",
+    "1011": "SelectionConflict"
   }
 }

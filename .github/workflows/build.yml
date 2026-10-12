@@ -105,6 +105,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
+        with:
+          submodules: recursive
 
       # ─── Install Qt (Windows / Linux via jurplel) ──────────────
       - name: Install Qt
@@ -222,6 +224,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
+        with:
+          submodules: recursive
 
       - name: Create Draft Release
         run: |

@@ -11,6 +11,8 @@ class PackageLease;
 struct PackagePolicy {
     QString applicationVersion="0.15.0",apiVersion="0.1.0";
     QStringList capabilities;
+    // Older profiles remain installable; each session negotiates one version.
+    QStringList compatibleApiVersions;
 };
 struct PreparedPackage {
     QString root,digest,repository;

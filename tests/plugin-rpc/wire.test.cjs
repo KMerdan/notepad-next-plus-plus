@@ -6,7 +6,7 @@ const {createClient}=require('../../packages/plugin-host/client.cjs');
 const fixtures=require('./wire-fixtures.json');
 for(const fixture of fixtures)test(fixture.name,()=>assert.equal(validate(fixture.method,fixture.part,fixture.value),fixture.valid));
 test('every negotiated method has positive and negative shared fixtures',()=>{
-  assert.equal(Object.keys(contract.methods).length,35);
+  assert.equal(Object.keys(contract.methods).length,45);
   for(const name of Object.keys(contract.methods)){
     assert.ok(fixtures.some(f=>f.method===name&&f.part==='params'&&f.valid));
     assert.ok(fixtures.some(f=>f.method===name&&f.part==='params'&&!f.valid));

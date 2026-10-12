@@ -31,6 +31,8 @@ qt_add_executable(NotepadNext
 	DockedEditorTitleBar.h
 
 	EditorManager.h
+	EditorOperations.h
+	EditorOperations.cpp
 	EditorPrintPreviewRenderer.h
 	FileDialogHelpers.h
 	Finder.h

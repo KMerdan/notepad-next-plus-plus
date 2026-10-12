@@ -32,7 +32,7 @@ register(endpoint,'nnp.initialize',async params=>{
   requireObject(params);
   if(state!=='new') throw new RpcError(-32602,'Already initialized');
   if(params.pluginId!==manifest.id || typeof params.sessionId!=='string' || !params.sessionId || !Number.isSafeInteger(params.generation) || params.generation<1
-    || !Array.isArray(params.protocolVersions) || !params.protocolVersions.includes('0.1') || params.apiVersion!=='0.1.0'
+    || !Array.isArray(params.protocolVersions) || !params.protocolVersions.includes('0.1') || !['0.1.0','0.2.0'].includes(params.apiVersion)
     || !Array.isArray(params.grantedCapabilities) || new Set(params.grantedCapabilities).size!==params.grantedCapabilities.length
     || !params.limits || Object.keys(limits).some(key=>params.limits[key]!==limits[key])) throw new RpcError(-32602,'Incompatible initialize contract');
   const declared=new Set([...(manifest.capabilities?.required ?? []),...(manifest.capabilities?.optional ?? [])]);
@@ -40,11 +40,11 @@ register(endpoint,'nnp.initialize',async params=>{
   identity=Object.freeze({...params});
   client=createClient(endpoint,identity,manifest,method=>{
     if(method==='nnp.resources.dispose') return state!=='new' && state!=='closed';
-    if(method==='nnp.commands.invoke')return state==='active';
+    if(method==='nnp.commands.invoke'||method==='nnp.commands.invokeNative')return state==='active';
     return state==='activating' || state==='active';
   });
   state='initialized';
-  return {protocolVersion:'0.1',apiVersion:'0.1.0',capabilities:params.grantedCapabilities,limits:params.limits};
+  return {protocolVersion:'0.1',apiVersion:identity.apiVersion,capabilities:params.grantedCapabilities,limits:params.limits};
 });
 register(endpoint,'nnp.plugin.activate',async params=>{
   validIdentity(params); if(state!=='initialized') throw new RpcError(1004,'Plugin cannot activate in this state'); state='activating';
@@ -63,7 +63,7 @@ register(endpoint,'nnp.plugin.activate',async params=>{
 });
 async function deactivate() {
   if(stopping) return stopping;
-  state='stopping';
+  state='stopping';client?.beginStopping();
   stopping=(async()=>{ try { if(typeof plugin?.deactivate==='function') await plugin.deactivate(); } finally { await client?.dispose(); } })();
   return stopping;
 }
