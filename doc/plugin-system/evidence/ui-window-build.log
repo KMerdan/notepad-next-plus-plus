@@ -1,0 +1,189 @@
+[  0%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  0%] Built target zlibstatic_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  4%] Built target NotepadNext_NotepadNext_translations
+[  4%] Built target lua_autogen_timestamp_deps
+[  4%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  4%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  4%] Built target SingleApplication_autogen_timestamp_deps
+[  4%] Built target NotepadNext_qmlimportscan
+[  4%] Built target uchardet_autogen_timestamp_deps
+[  5%] Built target zlibstatic_autogen
+[  5%] Built target NotepadNextPluginDiagnostics_autogen
+[  5%] Built target NotepadNextPluginSources_autogen
+[  5%] Built target NotepadNextPluginRpc_autogen
+[  5%] Built target scintilla_autogen
+[  5%] Built target NotepadNextPluginData_autogen
+[  5%] Built target QSimpleUpdater_autogen
+[  5%] Built target qtadvanceddocking-qt6_autogen
+[  5%] Built target SingleApplication_autogen
+[  5%] Built target editorconfig-core-qt_autogen
+[  5%] Built target uchardet_autogen
+[  5%] Built target lua_autogen
+[  8%] Built target zlibstatic
+[  9%] Built target NotepadNextPluginDiagnostics
+[ 10%] Built target NotepadNextPluginSources
+[ 13%] Built target NotepadNextPluginRpc
+[ 13%] Built target NotepadNextPluginData
+[ 15%] Built target QSimpleUpdater
+[ 16%] Built target SingleApplication
+[ 17%] Built target editorconfig-core-qt
+[ 26%] Built target scintilla
+[ 31%] Built target qtadvanceddocking-qt6
+[ 38%] Built target lua
+[ 38%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 38%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 49%] Built target uchardet
+[ 49%] Built target lexilla_autogen_timestamp_deps
+[ 49%] Built target lexilla_autogen
+[ 49%] Built target NotepadNextPluginPackages_autogen
+[ 50%] Built target NotepadNextPluginDocuments_autogen
+[ 50%] Built target NotepadNextPluginDocuments
+[ 50%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 52%] Built target NotepadNextPluginPackages
+[ 52%] Built target NotepadNextPluginWebviews_autogen
+[ 53%] Built target NotepadNextPluginWebviews
+[ 53%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 54%] Built target NotepadNextPluginRuntime_autogen
+[ 54%] Built target NotepadNextPluginRuntime
+[ 82%] Built target lexilla
+[ 82%] Built target NotepadNext_autogen_timestamp_deps
+[ 82%] Automatic MOC and UIC for target NotepadNext
+[ 82%] Built target NotepadNext_autogen
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/PluginManagerDialog.cpp.o
+[ 82%] Linking CXX executable NotepadNext.app/Contents/MacOS/NotepadNext
+ld: warning: -undefined suppress is deprecated
+[100%] Built target NotepadNext
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target zlibstatic_autogen_timestamp_deps
+[ 16%] Built target zlibstatic_autogen
+[ 16%] Built target NotepadNextPluginSources_autogen
+[ 50%] Built target zlibstatic
+[ 66%] Built target NotepadNextPluginSources
+[ 66%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 66%] Built target NotepadNextPluginPackages_autogen
+[ 83%] Built target NotepadNextPluginPackages
+[ 83%] Built target PluginManagerPreview_autogen_timestamp_deps
+[100%] Automatic MOC and UIC for target PluginManagerPreview
+[100%] Built target PluginManagerPreview_autogen
+[100%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[100%] Linking CXX executable PluginManagerPreview
+[100%] Built target PluginManagerPreview
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target zlibstatic_autogen_timestamp_deps
+[ 16%] Built target zlibstatic_autogen
+[ 16%] Built target NotepadNextPluginSources_autogen
+[ 50%] Built target zlibstatic
+[ 66%] Built target NotepadNextPluginSources
+[ 66%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 66%] Built target NotepadNextPluginPackages_autogen
+[ 83%] Built target NotepadNextPluginPackages
+[ 83%] Built target PluginSourceTests_autogen_timestamp_deps
+[ 83%] Automatic MOC and UIC for target PluginSourceTests
+[ 83%] Built target PluginSourceTests_autogen
+[ 83%] Building CXX object tests/plugin-sources/CMakeFiles/PluginSourceTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 83%] Linking CXX executable PluginSourceTests
+[100%] Built target PluginSourceTests
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  0%] Built target zlibstatic_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  5%] Built target zlibstatic_autogen
+[  5%] Built target NotepadNextPluginDiagnostics_autogen
+[  5%] Built target NotepadNextPluginRpc_autogen
+[  5%] Built target NotepadNextPluginSources_autogen
+[  5%] Built target scintilla_autogen
+[  5%] Built target NotepadNextPluginData_autogen
+[ 16%] Built target zlibstatic
+[ 22%] Built target NotepadNextPluginDiagnostics
+[ 27%] Built target NotepadNextPluginSources
+[ 38%] Built target NotepadNextPluginRpc
+[ 38%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 38%] Built target NotepadNextPluginData
+[ 38%] Built target NotepadNextPluginPackages_autogen
+[ 72%] Built target scintilla
+[ 77%] Built target NotepadNextPluginPackages
+[ 77%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 83%] Built target NotepadNextPluginDocuments_autogen
+[ 83%] Built target NotepadNextPluginDocuments
+[ 83%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 83%] Built target NotepadNextPluginWebviews_autogen
+[ 88%] Built target NotepadNextPluginWebviews
+[ 88%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 94%] Built target NotepadNextPluginRuntime_autogen
+[ 94%] Built target NotepadNextPluginRuntime
+[ 94%] Built target PluginWebviewTests_autogen_timestamp_deps
+[ 94%] Automatic MOC and UIC for target PluginWebviewTests
+[ 94%] Built target PluginWebviewTests_autogen
+[100%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[100%] Linking CXX executable PluginWebviewTests
+[100%] Built target PluginWebviewTests
+[  0%] Built target SingleApplication_autogen_timestamp_deps
+[  0%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  0%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  0%] Built target PluginApplicationTests_qmlimportscan
+[  0%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target uchardet_autogen_timestamp_deps
+[  0%] Built target lua_autogen_timestamp_deps
+[  0%] Built target zlibstatic_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  1%] Built target NotepadNext_qmlimportscan
+[  1%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  3%] Built target NotepadNext_NotepadNext_translations
+[  3%] Built target editorconfig-core-qt_autogen
+[  3%] Built target QSimpleUpdater_autogen
+[  3%] Built target qtadvanceddocking-qt6_autogen
+[  3%] Built target SingleApplication_autogen
+[  3%] Built target lua_autogen
+[  3%] Built target uchardet_autogen
+[  3%] Built target NotepadNextPluginDiagnostics_autogen
+[  3%] Built target scintilla_autogen
+[  4%] Built target zlibstatic_autogen
+[  4%] Built target NotepadNextPluginSources_autogen
+[  4%] Built target NotepadNextPluginRpc_autogen
+[  4%] Built target NotepadNextPluginData_autogen
+[  5%] Built target QSimpleUpdater
+[  6%] Built target editorconfig-core-qt
+[  8%] Built target SingleApplication
+[ 17%] Built target lua
+[ 18%] Built target qtadvanceddocking-qt6
+[ 27%] Built target uchardet
+[ 30%] Built target zlibstatic
+[ 31%] Built target NotepadNextPluginDiagnostics
+[ 32%] Built target NotepadNextPluginSources
+[ 32%] Built target NotepadNextPluginData
+[ 34%] Built target NotepadNextPluginRpc
+[ 34%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 41%] Built target scintilla
+[ 41%] Built target lexilla_autogen_timestamp_deps
+[ 41%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 41%] Built target NotepadNextPluginPackages_autogen
+[ 41%] Built target lexilla_autogen
+[ 43%] Built target NotepadNextPluginDocuments_autogen
+[ 44%] Built target NotepadNextPluginPackages
+[ 44%] Built target NotepadNextPluginDocuments
+[ 44%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 44%] Built target NotepadNextPluginWebviews_autogen
+[ 45%] Built target NotepadNextPluginWebviews
+[ 45%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 46%] Built target NotepadNextPluginRuntime_autogen
+[ 46%] Built target NotepadNextPluginRuntime
+[ 69%] Built target lexilla
+[ 69%] Built target NotepadNext_autogen_timestamp_deps
+[ 69%] Built target NotepadNext_autogen
+[ 84%] Built target NotepadNext
+[ 84%] Built target PluginApplicationTests_autogen_timestamp_deps
+[ 84%] Automatic MOC and UIC for target PluginApplicationTests
+[ 84%] Built target PluginApplicationTests_autogen
+[ 84%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 84%] Linking CXX executable PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+[100%] Built target PluginApplicationTests

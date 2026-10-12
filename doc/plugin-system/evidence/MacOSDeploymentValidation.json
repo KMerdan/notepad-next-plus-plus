@@ -1,0 +1,200 @@
+{
+  "scope": "I4 local macOS arm64 Node/WebEngine release deployment; original P0/I1/I2/I3/I4 scope retained",
+  "goalComplete": false,
+  "host": {
+    "macOS": "27.0.1",
+    "architecture": "arm64",
+    "qtVersion": "6.10.0",
+    "nodeVersion": "v24.21.0",
+    "buildType": "Release",
+    "declaredMinimumOS": "13.5",
+    "actualMinimumOSExecutionValidated": false
+  },
+  "checks": {
+    "releaseFullCTest": {
+      "passedTargets": 19,
+      "totalTargets": 19,
+      "durationSeconds": 183.09,
+      "nativeWebviewTargetSeconds": 155.9,
+      "summary": "macos-release-ctest.log",
+      "raw": "macos-release-conformance.log",
+      "qualification": "Full existing Release target set preceded registration of the new packaging target. Whole target durations are not isolated performance measurements."
+    },
+    "packagingBoundaries": {
+      "passedTargets": 1,
+      "totalTargets": 1,
+      "passedCases": 14,
+      "durationSeconds": 1.74,
+      "raw": "macos-bundle-boundaries.log",
+      "negativeCases": [
+        "external RPATH",
+        "missing dependency",
+        "symlink escape",
+        "underdeclared minimum OS",
+        "tampered resource seal",
+        "missing hardened runtime",
+        "debug entitlement",
+        "missing WebEngine resource",
+        "unverified Node archive",
+        "developer-only Python profile",
+        "rejected notarization does not staple",
+        "machine-specific Qt config",
+        "escaping Qt config"
+      ],
+      "positiveCase": "Signed native Mach-O fixture executes with contained dependency"
+    },
+    "relocatedProductionSourceApplication": {
+      "passedCasesIncludingSetupCleanup": 7,
+      "failed": 0,
+      "skipped": 1,
+      "durationMs": 3248,
+      "skippedCase": "Developer Python interpreter intentionally absent from the Node-only release profile",
+      "qtImagesInsideBundle": 20,
+      "sanitizedEnvironmentPrefixes": [
+        "QT",
+        "QML",
+        "DYLD_",
+        "NODE",
+        "PYTHON"
+      ],
+      "testArguments": [],
+      "raw": "macos-relocated-application.log",
+      "loadedPaths": "MacOSRelocatedRuntimeAudit.json",
+      "postRunSignatureVerification": "MacOSRelocatedBundleValidation.json",
+      "qualification": "Tests compile production Application/MainWindow/plugin services. Author package/import fixtures still use developer source paths; this is not clean-machine installation proof."
+    },
+    "mainBundle": {
+      "machoFiles": 36,
+      "allDependenciesContainedOrSystem": true,
+      "signaturesVerified": true,
+      "record": "MacOSBundleValidation.json",
+      "finalConfigAndSignatureCheck": "MacOSFinalBundleValidation.json",
+      "qualification": "Final Qt path configuration guard added after DMG generation; the actual copied DMG bundle was revalidated with the final verifier."
+    },
+    "diskImage": {
+      "imageBytes": 308452366,
+      "sha256": "0fac53350e6e46ff5a7b365cf9afd9b61392c81c0329e14f5235eb4ecbb3280e",
+      "checksumValidated": true,
+      "readonlyMountAndCopy": true,
+      "applicationsLinkVerified": true,
+      "detached": true,
+      "copiedProductionVersionCommandReturnCode": 0,
+      "record": "MacOSDiskImageValidation.json",
+      "qualification": "Local same-machine image/copy/signature/version smoke; not clean-machine installation or full production executable UI lifecycle"
+    },
+    "pluginsDisabledEditor": {
+      "passedTargets": 1,
+      "totalTargets": 1,
+      "durationSeconds": 0.41,
+      "raw": "macos-disabled-editor.log",
+      "qualification": "Editor open/save/reload/last-window regression; plugin-only slots compile to no-ops."
+    },
+    "nodeAndPythonDeveloperApplication": {
+      "passedTargets": 1,
+      "totalTargets": 1,
+      "passedCasesIncludingSetupCleanup": 8,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 3.73,
+      "raw": "macos-developer-python-editor.log",
+      "qualification": "Python 3.12.13 remains explicitly configured, not bundled."
+    },
+    "hostCopies": [
+      {
+        "bundle": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/payload/NotepadNext.app",
+        "matchedSourceFiles": 20,
+        "files": {
+          "protocol-profile.json": true,
+          "LICENSE": true,
+          "runtime-lock.json": true,
+          "wire.cjs": true,
+          "rpc.cjs": true,
+          "wire-contract.json": true,
+          "client.cjs": true,
+          "python-host.cjs": true,
+          "parent-watch.cjs": true,
+          "host.cjs": true,
+          "wire.schema.json": true,
+          "python/host.py": true,
+          "python/nnp_wire.py": true,
+          "python/nnp_rpc.py": true,
+          "python/nnp_client.py": true,
+          "vscode/documents.cjs": true,
+          "vscode/persistence.cjs": true,
+          "vscode/adapter.cjs": true,
+          "vscode/types.cjs": true,
+          "vscode/webviews.cjs": true
+        },
+        "buildProfile": {
+          "schemaVersion": 1,
+          "nodeBundled": true,
+          "developerPythonConfigured": false,
+          "webviews": true,
+          "buildType": "Release",
+          "qtVersion": "6.10.0",
+          "minimumMacOS": "13.5"
+        }
+      },
+      {
+        "bundle": "/private/tmp/NotepadNext 搬移 验证 fnjllh9g/Node Release 0.15/NotepadNext.app",
+        "matchedSourceFiles": 20,
+        "files": {
+          "protocol-profile.json": true,
+          "LICENSE": true,
+          "runtime-lock.json": true,
+          "wire.cjs": true,
+          "rpc.cjs": true,
+          "wire-contract.json": true,
+          "client.cjs": true,
+          "python-host.cjs": true,
+          "parent-watch.cjs": true,
+          "host.cjs": true,
+          "wire.schema.json": true,
+          "python/host.py": true,
+          "python/nnp_wire.py": true,
+          "python/nnp_rpc.py": true,
+          "python/nnp_client.py": true,
+          "vscode/documents.cjs": true,
+          "vscode/persistence.cjs": true,
+          "vscode/adapter.cjs": true,
+          "vscode/types.cjs": true,
+          "vscode/webviews.cjs": true
+        },
+        "buildProfile": {
+          "schemaVersion": 1,
+          "nodeBundled": true,
+          "developerPythonConfigured": false,
+          "webviews": true,
+          "buildType": "Release",
+          "qtVersion": "6.10.0",
+          "minimumMacOS": "13.5"
+        }
+      }
+    ],
+    "codeGraph": "MacOSDeploymentCodeGraphValidation.json",
+    "sourceHashes": "MacOSDeploymentSourceSha256.json"
+  },
+  "artifact": {
+    "bundle": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/payload/NotepadNext.app",
+    "diskImage": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/NotepadNext-0.15.0-arm64.dmg",
+    "appBytes": 758299258,
+    "signing": "ad-hoc-development",
+    "notarized": false,
+    "cleanMachineValidated": false,
+    "qtSpdxDocuments": 11,
+    "fullLicenseAndSourceGateComplete": false
+  },
+  "resolvedFindings": [
+    "Application bundle version/minimum OS fields were empty and the prior app binary targeted the host OS; metadata and explicit deployment target corrected.",
+    "macdeployqt returned success with an unresolved NMEA plugin QtSerialPort dependency; installed pinned Qt module and verified full closure.",
+    "Ad-hoc hardened runtime main initially could not load separately sealed libraries with no common Team ID; development-only main entitlement added and real moved application executes."
+  ],
+  "remaining": [
+    "Developer ID signing and real notarization/stapling/Gatekeeper; optional service branch implemented but unexecuted",
+    "Native Intel and actual minimum macOS execution",
+    "Clean-system install/upgrade/uninstall",
+    "Windows/Linux and other Qt/architecture matrices",
+    "Full dependency notices, corresponding-source and redistribution review",
+    "Original remaining lifecycle/fault/performance and VS Code acceptance requirements"
+  ]
+}

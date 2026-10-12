@@ -65,8 +65,13 @@ CREATE_SETTING(Editor, ShowEndOfLine, showEndOfLine, bool, false);
 CREATE_SETTING(Editor, ShowWrapSymbol, showWrapSymbol, bool, false);
 CREATE_SETTING(Editor, ShowIndentGuide, showIndentGuide, bool, true);
 CREATE_SETTING(Editor, WordWrap, wordWrap, bool, false)
+#ifdef Q_OS_MACOS
+CREATE_SETTING(Editor, FontName, fontName, QString, QStringLiteral("Menlo"))
+CREATE_SETTING(Editor, FontSize, fontSize, int, 10)
+#else
 CREATE_SETTING(Editor, FontName, fontName, QString, QStringLiteral("Courier New"))
 CREATE_SETTING(Editor, FontSize, fontSize, int, []() { return qApp->font().pointSize() + 2; })
+#endif
 CREATE_SETTING(Editor, AdditionalWordChars, additionalWordChars, QString, QStringLiteral(""));
 CREATE_SETTING(Editor, DefaultEOLMode, defaultEOLMode, QString, QStringLiteral(""))
 CREATE_SETTING(Editor, URLHighlighting, urlHighlighting, bool, true)

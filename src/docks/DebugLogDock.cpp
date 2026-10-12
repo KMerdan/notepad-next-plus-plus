@@ -22,12 +22,13 @@
 #include "DebugManager.h"
 
 #include <QScrollBar>
+#include <QPointer>
 
-static QPlainTextEdit *output = Q_NULLPTR;
+static QPointer<QPlainTextEdit> output;
 
 static void debugLogDockMessageHandler(const QString &msg)
 {
-    output->appendPlainText(msg);
+    if (output) output->appendPlainText(msg);
 }
 
 DebugLogDock::DebugLogDock(QWidget *parent) :

@@ -1,0 +1,158 @@
+Start testing: Oct 11 18:06 JST
+----------------------------------------------------------
+22/24 Testing: PluginApplicationTests
+22/24 Test: PluginApplicationTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+"PluginApplicationTests" start time: Oct 11 18:06 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 18:06:57.361 PluginApplicationTests[23729:17471877] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+void MainWindow::openFileList(const QStringList &)
+/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-rBOfdc/sample.md
+Read 16 bytes
+sample.md last modified Sun Oct 11 18:06:57 2026
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-rBOfdc/sample.md"
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+sample.md last modified Sun Oct 11 18:06:57 2026
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError ScintillaNext::save()
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+sample.md last modified Sun Oct 11 18:06:57 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Read 11 bytes
+sample.md last modified Sun Oct 11 18:06:57 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+renamed.md last modified Sun Oct 11 18:06:57 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void RecentFilesListManager::addFile(const QString &)
+void MainWindow::newFile()
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Text
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+PASS   : PluginApplicationTests::deployedLibraryAudit()
+void MainWindow::focusIn()
+bool MainWindow::checkFileForModification(ScintillaNext *)
+2026-10-11 18:06:57.612 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:57.612 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:57.612 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:57.612 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+[23729:259:1011/180657.931725:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[23729:259:1011/180657.931964:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-11 18:06:58.001 PluginApplicationTests[23729:17471877] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+2026-10-11 18:06:58.021 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.023 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::productionPythonAdapter()
+2026-10-11 18:06:58.525 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.529 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.533 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.534 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.537 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.539 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.810 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.815 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.820 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.820 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.823 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:06:58.824 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+PASS   : PluginApplicationTests::productionVSCodeWebview()
+2026-10-11 18:07:00.345 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.353 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.596 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.596 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.734 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.736 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.740 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.741 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.751 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:07:00.751 PluginApplicationTests[23729:17471877] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+FAIL!  : PluginApplicationTests::productionManagerAndExit() 'installed->plugins().size()==1' returned FALSE. (Selected=/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-rBOfdc; status=Package source must not contain the installation store.; result=Package source must not contain the installation store.)
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/PluginApplicationTests.cpp(175)]
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void SessionManager::saveSession(MainWindow *)
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 7 passed, 1 failed, 0 skipped, 0 blacklisted, 3500ms
+********* Finished testing of PluginApplicationTests *********
+<end of output>
+Test time =   3.89 sec
+----------------------------------------------------------
+Test Failed.
+"PluginApplicationTests" end time: Oct 11 18:07 JST
+"PluginApplicationTests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Oct 11 18:07 JST

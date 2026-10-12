@@ -22,10 +22,16 @@
 #include "TranslationManager.h"
 #include "ui_PreferencesDialog.h"
 #include "ScintillaNext.h"
+#include "NativeAppearance.h"
 
 #include <QButtonGroup>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QListWidget>
+#include <QStackedWidget>
+#include <QScrollArea>
+#include <QFormLayout>
+#include <QPushButton>
 
 
 PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
@@ -34,6 +40,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     settings(settings)
 {
     ui->setupUi(this);
+    setupMacLayout();
 
     QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
     QPixmap pixmap = icon.pixmap(QSize(16, 16));
@@ -142,6 +149,79 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     else {
         ui->txtHardCodedPath->setText(QString());
     }
+}
+
+void PreferencesDialog::setupMacLayout()
+{
+#ifdef Q_OS_MACOS
+    auto *holding=new QWidget(this);
+    const QList<QWidget*> controls{
+        ui->checkBoxMenuBar,ui->checkBoxToolBar,ui->checkBoxStatusBar,
+        ui->gbxRestorePreviousSession,ui->checkBoxRecenterSearchDialog,
+        ui->checkBoxCombineSearchResults,ui->comboBoxTranslation,
+        ui->checkBoxExitOnLastTabClosed,ui->groupBox,ui->comboBoxLineEndings,
+        ui->checkBoxHighlightURLs,ui->checkBoxShowLineNumbers,ui->checkBoxAutoCompletion,
+        ui->groupBox_2,ui->labelAppRestartIcon,ui->labelAppRestart,ui->buttonBox
+    };
+    for(auto *control:controls)control->setParent(holding);
+    delete ui->scrollArea;delete layout();
+    auto *root=new QVBoxLayout(this);
+    auto *body=new QHBoxLayout();body->setSpacing(24);root->addLayout(body,1);
+    auto *categories=new QListWidget(this);categories->setObjectName("settingsCategories");
+    categories->setAccessibleName(tr("Settings categories"));categories->setFixedWidth(176);categories->setIconSize(QSize(18,18));categories->setWordWrap(true);categories->setTextElideMode(Qt::ElideNone);
+    categories->setTabKeyNavigation(false);
+    body->addWidget(categories);
+    auto *pages=new QStackedWidget(this);pages->setObjectName("settingsPages");body->addWidget(pages,1);
+    const auto page=[&](const QString &name,const QString &symbol){
+        auto *item=new QListWidgetItem(name,categories);item->setData(Qt::UserRole+1,symbol);
+        auto *scroll=new QScrollArea(pages);scroll->setWidgetResizable(true);scroll->setFrameShape(QFrame::NoFrame);
+        scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        auto *content=new QWidget(scroll);auto *layout=new QVBoxLayout(content);
+        layout->setContentsMargins(0,0,8,0);layout->setSpacing(16);layout->setAlignment(Qt::AlignTop);
+        auto *heading=new QLabel(name,content);heading->setProperty("dialogRole","section");layout->addWidget(heading);
+        scroll->setWidget(content);pages->addWidget(scroll);return layout;
+    };
+    const auto group=[](QVBoxLayout *page,const QString &title){
+        auto *box=new QGroupBox(title);auto *layout=new QVBoxLayout(box);layout->setSpacing(8);page->addWidget(box);return layout;
+    };
+    const auto field=[](QVBoxLayout *page,const QString &title,QWidget *input){
+        auto *row=new QHBoxLayout();auto *label=new QLabel(title);label->setBuddy(input);
+        row->addWidget(label);row->addWidget(input,1);page->addLayout(row);
+    };
+    auto *general=page(tr("General"),"gearshape");
+    field(general,tr("Language"),ui->comboBoxTranslation);
+    auto *appearance=group(general,tr("Window appearance"));
+    appearance->addWidget(ui->checkBoxMenuBar);appearance->addWidget(ui->checkBoxToolBar);appearance->addWidget(ui->checkBoxStatusBar);
+    auto *windows=group(general,tr("Windows"));windows->addWidget(ui->checkBoxExitOnLastTabClosed);
+    auto *editor=page(tr("Editor"),"textformat");
+    editor->addWidget(ui->groupBox);
+    ui->label_2->setBuddy(ui->fcbDefaultFont);ui->label_3->setBuddy(ui->spbDefaultFontSize);
+    auto *editing=group(editor,tr("Editing"));
+    editing->addWidget(ui->checkBoxShowLineNumbers);editing->addWidget(ui->checkBoxHighlightURLs);editing->addWidget(ui->checkBoxAutoCompletion);
+    auto *files=page(tr("Files"),"doc");
+    field(files,tr("New document line endings"),ui->comboBoxLineEndings);
+    files->addWidget(ui->groupBox_2);files->addWidget(ui->gbxRestorePreviousSession);
+    ui->txtHardCodedPath->setAccessibleName(tr("Default directory path"));
+    ui->radioHardCoded->setText(tr("Custom folder"));
+    ui->btnSelectHardCodedPath->setProperty("nativeSymbol","folder");ui->btnSelectHardCodedPath->setText({});
+    ui->btnSelectHardCodedPath->setAccessibleName(tr("Choose default directory"));ui->btnSelectHardCodedPath->setToolTip(tr("Choose default directory"));
+    auto *search=page(tr("Search"),"magnifyingglass");auto *searchOptions=group(search,tr("Search behavior"));
+    searchOptions->addWidget(ui->checkBoxRecenterSearchDialog);searchOptions->addWidget(ui->checkBoxCombineSearchResults);
+    connect(categories,&QListWidget::currentRowChanged,pages,&QStackedWidget::setCurrentIndex);categories->setCurrentRow(0);
+    auto *footer=new QHBoxLayout();footer->setSpacing(8);root->addLayout(footer);
+    footer->addWidget(ui->labelAppRestartIcon);footer->addWidget(ui->labelAppRestart,1);footer->addWidget(ui->buttonBox);
+    ui->labelAppRestart->setWordWrap(true);ui->labelAppRestart->setProperty("dialogRole","caption");
+    auto *done=ui->buttonBox->button(QDialogButtonBox::Ok);done->setText(tr("Done"));
+    delete holding;
+    NativeAppearance::polishDialog(this,tr("Settings"),tr("Changes are saved automatically."));
+    NativeAppearance::setDialogPrimary(this,done);
+    const QList<QWidget*> order{categories,ui->comboBoxTranslation,ui->checkBoxMenuBar,ui->checkBoxToolBar,ui->checkBoxStatusBar,ui->checkBoxExitOnLastTabClosed,
+        ui->fcbDefaultFont,ui->spbDefaultFontSize,ui->checkBoxShowLineNumbers,ui->checkBoxHighlightURLs,ui->checkBoxAutoCompletion,
+        ui->comboBoxLineEndings,ui->radioFollowCurrentDirectory,ui->radioLastUsedDirectory,ui->radioHardCoded,ui->txtHardCodedPath,ui->btnSelectHardCodedPath,
+        ui->gbxRestorePreviousSession,ui->checkBoxUnsavedFiles,ui->checkBoxRestoreTempFiles,ui->checkBoxRecenterSearchDialog,ui->checkBoxCombineSearchResults,done};
+    for(int i=1;i<order.size();++i)QWidget::setTabOrder(order[i-1],order[i]);
+    setMinimumSize(720,500);resize(840,590);categories->setFocus();
+#endif
 }
 
 PreferencesDialog::~PreferencesDialog()

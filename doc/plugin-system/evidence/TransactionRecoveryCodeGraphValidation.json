@@ -1,0 +1,310 @@
+{
+  "recordedUtc": "2026-10-11T08:09:50.800Z",
+  "scope": "Current non-ignored working-tree/untracked sources and CommonJS are indexed using scripts/update-codegraph.py. Graph relationships are structural evidence only, not runtime proof or a Git commit.",
+  "stats": {
+    "status": "ok",
+    "summary": "Graph statistics for NotepadNext:\n  Files: 1017\n  Total nodes: 22131\n  Total edges: 116206\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T17:08:09\n\nNodes by kind:\n  Class: 2173\n  File: 1017\n  Function: 18736\n  Signal: 7\n  Test: 198\n\nEdges by kind:\n  CALLS: 83555\n  CONTAINS: 23195\n  IMPORTS_FROM: 7128\n  INHERITS: 450\n  REFERENCES: 612\n  TESTED_BY: 1266\n\nCALLS by target resolution: 11532 direct, 72023 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+    "total_nodes": 22131,
+    "total_edges": 116206,
+    "nodes_by_kind": {
+      "Class": 2173,
+      "File": 1017,
+      "Function": 18736,
+      "Signal": 7,
+      "Test": 198
+    },
+    "edges_by_kind": {
+      "CALLS": 83555,
+      "CONTAINS": 23195,
+      "IMPORTS_FROM": 7128,
+      "INHERITS": 450,
+      "REFERENCES": 612,
+      "TESTED_BY": 1266
+    },
+    "calls_by_resolution": {
+      "direct": 11532,
+      "unresolved": 72023
+    },
+    "languages": [
+      "bash",
+      "c",
+      "cpp",
+      "dart",
+      "gdscript",
+      "javascript",
+      "julia",
+      "lua",
+      "nix",
+      "objc",
+      "perl",
+      "php",
+      "powershell",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "sql",
+      "typescript",
+      "vbnet",
+      "verilog",
+      "zig"
+    ],
+    "files_count": 1017,
+    "last_updated": "2026-10-11T17:08:09",
+    "embeddings_count": 0,
+    "_graph": {
+      "updated_at": "2026-10-11T17:08:09",
+      "age_seconds": 16,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "queries": [
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/plugin-packages/TransactionCrashTests.cpp",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 11 result(s) for file_summary('tests/plugin-packages/TransactionCrashTests.cpp')",
+      "result_count": 11,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 610103,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 1,
+          "line_end": 178,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 610104,
+          "kind": "Function",
+          "name": "write",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::(anonymous).write(const QString&,const QByteArray&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 20,
+          "line_end": 23,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610105,
+          "kind": "Function",
+          "name": "read",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::(anonymous).read(const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 24,
+          "line_end": 26,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610106,
+          "kind": "Function",
+          "name": "metadata",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::(anonymous).metadata(const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 27,
+          "line_end": 34,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610107,
+          "kind": "Function",
+          "name": "fixture",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::(anonymous).fixture(const QString&,const QString&,const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 35,
+          "line_end": 40,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610108,
+          "kind": "Function",
+          "name": "probe",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::(anonymous).probe()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 41,
+          "line_end": 47,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610109,
+          "kind": "Function",
+          "name": "arguments",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::(anonymous).arguments(const QString&,const QString&,const QString&,const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 48,
+          "line_end": 50,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610110,
+          "kind": "Class",
+          "name": "TransactionCrashTests",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::TransactionCrashTests",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 52,
+          "line_end": 175,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 610111,
+          "kind": "Function",
+          "name": "processDeath_data",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::TransactionCrashTests.processDeath_data()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 56,
+          "line_end": 62,
+          "language": "cpp",
+          "parent_name": "TransactionCrashTests",
+          "is_test": true
+        },
+        {
+          "id": 610112,
+          "kind": "Function",
+          "name": "processDeath",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::TransactionCrashTests.processDeath()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 63,
+          "line_end": 165,
+          "language": "cpp",
+          "parent_name": "TransactionCrashTests",
+          "is_test": true
+        },
+        {
+          "id": 610113,
+          "kind": "Function",
+          "name": "cleanupTestCase",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp::TransactionCrashTests.cleanupTestCase()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/TransactionCrashTests.cpp",
+          "line_start": 166,
+          "line_end": 174,
+          "language": "cpp",
+          "parent_name": "TransactionCrashTests",
+          "is_test": true
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:08:09",
+        "age_seconds": 17,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/plugin-packages/PackageTransactionProbe.cpp",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 6 result(s) for file_summary('tests/plugin-packages/PackageTransactionProbe.cpp')",
+      "result_count": 6,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 610040,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "line_start": 1,
+          "line_end": 86,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 610041,
+          "kind": "Function",
+          "name": "output",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp::(anonymous).output(const QJsonObject&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "line_start": 12,
+          "line_end": 16,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610042,
+          "kind": "Function",
+          "name": "park",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp::(anonymous).park(const QString&,const QString&,qint64)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "line_start": 17,
+          "line_end": 23,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610043,
+          "kind": "Function",
+          "name": "fail",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp::(anonymous).fail(const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "line_start": 24,
+          "line_end": 27,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610044,
+          "kind": "Function",
+          "name": "revision",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp::(anonymous).revision(const PreparedPackage&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "line_start": 28,
+          "line_end": 30,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 610045,
+          "kind": "Function",
+          "name": "main",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp::main(int,char**)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-packages/PackageTransactionProbe.cpp",
+          "line_start": 32,
+          "line_end": 85,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:08:09",
+        "age_seconds": 19,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ]
+}

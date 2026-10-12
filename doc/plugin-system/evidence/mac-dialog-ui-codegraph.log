@@ -1,0 +1,30 @@
+INFO: Progress: 50/1064 files parsed
+INFO: Progress: 100/1064 files parsed
+INFO: Progress: 150/1064 files parsed
+INFO: Progress: 200/1064 files parsed
+INFO: Progress: 250/1064 files parsed
+INFO: Progress: 300/1064 files parsed
+INFO: Progress: 350/1064 files parsed
+INFO: Progress: 400/1064 files parsed
+INFO: Progress: 450/1064 files parsed
+INFO: Progress: 500/1064 files parsed
+INFO: Progress: 550/1064 files parsed
+INFO: Progress: 600/1064 files parsed
+INFO: Progress: 650/1064 files parsed
+INFO: Progress: 700/1064 files parsed
+INFO: Progress: 750/1064 files parsed
+INFO: Progress: 800/1064 files parsed
+INFO: Progress: 850/1064 files parsed
+INFO: Progress: 900/1064 files parsed
+INFO: Progress: 950/1064 files parsed
+INFO: Progress: 1000/1064 files parsed
+INFO: Progress: 1050/1064 files parsed
+INFO: Progress: 1064/1064 files parsed
+INFO: Python import resolution: {'files_indexed': 108, 'imports_updated': 218, 'imports_resolved': 13, 'imports_ambiguous': 1}
+INFO: Spring event resolver: indexed 0 events and emitted 0 CALLS edges
+INFO: Resolved 492 evidence-backed bare CALLS targets
+INFO: Resolved 224 evidence-backed bare TESTED_BY sources
+INFO: FTS index rebuilt: 22439 rows indexed
+INFO: Loaded 21395 unique nodes, 120509 edges
+INFO: igraph not available, using file-based community detection
+Full build: 1064 files, 24590 nodes, 125504 edges (postprocess=full)

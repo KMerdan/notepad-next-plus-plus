@@ -1,0 +1,13 @@
+Test project /private/tmp/notepadnext-app-build-610
+    Start  5: PluginPythonContractTests
+1/4 Test  #5: PluginPythonContractTests ........   Passed    0.14 sec
+    Start 10: PluginNodeWireTests
+2/4 Test #10: PluginNodeWireTests ..............   Passed    0.11 sec
+    Start 12: PluginVSCodeCoreTests
+3/4 Test #12: PluginVSCodeCoreTests ............   Passed    0.19 sec
+    Start 21: PluginApplicationTests
+4/4 Test #21: PluginApplicationTests ...........   Passed    3.82 sec
+
+100% tests passed out of 4
+
+Total Test time (real) =   4.26 sec

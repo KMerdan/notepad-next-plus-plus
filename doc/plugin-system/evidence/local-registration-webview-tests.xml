@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="150"
+	timestamp="2026-10-11T18:11:42"
+	>
+	<testcase name="PluginWebviewTests" classname="PluginWebviewTests" time="150.485" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[30819:259:1011/181143.070851:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[30819:259:1011/181143.071221:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load....
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,158 @@
+UpdateCTestConfiguration  from :/private/tmp/notepadnext-app-build-disabled/DartConfiguration.tcl
+Test project /private/tmp/notepadnext-app-build-disabled
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 20
+    Start 20: PluginApplicationTests
+
+20: Test command: /private/tmp/notepadnext-app-build-disabled/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+20: Working Directory: /private/tmp/notepadnext-app-build-disabled/tests/plugin-application
+20: Test timeout computed to be: 120
+20: ********* Start testing of PluginApplicationTests *********
+20: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+20: QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+20: QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+20: QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+20: QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+20: QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+20: 2026-10-12 09:58:07.885 PluginApplicationTests[8115:20340392] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+20: QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+20: QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+20: QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+20: QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+20: QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+20: QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+20: QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+20: QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+20: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+20: PASS   : PluginApplicationTests::initTestCase()
+20: void MainWindow::openFileList(const QStringList &)
+20: /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-QCgiIf/sample.md
+20: Read 16 bytes
+20: sample.md last modified Mon Oct 12 09:58:08 2026
+20: void EditorManager::setupEditor(ScintillaNext *)
+20: int EditorManager::detectEOLMode(ScintillaNext *) const
+20: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+20: EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-QCgiIf/sample.md"
+20: void MainWindow::addEditor(ScintillaNext *)
+20: void MainWindow::detectLanguage(ScintillaNext *)
+20: QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+20: QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+20: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+20: Language Name: Markdown
+20: void DockedEditor::addEditor(ScintillaNext *)
+20: void MainWindow::activateEditor(ScintillaNext *)
+20: bool MainWindow::checkFileForModification(ScintillaNext *)
+20: sample.md last modified Mon Oct 12 09:58:08 2026
+20: void MainWindow::updateGui(ScintillaNext *)
+20: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+20: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: QFileDevice::FileError ScintillaNext::save()
+20: QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+20: sample.md last modified Mon Oct 12 09:58:08 2026
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: Read 11 bytes
+20: sample.md last modified Mon Oct 12 09:58:08 2026
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void RecentFilesListManager::addFile(const QString &)
+20: void MainWindow::newFile()
+20: void EditorManager::setupEditor(ScintillaNext *)
+20: int EditorManager::detectEOLMode(ScintillaNext *) const
+20: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+20: void MainWindow::addEditor(ScintillaNext *)
+20: void MainWindow::detectLanguage(ScintillaNext *)
+20: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+20: Language Name: Text
+20: void DockedEditor::addEditor(ScintillaNext *)
+20: void MainWindow::activateEditor(ScintillaNext *)
+20: bool MainWindow::checkFileForModification(ScintillaNext *)
+20: void MainWindow::updateGui(ScintillaNext *)
+20: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+20: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+20: PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+20: PASS   : PluginApplicationTests::deployedLibraryAudit()
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MainWindow::focusIn()
+20: bool MainWindow::checkFileForModification(ScintillaNext *)
+20: void MainWindow::focusIn()
+20: bool MainWindow::checkFileForModification(ScintillaNext *)
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: PASS   : PluginApplicationTests::macOSChrome()
+20: PASS   : PluginApplicationTests::macOSSettingsDialog()
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *, MainWindow *)
+20: void FindReplaceDialog::loadSettings()
+20: virtual void FindReplaceDialog::showEvent(QShowEvent *)
+20: void FindReplaceDialog::performFind(SearchDirection)
+20: void FindReplaceDialog::prepareToPerformSearch(bool)
+20: void ScintillaNext::goToRange(const Sci_CharacterRange &)
+20: void FindReplaceDialog::count()
+20: void FindReplaceDialog::prepareToPerformSearch(bool)
+20: void FindReplaceDialog::replace()
+20: void FindReplaceDialog::prepareToPerformSearch(bool)
+20: void ScintillaNext::goToRange(const Sci_CharacterRange &)
+20: void FindReplaceDialog::replaceAll()
+20: void FindReplaceDialog::prepareToPerformSearch(bool)
+20: void FindReplaceDialog::markAll()
+20: void FindReplaceDialog::prepareToPerformSearch(bool)
+20: void FindReplaceDialog::clearAllMarks()
+20: void FindReplaceDialog::performFind(SearchDirection)
+20: void FindReplaceDialog::prepareToPerformSearch(bool)
+20: void FindReplaceDialog::saveSettings()
+20: void FindReplaceDialog::savePosition()
+20: FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *, MainWindow *)
+20: void FindReplaceDialog::loadSettings()
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: PASS   : PluginApplicationTests::macOSSearchDialogs()
+20: void Macro::addMacroStep(Message, uptr_t, sptr_t)
+20: MacroManager::MacroManager(QObject *)
+20: void MacroManager::loadSettings()
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MacroManager::saveSettings() const
+20: PASS   : PluginApplicationTests::macOSUtilityDialogs()
+20: PASS   : PluginApplicationTests::productionPythonAdapter()
+20: PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+20: PASS   : PluginApplicationTests::productionVSCodeWebview()
+20: PASS   : PluginApplicationTests::realGitHubMarkdownLifecycle()
+20: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+20: void MainWindow::saveSettings() const
+20: void SessionManager::saveSession(MainWindow *)
+20: void MacroManager::saveSettings() const
+20: PASS   : PluginApplicationTests::productionManagerAndExit()
+20: PASS   : PluginApplicationTests::cleanupTestCase()
+20: Totals: 13 passed, 0 failed, 0 skipped, 0 blacklisted, 677ms
+20: ********* Finished testing of PluginApplicationTests *********
+1/1 Test #20: PluginApplicationTests ...........   Passed    0.86 sec
+
+The following tests passed:
+	PluginApplicationTests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.87 sec

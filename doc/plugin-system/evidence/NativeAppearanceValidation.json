@@ -1,0 +1,356 @@
+{
+  "recordedUtc": "2026-10-11T07:58:15.873494+00:00",
+  "goalComplete": false,
+  "status": "local-native-appearance-and-reference-budgets-passed",
+  "scope": "Original P0/I1/I2/I3/I4 and all 27 requirements retained. Current macOS arm64 functional, performance and signed relocation evidence; no notarized release or clean-machine/cross-platform completion claim.",
+  "referenceHardware": {
+    "hw.memsize": "68719476736",
+    "hw.physicalcpu": "16",
+    "hw.logicalcpu": "16",
+    "machdep.cpu.brand_string": "Apple M4 Max"
+  },
+  "features": {
+    "nativeAppearance": "Trusted nonce stylesheet uses native host palette/window font and active Scintilla default font; live updates preserve URL, panel, scroll and document version. Font names are escaped as CSS values and raw HTML style text.",
+    "markdownFirstDelivery": "Real TS session renders differing unsaved buffers, Unicode headings/lists/code and percent-encoded local images; remote/missing image fallback, document switch, non-Markdown, invalid UTF-8, size limit, close and recovery states pass. Prior native ownership/scroll/search and close/reopen cases remain in full suite.",
+    "maintenanceLock": "Installation workers wait at most 1000ms in cancellable 10ms steps when background collection owns publication lock. Existing GUI lease calls remain nonblocking; a live lock is never forcibly removed."
+  },
+  "checks": {
+    "fullNodeOnlyRelease": {
+      "passed": true,
+      "targets": 20,
+      "elapsedSeconds": 191.7,
+      "webviewCasesPassed": 41,
+      "webviewPythonSkips": 2,
+      "applicationCasesPassed": 7,
+      "applicationPythonSkips": 1,
+      "githubReleaseCasesPassed": 42,
+      "macPackagingCasesPassed": 15,
+      "raw": "native-appearance-full-conformance.log",
+      "summary": "native-appearance-full-ctest.log"
+    },
+    "developerPythonApplication": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 4.05,
+      "casesPassed": 8,
+      "skips": 0,
+      "raw": "native-appearance-python-conformance.log"
+    },
+    "pluginsDisabledApplication": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 0.35,
+      "casesPassed": 8,
+      "skips": 0,
+      "raw": "native-appearance-disabled-conformance.log"
+    },
+    "nativeAppearanceRows": {
+      "passed": true,
+      "casesIncludingSetupCleanup": 5,
+      "raw": "native-appearance-focused.log"
+    },
+    "richRealMarkdown": {
+      "passed": true,
+      "casesIncludingSetupCleanup": 3,
+      "raw": "native-appearance-markdown.log"
+    },
+    "installationMaintenanceWait": {
+      "passed": true,
+      "dataRows": 3,
+      "casesIncludingSetupCleanup": 5,
+      "cases": [
+        "lock released during installation",
+        "cancel while lock remains held",
+        "bounded timeout while lock remains held"
+      ],
+      "guiTimerContinues": true,
+      "raw": "native-appearance-install-lock.log"
+    },
+    "compatiblePersistenceLifecycleRepeats": {
+      "passed": true,
+      "consecutiveRuns": 5,
+      "raw": [
+        "native-appearance-persistence-repeat-1.log",
+        "native-appearance-persistence-repeat-2.log",
+        "native-appearance-persistence-repeat-3.log",
+        "native-appearance-persistence-repeat-4.log",
+        "native-appearance-persistence-repeat-5.log"
+      ]
+    },
+    "isolatedPerformance": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 118.79,
+      "raw": "NativeAppearancePerformanceMeasurements.json",
+      "log": "native-appearance-performance-conformance.log"
+    },
+    "relocatedDeveloperIdApplication": {
+      "passed": true,
+      "casesPassed": 7,
+      "pythonSkips": 1,
+      "raw": "native-appearance-relocated-application.log",
+      "runtimePathsContained": true,
+      "loadedQtImages": 20,
+      "postRunSignaturesVerified": true,
+      "externalAuthorFixturesUsed": true
+    }
+  },
+  "budgets": {
+    "latest100KiBAllPanelsP95Ms": 500,
+    "maxObservedGuiTaskMs": 50,
+    "disableResourceRevokeMs": 3000
+  },
+  "populations": [
+    {
+      "pluginProcesses": 1,
+      "sizes": [
+        {
+          "bytes": 10240,
+          "samples": 10,
+          "latestAllPanelsP95Ms": 217.364583,
+          "maxGuiDispatchMs": 3.045584,
+          "maxDirectEditMs": 0.083083,
+          "aggregateProcessRssBytesAfterWorkload": 495026176,
+          "cpuPercentOneCoreByRole": {
+            "application": 12.35000670227612,
+            "plugin": 6.766401960968024,
+            "renderer": 10.144648070269799
+          }
+        },
+        {
+          "bytes": 102400,
+          "samples": 30,
+          "latestAllPanelsP95Ms": 315.406375,
+          "maxGuiDispatchMs": 3.187334,
+          "maxDirectEditMs": 0.080042,
+          "aggregateProcessRssBytesAfterWorkload": 1041858560,
+          "cpuPercentOneCoreByRole": {
+            "application": 10.003488941321933,
+            "plugin": 8.031480322468324,
+            "renderer": 34.15627183341594
+          }
+        },
+        {
+          "bytes": 1048576,
+          "samples": 6,
+          "latestAllPanelsP95Ms": 1882.525291,
+          "maxGuiDispatchMs": 10.623708,
+          "maxDirectEditMs": 0.1095,
+          "aggregateProcessRssBytesAfterWorkload": 1971355648,
+          "cpuPercentOneCoreByRole": {
+            "application": 9.976849834197841,
+            "plugin": 14.867694478253824,
+            "renderer": 79.76029171127288
+          }
+        }
+      ],
+      "revokeMs": 12.798291,
+      "allOwnedNodeIdentitiesExited": true,
+      "idleDocumentEvents": 0,
+      "idleWireDeltas": {
+        "queuedBytes": 190,
+        "receivedBytes": 99,
+        "receivedFrames": 1,
+        "sentFrames": 1
+      },
+      "idleCpuPercentOneCoreByRole": {
+        "application": 0.06669153107026389,
+        "plugin": 0.00429724540252325,
+        "renderer": 0.031971291097689584
+      },
+      "idleElapsedMs": 10091.736125
+    },
+    {
+      "pluginProcesses": 5,
+      "sizes": [
+        {
+          "bytes": 10240,
+          "samples": 10,
+          "latestAllPanelsP95Ms": 232.88225,
+          "maxGuiDispatchMs": 3.42575,
+          "maxDirectEditMs": 0.140459,
+          "aggregateProcessRssBytesAfterWorkload": 1413709824,
+          "cpuPercentOneCoreByRole": {
+            "application": 26.456973745667227,
+            "plugin": 21.612040219175313,
+            "renderer": 36.47684015234657
+          }
+        },
+        {
+          "bytes": 102400,
+          "samples": 30,
+          "latestAllPanelsP95Ms": 315.930625,
+          "maxGuiDispatchMs": 3.102916,
+          "maxDirectEditMs": 0.141,
+          "aggregateProcessRssBytesAfterWorkload": 4025794560,
+          "cpuPercentOneCoreByRole": {
+            "application": 30.15041767980136,
+            "plugin": 47.861965644369704,
+            "renderer": 144.90224885580074
+          }
+        },
+        {
+          "bytes": 1048576,
+          "samples": 6,
+          "latestAllPanelsP95Ms": 1947.863709,
+          "maxGuiDispatchMs": 11.189209,
+          "maxDirectEditMs": 0.1505,
+          "aggregateProcessRssBytesAfterWorkload": 8652685312,
+          "cpuPercentOneCoreByRole": {
+            "application": 27.27611735722655,
+            "plugin": 68.00873613724437,
+            "renderer": 381.6870323329464
+          }
+        }
+      ],
+      "revokeMs": 34.925542,
+      "allOwnedNodeIdentitiesExited": true,
+      "idleDocumentEvents": 0,
+      "idleWireDeltas": {
+        "queuedBytes": 950,
+        "receivedBytes": 495,
+        "receivedFrames": 5,
+        "sentFrames": 5
+      },
+      "idleCpuPercentOneCoreByRole": {
+        "application": 0.07411713279076484,
+        "plugin": 0.03283543436690198,
+        "renderer": 0.14594951118754665
+      },
+      "idleElapsedMs": 10008.369708
+    },
+    {
+      "pluginProcesses": 10,
+      "sizes": [
+        {
+          "bytes": 10240,
+          "samples": 10,
+          "latestAllPanelsP95Ms": 280.284083,
+          "maxGuiDispatchMs": 3.196,
+          "maxDirectEditMs": 0.338625,
+          "aggregateProcessRssBytesAfterWorkload": 2601205760,
+          "cpuPercentOneCoreByRole": {
+            "application": 40.87291837590527,
+            "plugin": 35.601823994027285,
+            "renderer": 61.28924739954301
+          }
+        },
+        {
+          "bytes": 102400,
+          "samples": 30,
+          "latestAllPanelsP95Ms": 349.026041,
+          "maxGuiDispatchMs": 3.934667,
+          "maxDirectEditMs": 0.324625,
+          "aggregateProcessRssBytesAfterWorkload": 7747633152,
+          "cpuPercentOneCoreByRole": {
+            "application": 52.43222774426775,
+            "plugin": 87.88364151763558,
+            "renderer": 264.47594247178796
+          }
+        },
+        {
+          "bytes": 1048576,
+          "samples": 6,
+          "latestAllPanelsP95Ms": 2231.738041,
+          "maxGuiDispatchMs": 15.896958,
+          "maxDirectEditMs": 0.324625,
+          "aggregateProcessRssBytesAfterWorkload": 17708728320,
+          "cpuPercentOneCoreByRole": {
+            "application": 47.902868946512484,
+            "plugin": 122.35096468704184,
+            "renderer": 736.0980390556142
+          }
+        }
+      ],
+      "revokeMs": 77.673125,
+      "allOwnedNodeIdentitiesExited": true,
+      "idleDocumentEvents": 0,
+      "idleWireDeltas": {
+        "queuedBytes": 2660,
+        "receivedBytes": 1386,
+        "receivedFrames": 14,
+        "sentFrames": 14
+      },
+      "idleCpuPercentOneCoreByRole": {
+        "application": 0.07132660272352134,
+        "plugin": 0.0457879660954427,
+        "renderer": 0.1271609941243283
+      },
+      "idleElapsedMs": 10358.161917
+    }
+  ],
+  "lifecycle": {
+    "cycles": 100,
+    "elapsedMs": 87082,
+    "exitedNodeIdentities": 200,
+    "initialFileDescriptors": 30,
+    "warmAfterCycles": 3,
+    "warmFileDescriptors": 32,
+    "finalFileDescriptors": 32,
+    "focusConnectionsAfterEachStop": 0,
+    "raw": "NativeAppearanceLifecycleResources.json"
+  },
+  "packageCost": {
+    "applicationBytes": 759661282,
+    "diskImageBytes": 308875428,
+    "diskImageSha256": "d24b36fdce367bb4f2fd9e2c9cbf7fa17f9237abbbb72676f5ef857679194c0f",
+    "diskImagePath": "/private/tmp/nnp-appearance-developer-id-production/NotepadNext-arm64-73ybh3xt/NotepadNext-0.15.0-arm64.dmg",
+    "physicalMachos": 36,
+    "signing": "Developer ID Application",
+    "notarized": false,
+    "cleanMachineValidated": false,
+    "raw": "NativeAppearanceDeveloperIdValidation.json"
+  },
+  "notarization": {
+    "credentialStorage": "local-keychain",
+    "profileConfigured": false,
+    "userConfirmedNotConfigured": true,
+    "submitted": false,
+    "stapled": false,
+    "gatekeeperAccepted": false,
+    "localGatekeeperSource": "Unnotarized Developer ID",
+    "nextLocalInteractiveCommand": "xcrun notarytool store-credentials \"NotepadNext\"",
+    "secretsRequestedInChat": false
+  },
+  "methodology": [
+    "Production Application/MainWindow, Scintilla buffer and production services; fixture instances differ by manifest and command IDs only.",
+    "Input heading edit to matching h1 after two requestAnimationFrame callbacks and native message receipt; physical pixels are not directly measured. Includes 150ms debounce.",
+    "Nearest-rank p95: 30 samples for 100KiB, 10 for 10KiB and 6 for 1MiB. Per-panel and last-of-all-panels raw samples retained.",
+    "CPU uses PROC_PIDTASKINFO Mach ticks scaled by mach_timebase_info; deltas match both PID and native creation time; one core is 100%.",
+    "RSS is sampled after workloads, not a peak or unique physical-memory total; summing processes can count shared mappings more than once.",
+    "Single benchmark process; no concurrent builds, other tests, graph updates or native UI inspection during the accepted measurement. Other user/system software is not asserted to be idle.",
+    "Wire counters are four per-start relaxed atomic samples; queued bytes do not prove peer consumption. Idle frames are health pings; no document invalidations occurred.",
+    "100-cycle resource test is real Scintilla/PluginEngine/WebEngine; its duration is a whole-suite observation, not isolated worker or diagnostic cost attribution. Three warm-up cycles account for shared provider handles; RSS need not return exactly to baseline.",
+    "The current reference run followed completed builds, full regression and codegraph update. It was not concurrent with any other own test, build, graph update or native UI inspection. No causal speedup claim is made against earlier measurements."
+  ],
+  "diagnosticRunsNotForAcceptance": [
+    {
+      "raw": "native-appearance-diagnostic-json-proxy.log",
+      "accepted": false,
+      "reason": "App test held a QJsonValueRef into a temporary QJsonObject; fixed fixture value lifetime by copying value. Other targets passed, but this full run is not accepted."
+    },
+    {
+      "raw": "native-appearance-diagnostic-install-lock.log",
+      "accepted": false,
+      "reason": "Real background collection and immediate reinstall contended on the publication lock. Product now uses bounded cancellable worker waiting; subsequent focused tests, five persistence repeats and full suite pass."
+    },
+    {
+      "raw": "native-appearance-diagnostic-image-fixture.log",
+      "accepted": false,
+      "reason": "New relative-image fixture used a nonexistent document path. Corrected to an existing saved file whose text differs from the unsaved editor buffer; current real-session case passes."
+    }
+  ],
+  "sourceHashes": "NativeAppearanceSourceSha256.json",
+  "codegraph": "NativeAppearanceCodeGraphValidation.json",
+  "knownLimits": [
+    "Dense 1MiB last-panel p95 is 1.88–2.23s; RSS snapshots remain high (about 16.49GiB summed across 10 plugins and renderers). This is neither peak nor unique physical memory. No 500ms budget is claimed for 1MiB.",
+    "Node-only Release Python skips do not establish Python support; the separate developer Python profile is verified, but its interpreter is not bundled.",
+    "Notary credentials are not configured. Notarization, stapling, Gatekeeper acceptance, clean systems, native Intel/minimum OS and Windows/Linux remain pending.",
+    "Full license/source obligations, remaining fault/workspace/migration requirements and other original partial requirements remain."
+  ],
+  "primarySources": {
+    "qtFontUnits": "https://doc.qt.io/qt-6.10/qfont.html",
+    "isolatedDomUpdates": "https://doc.qt.io/qt-6.10/qwebenginescript.html",
+    "lockSemantics": "https://doc.qt.io/qt-6.10/qlockfile.html"
+  }
+}

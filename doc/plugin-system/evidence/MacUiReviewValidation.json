@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-12",
+  "platform": "macOS arm64, Qt 6.10.0",
+  "scope": "Main workspace, Plugin Manager, Preferences, Find/Replace/Mark, Macro Save/Run/Editor, Column Editor",
+  "figma": {
+    "fileKey": "cJPphvdJ1ztsU0tzMFIBpD",
+    "board": "42:11715",
+    "primaryScreens": 14,
+    "settingsPrototype": "45:12075",
+    "themes": [
+      "Light",
+      "Dark"
+    ],
+    "uiFonts": [
+      "SF Pro"
+    ],
+    "codeFont": "Cousine"
+  },
+  "native": {
+    "updatedBundle": "/Users/merdankiji/localGit/NotepadNext/build/plugin-dev/NotepadNext.app",
+    "binarySha256": "56c093e1681338d6b60ccef6f88fb2926044ec79d7224ea1fff005da429e1e9f",
+    "humanWindowBeforeUpdate": "New 1, Text Length 0, Save disabled",
+    "humanWindowAfterUpdate": "Preferences: Settings, General, Editor, Files, Search, Done",
+    "toolbarVerified": "New/Open/Save, Undo/Redo, Find/Replace, Word Wrap, More editor commands"
+  },
+  "tests": [
+    {
+      "profile": "plugins-enabled",
+      "log": "native-dialog-ui-tests.log",
+      "qtTestTotals": [
+        {
+          "passed": 18,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "passed": 12,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "ctestPassed": true
+    },
+    {
+      "profile": "plugins-disabled",
+      "log": "native-dialog-ui-base-tests.log",
+      "qtTestTotals": [
+        {
+          "passed": 13,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "ctestPassed": true
+    }
+  ],
+  "notVerified": [
+    "Full VoiceOver workflow",
+    "All real locales",
+    "200% UI text and largest accessibility font",
+    "Intel macOS",
+    "Windows/Linux visual regression",
+    "APCA"
+  ],
+  "diffCheck": "passed"
+}

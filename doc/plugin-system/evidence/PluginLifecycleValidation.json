@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-12",
+  "platform": "macOS arm64 / Qt 6.10",
+  "tests": {
+    "PluginSourceTests": {
+      "passed": 18,
+      "failed": 0
+    },
+    "PluginApplicationTests": {
+      "passed": 13,
+      "failed": 0,
+      "liveRepository": "https://github.com/KMerdan/notepadnext-markdown-preview",
+      "realVersions": [
+        "0.1.2",
+        "0.1.3"
+      ]
+    },
+    "PluginApplicationExitTests": {
+      "passed": 8,
+      "failed": 0
+    },
+    "PluginWebviewTests": {
+      "passed": 44,
+      "failed": 0,
+      "cycles": 100
+    },
+    "PluginApplicationTestsPluginsDisabled": {
+      "passed": 13,
+      "failed": 0
+    },
+    "PluginSDK": {
+      "passed": 15,
+      "failed": 0
+    }
+  },
+  "fork": "https://github.com/KMerdan/notepad-next-plus-plus",
+  "license": "GPL-3.0-or-later",
+  "figmaLifecycleNode": "65:12291",
+  "uiScopes": [
+    "register source",
+    "install",
+    "update",
+    "source removal",
+    "uninstall",
+    "light and dark",
+    "real native UI demo"
+  ],
+  "limits": [
+    "hot update closes preview: reopen it",
+    "Intel macOS, Windows and Linux execution not checked in this turn"
+  ]
+}

@@ -1,0 +1,5 @@
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/PluginZlib.cmake)
+add_library(NotepadNextPluginPackages STATIC SemVer.cpp SemVer.h PackageStore.cpp PackageStore.h PackageLease.cpp PackageLease.h ProcessIdentity.cpp ProcessIdentity.h PackageCollection.cpp PackageCollectionService.cpp PackageCollectionService.h ZipExtractor.cpp ZipExtractor.h GitHubReleaseService.cpp GitHubReleaseService.h InstalledPluginRegistry.cpp InstalledPluginRegistry.h InstallationService.cpp InstallationService.h PluginController.h)
+target_link_libraries(NotepadNextPluginPackages PUBLIC NotepadNextPluginSources Qt6::Gui PRIVATE ZLIB::ZLIB)
+target_include_directories(NotepadNextPluginPackages PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set_target_properties(NotepadNextPluginPackages PROPERTIES AUTOMOC ON)

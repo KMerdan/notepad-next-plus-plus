@@ -1,0 +1,160 @@
+{
+  "recordedUtc": "2026-10-11T08:34:10.325065+00:00",
+  "goalComplete": false,
+  "status": "local-production-application-exit-passed",
+  "scope": "Original P0/I1/I2/I3/I4 and all 27 requirements retained. Production Application/MainWindow/services are compiled into a separate test executable with isolated profiles; shipped main executable receives no new CLI flag, environment override or test hook.",
+  "environment": {
+    "os": "macOS 27.0.1",
+    "architecture": "arm64",
+    "qtVersion": "6.10.0",
+    "releaseProfile": "Node-only Release with WebEngine",
+    "pythonDeveloperProfile": "Debug with explicitly configured Python 3.12.13",
+    "disabledProfile": "Release with NOTEPADNEXT_PLUGINS=OFF"
+  },
+  "checks": {
+    "releaseApplicationTargets": {
+      "passed": true,
+      "targets": 2,
+      "elapsedSeconds": 16.5,
+      "originalApplicationCasesPassed": 7,
+      "originalApplicationPythonSkips": 1,
+      "exitDataRows": 5,
+      "exitCasesIncludingSetupCleanup": 7,
+      "raw": "application-exit-conformance.log",
+      "summary": "application-exit-ctest.log"
+    },
+    "pythonDeveloperApplication": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 3.72,
+      "casesPassed": 8,
+      "skips": 0,
+      "raw": "application-exit-python-conformance.log"
+    },
+    "pluginsDisabledApplication": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 0.41,
+      "casesPassed": 8,
+      "skips": 0,
+      "raw": "application-exit-disabled-conformance.log"
+    },
+    "originalExitDeadlineMs": 8000,
+    "largestObservedQuitMs": 2504,
+    "ownedNodeAndDescendantIdentitiesExited": 12,
+    "allIdentitiesExitedAtExecReturn": true,
+    "zeroSessionsAndScopedResourcesAtExecReturn": true,
+    "interruptedUninstallRetainsIndexAndData": true,
+    "queuedReloadDoesNotActivateReplacement": true,
+    "unconfirmedUpdateHiddenBeforeCloseAndRestoresOldVersion": true
+  },
+  "rows": [
+    {
+      "scenario": "normal-close",
+      "quitElapsedMs": 32,
+      "processIdentities": 2,
+      "allIdentitiesExitedAtExecReturn": true,
+      "activationCount": 1,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "resources": 4,
+        "state": "active",
+        "updatePending": false
+      },
+      "pendingAtExit": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "unresponsive-deactivate",
+      "quitElapsedMs": 2438,
+      "processIdentities": 2,
+      "allIdentitiesExitedAtExecReturn": true,
+      "activationCount": 1,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "resources": 4,
+        "state": "active",
+        "updatePending": false
+      },
+      "pendingAtExit": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "reload-pending",
+      "quitElapsedMs": 2378,
+      "processIdentities": 2,
+      "allIdentitiesExitedAtExecReturn": true,
+      "activationCount": 1,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "resources": 0,
+        "state": "stopping",
+        "updatePending": false
+      },
+      "pendingAtExit": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "uninstall-pending",
+      "quitElapsedMs": 2379,
+      "processIdentities": 2,
+      "allIdentitiesExitedAtExecReturn": true,
+      "activationCount": 1,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "resources": 0,
+        "state": "stopping",
+        "updatePending": false
+      },
+      "pendingAtExit": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "update-activating",
+      "quitElapsedMs": 2504,
+      "processIdentities": 4,
+      "allIdentitiesExitedAtExecReturn": true,
+      "activationCount": 2,
+      "beforeExit": {
+        "installedVersion": "1.0.1",
+        "resources": 4,
+        "state": "updating",
+        "updatePending": true
+      },
+      "pendingAtExit": true,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    }
+  ],
+  "methodology": [
+    "Each row launches the production-source integration application without positional QtTest arguments in an isolated profile path containing Unicode and spaces. Qt/QML/DYLD/Node/Python override environment variables are removed.",
+    "The actual manifest menu QAction triggers lazy activation, document watch, storage write and native WebEngine panel creation. Node uses the test application bundled controlled runtime.",
+    "Owned Node and same-group descendants install SIGTERM handlers. Unresponsive deactivate or candidate activation spins in the main thread; production protocol deadlines and process-group force cleanup must complete the application last-window path.",
+    "The test closes the actual MainWindow and runs QApplication::exec, exercising the existing aboutToQuit barrier. Idle/session/resource state and native PID-plus-start-time identities are observed when exec returns. The external parent requires terminal normal application exit and rechecks every identity.",
+    "Reload and delete-data uninstall are initiated while the old session remains stopping. An append-only activation history proves that closing the application does not start a queued replacement. Uncommitted uninstall keeps the installed record and stored data.",
+    "The new update candidate registers resources and prepares a hidden panel, then stalls before activation returns. The installed index remains pending at application exit. Loading it in the external parent restores the original version, and package integrity and stored data are verified.",
+    "Release tests ran sequentially, then rebuilt Python and plugins-disabled applications ran separately. This is bounded exit verification, not an isolated performance comparison."
+  ],
+  "rawMeasurements": "ApplicationExitMeasurements.json",
+  "sourceHashes": "ApplicationExitSourceSha256.json",
+  "codegraph": "ApplicationExitCodeGraphValidation.json",
+  "diagnosticRunsNotForAcceptance": [
+    {
+      "raw": "application-exit-diagnostic-state.log",
+      "measurements": "ApplicationExitDiagnosticInitial.json",
+      "accepted": false,
+      "reason": "Four rows passed; the update row incorrectly expected the management aggregate state to be activating. Corrected to require updating plus an actual activating PluginSession. Product behavior and logs were consistent; the current full five-row run passes."
+    }
+  ],
+  "knownLimits": [
+    "The tests exercise production classes and services in an integration executable, with test-only profile/scenario selection. This is not clean-machine deployment or a new formal signed integration bundle.",
+    "All five normal/plugin/management exits finish before 8s. A blocked file-system worker and the outer 5s force/8s escape timers are not fault-injected; broader disk/worker/exit and platform cases remain.",
+    "The Node-only release skips Python; the separate developer profile verifies it, but its interpreter remains external.",
+    "Formal notarization credentials are still not configured; clean systems, native Intel/minimum OS, other platforms and complete license/source obligations remain.",
+    "Production source is unchanged from the signed NativeAppearance package; no new package or unrelated performance rerun is claimed."
+  ]
+}

@@ -1,0 +1,73 @@
+-- ADS: Solution configured to use Qt version 6
+-- CPM: Adding package ads@5.1.1 (v5.1.1 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/ads/fb9d)
+-- CPM: Adding package QSimpleUpdater@0 (c5c136c0f79ca6423b0914a2676ae3d0e3811c5b at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/qsimpleupdater/531e)
+-- CPM: Adding package SingleApplication@3.5.6 (v3.5.6 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/singleapplication/d282)
+-- CPM: Adding package editorconfig_core_qt@0 (ab62f0554abf2bbe4d45427b36a8b2f81ca7b4ab at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/editorconfig_core_qt/87f1)
+-- Configuring macOS packaging
+-- Configuring done (1.4s)
+-- Generating done (0.6s)
+-- Build files have been written to: /private/tmp/notepadnext-app-build-610
+[  0%] Built target PluginApplicationTests_qmlimportscan
+[  0%] Built target SingleApplication_autogen_timestamp_deps
+[  0%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  0%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  0%] Built target uchardet_autogen_timestamp_deps
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target lua_autogen_timestamp_deps
+[  0%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target zlibstatic_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  0%] Built target NotepadNext_qmlimportscan
+[  3%] Built target NotepadNext_NotepadNext_translations
+[  3%] Built target editorconfig-core-qt_autogen
+[  3%] Built target lua_autogen
+[  3%] Built target SingleApplication_autogen
+[  3%] Built target QSimpleUpdater_autogen
+[  3%] Built target qtadvanceddocking-qt6_autogen
+[  3%] Built target uchardet_autogen
+[  4%] Built target zlibstatic_autogen
+[  4%] Built target scintilla_autogen
+[  4%] Built target NotepadNextPluginDiagnostics_autogen
+[  4%] Built target NotepadNextPluginSources_autogen
+[  4%] Built target NotepadNextPluginData_autogen
+[  4%] Built target NotepadNextPluginRpc_autogen
+[  5%] Built target editorconfig-core-qt
+[  6%] Built target QSimpleUpdater
+[  8%] Built target SingleApplication
+[ 13%] Built target lua
+[ 23%] Built target uchardet
+[ 24%] Built target NotepadNextPluginDiagnostics
+[ 26%] Built target zlibstatic
+[ 31%] Built target qtadvanceddocking-qt6
+[ 32%] Built target NotepadNextPluginSources
+[ 32%] Built target NotepadNextPluginData
+[ 32%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 34%] Built target NotepadNextPluginRpc
+[ 34%] Built target NotepadNextPluginPackages_autogen
+[ 41%] Built target scintilla
+[ 41%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 41%] Built target lexilla_autogen_timestamp_deps
+[ 43%] Built target NotepadNextPluginPackages
+[ 43%] Built target lexilla_autogen
+[ 44%] Built target NotepadNextPluginDocuments_autogen
+[ 44%] Built target NotepadNextPluginDocuments
+[ 44%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 44%] Built target NotepadNextPluginWebviews_autogen
+[ 45%] Built target NotepadNextPluginWebviews
+[ 45%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 46%] Built target NotepadNextPluginRuntime_autogen
+[ 46%] Built target NotepadNextPluginRuntime
+[ 69%] Built target lexilla
+[ 69%] Built target NotepadNext_autogen_timestamp_deps
+[ 69%] Automatic MOC and UIC for target NotepadNext
+[ 69%] Built target NotepadNext_autogen
+[ 84%] Built target NotepadNext
+[ 84%] Built target PluginApplicationTests_autogen_timestamp_deps
+[ 84%] Automatic MOC and UIC for target PluginApplicationTests
+[ 84%] Built target PluginApplicationTests_autogen
+[ 84%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/PluginApplicationTests.cpp.o
+[ 84%] Linking CXX executable PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+[100%] Built target PluginApplicationTests

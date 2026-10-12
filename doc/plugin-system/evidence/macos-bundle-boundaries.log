@@ -1,0 +1,37 @@
+Start testing: Oct 11 15:21 JST
+----------------------------------------------------------
+20/20 Testing: PluginMacBundleTests
+20/20 Test: PluginMacBundleTests
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py"
+Directory: /private/tmp/notepadnext-macos-release-build/tests/macos-packaging
+"PluginMacBundleTests" start time: Oct 11 15:21 JST
+Output:
+----------------------------------------------------------
+test_debug_entitlement (__main__.BundleTests.test_debug_entitlement) ... ok
+test_escaping_qt_config (__main__.BundleTests.test_escaping_qt_config) ... ok
+test_external_rpath (__main__.BundleTests.test_external_rpath) ... ok
+test_machine_specific_qt_config (__main__.BundleTests.test_machine_specific_qt_config) ... ok
+test_missing_dependency (__main__.BundleTests.test_missing_dependency) ... ok
+test_missing_hardened_runtime (__main__.BundleTests.test_missing_hardened_runtime) ... ok
+test_missing_webengine_resources (__main__.BundleTests.test_missing_webengine_resources) ... ok
+test_python_developer_profile_cannot_be_packaged (__main__.BundleTests.test_python_developer_profile_cannot_be_packaged) ... ok
+test_rejected_notarization_does_not_staple (__main__.BundleTests.test_rejected_notarization_does_not_staple) ... ok
+test_signed_contained_bundle (__main__.BundleTests.test_signed_contained_bundle) ... ok
+test_symlink_escape (__main__.BundleTests.test_symlink_escape) ... ok
+test_tampered_resource_seal (__main__.BundleTests.test_tampered_resource_seal) ... ok
+test_underdeclared_minimum_os (__main__.BundleTests.test_underdeclared_minimum_os) ... ok
+test_unverified_node_archive (__main__.BundleTests.test_unverified_node_archive) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 1.547s
+
+OK
+<end of output>
+Test time =   1.73 sec
+----------------------------------------------------------
+Test Passed.
+"PluginMacBundleTests" end time: Oct 11 15:21 JST
+"PluginMacBundleTests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Oct 11 15:21 JST

@@ -1,0 +1,15 @@
+23: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationExitTests
+23: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+23: Test timeout computed to be: 90
+23: ********* Start testing of ApplicationExitTests *********
+23: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+23: PASS   : ApplicationExitTests::initTestCase()
+23: PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+23: PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+23: PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+23: PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+23: PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+23: PASS   : ApplicationExitTests::lastWindowClose(update-preparation-pending)
+23: PASS   : ApplicationExitTests::cleanupTestCase()
+23: Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 17864ms
+23: ********* Finished testing of ApplicationExitTests *********

@@ -1,0 +1,17 @@
+{
+  "name": "@notepadnext/plugin-sdk",
+  "version": "0.1.0",
+  "description": "NotepadNext plugin development kit: types, templates, local debugging and packaging",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {"types": "./index.d.ts"},
+    "./testing": {"types": "./testing.d.ts", "require": "./testing.cjs", "default": "./testing.cjs"},
+    "./*.cjs": "./*.cjs",
+    "./package.json": "./package.json"
+  },
+  "files": ["index.d.ts", "testing.cjs", "testing.d.ts", "create.cjs", "debug.cjs", "pack.cjs", "archive.cjs", "release.cjs", "import-vscode.cjs", "templates", "schemas", "docs", "README.md", "LICENSE"],
+  "bin": {"nnp-create": "create.cjs", "nnp-debug": "debug.cjs", "nnp-package": "pack.cjs", "nnp-archive": "archive.cjs", "nnp-release": "release.cjs", "nnp-import-vscode": "import-vscode.cjs"},
+  "scripts": {"test": "node --test pack.test.cjs developer.test.cjs"},
+  "license": "GPL-3.0-or-later",
+  "engines": {"node": ">=24 <25"}
+}

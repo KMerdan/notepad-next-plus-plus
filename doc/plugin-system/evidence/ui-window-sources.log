@@ -1,0 +1,33 @@
+********* Start testing of PluginSourceTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginSourceTests::initTestCase()
+PASS   : PluginSourceTests::repositoryNormalization()
+PASS   : PluginSourceTests::metadataDiscriminator()
+PASS   : PluginSourceTests::invalidMetadataIsRejected()
+PASS   : PluginSourceTests::vscodeCompatibilityMetadata()
+PASS   : PluginSourceTests::registrationPersistenceAndMerging()
+PASS   : PluginSourceTests::conflictsAndFailedWritesAreAtomic()
+PASS   : PluginSourceTests::refreshReplacesOnlyItsOwnAssociations()
+PASS   : PluginSourceTests::corruptCacheIsPreserved()
+PASS   : PluginSourceTests::resolverPinsMetadataAndDoesNotInstall()
+PASS   : PluginSourceTests::resolverFailureAndCancellation()
+QWARN  : PluginSourceTests::managerListsSearchesAndSharesRegistry() qt.qpa.fonts: Populating font family aliases took 23 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginSourceTests::managerListsSearchesAndSharesRegistry()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(direct-plugin)
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(marketplace)
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(cancel-confirmation)
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::localRegistrationRefreshAndPersistence()
+PASS   : PluginSourceTests::localMetadataValidation()
+PASS   : PluginSourceTests::cleanupTestCase()
+Totals: 18 passed, 0 failed, 0 skipped, 0 blacklisted, 516ms
+********* Finished testing of PluginSourceTests *********

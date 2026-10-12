@@ -1,0 +1,94 @@
+{
+  "board": {
+    "id": "42:11715",
+    "width": 2512,
+    "height": 5346
+  },
+  "frames": [
+    {
+      "id": "47:12153",
+      "name": "Workspace / Light",
+      "w": 1200,
+      "h": 760
+    },
+    {
+      "id": "47:12223",
+      "name": "Workspace / Dark",
+      "w": 1200,
+      "h": 760
+    },
+    {
+      "id": "47:12293",
+      "name": "Plugin Manager / Uninstalled / Light",
+      "w": 1080,
+      "h": 664
+    },
+    {
+      "id": "47:12369",
+      "name": "Plugin Manager / Uninstalled / Dark",
+      "w": 1080,
+      "h": 664
+    },
+    {
+      "id": "45:11729",
+      "name": "Settings / General / Light",
+      "w": 840,
+      "h": 590
+    },
+    {
+      "id": "45:11794",
+      "name": "Settings / General / Dark",
+      "w": 840,
+      "h": 590
+    },
+    {
+      "id": "45:11857",
+      "name": "Settings / Editor / Light",
+      "w": 840,
+      "h": 590
+    },
+    {
+      "id": "45:11919",
+      "name": "Settings / Files / Light",
+      "w": 840,
+      "h": 590
+    },
+    {
+      "id": "45:11978",
+      "name": "Settings / Search / Light",
+      "w": 840,
+      "h": 590
+    },
+    {
+      "id": "45:12018",
+      "name": "Settings / Files / Dark",
+      "w": 720,
+      "h": 500
+    },
+    {
+      "id": "46:12010",
+      "name": "Find / Light",
+      "w": 740,
+      "h": 540
+    },
+    {
+      "id": "46:12088",
+      "name": "Find / Dark",
+      "w": 740,
+      "h": 540
+    },
+    {
+      "id": "46:12164",
+      "name": "Replace / Light",
+      "w": 740,
+      "h": 540
+    },
+    {
+      "id": "46:12243",
+      "name": "Mark / Dark",
+      "w": 740,
+      "h": 540
+    }
+  ],
+  "overflows": []
+}

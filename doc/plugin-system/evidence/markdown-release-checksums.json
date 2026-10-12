@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "pluginId": "notepadnext.markdown-preview",
+  "version": "0.1.0",
+  "assets": [
+    {
+      "name": "notepadnext-plugin.zip",
+      "size": 831962,
+      "sha256": "4781584c74d86d3c81dc90e38d95a10eefb2aedb2ed4107346e84c6785b56f13"
+    }
+  ]
+}

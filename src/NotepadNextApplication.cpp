@@ -19,6 +19,16 @@
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
+#include "NativeAppearance.h"
+#ifdef NOTEPADNEXT_PLUGINS
+#include "RegisteredResourceRegistry.h"
+#include "DocumentBridge.h"
+#include "PluginEngine.h"
+#include "InstalledPluginRegistry.h"
+#include "InstallationService.h"
+#include <QEventLoop>
+#endif
+#include <QStandardPaths>
 #include "MarkerAppDecorator.h"
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
@@ -47,7 +57,7 @@ const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | Sing
 
 void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
 {
-    parser.setApplicationDescription("Notepad Next");
+    parser.setApplicationDescription("Notepad Next ++");
     parser.addHelpOption();
     parser.addVersionOption();
 
@@ -69,12 +79,12 @@ static QString toLocalFileName(const QString file)
     return fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
 }
 
-NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
-    : SingleApplication(argc, argv, true, opts)
+NotepadNextApplication::NotepadNextApplication(int &argc, char **argv,const QString &profileDataDirectory)
+    : SingleApplication(argc, argv, true, opts),dataDirectory(profileDataDirectory.isEmpty()?QStandardPaths::writableLocation(QStandardPaths::AppDataLocation):QDir(profileDataDirectory).absolutePath())
 {
 #ifdef Q_OS_WIN
     // Create a system-wide mutex so the installer can detect if it is running
-    CreateMutex(NULL, false, L"NotepadNextMutex");
+    CreateMutex(NULL, false, L"NotepadNextPlusPlusMutex");
 #endif
     parseCommandLine(parser, arguments());
 
@@ -82,8 +92,9 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     DebugManager::pauseDebugOutput();
 }
 
-bool NotepadNextApplication::init()
+bool NotepadNextApplication::init(QNetworkAccessManager *network)
 {
+    pluginNetwork=network;
     qInfo(Q_FUNC_INFO);
 
 #ifndef Q_OS_MACOS
@@ -127,6 +138,47 @@ bool NotepadNextApplication::init()
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(settings, this);
     sessionManager = new SessionManager(this);
+#ifdef NOTEPADNEXT_PLUGINS
+    registeredResourceRegistry = new PluginSources::RegisteredResourceRegistry(
+        dataDirectory + QStringLiteral("/plugins/registered-sources.json"), this);
+    QString sourceError;
+    if (!registeredResourceRegistry->load(&sourceError)) qWarning().noquote() << sourceError;
+    pluginDocumentBridge = new PluginDocuments::DocumentBridge(this);
+    // EditorManager's earlier connections have already applied these styles.
+    connect(settings,&ApplicationSettings::fontNameChanged,pluginDocumentBridge,&PluginDocuments::DocumentBridge::refreshAppearance);
+    connect(settings,&ApplicationSettings::fontSizeChanged,pluginDocumentBridge,&PluginDocuments::DocumentBridge::refreshAppearance);
+    const auto pluginPath=dataDirectory+QStringLiteral("/plugins");
+    installedPluginRegistry=new PluginPackages::InstalledPluginRegistry(pluginPath+"/installed.json",pluginPath+"/packages",this);
+    QString installedError;
+    if(!installedPluginRegistry->load(&installedError))qWarning().noquote()<<installedError;
+    pluginInstaller=new PluginPackages::InstallationService(installedPluginRegistry,PluginRuntime::PluginEngine::packagePolicy(),this,pluginNetwork);
+    pluginEngine=new PluginRuntime::PluginEngine(installedPluginRegistry,pluginInstaller,pluginDocumentBridge,PluginRuntime::RuntimePaths::bundled(),this);
+    connect(this,&NotepadNextApplication::aboutToQuit,this,[this] {
+        pluginEngine->shutdown();
+        if(pluginEngine->isIdle())return;
+        // Keep event delivery alive for acknowledgements and worker completion
+        // after the last window closes. Process owners survive until this exits.
+        QEventLoop cleanup;
+        connect(pluginEngine,&PluginRuntime::PluginEngine::idle,&cleanup,&QEventLoop::quit);
+        QTimer forceDeadline;forceDeadline.setSingleShot(true);
+        connect(&forceDeadline,&QTimer::timeout,pluginEngine,&PluginRuntime::PluginEngine::forceStop);forceDeadline.start(5000);
+        QTimer exitDeadline;exitDeadline.setSingleShot(true);
+        connect(&exitDeadline,&QTimer::timeout,&cleanup,&QEventLoop::quit);exitDeadline.start(8000);
+        cleanup.exec();
+        if(!pluginEngine->isIdle())qWarning()<<"Plugin cleanup exceeded the application exit deadline.";
+    });
+    connect(editorManager, &EditorManager::editorCreated, pluginDocumentBridge, [this](ScintillaNext *editor) {
+        const auto uri = [editor] { return editor->isFile() ? QUrl::fromLocalFile(editor->getFilePath()) : QUrl(); };
+        const auto language = [editor] { return editor->languageName == QStringLiteral("Normal Text") ? QStringLiteral("plaintext") : editor->languageName.toLower(); };
+        const auto id = pluginDocumentBridge->attach(editor, uri(), language());
+        const auto metadata = [this, id, uri, language] { pluginDocumentBridge->updateMetadata(id, uri(), language()); };
+        connect(editor, &ScintillaNext::closed, pluginDocumentBridge, [this, id] { pluginDocumentBridge->detach(id); });
+        connect(editor, &ScintillaNext::renamed, pluginDocumentBridge, metadata);
+        connect(editor, &ScintillaNext::saved, pluginDocumentBridge, metadata);
+        connect(editor, &ScintillaNext::lexerChanged, pluginDocumentBridge, metadata);
+        connect(editor, &ScintillaNext::reloaded, pluginDocumentBridge, [this, id] { pluginDocumentBridge->reset(id); });
+    });
+#endif
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [this](ScintillaNext *editor) {
         if (editor->isFile()) {
@@ -167,13 +219,15 @@ bool NotepadNextApplication::init()
     connect(this, &SingleApplication::instanceStarted, window, &MainWindow::bringWindowToForeground);
     connect(this, &SingleApplication::receivedMessage, this, &NotepadNextApplication::receiveInfoFromSecondaryInstance, Qt::QueuedConnection);
 
-    connect(this, &NotepadNextApplication::applicationStateChanged, this, [&](Qt::ApplicationState state) {
+    connect(this, &NotepadNextApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
 
             // Make sure it is active...
             // The application can be active without the main window being show e.g. if there is a
             // message box that pops up before the main window
-            if (window->isActiveWindow()) {
+            // macOS can reactivate the application while its last editor
+            // window is already gone and shutdown is still draining.
+            if (window && window->isActiveWindow()) {
                 window->focusIn();
             }
 
@@ -295,6 +349,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->setVariable("skip_tabwidth", skipTabWidth);
 
     getLuaState()->execute("SetLanguage(languageName)");
+    NativeAppearance::editorColors(editor,true);
 }
 
 QStringList NotepadNextApplication::getLanguageKeywords(const QString &languageName) const
@@ -480,6 +535,12 @@ MainWindow *NotepadNextApplication::createNewWindow()
     Q_ASSERT(window == Q_NULLPTR);
 
     window = new MainWindow(this);
+#ifdef NOTEPADNEXT_PLUGINS
+    connect(window, &MainWindow::editorActivated, pluginDocumentBridge, [this](ScintillaNext *editor) {
+        pluginDocumentBridge->setActive(pluginDocumentBridge->idFor(editor));
+    });
+    connect(window,&MainWindow::aboutToClose,pluginEngine,&PluginRuntime::PluginEngine::shutdown);
+#endif
 
     // Keep Lua's editor reference up to date
     connect(window, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {

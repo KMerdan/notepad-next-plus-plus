@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-11",
+  "cliReported": {
+    "parsedFiles": 1011,
+    "nodes": 23070,
+    "edges": 111600
+  },
+  "mcpUniqueStats": {
+    "status": "ok",
+    "summary": "Graph statistics for NotepadNext:\n  Files: 992\n  Total nodes: 21054\n  Total edges: 108644\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T12:40:48\n\nNodes by kind:\n  Class: 1649\n  File: 992\n  Function: 18270\n  Signal: 7\n  Test: 136\n\nEdges by kind:\n  CALLS: 78252\n  CONTAINS: 22069\n  IMPORTS_FROM: 6931\n  INHERITS: 421\n  REFERENCES: 418\n  TESTED_BY: 553\n\nCALLS by target resolution: 10801 direct, 67451 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+    "total_nodes": 21054,
+    "total_edges": 108644,
+    "nodes_by_kind": {
+      "Class": 1649,
+      "File": 992,
+      "Function": 18270,
+      "Signal": 7,
+      "Test": 136
+    },
+    "edges_by_kind": {
+      "CALLS": 78252,
+      "CONTAINS": 22069,
+      "IMPORTS_FROM": 6931,
+      "INHERITS": 421,
+      "REFERENCES": 418,
+      "TESTED_BY": 553
+    },
+    "calls_by_resolution": {
+      "direct": 10801,
+      "unresolved": 67451
+    },
+    "languages": [
+      "bash",
+      "c",
+      "cpp",
+      "dart",
+      "gdscript",
+      "javascript",
+      "julia",
+      "lua",
+      "nix",
+      "objc",
+      "perl",
+      "php",
+      "powershell",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "sql",
+      "typescript",
+      "vbnet",
+      "verilog",
+      "zig"
+    ],
+    "files_count": 992,
+    "last_updated": "2026-10-11T12:40:48",
+    "embeddings_count": 0,
+    "_graph": {
+      "updated_at": "2026-10-11T12:40:48",
+      "age_seconds": 88,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "queries": [
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "packages/plugin-host/python/nnp_rpc.py",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 27 result(s) for file_summary('packages/plugin-host/python/nnp_rpc.py') — showing 2, 25 omitted",
+      "result_count": 27,
+      "results_omitted": 25,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python/nnp_rpc.py",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python/nnp_rpc.py"
+        },
+        {
+          "name": "RpcError",
+          "kind": "Class",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python/nnp_rpc.py"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T12:40:48",
+        "age_seconds": 78,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "packages/plugin-host/python/nnp_client.py",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 19 result(s) for file_summary('packages/plugin-host/python/nnp_client.py') — showing 2, 17 omitted",
+      "result_count": 19,
+      "results_omitted": 17,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python/nnp_client.py",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python/nnp_client.py"
+        },
+        {
+          "name": "awaited",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python/nnp_client.py"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T12:40:48",
+        "age_seconds": 85,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "packages/plugin-host/python-host.cjs",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 3 result(s) for file_summary('packages/plugin-host/python-host.cjs') — showing 2, 1 omitted",
+      "result_count": 3,
+      "results_omitted": 1,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python-host.cjs",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python-host.cjs"
+        },
+        {
+          "name": "fail",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/python-host.cjs"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T12:40:48",
+        "age_seconds": 82,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ]
+}

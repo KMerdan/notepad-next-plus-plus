@@ -6,6 +6,7 @@ on:
 
 jobs:
   create-issues:
+    if: github.repository == 'dail8859/NotepadNext'
     name: Create GitHub Issues
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +23,7 @@ jobs:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
 
   winget:
+    if: github.repository == 'dail8859/NotepadNext'
     name: Publish to WinGet
     runs-on: ubuntu-latest
     steps:

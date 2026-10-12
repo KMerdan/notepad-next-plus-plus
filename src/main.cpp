@@ -24,15 +24,18 @@
 #include <QDataStream>
 
 #include "NotepadNextApplication.h"
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+#include "WebviewService.h"
+#endif
 
 int main(int argc, char *argv[])
 {
     qSetMessagePattern("[%{time process}] %{if-debug}D%{endif}%{if-info}I%{endif}%{if-warning}W%{endif}%{if-critical}C%{endif}%{if-fatal}F%{endif}: %{message}");
 
     // Set these since other parts of the app references these
-    QApplication::setOrganizationName("NotepadNext");
-    QApplication::setApplicationName("NotepadNext");
-    QGuiApplication::setApplicationDisplayName("Notepad Next");
+    QApplication::setOrganizationName("KMerdan");
+    QApplication::setApplicationName("NotepadNextPlusPlus");
+    QGuiApplication::setApplicationDisplayName(APP_DISPLAY_NAME);
     QGuiApplication::setApplicationVersion(APP_VERSION);
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -43,6 +46,10 @@ int main(int argc, char *argv[])
     // Default settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    PluginWebviews::registerScheme();
+#endif
     NotepadNextApplication app(argc, argv);
 
     // Log some debug info

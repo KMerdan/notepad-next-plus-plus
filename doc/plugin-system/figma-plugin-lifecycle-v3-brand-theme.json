@@ -1,0 +1,20 @@
+[
+  {
+    "key": "figmaBrandColorFix",
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"mutatedNodeIds\":[\"2:102\",\"2:103\",\"33:11732\"]}"
+      }
+    ]
+  },
+  {
+    "key": "figmaBrandStrokeFix",
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"mutatedNodeIds\":[\"2:102\",\"2:103\",\"33:11732\"]}"
+      }
+    ]
+  }
+]

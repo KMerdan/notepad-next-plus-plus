@@ -1,0 +1,145 @@
+{
+  "method": "WCAG sRGB relative luminance, opaque declared token pairs; actual screenshot backgrounds checked separately",
+  "pairs": [
+    {
+      "mode": "Light",
+      "foreground": "text",
+      "background": "surface",
+      "foregroundHex": "#242424",
+      "backgroundHex": "#ffffff",
+      "ratio": 15.523,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "secondary",
+      "background": "chrome",
+      "foregroundHex": "#626267",
+      "backgroundHex": "#f1f1f1",
+      "ratio": 5.37,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "secondary",
+      "background": "gutter",
+      "foregroundHex": "#626267",
+      "backgroundHex": "#f7f7f7",
+      "ratio": 5.662,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "onAccent",
+      "background": "accent",
+      "foregroundHex": "#ffffff",
+      "backgroundHex": "#005ec5",
+      "ratio": 6.163,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "successText",
+      "background": "successSurface",
+      "foregroundHex": "#22643a",
+      "backgroundHex": "#edf6ef",
+      "ratio": 6.446,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "errorText",
+      "background": "errorSurface",
+      "foregroundHex": "#b3261e",
+      "backgroundHex": "#fff0ef",
+      "ratio": 5.902,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "fieldBorder",
+      "background": "surface",
+      "foregroundHex": "#85858c",
+      "backgroundHex": "#ffffff",
+      "ratio": 3.664,
+      "threshold": 3,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "text",
+      "background": "surface",
+      "foregroundHex": "#eeeeef",
+      "backgroundHex": "#202023",
+      "ratio": 14.015,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "secondary",
+      "background": "chrome",
+      "foregroundHex": "#b6b6bd",
+      "backgroundHex": "#29292c",
+      "ratio": 7.194,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "secondary",
+      "background": "gutter",
+      "foregroundHex": "#b6b6bd",
+      "backgroundHex": "#26262a",
+      "ratio": 7.476,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "onAccent",
+      "background": "accent",
+      "foregroundHex": "#202023",
+      "backgroundHex": "#85baff",
+      "ratio": 8.098,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "successText",
+      "background": "successSurface",
+      "foregroundHex": "#85d0a1",
+      "backgroundHex": "#243b2d",
+      "ratio": 6.635,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "errorText",
+      "background": "errorSurface",
+      "foregroundHex": "#ffb4b0",
+      "backgroundHex": "#482c30",
+      "ratio": 7.392,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "fieldBorder",
+      "background": "surface",
+      "foregroundHex": "#777780",
+      "backgroundHex": "#202023",
+      "ratio": 3.664,
+      "threshold": 3,
+      "passes": true
+    }
+  ]
+}

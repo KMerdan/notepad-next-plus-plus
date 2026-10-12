@@ -1,0 +1,112 @@
+{
+  "scope": "Relevant crashing-thread frames only; original OS report is retained locally.",
+  "confirmedFailure": "Focus callback captured WebviewService but used the deferred dock as QObject receiver. The service was destroyed first.",
+  "fix": "Service-bound receiver plus per-panel connection disconnection in dispose.",
+  "regression": "focusNotificationsAfterDeferredDockCleanup in the green complete suite.",
+  "frames": [
+    [
+      {
+        "imageOffset": 2139552,
+        "sourceLine": 1042,
+        "sourceFile": "qhash.h",
+        "symbol": "QHash<QString, PluginWebviews::WebviewService::Private::Panel>::contains(QString const&) const",
+        "imageIndex": 0,
+        "symbolLocation": 28
+      },
+      {
+        "imageOffset": 2151780,
+        "sourceLine": 237,
+        "sourceFile": "WebviewService.cpp",
+        "symbol": "PluginWebviews::WebviewService::viewState(QString const&)",
+        "imageIndex": 0,
+        "symbolLocation": 68
+      },
+      {
+        "imageOffset": 2253744,
+        "sourceLine": 231,
+        "sourceFile": "WebviewService.cpp",
+        "symbol": "PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8::operator()() const",
+        "imageIndex": 0,
+        "symbolLocation": 32
+      },
+      {
+        "imageOffset": 2253700,
+        "sourceLine": 116,
+        "sourceFile": "qobjectdefs_impl.h",
+        "symbol": "QtPrivate::FunctorCall<std::__1::integer_sequence<unsigned long>, QtPrivate::List<>, void, PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8>::call(PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8&, void**)::'lambda'()::operator()() const",
+        "imageIndex": 0,
+        "symbolLocation": 28
+      },
+      {
+        "imageOffset": 2253660,
+        "sourceLine": 65,
+        "sourceFile": "qobjectdefs_impl.h",
+        "symbol": "void QtPrivate::FunctorCallBase::call_internal<void, QtPrivate::FunctorCall<std::__1::integer_sequence<unsigned long>, QtPrivate::List<>, void, PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8>::call(PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8&, void**)::'lambda'()>(void**, QtPrivate::FunctorCall<std::__1::integer_sequence<unsigned long>, QtPrivate::List<>, void, PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8>::call(PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8&, void**)::'lambda'()&&)",
+        "imageIndex": 0,
+        "symbolLocation": 28
+      },
+      {
+        "imageOffset": 2253620,
+        "sourceLine": 115,
+        "sourceFile": "qobjectdefs_impl.h",
+        "symbol": "QtPrivate::FunctorCall<std::__1::integer_sequence<unsigned long>, QtPrivate::List<>, void, PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8>::call(PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8&, void**)",
+        "imageIndex": 0,
+        "symbolLocation": 40
+      },
+      {
+        "imageOffset": 2253448,
+        "sourceLine": 337,
+        "sourceFile": "qobjectdefs_impl.h",
+        "symbol": "void QtPrivate::FunctorCallable<PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8>::call<QtPrivate::List<>, void>(PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8&, void*, void**)",
+        "imageIndex": 0,
+        "symbolLocation": 36
+      },
+      {
+        "imageOffset": 2253292,
+        "sourceLine": 547,
+        "sourceFile": "qobjectdefs_impl.h",
+        "symbol": "QtPrivate::QCallableObject<PluginWebviews::WebviewService::createPanel(QString const&, QString const&, QString const&, QString const&, bool, QJsonObject*)::$_8, QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*)",
+        "imageIndex": 0,
+        "symbolLocation": 168
+      },
+      {
+        "imageOffset": 974320,
+        "imageIndex": 17
+      },
+      {
+        "imageOffset": 53456,
+        "symbol": "QApplicationPrivate::setFocusWidget(QWidget*, Qt::FocusReason)",
+        "symbolLocation": 528,
+        "imageIndex": 7
+      },
+      {
+        "imageOffset": 310904,
+        "symbol": "QWidget::clearFocus()",
+        "symbolLocation": 360,
+        "imageIndex": 7
+      },
+      {
+        "imageOffset": 308888,
+        "symbol": "QWidget::~QWidget()",
+        "symbolLocation": 784,
+        "imageIndex": 7
+      },
+      {
+        "imageOffset": 2770716,
+        "sourceLine": 88,
+        "sourceFile": "ScintillaEditBase.cpp",
+        "symbol": "ScintillaEditBase::~ScintillaEditBase()",
+        "imageIndex": 0,
+        "symbolLocation": 64
+      },
+      {
+        "imageOffset": 2576380,
+        "sourceLine": 13,
+        "sourceFile": "ScintillaEdit.cpp",
+        "symbol": "ScintillaEdit::~ScintillaEdit()",
+        "imageIndex": 0,
+        "symbolLocation": 28
+      }
+    ]
+  ]
+}

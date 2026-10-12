@@ -1,0 +1,838 @@
+{
+  "schemaVersion": 1,
+  "protocolVersion": "0.1",
+  "apiVersion": "0.1.0",
+  "schemaFile": "wire.schema.json",
+  "compatibility": "Exact 0.1.0 API and negotiated 0.1 protocol. Unknown protocol offers may coexist with 0.1; future APIs/limits are rejected before importing plugin code. New major profiles need separate schemas and shared fixtures.",
+  "methods": {
+    "nnp.initialize": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.initialize.params",
+      "resultSchema": "#/$defs/nnp.initialize.result",
+      "capability": null,
+      "states": [
+        "new"
+      ],
+      "effect": "initialize",
+      "cancellation": "Timeout closes the activation generation; no plugin module imported yet.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.plugin.activate": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.plugin.activate.params",
+      "resultSchema": "#/$defs/nnp.plugin.activate.result",
+      "capability": null,
+      "states": [
+        "initialized"
+      ],
+      "effect": "stagedResources",
+      "cancellation": "Timeout terminates the owned process group; resources are revoked by the host.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.plugin.deactivate": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.plugin.deactivate.params",
+      "resultSchema": "#/$defs/nnp.plugin.deactivate.result",
+      "capability": null,
+      "states": [
+        "initialized",
+        "activating",
+        "active",
+        "failed",
+        "stopping"
+      ],
+      "effect": "revokeResources",
+      "cancellation": "Timeout terminates the owned process group; resources are revoked by the host.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.shutdown": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.shutdown.params",
+      "resultSchema": "#/$defs/nnp.shutdown.result",
+      "capability": null,
+      "states": [
+        "initialized",
+        "activating",
+        "active",
+        "failed",
+        "stopping"
+      ],
+      "effect": "exit",
+      "cancellation": "Timeout terminates the owned process group; resources are revoked by the host.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.health.ping": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.health.ping.params",
+      "resultSchema": "#/$defs/nnp.health.ping.result",
+      "capability": null,
+      "states": [
+        "initialized",
+        "activating",
+        "active",
+        "failed",
+        "stopping"
+      ],
+      "effect": "read",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "One active ping every 10 seconds; 2-second deadline."
+    },
+    "nnp.documents.getActive": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.getActive.params",
+      "resultSchema": "#/$defs/nnp.documents.getActive.result",
+      "capability": "documents.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.documents.getSnapshot": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.getSnapshot.params",
+      "resultSchema": "#/$defs/nnp.documents.getSnapshot.result",
+      "capability": "documents.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1002,
+        1009
+      ],
+      "budget": "2 MiB UTF-8 text; invalid encoding rejected as 1009."
+    },
+    "nnp.documents.watch": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.watch.params",
+      "resultSchema": "#/$defs/nnp.documents.watch.result",
+      "capability": "documents.events@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedResource",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "64 watches per activation; dispose by subscriptionId."
+    },
+    "nnp.documents.event": {
+      "direction": "hostToPlugin",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.documents.event.params",
+      "resultSchema": "#/$defs/nnp.documents.event.result",
+      "capability": "documents.events@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "invalidation",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "Ordered eventSeq; identity checked and duplicate/old sequence ignored."
+    },
+    "nnp.documents.applyEdits": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.applyEdits.params",
+      "resultSchema": "#/$defs/nnp.documents.applyEdits.result",
+      "capability": "documents.write@1",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "atomicBufferEdit",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1001,
+        1002,
+        1009
+      ],
+      "budget": "256 nonoverlapping edits; result <=2 MiB UTF-8; one undo; errors 1001/1002/1003/1009."
+    },
+    "nnp.commands.register": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.commands.register.params",
+      "resultSchema": "#/$defs/nnp.commands.register.result",
+      "capability": "commands@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedResource",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "Declared commands only; all must register before successful activation."
+    },
+    "nnp.commands.invoke": {
+      "direction": "hostToPlugin",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.commands.invoke.params",
+      "resultSchema": "#/$defs/nnp.commands.invoke.result",
+      "capability": "commands@1",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "pluginCallback",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "One command in flight per activation; activation clicks coalesce. The 5 s execution deadline pauses while this activation owns visible message dialogs, resumes with its remaining budget after the last dialog closes, and remains cancellable. Heartbeat and shutdown deadlines are never paused."
+    },
+    "nnp.webviews.create": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.create.params",
+      "resultSchema": "#/$defs/nnp.webviews.create.result",
+      "capability": "webviews@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "stagedResource",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "8 panels; same viewType returns existing panel; published after activation/confirmation."
+    },
+    "nnp.webviews.reveal": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.reveal.params",
+      "resultSchema": "#/$defs/nnp.webviews.reveal.result",
+      "capability": "webviews@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "stagedPresentation",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.webviews.setHtml": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.setHtml.params",
+      "resultSchema": "#/$defs/nnp.webviews.setHtml.result",
+      "capability": "webviews@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "versionCheckedPresentation",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1001,
+        1002
+      ],
+      "budget": "6 MiB XHTML fragment; 8 MiB host document; current buffer/version required; load event follows acceptance."
+    },
+    "nnp.webviews.mapResource": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.mapResource.params",
+      "resultSchema": "#/$defs/nnp.webviews.mapResource.result",
+      "capability": "webviews@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedResource",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1001,
+        1002
+      ],
+      "budget": "PNG/JPEG/WebP <=8 MiB, <=4096 px per side; 64 images/panel, 32 MiB/profile; contained path and active document."
+    },
+    "nnp.webviews.postMessage": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.postMessage.params",
+      "resultSchema": "#/$defs/nnp.webviews.postMessage.result",
+      "capability": "webviews@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "presentation",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "JSON <=64 KiB. Compatible loading-page messages queue up to 128/8 MiB, true means accepted and is not delivery acknowledgement. A document replacement drops old-page queued messages. Closed or uninitialized pages return false."
+    },
+    "nnp.webviews.event": {
+      "direction": "hostToPlugin",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.webviews.event.params",
+      "resultSchema": "#/$defs/nnp.webviews.event.result",
+      "capability": "webviews@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedPanelEvent",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "64 KiB messages; current panel/page revision only."
+    },
+    "nnp.storage.get": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.storage.get.params",
+      "resultSchema": "#/$defs/nnp.storage.get.result",
+      "capability": "storage@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1010
+      ],
+      "budget": "Plugin namespace only; missing -> null; 1 MiB atomic record; disk failures 1010."
+    },
+    "nnp.storage.update": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.storage.update.params",
+      "resultSchema": "#/$defs/nnp.storage.update.result",
+      "capability": "storage@1",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "atomicDataWrite",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32603,
+        -32602,
+        1001,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1010
+      ],
+      "budget": "Missing value deletes; null stores null; optional expectedValue compared under record lock, mismatch 1001 without write; null matches absent/null; each value <=64 KiB, depth32, 256keys/namespace, 1MiB/plugin; disk failures1010."
+    },
+    "nnp.configuration.get": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.configuration.get.params",
+      "resultSchema": "#/$defs/nnp.configuration.get.result",
+      "capability": "configuration@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1010
+      ],
+      "budget": "Plugin namespace only; missing -> null; 1 MiB atomic record; disk failures 1010."
+    },
+    "nnp.configuration.update": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.configuration.update.params",
+      "resultSchema": "#/$defs/nnp.configuration.update.result",
+      "capability": "configuration@1",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "atomicDataWrite",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32603,
+        -32602,
+        1001,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1010
+      ],
+      "budget": "Missing value deletes; null stores null; optional expectedValue compared under record lock, mismatch 1001 without write; null matches absent/null; each value <=64 KiB, depth32, 256keys/namespace, 1MiB/plugin; disk failures1010."
+    },
+    "nnp.resources.dispose": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.resources.dispose.params",
+      "resultSchema": "#/$defs/nnp.resources.dispose.result",
+      "capability": null,
+      "states": [
+        "initialized",
+        "activating",
+        "active",
+        "failed",
+        "stopping"
+      ],
+      "effect": "revokeResource",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "Session-owned resource only; repeat disposal is a no-op."
+    },
+    "nnp.request.cancel": {
+      "direction": "bidirectional",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.request.cancel.params",
+      "resultSchema": "#/$defs/nnp.request.cancel.result",
+      "capability": null,
+      "states": [
+        "initialized",
+        "activating",
+        "active",
+        "failed",
+        "stopping"
+      ],
+      "effect": "cancel",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "App-generated string request ID; does not acknowledge or reverse committed writes."
+    },
+    "nnp.documents.watchAll": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.watchAll.params",
+      "resultSchema": "#/$defs/nnp.documents.watchAll.result",
+      "capability": "documents.delta@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedResource",
+      "cancellation": "Reliable ordered notifications are never coalesced. Cancelling a read stops waiting, not its event history.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires documents.read@1 as well. 64 documents, 4 MiB mirrored UTF-8 total, 2 MiB/snapshot; changes reference old UTF-16 positions. Snapshot carries an atomic stream sequence barrier; mismatch/reset requires explicit resynchronization."
+    },
+    "nnp.documents.getMirrorSnapshot": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.getMirrorSnapshot.params",
+      "resultSchema": "#/$defs/nnp.documents.getMirrorSnapshot.result",
+      "capability": "documents.delta@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Reliable ordered notifications are never coalesced. Cancelling a read stops waiting, not its event history.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires documents.read@1 as well. 64 documents, 4 MiB mirrored UTF-8 total, 2 MiB/snapshot; changes reference old UTF-16 positions. Snapshot carries an atomic stream sequence barrier; mismatch/reset requires explicit resynchronization."
+    },
+    "nnp.documents.delta": {
+      "direction": "hostToPlugin",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.documents.delta.params",
+      "resultSchema": "#/$defs/nnp.documents.delta.result",
+      "capability": "documents.delta@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "orderedDocumentMirror",
+      "cancellation": "Reliable ordered notifications are never coalesced. Cancelling a read stops waiting, not its event history.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires documents.read@1 as well. 64 documents, 4 MiB mirrored UTF-8 total, 2 MiB/snapshot; changes reference old UTF-16 positions. Snapshot carries an atomic stream sequence barrier; mismatch/reset requires explicit resynchronization."
+    },
+    "nnp.window.showMessage": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.window.showMessage.params",
+      "resultSchema": "#/$defs/nnp.window.showMessage.result",
+      "capability": "messages@1",
+      "states": [
+        "activePublished"
+      ],
+      "effect": "ownedMessage",
+      "cancellation": "Creation acknowledges a resource immediately. Selection/close arrives as a separate notification. Disposal resolves the waiting SDK promise without an action.",
+      "errors": [
+        -32602,
+        1003,
+        1004,
+        1007,
+        1008
+      ],
+      "budget": "8 owned non-modal dialogs, 8 KiB message, up to eight string actions of 1 KiB each. No activation/update-validation UI publication."
+    },
+    "nnp.window.messageEvent": {
+      "direction": "hostToPlugin",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.window.messageEvent.params",
+      "resultSchema": "#/$defs/nnp.window.messageEvent.result",
+      "capability": "messages@1",
+      "states": [
+        "active"
+      ],
+      "effect": "ownedMessage",
+      "cancellation": "Creation acknowledges a resource immediately. Selection/close arrives as a separate notification. Disposal resolves the waiting SDK promise without an action.",
+      "errors": [
+        -32602,
+        1003,
+        1004,
+        1007,
+        1008
+      ],
+      "budget": "8 owned non-modal dialogs, 8 KiB message, up to eight string actions of 1 KiB each. No activation/update-validation UI publication."
+    },
+    "nnp.webviews.createCompatible": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.createCompatible.params",
+      "resultSchema": "#/$defs/nnp.webviews.createCompatible.result",
+      "capability": "webviews.compat@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedCompatiblePanel",
+      "cancellation": "Creation/mapping/publication acknowledgements are tracked by the synchronous proxy; stop and late-create disposal reclaim all owned resources. No retry of uncertain writes.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires webviews@1 plus webviews.compat@1 and Qt >=6.6. Eight panels/session, 16 roots/panel, 64 assets/panel, 32 MiB assets/session. UTF-8 JS/CSS <=2 MiB, typed images <=8 MiB. Full HTML <=6 MiB, immutable host CSP response header. Only own roots and own panel origin; no network, file, frames, downloads or permission grants. State/messages <=64 KiB; outgoing queue 128/8 MiB. Staged compatible pages execute only after publication."
+    },
+    "nnp.webviews.setDocument": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.setDocument.params",
+      "resultSchema": "#/$defs/nnp.webviews.setDocument.result",
+      "capability": "webviews.compat@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedCompatiblePanel",
+      "cancellation": "Creation/mapping/publication acknowledgements are tracked by the synchronous proxy; stop and late-create disposal reclaim all owned resources. No retry of uncertain writes.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires webviews@1 plus webviews.compat@1 and Qt >=6.6. Eight panels/session, 16 roots/panel, 64 assets/panel, 32 MiB assets/session. UTF-8 JS/CSS <=2 MiB, typed images <=8 MiB. Full HTML <=6 MiB, immutable host CSP response header. Only own roots and own panel origin; no network, file, frames, downloads or permission grants. State/messages <=64 KiB; outgoing queue 128/8 MiB. Staged compatible pages execute only after publication."
+    },
+    "nnp.webviews.mapAsset": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.mapAsset.params",
+      "resultSchema": "#/$defs/nnp.webviews.mapAsset.result",
+      "capability": "webviews.compat@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedCompatiblePanel",
+      "cancellation": "Creation/mapping/publication acknowledgements are tracked by the synchronous proxy; stop and late-create disposal reclaim all owned resources. No retry of uncertain writes.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires webviews@1 plus webviews.compat@1 and Qt >=6.6. Eight panels/session, 16 roots/panel, 64 assets/panel, 32 MiB assets/session. UTF-8 JS/CSS <=2 MiB, typed images <=8 MiB. Full HTML <=6 MiB, immutable host CSP response header. Only own roots and own panel origin; no network, file, frames, downloads or permission grants. State/messages <=64 KiB; outgoing queue 128/8 MiB. Staged compatible pages execute only after publication."
+    },
+    "nnp.webviews.setTitle": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.setTitle.params",
+      "resultSchema": "#/$defs/nnp.webviews.setTitle.result",
+      "capability": "webviews.compat@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "ownedCompatiblePanel",
+      "cancellation": "Creation/mapping/publication acknowledgements are tracked by the synchronous proxy; stop and late-create disposal reclaim all owned resources. No retry of uncertain writes.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1007,
+        1008,
+        1009
+      ],
+      "budget": "Requires webviews@1 plus webviews.compat@1 and Qt >=6.6. Eight panels/session, 16 roots/panel, 64 assets/panel, 32 MiB assets/session. UTF-8 JS/CSS <=2 MiB, typed images <=8 MiB. Full HTML <=6 MiB, immutable host CSP response header. Only own roots and own panel origin; no network, file, frames, downloads or permission grants. State/messages <=64 KiB; outgoing queue 128/8 MiB. Staged compatible pages execute only after publication."
+    }
+  },
+  "errors": {
+    "1001": "VersionConflict",
+    "1002": "DocumentClosed",
+    "1003": "CapabilityDenied",
+    "1004": "PluginStopping",
+    "1005": "UnsupportedCapability",
+    "1006": "Cancelled",
+    "1007": "Overloaded",
+    "1008": "ContentTooLarge",
+    "1009": "UnsupportedEncoding",
+    "1010": "DataUnavailable"
+  }
+}

@@ -1,0 +1,5 @@
+add_library(NotepadNextPluginWebviews STATIC HtmlPolicy.cpp HtmlPolicy.h WebviewService.cpp WebviewService.h compat-bridge.qrc)
+find_package(Qt6 REQUIRED COMPONENTS QuickWidgets)
+target_link_libraries(NotepadNextPluginWebviews PUBLIC NotepadNextPluginDocuments Qt6::WebEngineWidgets Qt6::WebChannel Qt6::QuickWidgets)
+target_include_directories(NotepadNextPluginWebviews PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set_target_properties(NotepadNextPluginWebviews PROPERTIES AUTOMOC ON AUTORCC ON)

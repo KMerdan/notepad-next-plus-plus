@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-11",
+  "platform": "macOS 27.0.1 arm64",
+  "qt": "6.10.0",
+  "node": "24.21.0",
+  "python": "3.12.13",
+  "scope": "I3 synchronous document prerequisite; complete VS Code extension compatibility is not delivered",
+  "sharedWireMethods": 27,
+  "sharedWireFixtures": 141,
+  "sharedRpcFixtures": 28,
+  "qtRpcCases": 194,
+  "nodeRpcCases": 33,
+  "nodeWireCases": 145,
+  "nodeHostCases": 10,
+  "mirrorCases": 10,
+  "pythonContractAndBoundaryCases": 176,
+  "nativeDocumentCases": 16,
+  "nativeWebviewCases": 21,
+  "nativeAcceptance": {
+    "twoUnsavedDocuments": true,
+    "unicodeOldCoordinates": true,
+    "atomicEditSingleUndoRedo": true,
+    "normalEditsWithoutSpuriousResync": true,
+    "renameResetClose": true,
+    "unsupportedEncodingAndRecovery": true,
+    "capabilityDenialsAndCensusLimit": true,
+    "disableOwnedResourceBaseline": true
+  },
+  "limits": {
+    "singleSnapshotUtf8Bytes": 2097152,
+    "mirroredTextUtf8Bytes": 4194304,
+    "documents": 64,
+    "subscriptionsPerSession": 64,
+    "mirrorQueueEvents": 128,
+    "mirrorQueueBytes": 8388608,
+    "rpcConcurrentMessages": 64,
+    "osSandbox": false
+  },
+  "fullSuite": {
+    "passedTargets": 17,
+    "totalTargets": 17,
+    "seconds": 155.91,
+    "productionAppCases": 5,
+    "markdownLifecycleCycles": 100,
+    "markdownLifecycleMilliseconds": 84204,
+    "isolatedPerformanceAcceptance": false,
+    "sourceSnapshot": "DeltaSourceSha256.json"
+  },
+  "bundleEvidence": "DeltaBundleHostValidation.json",
+  "codeGraphEvidence": "DeltaCodeGraphValidation.json",
+  "logs": [
+    "delta-ctest-summary.log",
+    "delta-full-conformance.log",
+    "delta-native-mirror-conformance.log",
+    "delta-independent-schema.log",
+    "delta-initial-native-docs-failures.log",
+    "delta-initial-mirror-json-failure.log",
+    "delta-mirror-premature-command-failure.log",
+    "delta-initial-startup-overload-failure.log",
+    "delta-initial-python-scheduling-failure.log"
+  ],
+  "correctedFindings": [
+    "Batch save-point metadata was emitted between suppressed text changes; defer metadata until final text/version.",
+    "Over-limit changes now use reset before decoding a large inserted payload.",
+    "Reliable notifications previously inherited silent endpoint-overload dropping; Node and Python now fault explicitly.",
+    "Fixture snapshots included undefined JSON fields; omit those fields.",
+    "Fixture sent another command before prior reply; now waits for commandFinished.",
+    "Python concurrency fixture waited one event-loop tick instead of handler readiness; now waits for an explicit barrier and updates mock register signature."
+  ],
+  "remaining": [
+    "Versioned vscode API support table, loader, importer/aliases and synchronous Disposable/Webview proxies.",
+    "Licensed actual command/Webview sample execution; exact official source commit is prepared in VSCodeSampleSources.json.",
+    "Broader fault/resource/performance and all I4 deployment/platform/signing/notarization acceptance.",
+    "Configured Python interpreter remains a developer path, not a packaged runtime."
+  ]
+}

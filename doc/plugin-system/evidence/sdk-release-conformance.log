@@ -1,0 +1,15 @@
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (12.117958ms)
+✔ rejects escaping entry and clears failed staging (4.502542ms)
+✔ rejects links and native addons (5.029208ms)
+✔ rejects missing production dependency and source-contained output (5.204208ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (17.552709ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (17.103291ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (7.824125ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.194333

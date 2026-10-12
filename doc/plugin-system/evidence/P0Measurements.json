@@ -1,0 +1,180 @@
+{
+  "date": "2026-10-11",
+  "platform": "macOS 27.0.1 arm64",
+  "qt": "6.10.0",
+  "node": "24.21.0",
+  "build": "Debug root application test build",
+  "scope": "Qt worker -> Node peer -> Qt host echo -> Node peer -> Qt callback. Sequential calls through a pool; not concurrent Markdown rendering. RSS measured after all sizes, not idle baseline. CPU is ps lifetime average.",
+  "processMeasurements": [
+    {
+      "processes": 1,
+      "roundtrips": [
+        {
+          "bytes": 10240,
+          "meanMs": 2.690875,
+          "p95Ms": 3.866167,
+          "samples": 10
+        },
+        {
+          "bytes": 102400,
+          "meanMs": 5.207258500000001,
+          "p95Ms": 6.4675,
+          "samples": 10
+        },
+        {
+          "bytes": 1048576,
+          "meanMs": 41.8179667,
+          "p95Ms": 43.21375,
+          "samples": 10
+        }
+      ],
+      "ownedProcessesAfterWorkload": [
+        {
+          "rssKiB": 125392,
+          "lifetimeCpuPercent": 30.0
+        }
+      ],
+      "totalRssKiB": 125392
+    },
+    {
+      "processes": 5,
+      "roundtrips": [
+        {
+          "bytes": 10240,
+          "meanMs": 2.6754926000000006,
+          "p95Ms": 3.836834,
+          "samples": 50
+        },
+        {
+          "bytes": 102400,
+          "meanMs": 5.16861586,
+          "p95Ms": 6.197167,
+          "samples": 50
+        },
+        {
+          "bytes": 1048576,
+          "meanMs": 42.9011074,
+          "p95Ms": 44.554666,
+          "samples": 50
+        }
+      ],
+      "ownedProcessesAfterWorkload": [
+        {
+          "rssKiB": 131680,
+          "lifetimeCpuPercent": 4.3
+        },
+        {
+          "rssKiB": 137392,
+          "lifetimeCpuPercent": 4.8
+        },
+        {
+          "rssKiB": 131728,
+          "lifetimeCpuPercent": 7.0
+        },
+        {
+          "rssKiB": 132752,
+          "lifetimeCpuPercent": 7.1
+        },
+        {
+          "rssKiB": 149664,
+          "lifetimeCpuPercent": 8.5
+        }
+      ],
+      "totalRssKiB": 683216
+    },
+    {
+      "processes": 10,
+      "roundtrips": [
+        {
+          "bytes": 10240,
+          "meanMs": 2.7229116600000007,
+          "p95Ms": 3.892292,
+          "samples": 100
+        },
+        {
+          "bytes": 102400,
+          "meanMs": 5.4786395400000005,
+          "p95Ms": 7.593458,
+          "samples": 100
+        },
+        {
+          "bytes": 1048576,
+          "meanMs": 41.687774139999995,
+          "p95Ms": 44.020583,
+          "samples": 100
+        }
+      ],
+      "ownedProcessesAfterWorkload": [
+        {
+          "rssKiB": 119648,
+          "lifetimeCpuPercent": 1.6
+        },
+        {
+          "rssKiB": 125936,
+          "lifetimeCpuPercent": 1.9
+        },
+        {
+          "rssKiB": 138464,
+          "lifetimeCpuPercent": 1.9
+        },
+        {
+          "rssKiB": 134880,
+          "lifetimeCpuPercent": 2.5
+        },
+        {
+          "rssKiB": 135232,
+          "lifetimeCpuPercent": 2.9
+        },
+        {
+          "rssKiB": 136576,
+          "lifetimeCpuPercent": 2.9
+        },
+        {
+          "rssKiB": 139024,
+          "lifetimeCpuPercent": 4.0
+        },
+        {
+          "rssKiB": 134064,
+          "lifetimeCpuPercent": 4.8
+        },
+        {
+          "rssKiB": 133536,
+          "lifetimeCpuPercent": 5.0
+        },
+        {
+          "rssKiB": 134160,
+          "lifetimeCpuPercent": 3.1
+        }
+      ],
+      "totalRssKiB": 1331520
+    }
+  ],
+  "snapshotMeasurement": {
+    "scope": "Release standalone Scintilla bridge, mean of 100 reads; earlier run before latest truncated-UTF8 fixture",
+    "samples": [
+      {
+        "bytes": 10240,
+        "meanMs": 0.014
+      },
+      {
+        "bytes": 102400,
+        "meanMs": 0.119
+      },
+      {
+        "bytes": 1048576,
+        "meanMs": 1.212
+      }
+    ]
+  },
+  "pending": [
+    "Full Markdown render p95 and GUI task budget",
+    "Idle RSS and event traffic",
+    "WebEngine helper resource breakdown",
+    "Relocatable deployment and package size"
+  ],
+  "sourceSha256": {
+    "packages/plugin-host/rpc.cjs": "0280164905e07c86e2269fb2dec201a57eb1aa7089f495cb801263434499bad9",
+    "src/plugins/rpc/RpcProcess.cpp": "0521ebdf0a08b6781b8b5d9a8a32c429fd24d635e72f16e2d4bec335de22198a",
+    "tests/plugin-rpc/PluginRpcTests.cpp": "042d62b205fe726301b40438d01dd2df6f675d04185ddebf8dd1dd1a47022519"
+  }
+}

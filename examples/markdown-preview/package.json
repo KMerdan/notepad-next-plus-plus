@@ -1,0 +1,10 @@
+{
+  "name": "@notepadnext/markdown-preview",
+  "version": "0.1.0",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "scripts": {"build": "tsc -p tsconfig.json", "test": "node --test test.cjs"},
+  "dependencies": {"markdown-it": "15.0.2"},
+  "devDependencies": {"@notepadnext/plugin-sdk": "file:../../packages/plugin-sdk", "typescript": "5.9.3"},
+  "engines": {"node": ">=24 <25"}
+}

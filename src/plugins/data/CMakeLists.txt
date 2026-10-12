@@ -1,0 +1,4 @@
+add_library(NotepadNextPluginData STATIC PluginDataStore.cpp PluginDataStore.h PluginDataService.cpp PluginDataService.h)
+target_link_libraries(NotepadNextPluginData PUBLIC Qt6::Core)
+target_include_directories(NotepadNextPluginData PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set_target_properties(NotepadNextPluginData PROPERTIES AUTOMOC ON)

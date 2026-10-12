@@ -1,0 +1,10 @@
+Test project /private/tmp/notepadnext-macos-release-build
+    Start 20: PluginPerformanceTests
+1/1 Test #20: PluginPerformanceTests ...........   Passed  125.93 sec
+
+100% tests passed out of 1
+
+Label Time Summary:
+performance    = 125.93 sec*proc (1 test)
+
+Total Test time (real) = 125.94 sec

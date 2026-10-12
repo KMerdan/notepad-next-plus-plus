@@ -1,0 +1,36 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[92333:259:1012/084923.633554:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[92333:259:1012/084923.633852:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+QINFO  : PluginWebviewTests::firstPanelKeepsEditorWindow() Native surface replacements: 0
+2026-10-12 08:49:23.903 PluginWebviewTests[92333:19823841] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::firstPanelKeepsEditorWindow()
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+PASS   : PluginWebviewTests::compatibleFullPagePolicyAndStateBridge()
+PASS   : PluginWebviewTests::focusNotificationsAfterDeferredDockCleanup()
+PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+PASS   : PluginWebviewTests::activationResourceStaging()
+2026-10-12 08:49:40.581 PluginWebviewTests[92333:19823841] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 08:49:40.586 PluginWebviewTests[92333:19823841] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 08:49:40.590 PluginWebviewTests[92333:19823841] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 08:49:40.591 PluginWebviewTests[92333:19823841] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 08:49:40.595 PluginWebviewTests[92333:19823841] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 08:49:40.596 PluginWebviewTests[92333:19823841] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+PASS   : PluginWebviewTests::installedManagerLifecycle()
+PASS   : PluginWebviewTests::realMarkdownSession()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 10 passed, 0 failed, 0 skipped, 0 blacklisted, 18614ms
+********* Finished testing of PluginWebviewTests *********

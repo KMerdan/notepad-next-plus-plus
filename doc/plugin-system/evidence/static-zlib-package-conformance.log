@@ -1,0 +1,102 @@
+Start testing: Oct 11 10:08 JST
+----------------------------------------------------------
+1/2 Testing: PluginPackageTests
+1/2 Test: PluginPackageTests
+Command: "/private/tmp/notepadnext-plugin-package-vendored-tests/PluginPackageTests"
+Directory: /private/tmp/notepadnext-plugin-package-vendored-tests
+"PluginPackageTests" start time: Oct 11 10:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginPackageTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginPackageTests::initTestCase()
+PASS   : PluginPackageTests::versionsAndRanges()
+PASS   : PluginPackageTests::immutableInstallationAndPersistence()
+PASS   : PluginPackageTests::updateTransactionsAndRecovery()
+PASS   : PluginPackageTests::registrationAndInstallationStaySeparate()
+PASS   : PluginPackageTests::metadataAndCompatibilityChecks()
+PASS   : PluginPackageTests::unsafePathsAndLinks()
+PASS   : PluginPackageTests::budgetsCancellationAndIntegrity()
+libpng error: Read Error
+PASS   : PluginPackageTests::icons()
+PASS   : PluginPackageTests::failedIndexWritesAndCorruptStorage()
+PASS   : PluginPackageTests::productionMarkdownPackage()
+PASS   : PluginPackageTests::zipRoundtripAndPackage()
+PASS   : PluginPackageTests::unsafeZip(../escape)
+PASS   : PluginPackageTests::unsafeZip(/absolute)
+PASS   : PluginPackageTests::unsafeZip(C:/drive)
+PASS   : PluginPackageTests::unsafeZip(a\b)
+PASS   : PluginPackageTests::unsafeZip(a//b)
+PASS   : PluginPackageTests::unsafeZip(./a)
+PASS   : PluginPackageTests::unsafeZip(a/../b)
+PASS   : PluginPackageTests::unsafeZip(CON.txt)
+PASS   : PluginPackageTests::unsafeZip(aux)
+PASS   : PluginPackageTests::unsafeZip(a.)
+PASS   : PluginPackageTests::unsafeZip(a )
+PASS   : PluginPackageTests::unsafeZip(a:b)
+PASS   : PluginPackageTests::unsafeZip(a?b)
+PASS   : PluginPackageTests::unsafeZip(.nnp-receipt.json)
+PASS   : PluginPackageTests::unsafeZip(case aliases)
+PASS   : PluginPackageTests::unsafeZip(duplicate file)
+PASS   : PluginPackageTests::unsafeZip(symlink)
+PASS   : PluginPackageTests::unsafeZip(device)
+PASS   : PluginPackageTests::unsafeZip(fifo)
+PASS   : PluginPackageTests::unsafeZip(encryption)
+PASS   : PluginPackageTests::unsafeZip(compression method)
+PASS   : PluginPackageTests::unsafeZip(invalid utf8)
+PASS   : PluginPackageTests::unsafeZip(undeclared utf8)
+PASS   : PluginPackageTests::unsafeZip(directory data)
+PASS   : PluginPackageTests::unsafeZip(file prefix)
+PASS   : PluginPackageTests::unsafeZip(directory prefix)
+PASS   : PluginPackageTests::unsafeZip(depth)
+PASS   : PluginPackageTests::unsafeZip(unicode aliases)
+PASS   : PluginPackageTests::corruptZipAndBudgets()
+PASS   : PluginPackageTests::cleanupTestCase()
+Totals: 42 passed, 0 failed, 0 skipped, 0 blacklisted, 227ms
+********* Finished testing of PluginPackageTests *********
+<end of output>
+Test time =   0.45 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPackageTests" end time: Oct 11 10:08 JST
+"PluginPackageTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: PluginGitHubReleaseTests
+2/2 Test: PluginGitHubReleaseTests
+Command: "/private/tmp/notepadnext-plugin-package-vendored-tests/PluginGitHubReleaseTests"
+Directory: /private/tmp/notepadnext-plugin-package-vendored-tests
+"PluginGitHubReleaseTests" start time: Oct 11 10:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of GitHubReleaseTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : GitHubReleaseTests::initTestCase()
+PASS   : GitHubReleaseTests::matchingAssetsAndNoInstallation()
+PASS   : GitHubReleaseTests::paginationAndBudget()
+PASS   : GitHubReleaseTests::downloadRedirectAndProvenance()
+PASS   : GitHubReleaseTests::invalidDownload(sha mismatch)
+PASS   : GitHubReleaseTests::invalidDownload(oversize)
+PASS   : GitHubReleaseTests::invalidDownload(truncated)
+PASS   : GitHubReleaseTests::invalidDownload(redirect host)
+PASS   : GitHubReleaseTests::invalidDownload(redirect http)
+PASS   : GitHubReleaseTests::invalidDownload(too many redirects)
+PASS   : GitHubReleaseTests::invalidDownload(rate limit)
+PASS   : GitHubReleaseTests::invalidDownload(not found)
+PASS   : GitHubReleaseTests::invalidDownload(cancel)
+PASS   : GitHubReleaseTests::invalidDownload(declared size)
+PASS   : GitHubReleaseTests::lookupFailureAndCancel()
+PASS   : GitHubReleaseTests::installTransaction()
+PASS   : GitHubReleaseTests::releaseUpdatePreparation()
+PASS   : GitHubReleaseTests::cleanupTestCase()
+Totals: 18 passed, 0 failed, 0 skipped, 0 blacklisted, 451ms
+********* Finished testing of GitHubReleaseTests *********
+<end of output>
+Test time =   0.66 sec
+----------------------------------------------------------
+Test Passed.
+"PluginGitHubReleaseTests" end time: Oct 11 10:08 JST
+"PluginGitHubReleaseTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 11 10:08 JST

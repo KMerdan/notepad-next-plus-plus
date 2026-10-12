@@ -1,0 +1,176 @@
+{
+  "recordedUtc": "2026-10-11T08:09:50.893340+00:00",
+  "goalComplete": false,
+  "status": "local-transaction-process-boundaries-passed",
+  "scope": "Original P0/I1/I2/I3/I4 and all 27 requirements retained. Production PackageStore/InstalledPluginRegistry/collection process-death and recovery proof on local macOS arm64 only.",
+  "environment": {
+    "platform": "macos",
+    "platformVersion": "27.0.1",
+    "architecture": "arm64",
+    "qtVersion": "6.10.0"
+  },
+  "checks": {
+    "packageRelatedCTest": {
+      "passed": true,
+      "targets": 3,
+      "elapsedSeconds": 6.02,
+      "casesIncludingSetupCleanup": {
+        "PluginPackageTests": 48,
+        "PluginTransactionCrashTests": 17,
+        "PluginGitHubReleaseTests": 42
+      },
+      "raw": "transaction-recovery-conformance.log",
+      "summary": "transaction-recovery-ctest.log"
+    },
+    "transactionDataRows": 15,
+    "logicalCheckpoints": 9,
+    "ownerIdentitiesConfirmedExited": 15,
+    "freshProcessRecoveryAndRepeat": true,
+    "afterCollectionAllCurrentAndHistoryPackagesVerified": true,
+    "copyPausedInsidePartialFile": true,
+    "livePublicationLockAndPreparedLeaseRetainedFiles": true,
+    "blockedRecoveryPreservesIndexAndRejectsMutations": true,
+    "pluginCodeNeverExecuted": true,
+    "unicodeAndSpacePaths": true
+  },
+  "rows": [
+    {
+      "phase": "copying",
+      "enabled": false,
+      "retainedPackageReferences": 0,
+      "collectedPackages": 0,
+      "collectedTemporaryDirectories": 1,
+      "staleLeases": 0
+    },
+    {
+      "phase": "published",
+      "enabled": false,
+      "retainedPackageReferences": 0,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "installed",
+      "enabled": false,
+      "retainedPackageReferences": 1,
+      "collectedPackages": 0,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "update-pending",
+      "enabled": false,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "update-pending",
+      "enabled": true,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "update-deferred",
+      "enabled": false,
+      "retainedPackageReferences": 3,
+      "collectedPackages": 0,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "update-deferred",
+      "enabled": true,
+      "retainedPackageReferences": 3,
+      "collectedPackages": 0,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "validation-started",
+      "enabled": false,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "validation-started",
+      "enabled": true,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "update-confirmed",
+      "enabled": false,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "update-confirmed",
+      "enabled": true,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "rollback-pending",
+      "enabled": false,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 0,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 0
+    },
+    {
+      "phase": "rollback-pending",
+      "enabled": true,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 0,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 0
+    },
+    {
+      "phase": "recovery-busy",
+      "enabled": false,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    },
+    {
+      "phase": "recovery-busy",
+      "enabled": true,
+      "retainedPackageReferences": 2,
+      "collectedPackages": 1,
+      "collectedTemporaryDirectories": 0,
+      "staleLeases": 1
+    }
+  ],
+  "rawMeasurements": "TransactionRecoveryMeasurements.json",
+  "sourceHashes": "TransactionRecoverySourceSha256.json",
+  "codegraph": "TransactionRecoveryCodeGraphValidation.json",
+  "methodology": [
+    "The parent creates immutable baseline/history packages using production APIs and runs a native helper linked to the production packages library. No production test hooks were added.",
+    "Copy interruption parks inside the existing copy-progress callback with a payload strictly between 0 and 4MiB; later markers occur after actual package publication or completed index transactions.",
+    "The parent verifies PID plus native creation time is Alive, force-terminates the same QProcess, waits for terminal CrashExit and confirms the native identity is Exited.",
+    "A fresh native process loads the durable index, verifies current/previous/pendingPrevious package integrity and reports recovered state. A second process must produce the same state and leave disk unchanged.",
+    "Collection then runs from the durable references. A third fresh verifier independently checks all retained versions after collection, so a shared reference-scanner omission cannot masquerade as success.",
+    "Enabled and disabled histories are both tested; deferred update keeps three versions and pending validation recovers original current/history/source. A live recovery index lock causes failure without rewriting the index or removing the live lock.",
+    "Throwing plugin entries would create an execution marker if imported; no marker is created. Processes operate only on isolated temporary directories."
+  ],
+  "knownLimits": [
+    "Checkpoint process termination does not simulate power loss, disk-full/fsync hardware faults or termination inside QSaveFile rename/fsync.",
+    "This fixture verifies package/index/collection boundaries; full GUI command publication, concurrent manager operations and application-exit fault scenarios remain separate.",
+    "Other platform execution, native Intel/minimum macOS, clean systems, full license/source review and formal notarization remain incomplete.",
+    "Current production inputs are unchanged from the signed NativeAppearance package; this test-only increment does not create a new package or rerun the unrelated performance benchmark."
+  ]
+}

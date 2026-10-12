@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-11",
+  "platform": "macOS 27.0.1 arm64",
+  "qt": "6.10.0",
+  "node": "24.21.0",
+  "python": "3.12.13",
+  "scope": "I3 VS Code core increment; full I3/I4 scope retained, not complete",
+  "compatVersion": "0.1.0",
+  "apiDeclarationBaseline": "1.100.0",
+  "sharedWireMethods": 29,
+  "sharedWireFixtures": 151,
+  "qtRpcCases": 205,
+  "nodeRpcCases": 33,
+  "nodeWireCases": 155,
+  "nodeHostCases": 10,
+  "nodeVSCodeCoreCases": 11,
+  "mirrorCases": 10,
+  "pythonContractAndBoundaryCases": 186,
+  "nativeDocumentCases": 16,
+  "nativeWebviewCases": 24,
+  "productionApplicationCases": 6,
+  "fullSuite": {
+    "targets": 19,
+    "passed": 19,
+    "elapsedSeconds": 157.0,
+    "log": "vscode-core-full-conformance.log",
+    "initialFailure": "vscode-core-initial-failure.log",
+    "initialFailureCause": "New metadata fixture retained a different repository URL; fixture corrected and independently reverified before the green full rerun"
+  },
+  "finalAffectedChecks": {
+    "targets": 4,
+    "passed": 4,
+    "elapsedSeconds": 3.27,
+    "log": "vscode-core-final-affected.log",
+    "reason": "After full suite: lineAt(Position) out-of-range fix and regular-file importer guard; new assertions and SDK/sample/current bundled production host pass",
+    "bundleRefreshFix": "Production-test target inherits LINK_DEPENDS. Both actual bundles byte-match all 18 current host files."
+  },
+  "finalNativeChecks": {
+    "casesIncludingSetupCleanup": 5,
+    "passed": 5,
+    "elapsedMs": 7566,
+    "log": "vscode-core-final-native.log"
+  },
+  "disabledEditor": {
+    "targets": 1,
+    "passed": 1,
+    "elapsedSeconds": 0.36,
+    "log": "vscode-core-disabled-editor.log",
+    "scope": "Compiled plugins-disabled editor open/save/reload/rename/close/exit; conditional plugin test bodies do not establish plugin behavior"
+  },
+  "accepted": {
+    "originalMITCommandSourceUnmodified": true,
+    "importerNoCodeOrHooksExecuted": true,
+    "actualInstallationDisabledByDefault": true,
+    "staticMenuLazyActivation": true,
+    "syncDisposableAndDisposeBeforeAck": true,
+    "moduleAliasAndRestoration": true,
+    "unknownApiDiagnostics": true,
+    "synchronousDocumentReadAndTypedRanges": true,
+    "unicodeEditorTransactionAndSingleUndoRedo": true,
+    "humanMessageWaitBeyondFiveSeconds": true,
+    "capabilityPublicationAndEightDialogLimit": true,
+    "stopUninstallOwnedMessageCleanup": true,
+    "productionBundledHost": true,
+    "sourceBundleHashesMatch": true
+  },
+  "stress": {
+    "cycles": 100,
+    "sessions": 200,
+    "elapsedMs": 81265,
+    "resourceBaselineRestoredEachCycle": true,
+    "isolatedPerformanceAcceptance": false,
+    "notes": "Whole-suite run with concurrent build/graph work; no isolated cost or preview latency acceptance"
+  },
+  "pending": [
+    "VS Code synchronous Webview proxy and licensed real Webview sample",
+    "adapter globalState/workspaceState/configuration semantics",
+    "full Markdown/image-cache/fault/performance acceptance",
+    "standalone author remote CI and release publication",
+    "clean-machine relocation, supported OS/architecture matrix, signing/notarization/distribution"
+  ],
+  "limits": {
+    "messageDialogsPerSession": 8,
+    "messageUtf8Bytes": 8192,
+    "messageActions": 8,
+    "actionUtf8Bytes": 1024,
+    "ordinaryCommandExecutionMs": 5000,
+    "executionDeadlinePausedDuringOwnedMessageDialogs": true,
+    "heartbeatOrShutdownDeadlinePaused": false,
+    "osSandbox": false
+  }
+}

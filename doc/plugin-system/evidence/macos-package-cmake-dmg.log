@@ -1,0 +1,57 @@
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  1%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  4%] Built target NotepadNext_NotepadNext_translations
+[  4%] Built target lua_autogen_timestamp_deps
+[  4%] Built target uchardet_autogen_timestamp_deps
+[  4%] Built target SingleApplication_autogen_timestamp_deps
+[  4%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  4%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  4%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  4%] Built target NotepadNext_qmlimportscan
+[  4%] Built target qtadvanceddocking-qt6_autogen
+[  5%] Built target NotepadNextPluginDiagnostics_autogen
+[  5%] Built target NotepadNextPluginRpc_autogen
+[  5%] Built target NotepadNextPluginSources_autogen
+[  5%] Built target NotepadNextPluginData_autogen
+[  5%] Built target scintilla_autogen
+[  5%] Built target editorconfig-core-qt_autogen
+[  5%] Built target lua_autogen
+[  6%] Built target uchardet_autogen
+[  6%] Built target QSimpleUpdater_autogen
+[  6%] Built target SingleApplication_autogen
+[  8%] Built target NotepadNextPluginDiagnostics
+[ 10%] Built target NotepadNextPluginData
+[ 10%] Built target NotepadNextPluginSources
+[ 13%] Built target NotepadNextPluginRpc
+[ 16%] Built target QSimpleUpdater
+[ 16%] Built target editorconfig-core-qt
+[ 16%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 25%] Built target uchardet
+[ 32%] Built target lua
+[ 33%] Built target SingleApplication
+[ 33%] Built target NotepadNextPluginPackages_autogen
+[ 38%] Built target qtadvanceddocking-qt6
+[ 41%] Built target NotepadNextPluginPackages
+[ 49%] Built target scintilla
+[ 49%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 49%] Built target lexilla_autogen_timestamp_deps
+[ 49%] Built target lexilla_autogen
+[ 49%] Built target NotepadNextPluginDocuments_autogen
+[ 49%] Built target NotepadNextPluginDocuments
+[ 49%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 49%] Built target NotepadNextPluginWebviews_autogen
+[ 50%] Built target NotepadNextPluginWebviews
+[ 50%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 52%] Built target NotepadNextPluginRuntime_autogen
+[ 52%] Built target NotepadNextPluginRuntime
+[ 81%] Built target lexilla
+[ 81%] Built target NotepadNext_autogen_timestamp_deps
+[ 82%] Automatic MOC and UIC for target NotepadNext
+[ 82%] Built target NotepadNext_autogen
+[100%] Built target NotepadNext
+{"bundle": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/payload/NotepadNext.app", "architecture": "arm64", "runtime": {"archiveSha256": "6239d4cf92d864487ec8cd3615038f7b67e7f58b77b21cd2f09ea9fbd68065fe", "originalBinarySha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b", "version": "v24.21.0"}, "signedNodeSha256": "9f9adf8060a8b4fb4382ead94bb4369aea8f0d825267a791cdf31a6b82bdeb2c", "signing": "ad-hoc-development", "notarized": false, "applicationNotarization": null, "cleanMachineValidated": false, "bundleValidation": "bundle-validation.json", "appBytes": 758299258, "dmg": {"path": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/NotepadNext-0.15.0-arm64.dmg", "bytes": 308452366, "sha256": "0fac53350e6e46ff5a7b365cf9afd9b61392c81c0329e14f5235eb4ecbb3280e"}}
+[100%] Built target plugin_dmg
+[100%] Built target dmg

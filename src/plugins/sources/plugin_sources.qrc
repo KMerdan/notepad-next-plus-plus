@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins">
+        <file alias="manifest.schema.json">../../../doc/plugin-system/manifest.schema.json</file>
+    </qresource>
+</RCC>

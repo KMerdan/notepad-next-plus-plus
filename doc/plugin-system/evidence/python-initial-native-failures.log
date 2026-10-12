@@ -1,0 +1,13 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[70271:259:1011/123210.880754:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[70271:259:1011/123210.882069:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+FAIL!  : PluginWebviewTests::pythonInspectorExample() '([&]{page->runJavaScript("document.querySelector('pre')?.textContent",[text](const QVariant &value){*text=value.toString();});return *text==(QString(QtPrivate::qMakeStringPrivate(u"" "Python sees unsaved 😀中\n")));})()' returned FALSE. ()
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-webviews/PluginWebviewTests.cpp(66)]
+QWARN  : PluginWebviewTests::pythonInspectorExample() Could not remove our own lock file "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/PluginWebviewTests-vpmmDs/store/.store.lock" maybe permissions changed meanwhile?
+FAIL!  : PluginWebviewTests::pythonPluginLifecycle() 'pyData.access(pyId,"storage","processId").value.toInteger()!=oldPid' returned FALSE. ()
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-webviews/PluginWebviewTests.cpp(108)]
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 2 passed, 2 failed, 0 skipped, 0 blacklisted, 19318ms
+********* Finished testing of PluginWebviewTests *********

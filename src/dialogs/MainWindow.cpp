@@ -71,6 +71,10 @@
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#ifdef NOTEPADNEXT_PLUGINS
+#include "PluginManagerDialog.h"
+#include "PluginEngine.h"
+#endif
 #include "ColumnEditorDialog.h"
 
 #include "TabsQuickActionsBar.h"
@@ -92,6 +96,7 @@
 #include "FadingIndicator.h"
 
 #include "ActionUtils.h"
+#include "NativeAppearance.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -123,6 +128,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
 
     // Set up the menus
+#ifdef NOTEPADNEXT_PLUGINS
+    connect(ui->actionPluginManager, &QAction::triggered, this, &MainWindow::showPluginManager);
+#else
+    ui->menuPlugins->menuAction()->setVisible(false);
+#endif
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFileDialog);
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::reloadFile);
@@ -913,7 +923,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         QMessageBox::about(this, QString(),
                             QStringLiteral("<h3>%1 v%2 %3</h3>"
                                     "<p>%4</p>"
-                                    "<p><a href=\"https://github.com/dail8859/NotepadNext\">Notepad Next Home Page</a></p>"
+                                    "<p><a href=\"https://github.com/KMerdan/notepad-next-plus-plus\">Notepad Next ++ Home Page</a></p><p>Independent fork of <a href=\"https://github.com/dail8859/NotepadNext\">Notepad Next</a> by Justin Dailey and contributors. Fork modifications by KMerdan, October 2026.</p>"
                                     R"(<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p> <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p> <p>You should have received a copy of the GNU General Public License along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
@@ -938,7 +948,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
         for (const auto editor : editorsList) {
             const auto iconPath = editor->isSavedToDisk() ? ":/icons/saved.png" : ":/icons/unsaved.png";
-            const auto action = editorsMenu->addAction(QIcon(iconPath), editor->getName());
+            const auto nativeIcon=NativeAppearance::symbolIcon(editor->isSavedToDisk()?"doc.text":"circle.fill",QIcon(iconPath),palette());
+            const auto action = editorsMenu->addAction(nativeIcon, editor->getName());
 
             if (editor->isActiveWindow()) {
                 auto font = action->font();
@@ -1022,6 +1033,24 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     restoreSettings();
 
     initUpdateCheck();
+#ifdef NOTEPADNEXT_PLUGINS
+    app->getPluginEngine()->attachWindow(this,ui->menuPlugins);
+#endif
+    NativeAppearance::install(this);
+}
+
+void MainWindow::showPluginManager()
+{
+#ifdef NOTEPADNEXT_PLUGINS
+    if (!pluginManagerDialog) {
+        pluginManagerDialog = new PluginManagerDialog(app->getRegisteredResourceRegistry(), this,app->pluginNetworkAccessManager(),
+                                                     app->getInstalledPluginRegistry(),app->getPluginInstaller(),app->getPluginEngine());
+        pluginManagerDialog->setAttribute(Qt::WA_DeleteOnClose);
+    }
+    pluginManagerDialog->show();
+    pluginManagerDialog->raise();
+    pluginManagerDialog->activateWindow();
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -1689,7 +1718,12 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
         fileName = editor->getName();
     }
 
+#ifdef Q_OS_MACOS
+    QString title = QStringLiteral("[*]%1 — Notepad Next ++").arg(isFile?QFileInfo(fileName).fileName():fileName);
+    setWindowFilePath(isFile?fileName:QString());
+#else
     QString title = QStringLiteral("[*]%1").arg(fileName);
+#endif
     if (app->isRunningAsAdmin()) {
         title += QStringLiteral(" - [%1]").arg(tr("Administrator"));
     }
@@ -1887,7 +1921,16 @@ void MainWindow::applyStyleSheet()
         custom.close();
     }
 
+#ifdef Q_OS_MACOS
+    // Platform chrome replaces the legacy fixed-color tab stylesheet. A user
+    // custom stylesheet still has the final say.
+    QString customSheet;
+    if(QFile::exists(fullPath)){QFile custom(fullPath);if(custom.open(QFile::ReadOnly))customSheet=custom.readAll();}
+    setProperty("nativeCustomStyle",customSheet);
+    setStyleSheet(NativeAppearance::chromeStyle(palette())+customSheet);
+#else
     setStyleSheet(sheet);
+#endif
 }
 
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
@@ -2186,7 +2229,7 @@ void MainWindow::checkForUpdates(bool silent)
 #ifdef Q_OS_WIN
     qInfo(Q_FUNC_INFO);
 
-    QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
+    QString url = "https://raw.githubusercontent.com/KMerdan/notepad-next-plus-plus/main/updates.json";
 
 #if defined(_M_ARM64) || defined(__aarch64__)
     // updates.json only points to the x64 installer, so ARM64 builds check

@@ -1,0 +1,31 @@
+********* Start testing of PluginDocumentTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDocumentTests::initTestCase()
+QWARN  : PluginDocumentTests::deletionDeltaUsesOldUnicodeCoordinates() qt.qpa.fonts: Populating font family aliases took 65 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginDocumentTests::deletionDeltaUsesOldUnicodeCoordinates()
+FAIL!  : PluginDocumentTests::multilineDeltaAndUndoRedo() Compared values are not the same
+   Actual   (events.size()): 2
+   Expected (1)            : 1
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-documents/PluginDocumentTests.cpp(23)]
+FAIL!  : PluginDocumentTests::atomicEditDeltaAndExplicitReset() Compared values are not the same
+   Actual   (events.size()): 2
+   Expected (1)            : 1
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-documents/PluginDocumentTests.cpp(28)]
+PASS   : PluginDocumentTests::unsupportedDeltaIsAnExplicitReset()
+PASS   : PluginDocumentTests::orderedDeltaTopologyAndMetadata()
+PASS   : PluginDocumentTests::snapshotAndIdentity()
+PASS   : PluginDocumentTests::unicodePositions()
+PASS   : PluginDocumentTests::invalidEncodingAndBudget()
+PASS   : PluginDocumentTests::editsAreAtomicAndUndoable()
+QWARN  : PluginDocumentTests::sequenceAndSwitching() QWidget::paintEngine: Should no longer be called
+QWARN  : PluginDocumentTests::sequenceAndSwitching() QWidget::paintEngine: Should no longer be called
+PASS   : PluginDocumentTests::sequenceAndSwitching()
+QINFO  : PluginDocumentTests::snapshotPerformance(10KiB) Snapshot bytes=10240, average=0.148ms
+PASS   : PluginDocumentTests::snapshotPerformance(10KiB)
+QINFO  : PluginDocumentTests::snapshotPerformance(100KiB) Snapshot bytes=102400, average=1.459ms
+PASS   : PluginDocumentTests::snapshotPerformance(100KiB)
+QINFO  : PluginDocumentTests::snapshotPerformance(1MiB) Snapshot bytes=1048576, average=14.165ms
+PASS   : PluginDocumentTests::snapshotPerformance(1MiB)
+PASS   : PluginDocumentTests::cleanupTestCase()
+Totals: 13 passed, 2 failed, 0 skipped, 0 blacklisted, 1760ms
+********* Finished testing of PluginDocumentTests *********

@@ -1,0 +1,2468 @@
+{
+    "architecture": "arm64",
+    "platform": "macos",
+    "platformVersion": "27.0.1",
+    "qtVersion": "6.10.0",
+    "rows": [
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+            },
+            "checkpoint": {
+                "copiedBytes": 66439,
+                "digest": "",
+                "phase": "copying"
+            },
+            "collectedPackages": 0,
+            "collectedTemporaryDirectories": 1,
+            "enabled": false,
+            "phase": "copying",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 0,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 0,
+            "terminatedIdentity": {
+                "pid": 38077,
+                "platform": "macos",
+                "start": "1791706055:5794"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "e3e617fdfb0e1495a26d7ab9fbf7227bb0a01008a9dc1b6ed3818ae8d38e4999",
+                "phase": "published"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "published",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 0,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38081,
+                "platform": "macos",
+                "start": "1791706055:114253"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "c9f1bfc491f5476e1904e7b8a05e3f1f674a166abfe15ef6e6fa3722e8a2c5f8",
+                        "enabled": false,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:35.265Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "probe-source"
+                        ]
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "c9f1bfc491f5476e1904e7b8a05e3f1f674a166abfe15ef6e6fa3722e8a2c5f8",
+                "phase": "installed"
+            },
+            "collectedPackages": 0,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "installed",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "c9f1bfc491f5476e1904e7b8a05e3f1f674a166abfe15ef6e6fa3722e8a2c5f8",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-AnypjB/store/c9f1bfc491f5476e1904e7b8a05e3f1f674a166abfe15ef6e6fa3722e8a2c5f8",
+                            "version": "1.2.4"
+                        },
+                        "sourceIds": [
+                            "probe-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 1,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38085,
+                "platform": "macos",
+                "start": "1791706055:224522"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "7f297d9c24b9ba338acd2e9fc6742e98869ce3d3733de04989e3360e73839e1f",
+                        "enabled": false,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:35.478Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "6c93e089af9746c6369e1220151e3d2c6bef83e24f217648e12356c3151f7cc1",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.418Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "0de7b6ecc34f142f27f68a8f2d2c01c104fb5922a873a8717835c78760ff0d16",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.430Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "7f297d9c24b9ba338acd2e9fc6742e98869ce3d3733de04989e3360e73839e1f",
+                "phase": "update-pending"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "update-pending",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "0de7b6ecc34f142f27f68a8f2d2c01c104fb5922a873a8717835c78760ff0d16",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-SsXljm/store/0de7b6ecc34f142f27f68a8f2d2c01c104fb5922a873a8717835c78760ff0d16",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "6c93e089af9746c6369e1220151e3d2c6bef83e24f217648e12356c3151f7cc1",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-SsXljm/store/6c93e089af9746c6369e1220151e3d2c6bef83e24f217648e12356c3151f7cc1",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38090,
+                "platform": "macos",
+                "start": "1791706055:435777"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "4e511e51faed9818bed2a06a57f5866049e923d4ed30a34ad0e6297574c3131f",
+                        "enabled": true,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:35.661Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "9c064ffc8e71c66c125043e84abc0d64675ccdefe574f4f9b8fe049462f4e92b",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.609Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "b2297f95056875e9dd723a559de33404b261ae9d43201ee38bad667f54b7400d",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.614Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "4e511e51faed9818bed2a06a57f5866049e923d4ed30a34ad0e6297574c3131f",
+                "phase": "update-pending"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": true,
+            "phase": "update-pending",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": true,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "b2297f95056875e9dd723a559de33404b261ae9d43201ee38bad667f54b7400d",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-JAOwXb/store/b2297f95056875e9dd723a559de33404b261ae9d43201ee38bad667f54b7400d",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "9c064ffc8e71c66c125043e84abc0d64675ccdefe574f4f9b8fe049462f4e92b",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-JAOwXb/store/9c064ffc8e71c66c125043e84abc0d64675ccdefe574f4f9b8fe049462f4e92b",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38094,
+                "platform": "macos",
+                "start": "1791706055:618217"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "43f3bab8b2f21d7d723cd2f86eead558c01a950b6309c3e78f475456e6c5356a",
+                        "enabled": false,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:35.842Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "106abb450972dd001d68af54539248037c9c6b794215d38d54302bef3cdbf0e0",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.795Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "c8bf3a90606b0810f50b0b0e9dbaed11e55725be8acdcb7c165d98f8c6e0b8fc",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.798Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true,
+                        "validationDeferred": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "43f3bab8b2f21d7d723cd2f86eead558c01a950b6309c3e78f475456e6c5356a",
+                "phase": "update-deferred"
+            },
+            "collectedPackages": 0,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "update-deferred",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "43f3bab8b2f21d7d723cd2f86eead558c01a950b6309c3e78f475456e6c5356a",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-iJKQcV/store/43f3bab8b2f21d7d723cd2f86eead558c01a950b6309c3e78f475456e6c5356a",
+                            "version": "1.2.4"
+                        },
+                        "pendingPrevious": {
+                            "digest": "106abb450972dd001d68af54539248037c9c6b794215d38d54302bef3cdbf0e0",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-iJKQcV/store/106abb450972dd001d68af54539248037c9c6b794215d38d54302bef3cdbf0e0",
+                            "version": "1.2.2"
+                        },
+                        "previous": {
+                            "digest": "c8bf3a90606b0810f50b0b0e9dbaed11e55725be8acdcb7c165d98f8c6e0b8fc",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-iJKQcV/store/c8bf3a90606b0810f50b0b0e9dbaed11e55725be8acdcb7c165d98f8c6e0b8fc",
+                            "version": "1.2.3"
+                        },
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true,
+                        "validationDeferred": true
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 3,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38098,
+                "platform": "macos",
+                "start": "1791706055:801833"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "263d7423dbedf58d7f19575d11357cafee2f7bc525154fa5f1f9a720fd3d41fb",
+                        "enabled": true,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:36.032Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "82d7f9464587935fc3f34d6ff3ea47fa072a62660cd08e0bcbd699e95d55768a",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.985Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "bb1dbd11d072b00175b1a00c5eefe9f4dc9d3e8e4198196e958c9b6d09016b82",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:35.989Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true,
+                        "validationDeferred": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "263d7423dbedf58d7f19575d11357cafee2f7bc525154fa5f1f9a720fd3d41fb",
+                "phase": "update-deferred"
+            },
+            "collectedPackages": 0,
+            "collectedTemporaryDirectories": 0,
+            "enabled": true,
+            "phase": "update-deferred",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": true,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "263d7423dbedf58d7f19575d11357cafee2f7bc525154fa5f1f9a720fd3d41fb",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-bKGUNo/store/263d7423dbedf58d7f19575d11357cafee2f7bc525154fa5f1f9a720fd3d41fb",
+                            "version": "1.2.4"
+                        },
+                        "pendingPrevious": {
+                            "digest": "82d7f9464587935fc3f34d6ff3ea47fa072a62660cd08e0bcbd699e95d55768a",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-bKGUNo/store/82d7f9464587935fc3f34d6ff3ea47fa072a62660cd08e0bcbd699e95d55768a",
+                            "version": "1.2.2"
+                        },
+                        "previous": {
+                            "digest": "bb1dbd11d072b00175b1a00c5eefe9f4dc9d3e8e4198196e958c9b6d09016b82",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-bKGUNo/store/bb1dbd11d072b00175b1a00c5eefe9f4dc9d3e8e4198196e958c9b6d09016b82",
+                            "version": "1.2.3"
+                        },
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true,
+                        "validationDeferred": true
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 3,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38102,
+                "platform": "macos",
+                "start": "1791706055:993460"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "f6a14b399a468b56a8f2cd57ef60c7163fdbafff2382a61bedcb7cda637e7277",
+                        "enabled": false,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:36.219Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "1a2eda78546b798c828fb7e0e2a1a21e4ca1bfaaf9c84dc9cd2bc1b408051132",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.172Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "6a16176d55fcc7b308d887dd871f79e019c09ede2c0210541afb383a610d8e97",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.175Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "f6a14b399a468b56a8f2cd57ef60c7163fdbafff2382a61bedcb7cda637e7277",
+                "phase": "validation-started"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "validation-started",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "6a16176d55fcc7b308d887dd871f79e019c09ede2c0210541afb383a610d8e97",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-ANbqdE/store/6a16176d55fcc7b308d887dd871f79e019c09ede2c0210541afb383a610d8e97",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "1a2eda78546b798c828fb7e0e2a1a21e4ca1bfaaf9c84dc9cd2bc1b408051132",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-ANbqdE/store/1a2eda78546b798c828fb7e0e2a1a21e4ca1bfaaf9c84dc9cd2bc1b408051132",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38106,
+                "platform": "macos",
+                "start": "1791706056:179496"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "53bd2099b64352658f2d1043f85574c2d3f9c73cb01659b4cff23a36478af8db",
+                        "enabled": true,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:36.349Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "1d19dd30035b5c04dfbc8f29523b0c5fb249861c6d966ef1deaa9299c6b33747",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.303Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "2836a2a0cd9c7fdc6e319023afd54f6b2bc10ef4c575d6a99ac0a3277655ac86",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.306Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "53bd2099b64352658f2d1043f85574c2d3f9c73cb01659b4cff23a36478af8db",
+                "phase": "validation-started"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": true,
+            "phase": "validation-started",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": true,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "2836a2a0cd9c7fdc6e319023afd54f6b2bc10ef4c575d6a99ac0a3277655ac86",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-fDZTKZ/store/2836a2a0cd9c7fdc6e319023afd54f6b2bc10ef4c575d6a99ac0a3277655ac86",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "1d19dd30035b5c04dfbc8f29523b0c5fb249861c6d966ef1deaa9299c6b33747",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-fDZTKZ/store/1d19dd30035b5c04dfbc8f29523b0c5fb249861c6d966ef1deaa9299c6b33747",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38110,
+                "platform": "macos",
+                "start": "1791706056:310101"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "6b97615bc314d92bbe97c244e9e3675ff01622ae949343cfc39e08f51ea6633f",
+                        "enabled": false,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:36.473Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "4b9344b60aadac449c242c3e64cf80694c9c171482b1316fa31e476bc1db4e2f",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.429Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": false
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "6b97615bc314d92bbe97c244e9e3675ff01622ae949343cfc39e08f51ea6633f",
+                "phase": "update-confirmed"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "update-confirmed",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "6b97615bc314d92bbe97c244e9e3675ff01622ae949343cfc39e08f51ea6633f",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-jWTfxC/store/6b97615bc314d92bbe97c244e9e3675ff01622ae949343cfc39e08f51ea6633f",
+                            "version": "1.2.4"
+                        },
+                        "previous": {
+                            "digest": "4b9344b60aadac449c242c3e64cf80694c9c171482b1316fa31e476bc1db4e2f",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-jWTfxC/store/4b9344b60aadac449c242c3e64cf80694c9c171482b1316fa31e476bc1db4e2f",
+                            "version": "1.2.3"
+                        },
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38114,
+                "platform": "macos",
+                "start": "1791706056:433280"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "2bcfde274587200c3d2723677bf76af20b414af24378a8e72c4428329643abdf",
+                        "enabled": true,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:36.659Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "ac711c20381eaae8f86de422aa99797037072e97aab811f314d2e8e6c0f21e42",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.615Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": false
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "2bcfde274587200c3d2723677bf76af20b414af24378a8e72c4428329643abdf",
+                "phase": "update-confirmed"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": true,
+            "phase": "update-confirmed",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": true,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "2bcfde274587200c3d2723677bf76af20b414af24378a8e72c4428329643abdf",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-MNbJlj/store/2bcfde274587200c3d2723677bf76af20b414af24378a8e72c4428329643abdf",
+                            "version": "1.2.4"
+                        },
+                        "previous": {
+                            "digest": "ac711c20381eaae8f86de422aa99797037072e97aab811f314d2e8e6c0f21e42",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-MNbJlj/store/ac711c20381eaae8f86de422aa99797037072e97aab811f314d2e8e6c0f21e42",
+                            "version": "1.2.3"
+                        },
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38118,
+                "platform": "macos",
+                "start": "1791706056:619111"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 903,
+                        "digest": "d76cd235daa417c16fc6c16b3a718980ff921addc7e68ef0db9b80c951daf1d7",
+                        "enabled": false,
+                        "files": 4,
+                        "installedAt": "2026-10-11T08:07:36.848Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.2"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "d76cd235daa417c16fc6c16b3a718980ff921addc7e68ef0db9b80c951daf1d7",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.848Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "df10dd9d75785358ccd1c3adb01781722e427b1b219963443a7b04572633f70e",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.852Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "d76cd235daa417c16fc6c16b3a718980ff921addc7e68ef0db9b80c951daf1d7",
+                "phase": "rollback-pending"
+            },
+            "collectedPackages": 0,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "rollback-pending",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "df10dd9d75785358ccd1c3adb01781722e427b1b219963443a7b04572633f70e",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-whMRLh/store/df10dd9d75785358ccd1c3adb01781722e427b1b219963443a7b04572633f70e",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "d76cd235daa417c16fc6c16b3a718980ff921addc7e68ef0db9b80c951daf1d7",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-whMRLh/store/d76cd235daa417c16fc6c16b3a718980ff921addc7e68ef0db9b80c951daf1d7",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 0,
+            "terminatedIdentity": {
+                "pid": 38122,
+                "platform": "macos",
+                "start": "1791706056:855636"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 903,
+                        "digest": "fd2c370702feefe7e7a2f1ab8df44bf3d2d67d35e41355dea8084e1dd19d64f7",
+                        "enabled": true,
+                        "files": 4,
+                        "installedAt": "2026-10-11T08:07:36.967Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.2"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "fd2c370702feefe7e7a2f1ab8df44bf3d2d67d35e41355dea8084e1dd19d64f7",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.967Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "f83bef08e0610bc83d692441152e243d5d6c8e03fbadcc378415a9d4ce3e6f2d",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:36.970Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "fd2c370702feefe7e7a2f1ab8df44bf3d2d67d35e41355dea8084e1dd19d64f7",
+                "phase": "rollback-pending"
+            },
+            "collectedPackages": 0,
+            "collectedTemporaryDirectories": 0,
+            "enabled": true,
+            "phase": "rollback-pending",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": true,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "f83bef08e0610bc83d692441152e243d5d6c8e03fbadcc378415a9d4ce3e6f2d",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-RPgtll/store/f83bef08e0610bc83d692441152e243d5d6c8e03fbadcc378415a9d4ce3e6f2d",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "fd2c370702feefe7e7a2f1ab8df44bf3d2d67d35e41355dea8084e1dd19d64f7",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-RPgtll/store/fd2c370702feefe7e7a2f1ab8df44bf3d2d67d35e41355dea8084e1dd19d64f7",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 0,
+            "terminatedIdentity": {
+                "pid": 38126,
+                "platform": "macos",
+                "start": "1791706056:973886"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "5b5d06945f9fd0180e1c11efb2d4951a92a016fe896b3971f6be5881695325cc",
+                        "enabled": false,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:37.149Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "63889378b31d52a4d6116ada868c6aa62d7198dc68c2bef103bb84427cf85f49",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:37.090Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "1de5c7f08bee079ac53a73cc85da077662c81c7698a6a1129cab291a35559bdc",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:37.095Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "5b5d06945f9fd0180e1c11efb2d4951a92a016fe896b3971f6be5881695325cc",
+                "phase": "recovery-busy"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": false,
+            "phase": "recovery-busy",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": false,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "1de5c7f08bee079ac53a73cc85da077662c81c7698a6a1129cab291a35559bdc",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-JoaZoZ/store/1de5c7f08bee079ac53a73cc85da077662c81c7698a6a1129cab291a35559bdc",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "63889378b31d52a4d6116ada868c6aa62d7198dc68c2bef103bb84427cf85f49",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-JoaZoZ/store/63889378b31d52a4d6116ada868c6aa62d7198dc68c2bef103bb84427cf85f49",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38130,
+                "platform": "macos",
+                "start": "1791706057:98870"
+            }
+        },
+        {
+            "afterCollectionIntegrityVerified": true,
+            "beforeRecoveryIndex": {
+                "plugins": [
+                    {
+                        "bytes": 4195207,
+                        "digest": "1ba1fe18f5d2013d5d20b8b4cf1f7e7efa1df8102fc0d269285808d22146b225",
+                        "enabled": true,
+                        "files": 5,
+                        "installedAt": "2026-10-11T08:07:37.358Z",
+                        "metadata": {
+                            "activationEvents": [
+                                "onCommand:tests.transaction.open"
+                            ],
+                            "capabilities": {
+                                "optional": [
+                                ],
+                                "required": [
+                                    "commands@1"
+                                ]
+                            },
+                            "contributes": {
+                                "commands": [
+                                    {
+                                        "id": "tests.transaction.open",
+                                        "title": "Open"
+                                    }
+                                ]
+                            },
+                            "engines": {
+                                "api": "^0.1.0",
+                                "notepadnext": ">=0.15.0 <0.16.0"
+                            },
+                            "id": "tests.transaction",
+                            "list": false,
+                            "manifestVersion": 1,
+                            "name": "Transaction fixture",
+                            "repository": "https://github.com/tests/transaction",
+                            "runtime": {
+                                "entry": "dist/index.cjs",
+                                "kind": "node"
+                            },
+                            "version": "1.2.4"
+                        },
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "pendingPrevious": {
+                            "bytes": 903,
+                            "digest": "566756ea863ce882d8a00f4c314344c690a55f8c100f1f957396361f7fe201b2",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:37.290Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.2"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "previous": {
+                            "bytes": 903,
+                            "digest": "a3e1f57515c2cc0c9e652d3348d28e92195d25515fab26ef67a02b328853d016",
+                            "enabled": false,
+                            "files": 4,
+                            "installedAt": "2026-10-11T08:07:37.294Z",
+                            "metadata": {
+                                "activationEvents": [
+                                    "onCommand:tests.transaction.open"
+                                ],
+                                "capabilities": {
+                                    "optional": [
+                                    ],
+                                    "required": [
+                                        "commands@1"
+                                    ]
+                                },
+                                "contributes": {
+                                    "commands": [
+                                        {
+                                            "id": "tests.transaction.open",
+                                            "title": "Open"
+                                        }
+                                    ]
+                                },
+                                "engines": {
+                                    "api": "^0.1.0",
+                                    "notepadnext": ">=0.15.0 <0.16.0"
+                                },
+                                "id": "tests.transaction",
+                                "list": false,
+                                "manifestVersion": 1,
+                                "name": "Transaction fixture",
+                                "repository": "https://github.com/tests/transaction",
+                                "runtime": {
+                                    "entry": "dist/index.cjs",
+                                    "kind": "node"
+                                },
+                                "version": "1.2.3"
+                            },
+                            "origin": {
+                                "kind": "local"
+                            },
+                            "repository": "https://github.com/tests/transaction",
+                            "sourceIds": [
+                                "original-source"
+                            ]
+                        },
+                        "repository": "https://github.com/tests/transaction",
+                        "sourceIds": [
+                            "candidate-source"
+                        ],
+                        "updatePending": true
+                    }
+                ],
+                "schemaVersion": 1
+            },
+            "checkpoint": {
+                "copiedBytes": 0,
+                "digest": "1ba1fe18f5d2013d5d20b8b4cf1f7e7efa1df8102fc0d269285808d22146b225",
+                "phase": "recovery-busy"
+            },
+            "collectedPackages": 1,
+            "collectedTemporaryDirectories": 0,
+            "enabled": true,
+            "phase": "recovery-busy",
+            "pluginCodeExecuted": false,
+            "processExited": true,
+            "recovered": {
+                "plugins": [
+                    {
+                        "enabled": true,
+                        "id": "tests.transaction",
+                        "origin": {
+                            "kind": "local"
+                        },
+                        "package": {
+                            "digest": "a3e1f57515c2cc0c9e652d3348d28e92195d25515fab26ef67a02b328853d016",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-tJTtMY/store/a3e1f57515c2cc0c9e652d3348d28e92195d25515fab26ef67a02b328853d016",
+                            "version": "1.2.3"
+                        },
+                        "previous": {
+                            "digest": "566756ea863ce882d8a00f4c314344c690a55f8c100f1f957396361f7fe201b2",
+                            "root": "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/NotepadNext 安装中断-tJTtMY/store/566756ea863ce882d8a00f4c314344c690a55f8c100f1f957396361f7fe201b2",
+                            "version": "1.2.2"
+                        },
+                        "sourceIds": [
+                            "original-source"
+                        ],
+                        "updatePending": false,
+                        "validationDeferred": false
+                    }
+                ],
+                "verified": true
+            },
+            "retainedPackageReferences": 2,
+            "secondRecoveryIdentical": true,
+            "staleLeases": 1,
+            "terminatedIdentity": {
+                "pid": 38135,
+                "platform": "macos",
+                "start": "1791706057:297909"
+            }
+        }
+    ],
+    "scope": "Real native process termination at explicit production transaction checkpoints; not power-loss or an in-syscall atomic-rename/fsync proof."
+}

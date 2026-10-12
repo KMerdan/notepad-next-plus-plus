@@ -109,6 +109,7 @@ private:
     FindOptions findOptions() const;
 
     void showMessage(const QString &message, const QString &color);
+    void setupMacLayout();
     int ensureMarkIndicator();
     BookMarkDecorator *bookMarkDecorator() const;
     void clearAllBookmarks();

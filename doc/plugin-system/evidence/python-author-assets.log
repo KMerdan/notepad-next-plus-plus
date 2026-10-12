@@ -1,0 +1,15 @@
+{
+  "directory": "/private/tmp/notepadnext-python-inspector-assets-01",
+  "schemaVersion": 1,
+  "pluginId": "notepadnext.python-inspector",
+  "version": "0.1.0",
+  "assets": [
+    {
+      "name": "notepadnext-plugin.zip",
+      "size": 13867,
+      "sha256": "84a5a9fe6543a263d3e6b0a38cb43a32dfef6e21b1366b0ba095f56c9a2d3588"
+    }
+  ],
+  "entries": 6,
+  "sourceMetadataSha256": "0c3e7f43fda066630c346d51d14e2025cde617488d8b2593ab6b12e5796283ed"
+}

@@ -1,0 +1,92 @@
+{
+  "graph": {
+    "status": "ok",
+    "summary": "Graph statistics for NotepadNext:\n  Files: 1011\n  Total nodes: 21997\n  Total edges: 114010\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T14:47:13\n\nNodes by kind:\n  Class: 2162\n  File: 1011\n  Function: 18634\n  Signal: 7\n  Test: 183\n\nEdges by kind:\n  CALLS: 81683\n  CONTAINS: 23061\n  IMPORTS_FROM: 7015\n  INHERITS: 445\n  REFERENCES: 607\n  TESTED_BY: 1199\n\nCALLS by target resolution: 11437 direct, 70246 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+    "total_nodes": 21997,
+    "total_edges": 114010,
+    "nodes_by_kind": {
+      "Class": 2162,
+      "File": 1011,
+      "Function": 18634,
+      "Signal": 7,
+      "Test": 183
+    },
+    "edges_by_kind": {
+      "CALLS": 81683,
+      "CONTAINS": 23061,
+      "IMPORTS_FROM": 7015,
+      "INHERITS": 445,
+      "REFERENCES": 607,
+      "TESTED_BY": 1199
+    },
+    "calls_by_resolution": {
+      "direct": 11437,
+      "unresolved": 70246
+    },
+    "languages": [
+      "bash",
+      "c",
+      "cpp",
+      "dart",
+      "gdscript",
+      "javascript",
+      "julia",
+      "lua",
+      "nix",
+      "objc",
+      "perl",
+      "php",
+      "powershell",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "sql",
+      "typescript",
+      "vbnet",
+      "verilog",
+      "zig"
+    ],
+    "files_count": 1011,
+    "last_updated": "2026-10-11T14:47:13",
+    "embeddings_count": 0,
+    "_graph": {
+      "updated_at": "2026-10-11T14:47:13",
+      "age_seconds": 65,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "fileSummary": {
+    "status": "ok",
+    "pattern": "file_summary",
+    "target": "packages/plugin-host/vscode/persistence.cjs",
+    "description": "Get a summary of all nodes in a file",
+    "summary": "Found 35 result(s) for file_summary('packages/plugin-host/vscode/persistence.cjs') — showing 2, 33 omitted",
+    "result_count": 35,
+    "results_omitted": 33,
+    "results": [
+      {
+        "name": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/persistence.cjs",
+        "kind": "File",
+        "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/persistence.cjs"
+      },
+      {
+        "name": "own",
+        "kind": "Function",
+        "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/persistence.cjs"
+      }
+    ],
+    "_graph": {
+      "updated_at": "2026-10-11T14:47:13",
+      "age_seconds": 67,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "scope": "Working-tree structure and symbol discovery; behavioral evidence comes from tests."
+}

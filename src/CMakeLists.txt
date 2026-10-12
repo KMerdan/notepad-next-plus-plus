@@ -1,7 +1,25 @@
+add_subdirectory(appearance)
+if(NOTEPADNEXT_PLUGINS OR NOTEPADNEXT_BUILD_PLUGIN_TESTS)
+    add_subdirectory(plugins/sources)
+    add_subdirectory(plugins/packages)
+    add_subdirectory(plugins/rpc)
+    add_subdirectory(plugins/documents)
+endif()
+if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_PLUGIN_WEBVIEWS)
+    find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets WebChannel)
+    add_subdirectory(plugins/webviews)
+endif()
+if(NOTEPADNEXT_PLUGINS OR NOTEPADNEXT_BUILD_PLUGIN_TESTS)
+    add_subdirectory(plugins/runtime)
+endif()
+
+
 qt_add_executable(NotepadNext
 	WIN32
 	MACOSX_BUNDLE
 	ActionUtils.h
+	NativeAppearance.h
+	NativeAppearance.cpp
 	ApplicationSettings.h
 	ByteArrayUtils.h
 	ColorPickerDelegate.h
@@ -189,6 +207,7 @@ qt_add_executable(NotepadNext
 )
 
 set_target_properties(NotepadNext PROPERTIES
+    OUTPUT_NAME "NotepadNextPlusPlus"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/deploy/macos/info.plist
 )
 
@@ -227,6 +246,7 @@ if(WIN32)
 endif()
 
 target_link_libraries(NotepadNext
+    PRIVATE NotepadNextAppearance
     PRIVATE
         Qt6::Core
         Qt6::Gui
@@ -243,7 +263,20 @@ target_link_libraries(NotepadNext
         uchardet
 )
 
+if(NOTEPADNEXT_PLUGINS)
+    target_sources(NotepadNext PRIVATE dialogs/PluginManagerDialog.cpp dialogs/PluginManagerDialog.h)
+    target_link_libraries(NotepadNext PRIVATE NotepadNextPluginSources NotepadNextPluginRuntime)
+    target_compile_definitions(NotepadNext PRIVATE NOTEPADNEXT_PLUGINS)
+    if(NOTEPADNEXT_PLUGIN_WEBVIEWS)
+        target_link_libraries(NotepadNext PRIVATE NotepadNextPluginWebviews)
+        target_compile_definitions(NotepadNext PRIVATE NOTEPADNEXT_PLUGIN_WEBVIEWS)
+    endif()
+endif()
+
+include(${CMAKE_SOURCE_DIR}/cmake/PluginRuntime.cmake)
+
 if(APPLE)
+    target_link_libraries(NotepadNext PRIVATE "-framework AppKit" "-framework CoreGraphics")
     # Workaround for Qt 6.5/6.8 on macOS with newer Xcode that removed deprecated AGL framework
     # These linker flags prevent the linker from failing when Qt tries to reference AGL
     target_link_options(NotepadNext PRIVATE "LINKER:-flat_namespace" "LINKER:-undefined,suppress")
@@ -255,6 +288,8 @@ target_compile_definitions(NotepadNext
         QSIMPLEUPDATER_STATIC
         QAPPLICATION_CLASS=QApplication
         APP_VERSION="${PROJECT_VERSION}"
+        APP_DISPLAY_NAME="${APP_DISPLAY_NAME}"
+        APP_REPOSITORY_URL="${APP_REPOSITORY_URL}"
         APP_COPYRIGHT="${APP_COPYRIGHT}"
         APP_DISTRIBUTION="${APP_DISTRIBUTION}"
 )

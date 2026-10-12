@@ -20,6 +20,8 @@
 #include "ColumnEditorDialog.h"
 #include "UndoAction.h"
 #include "ui_ColumnEditorDialog.h"
+#include "NativeAppearance.h"
+#include <QPushButton>
 
 
 ColumnEditorDialog::ColumnEditorDialog(MainWindow *parent) :
@@ -60,6 +62,12 @@ ColumnEditorDialog::ColumnEditorDialog(MainWindow *parent) :
     });
 
      ui->txtText->setFocus();
+#ifdef Q_OS_MACOS
+    NativeAppearance::polishDialog(this,tr("Column Editing"),tr("Insert text or a number sequence at the current column."));
+    ui->txtText->setAccessibleName(tr("Text to insert"));ui->lblStart->setBuddy(ui->sbxStart);ui->label_2->setBuddy(ui->sbxStep);
+    auto *insert=ui->buttonBox->button(QDialogButtonBox::Ok);insert->setText(tr("Insert"));NativeAppearance::setDialogPrimary(this,insert);
+    setMinimumSize(440,380);resize(480,410);
+#endif
 }
 
 ColumnEditorDialog::~ColumnEditorDialog()

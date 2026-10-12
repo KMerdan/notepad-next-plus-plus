@@ -1,0 +1,18 @@
+1/16 Test  #1: PluginSourceTests ................   Passed    0.81 sec
+2/16 Test  #2: PluginPackageTests ...............   Passed    1.44 sec
+3/16 Test  #3: PluginGitHubReleaseTests .........   Passed    0.82 sec
+4/16 Test  #4: PluginParentCrashTests ...........   Passed    0.77 sec
+5/16 Test  #5: PluginPythonContractTests ........   Passed    0.12 sec
+6/16 Test  #6: PluginPythonHostTests ............   Passed    0.44 sec
+7/16 Test  #7: PluginRpcTests ...................   Passed   14.34 sec
+8/16 Test  #8: PluginNodeRpcTests ...............   Passed    0.10 sec
+9/16 Test  #9: PluginNodeHostTests ..............   Passed    0.38 sec
+10/16 Test #10: PluginNodeWireTests ..............   Passed    0.09 sec
+11/16 Test #11: PluginSdkPackageTests ............   Passed    0.16 sec
+12/16 Test #12: PluginDocumentTests ..............   Passed    1.70 sec
+13/16 Test #13: PluginDataTests ..................   Passed    0.58 sec
+14/16 Test #14: PluginDiagnosticTests ............   Passed    2.00 sec
+15/16 Test #15: PluginWebviewTests ...............   Passed  121.93 sec
+16/16 Test #16: PluginApplicationTests ...........   Passed    2.29 sec
+100% tests passed out of 16
+Total Test time (real) = 147.99 sec

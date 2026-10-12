@@ -1,14 +1,14 @@
 [Desktop Entry]
 Categories=Qt;TextEditor;Utility;
-Exec=NotepadNext %f
+Exec=NotepadNextPlusPlus %f
 Icon=NotepadNext
 MimeType=text/plain;
 StartupNotify=true
 Type=Application
 Terminal=false
 
-Name=Notepad Next
-Name[pt_BR]=Editor de Texto Notepad Next
+Name=Notepad Next ++
+Name[pt_BR]=Editor de Texto Notepad Next ++
 
 GenericName=Text Editor
 GenericName[pt_BR]=Editor de Texto

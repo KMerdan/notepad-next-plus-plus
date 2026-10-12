@@ -1,0 +1,285 @@
+{
+  "title": "NotepadNext Plugin Manager: resource registration and lifecycle draft",
+  "date": "2026-10-11",
+  "fileKey": "cJPphvdJ1ztsU0tzMFIBpD",
+  "url": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=23-8653",
+  "installationOverviewUrl": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=1-1456",
+  "previewUrl": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=1-1474",
+  "prototypeUrl": "https://www.figma.com/proto/cJPphvdJ1ztsU0tzMFIBpD?node-id=24-8653&starting-point-node-id=24%3A8653",
+  "overviewNode": "23:8653",
+  "installationOverviewNode": "1:1456",
+  "screens": [
+    {
+      "nodeId": "1:1461",
+      "purpose": "Install from a GitHub repository"
+    },
+    {
+      "nodeId": "1:1465",
+      "purpose": "Installed plugin list, enabled and waiting for first command"
+    },
+    {
+      "nodeId": "1:1470",
+      "purpose": "Open through Plugins menu or toolbar icon"
+    },
+    {
+      "nodeId": "1:1474",
+      "purpose": "Edit Markdown with a live preview in the right dock"
+    }
+  ],
+  "lifecycle": {
+    "reviewScreenCount": 10,
+    "reviewStates": [
+      {
+        "kind": "LIST",
+        "nodeId": "13:4002",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "INSPECT",
+        "nodeId": "13:4397",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "UPDATE",
+        "nodeId": "13:4792",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "PROGRESS",
+        "nodeId": "13:5202",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "SUCCESS",
+        "nodeId": "13:5544",
+        "version": "0.2.0"
+      },
+      {
+        "kind": "DISABLED",
+        "nodeId": "14:3372",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "UNINSTALL",
+        "nodeId": "14:3714",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "REMOVED",
+        "nodeId": "14:4129",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "ROLLBACK",
+        "nodeId": "14:4409",
+        "version": "0.1.0"
+      },
+      {
+        "kind": "CRASH",
+        "nodeId": "14:4759",
+        "version": "0.1.0"
+      }
+    ],
+    "prototypeHelperStates": [
+      {
+        "kind": "REENABLED",
+        "nodeId": "14:5111"
+      },
+      {
+        "kind": "RESTARTED",
+        "nodeId": "14:5451"
+      }
+    ],
+    "returnToEditorStates": [
+      {
+        "kind": "DISABLED",
+        "rootId": "17:8009"
+      },
+      {
+        "kind": "REMOVED",
+        "rootId": "17:8199"
+      },
+      {
+        "kind": "REENABLED",
+        "rootId": "17:8389"
+      }
+    ],
+    "flows": [
+      {
+        "nodeId": "13:4002",
+        "name": "Plugin Manager · List / Inspect"
+      },
+      {
+        "nodeId": "13:4792",
+        "name": "Update · Confirm / Progress / Success"
+      },
+      {
+        "nodeId": "14:3372",
+        "name": "Disable / Enable / Preview"
+      },
+      {
+        "nodeId": "14:3714",
+        "name": "Uninstall / Keep data / Reinstall"
+      },
+      {
+        "nodeId": "14:4409",
+        "name": "Update failure / Rollback"
+      },
+      {
+        "nodeId": "14:4759",
+        "name": "Crash / Restart"
+      },
+      {
+        "nodeId": "1:1461",
+        "name": "Install / Enable / Preview"
+      },
+      {
+        "nodeId": "1:1474",
+        "name": "Markdown preview"
+      }
+    ],
+    "stateDimensions": [
+      "Installed version",
+      "Enablement",
+      "Plugin process",
+      "Open preview panels"
+    ],
+    "defaultUninstallDataPolicy": "Keep settings and data; separately opt in to delete them.",
+    "enablePolicy": "Restore commands immediately; start process on first command.",
+    "updatePolicy": "Preserve enablement and inactive state. For running plugins, validate and activate before committing; restore previous version if activation fails.",
+    "coveredEdgeStates": [
+      "Empty installed list",
+      "No search matches",
+      "Update check unavailable",
+      "Additional host API access requested",
+      "Update activation failure and rollback",
+      "Plugin process crash"
+    ],
+    "securityCopy": "Host API grants do not sandbox the OS permissions of local Node code."
+  },
+  "sourceReferences": [
+    "src/dialogs/MainWindow.ui",
+    "src/ApplicationSettings.cpp",
+    "src/icons/",
+    "doc/screenshot.png",
+    "doc/screenshot_linux.png",
+    "doc/PluginSystemPlan.zh-CN.md",
+    "doc/plugin-system/SourceRegistration.zh-CN.md",
+    "doc/plugin-system/examples/marketplace.manifest.json"
+  ],
+  "fonts": {
+    "interface": "SF Pro",
+    "editor": "Cousine (Figma substitute for Courier New)",
+    "annotations": "Noto Sans SC"
+  },
+  "iconPolicy": {
+    "manager": "Generic puzzle icon; no plugin-specific branding in Plugin Manager headings.",
+    "managerComponentId": "33:11730",
+    "managerHeaderInstancesUpdated": 32,
+    "verification": "All 32 manager headers use the generic icon; 97 Markdown plugin icon instances remain. Uninstalled screen reviewed at 1200x760.",
+    "plugin": "Keep each plugin's own icon in its list entry, detail identity, contributed command and plugin window.",
+    "markdownComponentId": "2:100"
+  },
+  "prototypeScope": "Clickable main routes: check/register marketplace → Uninstalled; register single plugin → the same Uninstalled view with one resource; explicit Install → existing install review; remove registered source → empty resource state. Search, refresh, preexisting Installed examples and all shared-source combinations remain illustrative. Existing installed-plugin lifecycle flows remain available.",
+  "verification": {
+    "visualReview": "Full lifecycle board and close-up review passed; progress and replaced original manager rechecked after changes.",
+    "editableNodesInLifecycleOverview": 3615,
+    "prototypeNavigationReactionsInLifecycleScreens": 52,
+    "invalidPrototypeDestinations": 0,
+    "completeUiRasters": 0,
+    "originalToolbarIconSize": "16x16",
+    "primaryButtonLabelContrast": 6.16
+  },
+  "exampleData": "Repository URL, author, plugins, versions and logs are illustrative; no plugin was installed.",
+  "runtimeChecks": "Native Qt implementation, keyboard navigation and minimum-window behavior are outside this design draft.",
+  "lifecycleOverviewNode": "11:1925",
+  "lifecycleOverviewUrl": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=11-1925",
+  "resourceRegistration": {
+    "overviewNode": "23:8653",
+    "url": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=23-8653",
+    "prototypeUrl": "https://www.figma.com/proto/cJPphvdJ1ztsU0tzMFIBpD?node-id=24-8653&starting-point-node-id=24%3A8653",
+    "screens": [
+      {
+        "kind": "ENTRY",
+        "nodeId": "24:8653"
+      },
+      {
+        "kind": "DETECTED_MARKETPLACE",
+        "nodeId": "24:8881"
+      },
+      {
+        "kind": "UNINSTALLED",
+        "nodeId": "24:9112"
+      },
+      {
+        "kind": "SOURCES",
+        "nodeId": "24:9432"
+      },
+      {
+        "kind": "DETECTED_PLUGIN",
+        "nodeId": "24:9727"
+      },
+      {
+        "kind": "SOURCE_REMOVE",
+        "nodeId": "24:9958"
+      },
+      {
+        "kind": "UNINSTALLED_SINGLE",
+        "nodeId": "27:9973"
+      },
+      {
+        "kind": "SOURCE_EMPTY",
+        "nodeId": "27:10283"
+      }
+    ],
+    "registrationPolicy": "All repository types register resources first and open Uninstalled. Registration downloads only bounded metadata, never plugin packages, and does not install or activate plugins. Only an explicit Install action enters package installation.",
+    "metadata": {
+      "filename": "notepadnext-plugin.json",
+      "schema": "doc/plugin-system/manifest.schema.json",
+      "typeField": "list",
+      "singlePluginValue": false,
+      "marketplaceValue": "array of the same plugin metadata with list=false",
+      "emptyMarketplaceAllowed": true
+    },
+    "views": [
+      "Uninstalled: registered resources with no installed package",
+      "Installed: committed plugin installations",
+      "Sources: registered direct or marketplace repositories"
+    ],
+    "uninstallPolicy": "Return to Uninstalled when a registered resource source still exists.",
+    "removeSourcePolicy": "Remove source associations and unavailable uninstalled resources; preserve installed packages, data and independent release origins.",
+    "verification": {
+      "visualReview": "Full resource-registration board and direct-plugin Uninstalled branch passed.",
+      "editableNodes": 1611,
+      "completeUiRasters": 0,
+      "registrationRoutes": [
+        {
+          "id": "24:9954",
+          "name": "Action / Register Resource",
+          "destinations": [
+            "27:9973"
+          ]
+        },
+        {
+          "id": "24:9108",
+          "name": "Action / Register Resources",
+          "destinations": [
+            "24:9112"
+          ]
+        }
+      ],
+      "schemaValidFixtures": 3,
+      "schemaRejectedInvalidCases": 9
+    },
+    "prototypeScope": "Clickable main routes: check/register marketplace → Uninstalled; register single plugin → the same Uninstalled view with one resource; explicit Install → existing install review; remove registered source → empty resource state. Search, refresh, preexisting Installed examples and all shared-source combinations remain illustrative.",
+    "implementationStatus": "Qt resource parsing, shared persistent registry and Plugin Manager views implemented. Package installation and plugin runtime are not yet implemented. See Implementation.zh-CN.md."
+  },
+  "macosUiReview": {
+    "date": "2026-10-12",
+    "url": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=42-11715",
+    "board": "42:11715",
+    "settingsPrototype": "45:12075",
+    "state": "figma-ui-revision-state.json",
+    "review": "MacUiReview.zh-CN.md"
+  }
+}

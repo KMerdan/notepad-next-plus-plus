@@ -1,0 +1,159 @@
+UpdateCTestConfiguration  from :/private/tmp/notepadnext-app-build-610/DartConfiguration.tcl
+Test project /private/tmp/notepadnext-app-build-610
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 23
+    Start 23: PluginApplicationTests
+
+23: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+23: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+23: Test timeout computed to be: 240
+23: ********* Start testing of PluginApplicationTests *********
+23: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+23: QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+23: QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+23: QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+23: QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+23: QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+23: 2026-10-12 08:49:03.797 PluginApplicationTests[91620:19821373] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+23: QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+23: QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+23: QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+23: QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+23: QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+23: QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+23: QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::initTestCase()
+23: void MainWindow::openFileList(const QStringList &)
+23: /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-cVdnGj/sample.md
+23: Read 16 bytes
+23: sample.md last modified Mon Oct 12 08:49:03 2026
+23: void EditorManager::setupEditor(ScintillaNext *)
+23: int EditorManager::detectEOLMode(ScintillaNext *) const
+23: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+23: EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-cVdnGj/sample.md"
+23: void MainWindow::addEditor(ScintillaNext *)
+23: void MainWindow::detectLanguage(ScintillaNext *)
+23: QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+23: QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+23: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: Language Name: Markdown
+23: void DockedEditor::addEditor(ScintillaNext *)
+23: void MainWindow::activateEditor(ScintillaNext *)
+23: bool MainWindow::checkFileForModification(ScintillaNext *)
+23: sample.md last modified Mon Oct 12 08:49:03 2026
+23: void MainWindow::updateGui(ScintillaNext *)
+23: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+23: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: QFileDevice::FileError ScintillaNext::save()
+23: QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+23: sample.md last modified Mon Oct 12 08:49:03 2026
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: Read 11 bytes
+23: sample.md last modified Mon Oct 12 08:49:03 2026
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+23: renamed.md last modified Mon Oct 12 08:49:03 2026
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::detectLanguage(ScintillaNext *)
+23: QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+23: QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+23: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: Language Name: Markdown
+23: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: void RecentFilesListManager::addFile(const QString &)
+23: void MainWindow::newFile()
+23: void EditorManager::setupEditor(ScintillaNext *)
+23: int EditorManager::detectEOLMode(ScintillaNext *) const
+23: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+23: void MainWindow::addEditor(ScintillaNext *)
+23: void MainWindow::detectLanguage(ScintillaNext *)
+23: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: Language Name: Text
+23: void DockedEditor::addEditor(ScintillaNext *)
+23: void MainWindow::activateEditor(ScintillaNext *)
+23: bool MainWindow::checkFileForModification(ScintillaNext *)
+23: void MainWindow::updateGui(ScintillaNext *)
+23: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+23: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+23: PASS   : PluginApplicationTests::deployedLibraryAudit()
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::focusIn()
+23: bool MainWindow::checkFileForModification(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::macOSChrome()
+23: 2026-10-12 08:49:04.387 PluginApplicationTests[91620:19821373] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+23: 2026-10-12 08:49:04.397 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:04.401 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:04.402 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:04.405 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:04.406 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: [91620:259:1012/084904.709892:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+23: [91620:259:1012/084904.711762:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::productionPythonAdapter()
+23: PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+23: js: Uncaught ReferenceError: acquireVsCodeApi is not defined
+23: PASS   : PluginApplicationTests::productionVSCodeWebview()
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: Live GitHub registration, install v0.1.2, source refresh, update v0.1.3 and unsaved preview passed.
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::realGitHubMarkdownLifecycle()
+23: 2026-10-12 08:49:09.675 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:09.676 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: Local registration reviewed
+23: Opening local package picker
+23: 2026-10-12 08:49:10.019 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:10.021 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:10.153 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 08:49:10.161 PluginApplicationTests[91620:19821373] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: Local package review completed
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::saveSettings() const
+23: void SessionManager::saveSession(MainWindow *)
+23: void MacroManager::saveSettings() const
+23: QWidget::paintEngine: Should no longer be called
+23: QWidget::paintEngine: Should no longer be called
+23: PASS   : PluginApplicationTests::productionManagerAndExit()
+23: PASS   : PluginApplicationTests::cleanupTestCase()
+23: Totals: 10 passed, 0 failed, 0 skipped, 0 blacklisted, 7006ms
+23: ********* Finished testing of PluginApplicationTests *********
+1/1 Test #23: PluginApplicationTests ...........   Passed    7.42 sec
+
+The following tests passed:
+	PluginApplicationTests
+
+100% tests passed out of 1
+
+Total Test time (real) =   7.42 sec

@@ -437,6 +437,9 @@ void ScintillaNext::reload()
     bool readSuccessful = readFromDisk(f);
 
     if (!readSuccessful) {
+        // Clearing the old buffer was signal-blocked. Observers must still
+        // invalidate their snapshots even when the subsequent disk read fails.
+        emit reloaded();
         return;
     }
 

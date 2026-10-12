@@ -1,0 +1,9 @@
+Test project /private/tmp/notepadnext-app-build-610
+    Start 2: PluginPackageTests
+1/2 Test #2: PluginPackageTests ...............   Passed    1.61 sec
+    Start 9: PluginSdkPackageTests
+2/2 Test #9: PluginSdkPackageTests ............   Passed    0.14 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   1.76 sec

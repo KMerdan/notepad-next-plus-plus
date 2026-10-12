@@ -1,0 +1,115 @@
+UpdateCTestConfiguration  from :/private/tmp/notepadnext-app-build-disabled/DartConfiguration.tcl
+Test project /private/tmp/notepadnext-app-build-disabled
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 16
+    Start 16: PluginApplicationTests
+
+16: Test command: /private/tmp/notepadnext-app-build-disabled/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+16: Working Directory: /private/tmp/notepadnext-app-build-disabled/tests/plugin-application
+16: Test timeout computed to be: 10000000
+16: ********* Start testing of PluginApplicationTests *********
+16: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+16: QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+16: QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+16: QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+16: QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+16: QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+16: 2026-10-11 13:40:50.885 PluginApplicationTests[71685:15801788] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+16: QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+16: QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+16: QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+16: QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+16: QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+16: QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+16: QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+16: QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+16: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+16: PASS   : PluginApplicationTests::initTestCase()
+16: void MainWindow::openFileList(const QStringList &)
+16: /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-tdyLSr/sample.md
+16: Read 16 bytes
+16: sample.md last modified Sun Oct 11 13:40:50 2026
+16: void EditorManager::setupEditor(ScintillaNext *)
+16: int EditorManager::detectEOLMode(ScintillaNext *) const
+16: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+16: EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-tdyLSr/sample.md"
+16: void MainWindow::addEditor(ScintillaNext *)
+16: void MainWindow::detectLanguage(ScintillaNext *)
+16: QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+16: QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+16: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+16: Language Name: Markdown
+16: void DockedEditor::addEditor(ScintillaNext *)
+16: void MainWindow::activateEditor(ScintillaNext *)
+16: bool MainWindow::checkFileForModification(ScintillaNext *)
+16: sample.md last modified Sun Oct 11 13:40:50 2026
+16: void MainWindow::updateGui(ScintillaNext *)
+16: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+16: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: QFileDevice::FileError ScintillaNext::save()
+16: QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+16: sample.md last modified Sun Oct 11 13:40:50 2026
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: Read 11 bytes
+16: sample.md last modified Sun Oct 11 13:40:50 2026
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: void RecentFilesListManager::addFile(const QString &)
+16: void MainWindow::newFile()
+16: void EditorManager::setupEditor(ScintillaNext *)
+16: int EditorManager::detectEOLMode(ScintillaNext *) const
+16: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+16: void MainWindow::addEditor(ScintillaNext *)
+16: void MainWindow::detectLanguage(ScintillaNext *)
+16: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+16: Language Name: Text
+16: void DockedEditor::addEditor(ScintillaNext *)
+16: void MainWindow::activateEditor(ScintillaNext *)
+16: bool MainWindow::checkFileForModification(ScintillaNext *)
+16: void MainWindow::updateGui(ScintillaNext *)
+16: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+16: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+16: PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+16: PASS   : PluginApplicationTests::productionPythonAdapter()
+16: PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+16: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+16: void MainWindow::saveSettings() const
+16: void SessionManager::saveSession(MainWindow *)
+16: void MacroManager::saveSettings() const
+16: PASS   : PluginApplicationTests::productionManagerAndExit()
+16: PASS   : PluginApplicationTests::cleanupTestCase()
+16: Totals: 6 passed, 0 failed, 0 skipped, 0 blacklisted, 166ms
+16: ********* Finished testing of PluginApplicationTests *********
+1/1 Test #16: PluginApplicationTests ...........   Passed    0.36 sec
+
+The following tests passed:
+	PluginApplicationTests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.36 sec

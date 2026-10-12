@@ -1,0 +1,13 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+QWARN  : PluginWebviewTests::nativeDocumentMirrorLifecycle() qt.qpa.fonts: Populating font family aliases took 63 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+FAIL!  : PluginWebviewTests::nativeDocumentMirrorLifecycle() Compared values are not the same
+   Actual   (snapshot()["count"].toInt()): 1
+   Expected (2)                          : 2
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-webviews/PluginWebviewTests.cpp(99)]
+QWARN  : PluginWebviewTests::nativeDocumentMirrorLifecycle() QTemporaryDir: Unable to remove "/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/PluginWebviewTests-HDjYJi" most likely due to the presence of read-only files.
+PASS   : PluginWebviewTests::nativeDeltaCapabilitiesAndCensusLimit()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 3 passed, 1 failed, 0 skipped, 0 blacklisted, 17784ms
+********* Finished testing of PluginWebviewTests *********

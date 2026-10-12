@@ -1,0 +1,7 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+PASS   : PluginWebviewTests::compatiblePersistenceLifecycle()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 2744ms
+********* Finished testing of PluginWebviewTests *********

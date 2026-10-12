@@ -7,7 +7,7 @@ set(LINUXDEPLOY ${CMAKE_BINARY_DIR}/linuxdeploy-x86_64.AppImage)
 set(LINUXDEPLOY_QT ${CMAKE_BINARY_DIR}/linuxdeploy-plugin-qt-x86_64.AppImage)
 
 set(APPIMAGE_ENV_VARS
-    LDAI_OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
+    LDAI_OUTPUT=NotepadNextPlusPlus-v${PROJECT_VERSION}-x86_64.AppImage
 )
 
 if(DEFINED ENV{QMAKE} AND NOT "$ENV{QMAKE}" STREQUAL "")
@@ -52,6 +52,7 @@ install(TARGETS NotepadNext
 install(FILES
     ${PROJECT_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
     DESTINATION share/applications
+    RENAME io.github.kmerdan.NotepadNextPlusPlus.desktop
 )
 install(FILES
     ${PROJECT_SOURCE_DIR}/icon/NotepadNext.svg
@@ -83,8 +84,8 @@ add_custom_target(appimage
         ${APPIMAGE_ENV_VARS}
         ${LINUXDEPLOY}
         --appdir ${APPDIR}
-        --executable ${APPDIR_USR}/bin/NotepadNext
-        --desktop-file ${APPDIR_USR}/share/applications/NotepadNext.desktop
+        --executable ${APPDIR_USR}/bin/NotepadNextPlusPlus
+        --desktop-file ${APPDIR_USR}/share/applications/io.github.kmerdan.NotepadNextPlusPlus.desktop
         --icon-file ${APPDIR_USR}/share/icons/hicolor/scalable/apps/NotepadNext.svg
         --plugin qt
         --output appimage

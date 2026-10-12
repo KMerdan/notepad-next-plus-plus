@@ -1,0 +1,110 @@
+Start testing: Oct 11 16:48 JST
+----------------------------------------------------------
+20/21 Testing: PluginPerformanceTests
+20/21 Test: PluginPerformanceTests
+Command: "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests"
+Directory: /private/tmp/notepadnext-macos-release-build/tests/plugin-application
+"PluginPerformanceTests" start time: Oct 11 16:48 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginPerformanceTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginPerformanceTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginPerformanceTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginPerformanceTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginPerformanceTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginPerformanceTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginPerformanceTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 16:48:29.790 PluginPerformanceTests[25594:16823698] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginPerformanceTests.savedState
+QINFO  : PluginPerformanceTests::initTestCase() setupUi Completed
+QINFO  : PluginPerformanceTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginPerformanceTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginPerformanceTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginPerformanceTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginPerformanceTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginPerformanceTests::initTestCase() Language Name: Text
+QINFO  : PluginPerformanceTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginPerformanceTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::openFileList(const QStringList &)
+/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-HsvsBE/benchmark.md
+Read 10 bytes
+benchmark.md last modified Sun Oct 11 16:48:29 2026
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-HsvsBE/benchmark.md"
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+benchmark.md last modified Sun Oct 11 16:48:29 2026
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::focusIn()
+bool MainWindow::checkFileForModification(ScintillaNext *)
+benchmark.md last modified Sun Oct 11 16:48:29 2026
+PASS   : PluginPerformanceTests::initTestCase()
+[25594:259:1011/164831.708342:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[25594:259:1011/164831.708619:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-11 16:48:31.743 PluginPerformanceTests[25594:16823698] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+Markdown performance 1 10240 p95 ms QJsonValue(double, 217.365) GUI max ms 3.04558
+Markdown performance 1 102400 p95 ms QJsonValue(double, 315.406) GUI max ms 3.18733
+Markdown performance 1 1048576 p95 ms QJsonValue(double, 1882.53) GUI max ms 10.6237
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginPerformanceTests::preview(1)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Markdown performance 5 10240 p95 ms QJsonValue(double, 232.882) GUI max ms 3.42575
+Markdown performance 5 102400 p95 ms QJsonValue(double, 315.931) GUI max ms 3.10292
+void RecentFilesListManager::addFile(const QString &)
+void SessionManager::saveSession(MainWindow *)
+Markdown performance 5 1048576 p95 ms QJsonValue(double, 1947.86) GUI max ms 11.1892
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginPerformanceTests::preview(5)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Markdown performance 10 10240 p95 ms QJsonValue(double, 280.284) GUI max ms 3.196
+Markdown performance 10 102400 p95 ms QJsonValue(double, 349.026) GUI max ms 3.93467
+Markdown performance 10 1048576 p95 ms QJsonValue(double, 2231.74) GUI max ms 15.897
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginPerformanceTests::preview(10)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void RecentFilesListManager::addFile(const QString &)
+void SessionManager::saveSession(MainWindow *)
+PASS   : PluginPerformanceTests::cleanupTestCase()
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 118415ms
+********* Finished testing of PluginPerformanceTests *********
+<end of output>
+Test time = 118.79 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPerformanceTests" end time: Oct 11 16:50 JST
+"PluginPerformanceTests" time elapsed: 00:01:58
+----------------------------------------------------------
+
+End testing: Oct 11 16:50 JST
+
+performance = 118.79 sec*proc
+

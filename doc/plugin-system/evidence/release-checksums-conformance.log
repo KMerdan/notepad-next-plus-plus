@@ -1,0 +1,234 @@
+Start testing: Oct 11 12:09 JST
+----------------------------------------------------------
+1/14 Testing: PluginSourceTests
+1/14 Test: PluginSourceTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-sources/PluginSourceTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-sources
+"PluginSourceTests" start time: Oct 11 12:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginSourceTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginSourceTests::initTestCase()
+PASS   : PluginSourceTests::repositoryNormalization()
+PASS   : PluginSourceTests::metadataDiscriminator()
+PASS   : PluginSourceTests::invalidMetadataIsRejected()
+PASS   : PluginSourceTests::registrationPersistenceAndMerging()
+PASS   : PluginSourceTests::conflictsAndFailedWritesAreAtomic()
+PASS   : PluginSourceTests::refreshReplacesOnlyItsOwnAssociations()
+PASS   : PluginSourceTests::corruptCacheIsPreserved()
+PASS   : PluginSourceTests::resolverPinsMetadataAndDoesNotInstall()
+PASS   : PluginSourceTests::resolverFailureAndCancellation()
+QWARN  : PluginSourceTests::managerListsSearchesAndSharesRegistry() qt.qpa.fonts: Populating font family aliases took 56 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginSourceTests::managerListsSearchesAndSharesRegistry()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(direct-plugin)
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(marketplace)
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(cancel-confirmation)
+PASS   : PluginSourceTests::cleanupTestCase()
+Totals: 15 passed, 0 failed, 0 skipped, 0 blacklisted, 480ms
+********* Finished testing of PluginSourceTests *********
+<end of output>
+Test time =   0.77 sec
+----------------------------------------------------------
+Test Passed.
+"PluginSourceTests" end time: Oct 11 12:09 JST
+"PluginSourceTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/14 Testing: PluginGitHubReleaseTests
+3/14 Test: PluginGitHubReleaseTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginGitHubReleaseTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginGitHubReleaseTests" start time: Oct 11 12:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of GitHubReleaseTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : GitHubReleaseTests::initTestCase()
+PASS   : GitHubReleaseTests::matchingAssetsAndNoInstallation()
+PASS   : GitHubReleaseTests::paginationAndBudget()
+PASS   : GitHubReleaseTests::downloadRedirectAndProvenance()
+PASS   : GitHubReleaseTests::invalidDownload(sha mismatch)
+PASS   : GitHubReleaseTests::invalidDownload(oversize)
+PASS   : GitHubReleaseTests::invalidDownload(truncated)
+PASS   : GitHubReleaseTests::invalidDownload(redirect host)
+PASS   : GitHubReleaseTests::invalidDownload(redirect http)
+PASS   : GitHubReleaseTests::invalidDownload(too many redirects)
+PASS   : GitHubReleaseTests::invalidDownload(rate limit)
+PASS   : GitHubReleaseTests::invalidDownload(not found)
+PASS   : GitHubReleaseTests::invalidDownload(cancel)
+PASS   : GitHubReleaseTests::invalidDownload(declared size)
+PASS   : GitHubReleaseTests::lookupFailureAndCancel()
+PASS   : GitHubReleaseTests::installTransaction()
+PASS   : GitHubReleaseTests::releaseUpdatePreparation()
+PASS   : GitHubReleaseTests::authorChecksumFallback()
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(wrong plugin)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(wrong version)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(missing archive)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(duplicate name)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(unknown field)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(invalid sha)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(path entry)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(archive size)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(truncated checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(checksum digest)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(oversized checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(redirect host)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(redirect http)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(rate limit)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(missing checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(cancel checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(archive hash mismatch)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(extra root field)
+PASS   : GitHubReleaseTests::checksumDiscoveryAndSelection()
+PASS   : GitHubReleaseTests::installWithAuthorChecksum()
+PASS   : GitHubReleaseTests::cleanupTestCase()
+Totals: 39 passed, 0 failed, 0 skipped, 0 blacklisted, 559ms
+********* Finished testing of GitHubReleaseTests *********
+<end of output>
+Test time =   0.82 sec
+----------------------------------------------------------
+Test Passed.
+"PluginGitHubReleaseTests" end time: Oct 11 12:09 JST
+"PluginGitHubReleaseTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/14 Testing: PluginApplicationTests
+14/14 Test: PluginApplicationTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+"PluginApplicationTests" start time: Oct 11 12:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 12:09:26.554 PluginApplicationTests[36811:15205046] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+void MainWindow::openFileList(const QStringList &)
+/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-NVdTZO/sample.md
+Read 16 bytes
+sample.md last modified Sun Oct 11 12:09:26 2026
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-NVdTZO/sample.md"
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+sample.md last modified Sun Oct 11 12:09:26 2026
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError ScintillaNext::save()
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+sample.md last modified Sun Oct 11 12:09:26 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Read 11 bytes
+sample.md last modified Sun Oct 11 12:09:26 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+renamed.md last modified Sun Oct 11 12:09:26 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void RecentFilesListManager::addFile(const QString &)
+void MainWindow::newFile()
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Text
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+void MainWindow::focusIn()
+bool MainWindow::checkFileForModification(ScintillaNext *)
+2026-10-11 12:09:26.804 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 12:09:26.804 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 12:09:26.804 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 12:09:26.804 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+[36811:259:1011/120927.057886:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[36811:259:1011/120927.058154:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-11 12:09:27.134 PluginApplicationTests[36811:15205046] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+2026-10-11 12:09:27.157 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 12:09:27.158 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 12:09:27.164 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 12:09:27.165 PluginApplicationTests[36811:15205046] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void SessionManager::saveSession(MainWindow *)
+void MacroManager::saveSettings() const
+QWidget::paintEngine: Should no longer be called
+QWidget::paintEngine: Should no longer be called
+PASS   : PluginApplicationTests::productionManagerAndExit()
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 872ms
+********* Finished testing of PluginApplicationTests *********
+<end of output>
+Test time =   1.29 sec
+----------------------------------------------------------
+Test Passed.
+"PluginApplicationTests" end time: Oct 11 12:09 JST
+"PluginApplicationTests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Oct 11 12:09 JST

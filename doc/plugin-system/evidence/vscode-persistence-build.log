@@ -1,0 +1,135 @@
+-- ADS: Solution configured to use Qt version 6
+-- CPM: Adding package ads@5.1.1 (v5.1.1 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/ads/fb9d)
+-- CPM: Adding package QSimpleUpdater@0 (c5c136c0f79ca6423b0914a2676ae3d0e3811c5b at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/qsimpleupdater/531e)
+-- CPM: Adding package SingleApplication@3.5.6 (v3.5.6 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/singleapplication/d282)
+-- CPM: Adding package editorconfig_core_qt@0 (ab62f0554abf2bbe4d45427b36a8b2f81ca7b4ab at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/editorconfig_core_qt/87f1)
+-- Configuring macOS packaging
+-- Configuring done (1.5s)
+-- Generating done (0.7s)
+-- Build files have been written to: /private/tmp/notepadnext-app-build-610
+[  0%] Built target SingleApplication_autogen_timestamp_deps
+[  0%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  0%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  0%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  0%] Built target lua_autogen_timestamp_deps
+[  3%] Built target NotepadNext_lrelease
+[  3%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  3%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  3%] Built target zlibstatic_autogen_timestamp_deps
+[  3%] Built target scintilla_autogen_timestamp_deps
+[  3%] Built target uchardet_autogen_timestamp_deps
+[  3%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  3%] Built target DiagnosticCrashProbe_autogen_timestamp_deps
+[  4%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  4%] Built target NotepadNext_qmlimportscan
+[  7%] Built target PluginApplicationTests_qmlimportscan
+[  8%] Built target NotepadNext_NotepadNext_translations
+[  8%] Built target editorconfig-core-qt_autogen
+[  8%] Built target lua_autogen
+[  8%] Built target uchardet_autogen
+[  8%] Built target SingleApplication_autogen
+[  8%] Built target QSimpleUpdater_autogen
+[  8%] Built target scintilla_autogen
+[  8%] Built target qtadvanceddocking-qt6_autogen
+[  8%] Built target NotepadNextPluginDiagnostics_autogen
+[  9%] Built target zlibstatic_autogen
+[  9%] Built target DiagnosticCrashProbe_autogen
+[  9%] Built target NotepadNextPluginSources_autogen
+[  9%] Automatic MOC and UIC for target NotepadNextPluginData
+[  9%] Built target NotepadNextPluginRpc_autogen
+[ 10%] Built target editorconfig-core-qt
+[ 15%] Built target lua
+[ 16%] Built target QSimpleUpdater
+[ 17%] Built target SingleApplication
+[ 25%] Built target uchardet
+[ 27%] Built target zlibstatic
+[ 27%] Automatic RCC for wire_contract.qrc
+[ 27%] Built target NotepadNextPluginDiagnostics
+[ 27%] Built target DiagnosticCrashProbe
+[ 28%] Built target NotepadNextPluginSources
+[ 32%] Built target qtadvanceddocking-qt6
+[ 32%] Built target PluginDiagnosticTests_autogen_timestamp_deps
+[ 32%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 32%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/NotepadNextPluginRpc_autogen/EWIEGA46WW/qrc_wire_contract.cpp.o
+[ 32%] Built target PluginDiagnosticTests_autogen
+[ 32%] Built target NotepadNextPluginPackages_autogen
+[ 33%] Built target PluginDiagnosticTests
+[ 39%] Built target scintilla
+[ 39%] Built target lexilla_autogen_timestamp_deps
+[ 41%] Built target NotepadNextPluginPackages
+[ 41%] Built target lexilla_autogen
+[ 41%] Built target PluginManagerPreview_autogen_timestamp_deps
+[ 41%] Built target PackageLeaseProbe_autogen_timestamp_deps
+[ 41%] Built target PluginSourceTests_autogen_timestamp_deps
+[ 41%] Built target PluginGitHubReleaseTests_autogen_timestamp_deps
+[ 41%] Built target PackageLeaseProbe_autogen
+[ 41%] Built target PluginSourceTests_autogen
+[ 41%] Built target PluginManagerPreview_autogen
+[ 41%] Built target PluginGitHubReleaseTests_autogen
+[ 42%] Built target PackageLeaseProbe
+[ 42%] Built target NotepadNextPluginData_autogen
+[ 43%] Built target PluginSourceTests
+[ 44%] Built target PluginPackageTests_autogen_timestamp_deps
+[ 44%] Built target PluginManagerPreview
+[ 44%] Linking CXX static library libNotepadNextPluginRpc.a
+[ 44%] Built target PluginGitHubReleaseTests
+[ 44%] Building CXX object src/plugins/runtime/plugin-data/CMakeFiles/NotepadNextPluginData.dir/NotepadNextPluginData_autogen/mocs_compilation.cpp.o
+[ 44%] Building CXX object src/plugins/runtime/plugin-data/CMakeFiles/NotepadNextPluginData.dir/PluginDataStore.cpp.o
+[ 44%] Building CXX object src/plugins/runtime/plugin-data/CMakeFiles/NotepadNextPluginData.dir/PluginDataService.cpp.o
+[ 44%] Built target PluginPackageTests_autogen
+[ 45%] Built target PluginPackageTests
+[ 46%] Built target NotepadNextPluginRpc
+[ 46%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 46%] Built target ParentCrashProbe_autogen_timestamp_deps
+[ 46%] Built target PluginRpcTests_autogen_timestamp_deps
+[ 46%] Built target NotepadNextPluginDocuments_autogen
+[ 47%] Built target ParentCrashProbe_autogen
+[ 47%] Built target PluginRpcTests_autogen
+[ 48%] Built target NotepadNextPluginDocuments
+[ 48%] Linking CXX executable ParentCrashProbe
+[ 48%] Linking CXX executable PluginRpcTests
+[ 48%] Built target ParentCrashProbe
+[ 49%] Built target PluginRpcTests
+[ 49%] Built target PluginDocumentTests_autogen_timestamp_deps
+[ 49%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 49%] Built target PluginParentCrashTests_autogen_timestamp_deps
+[ 50%] Built target PluginDocumentTests_autogen
+[ 50%] Built target NotepadNextPluginWebviews_autogen
+[ 50%] Built target PluginParentCrashTests_autogen
+[ 69%] Linking CXX executable PluginDocumentTests
+[ 71%] Built target lexilla
+[ 72%] Built target NotepadNextPluginWebviews
+[ 72%] Built target PluginParentCrashTests
+[ 72%] Built target PluginDocumentTests
+[ 73%] Linking CXX static library libNotepadNextPluginData.a
+[ 73%] Built target NotepadNextPluginData
+[ 73%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 73%] Built target PluginDataTests_autogen_timestamp_deps
+[ 73%] Automatic MOC and UIC for target PluginDataTests
+[ 73%] Automatic MOC and UIC for target NotepadNextPluginRuntime
+[ 73%] Built target NotepadNextPluginRuntime_autogen
+[ 74%] Building CXX object src/plugins/runtime/CMakeFiles/NotepadNextPluginRuntime.dir/PluginEngine.cpp.o
+[ 74%] Building CXX object src/plugins/runtime/CMakeFiles/NotepadNextPluginRuntime.dir/PluginSession.cpp.o
+[ 74%] Built target PluginDataTests_autogen
+[ 74%] Building CXX object tests/plugin-data/CMakeFiles/PluginDataTests.dir/PluginDataTests.cpp.o
+[ 74%] Linking CXX executable PluginDataTests
+[ 74%] Built target PluginDataTests
+[ 74%] Linking CXX static library libNotepadNextPluginRuntime.a
+[ 74%] Built target NotepadNextPluginRuntime
+[ 74%] Built target PluginWebviewTests_autogen_timestamp_deps
+[ 74%] Built target NotepadNext_autogen_timestamp_deps
+[ 74%] Automatic MOC and UIC for target PluginWebviewTests
+[ 74%] Automatic MOC and UIC for target NotepadNext
+[ 74%] Built target NotepadNext_autogen
+[ 74%] Built target PluginWebviewTests_autogen
+[ 74%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/PluginWebviewTests.cpp.o
+[ 74%] Linking CXX executable NotepadNext.app/Contents/MacOS/NotepadNext
+ld: warning: -undefined suppress is deprecated
+[ 87%] Built target NotepadNext
+[ 87%] Built target PluginApplicationTests_autogen_timestamp_deps
+[ 87%] Automatic MOC and UIC for target PluginApplicationTests
+[ 87%] Built target PluginApplicationTests_autogen
+[ 87%] Linking CXX executable PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+[ 99%] Built target PluginApplicationTests
+[ 99%] Linking CXX executable PluginWebviewTests
+[100%] Built target PluginWebviewTests

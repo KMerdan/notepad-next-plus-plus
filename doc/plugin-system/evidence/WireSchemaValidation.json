@@ -1,0 +1,9 @@
+{
+  "validator": "python-jsonschema",
+  "version": "4.26.0",
+  "draft": "2020-12",
+  "schemaValid": true,
+  "fixturesPassed": 141,
+  "runtimeAnnotation": "x-nnp-maxUtf8Bytes is separately enforced by Qt, Node and Python.",
+  "sourceSnapshot": "DeltaSourceSha256.json"
+}

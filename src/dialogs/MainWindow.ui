@@ -338,6 +338,12 @@
     <addaction name="actionEditMacros"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuPlugins">
+    <property name="title">
+     <string>Plugins</string>
+    </property>
+    <addaction name="actionPluginManager"/>
+   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
@@ -363,6 +369,7 @@
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
    <addaction name="menuMacro"/>
+   <addaction name="menuPlugins"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -783,6 +790,15 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+0</string>
+   </property>
+  </action>
+  <action name="actionPluginManager">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/plugins.svg</normaloff>:/icons/plugins.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Plugin Manager…</string>
    </property>
   </action>
   <action name="actionAboutQt">

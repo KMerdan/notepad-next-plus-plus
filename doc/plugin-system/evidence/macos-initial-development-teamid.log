@@ -1,0 +1,28 @@
+test_external_rpath (__main__.BundleTests.test_external_rpath) ... ok
+test_missing_dependency (__main__.BundleTests.test_missing_dependency) ... ok
+test_missing_webengine_resources (__main__.BundleTests.test_missing_webengine_resources) ... ok
+test_python_developer_profile_cannot_be_packaged (__main__.BundleTests.test_python_developer_profile_cannot_be_packaged) ... ok
+test_signed_contained_bundle (__main__.BundleTests.test_signed_contained_bundle) ... ERROR
+test_symlink_escape (__main__.BundleTests.test_symlink_escape) ... ok
+test_tampered_resource_seal (__main__.BundleTests.test_tampered_resource_seal) ... ok
+test_underdeclared_minimum_os (__main__.BundleTests.test_underdeclared_minimum_os) ... ok
+test_unverified_node_archive (__main__.BundleTests.test_unverified_node_archive) ... ok
+
+======================================================================
+ERROR: test_signed_contained_bundle (__main__.BundleTests.test_signed_contained_bundle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py", line 49, in test_signed_contained_bundle
+    self.run_command([str(self.app/'Contents/MacOS/Fixture')])
+  File "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py", line 42, in run_command
+    if result.returncode:raise RuntimeError(f'{args[0]} exited {result.returncode}: {result.stderr}')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-bundle-contract-w4t8wiiw/tmp65er5n65/Fixture.app/Contents/MacOS/Fixture exited -6: dyld[14448]: Library not loaded: @rpath/libfixture.dylib
+  Referenced from: <FDE0CA2F-3EF2-38BF-957F-05174DA5468E> /private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-bundle-contract-w4t8wiiw/tmp65er5n65/Fixture.app/Contents/MacOS/Fixture
+  Reason: tried: '/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-bundle-contract-w4t8wiiw/tmp65er5n65/Fixture.app/Contents/Frameworks/libfixture.dylib' (code signature in <6F9BBFEB-1AD0-3A0D-A269-4AEA5F93312F> '/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-bundle-contract-w4t8wiiw/tmp65er5n65/Fixture.app/Contents/Frameworks/libfixture.dylib' not valid for use in process: mapping process and mapped file (non-platform) have different Team IDs), '/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-bundle-contract-w4t8wiiw/tmp65er5n65/Fixture.app/Contents/Frameworks/libfixture.dylib' (code signature in <6F9BBFEB-1AD0-3A0D-A269-4AEA5F93312F> '/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-bundle-contract-w4t8wiiw/tmp65er5n65/Fixture.app/Contents/Frameworks/libfixture.dylib' not valid for use in process: mapping process and mapped file (non-platform) have different Team IDs)
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.721s
+
+FAILED (errors=1)

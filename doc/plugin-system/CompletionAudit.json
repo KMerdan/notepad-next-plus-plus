@@ -1,0 +1,648 @@
+{
+  "objective": "finish the plan properly",
+  "source": "doc/PluginSystemPlan.zh-CN.md",
+  "status": "in_progress",
+  "requirements": [
+    {
+      "id": "P0.runtime",
+      "requirement": "Pinned Node 24 LTS, Qt/WebEngine deployment and controlled runtime paths",
+      "status": "partial",
+      "evidence": [
+        "packages/plugin-host/runtime-lock.json",
+        "doc/plugin-system/evidence/MacOSDeploymentValidation.json",
+        "doc/plugin-system/MacOSDeployment.zh-CN.md",
+        "doc/plugin-system/evidence/MacOSDeveloperIdValidation.json",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json"
+      ],
+      "notes": "Pinned Node 24.21.0 and controlled absolute runtime paths pass locally. Current arm64 Node-only Release bundles contain Qt/WebEngine/host/Node; all 36 production physical Mach-O files and DMG carry matching Developer ID Team signatures with secure timestamps. Relocated production version, Node JIT and signed production-source UI integration pass. The user confirmed local-keychain notary credentials are not configured; notarization/stapling/Gatekeeper acceptance, native Intel/minimum OS, clean systems, other platforms and full license/source review remain.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "P0.rpc",
+      "requirement": "Qt and Node shared JSON-RPC conformance, lossless IDs, framing, bidirectional requests",
+      "status": "complete",
+      "evidence": [
+        "tests/plugin-rpc/fixtures.json",
+        "tests/plugin-rpc/PluginRpcTests.cpp",
+        "tests/plugin-rpc/rpc.test.cjs",
+        "doc/plugin-system/ProtocolProfile.zh-CN.md",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceSchemaValidation.json"
+      ],
+      "notes": "Local arm64 full 21-target suite passes, followed by 4 final affected targets. Shared wire has 33 methods and 180 fixtures enforced by Qt/Node/Python and independently validated with Draft 2020-12. Optional expectedValue adds native conditional writes under the existing lock; mismatches are 1001 with no mutation. Reliable owned notifications remain validated. Historical earlier counts are retained in earlier evidence.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "P0.document",
+      "requirement": "Real Scintilla snapshots, UTF-8/UTF-16 conversion and unsupported encoding fixtures",
+      "status": "complete",
+      "evidence": [
+        "tests/plugin-documents/PluginDocumentTests.cpp",
+        "src/plugins/documents/DocumentBridge.cpp"
+      ],
+      "notes": "Real Scintilla fixtures pass, including invalid and truncated UTF-8, emoji, combining text, CRLF, strict UTF-16 positions and undo.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "P0.panel",
+      "requirement": "Controlled scheme, isolated profile and minimal panel creation/reclamation",
+      "status": "complete",
+      "evidence": [
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "src/plugins/webviews/WebviewService.cpp"
+      ],
+      "notes": "Real sandbox-enabled WebEngine scheme/Profile/message/large-page/cleanup tests pass on local arm64 Qt 6.10.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "P0.performance",
+      "requirement": "1/5/10 process and 10KiB/100KiB/1MiB document resource/performance records",
+      "status": "complete",
+      "evidence": [
+        "doc/plugin-system/evidence/P0Measurements.json",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json"
+      ],
+      "notes": "Original reference records complete on Apple M4 Max/16-core/64GiB macOS arm64 Release: 1/5/10 real Markdown processes at 10KiB/100KiB/1MiB, CPU/RSS, idle traffic, native resources and signed package cost. Current original budgets pass: 100KiB p95 315.4/315.9/349.0ms, max GUI dispatch 15.9ms, max revoke 77.7ms. Dense 1MiB remains slow/high-RSS; historical measurements and diagnostic qualifications are retained. This status applies to the original reference-record requirement; clean systems and other platforms remain under I4.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I1.contract",
+      "requirement": "Versioned wire schemas, capability/state/error/cancellation/budget contracts",
+      "status": "complete",
+      "evidence": [
+        "packages/plugin-host/protocol-profile.json",
+        "packages/plugin-sdk/index.d.ts",
+        "packages/plugin-host/wire.schema.json",
+        "packages/plugin-host/wire-contract.json",
+        "src/plugins/rpc/WireContract.cpp",
+        "packages/plugin-host/wire.cjs",
+        "tests/plugin-rpc/wire-fixtures.json",
+        "doc/plugin-system/evidence/WireSchemaValidation.json",
+        "doc/plugin-system/evidence/wire-data-conformance.log",
+        "doc/plugin-system/DocumentMirror.zh-CN.md",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceSchemaValidation.json"
+      ],
+      "notes": "33 bounded-profile methods and 180 shared fixtures are enforced across Qt/Node/Python and independently match Draft 2020-12. The final Python suite has 216 cases including SDK compare_exchange. Capability pairs, publication gates, ownership, conditional writes, budgets and cleanup pass locally; protocol/API remain 0.1/0.1.0.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I1.package",
+      "requirement": "Validated local packages and immutable installation registry",
+      "status": "complete",
+      "evidence": [
+        "src/plugins/packages/PackageStore.cpp",
+        "src/plugins/packages/InstalledPluginRegistry.cpp",
+        "tests/plugin-packages/PluginPackageTests.cpp",
+        "doc/plugin-system/evidence/installation-update-conformance.log"
+      ],
+      "notes": "Local directory and actual Markdown ZIP validation, immutable content store and separate atomic installed index pass. Lifetime-pinned package and staging collection is now implemented in I2.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I1.lifecycle",
+      "requirement": "Initialize/activate/deactivate/shutdown with bounded forced cleanup and application exit",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/runtime/PluginSession.cpp",
+        "src/plugins/runtime/PluginEngine.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp",
+        "doc/plugin-system/evidence/installation-update-conformance.log",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/evidence/static-zlib-lifecycle-conformance.log",
+        "doc/plugin-system/evidence/repository-data-conformance.log",
+        "tests/plugin-packages/ParentCrashTests.cpp",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/TransactionRecoveryValidation.json",
+        "doc/plugin-system/evidence/ApplicationExitValidation.json",
+        "doc/plugin-system/evidence/ApplicationPreparationExitValidation.json"
+      ],
+      "notes": "Initialize/activate/deactivate/shutdown, staged native panels, denied activation writes, held update commands and production app exit pass. Broad forced-exit/disk/race and platform evidence remain. Actual abnormal parent death with a blocked plugin main thread is now covered on local macOS. Real native installation/update owners now die at 15 explicit transaction boundaries; fresh-process recovery and post-collection integrity pass. This adds package ownership evidence, not a full application-exit fault proof. Five real production-source last-window exits now pass with normal and spinning deactivate, queued reload/delete-data uninstall and stalled update activation. All 12 Node/descendant identities exit by exec return; sessions/resources are zero, original 8s budget is retained, and parent terminal/recovery checks pass. The outer 5s/8s fallback and blocked file-system/worker faults remain untested; platform execution remains under I4. A sixth production-source exit now cancels pending update preparation while its real store lock remains held through exec return; the installer drains, the old enabled version/data remain and no replacement activates. All six exit rows pass (14 owned Node/descendant identities). This is cancellable lock contention, not an uninterruptible filesystem or outer-fallback proof.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I1.contributions",
+      "requirement": "Manifest menu/toolbar placeholders, lazy single activation and owned callbacks",
+      "status": "complete",
+      "evidence": [
+        "src/plugins/runtime/PluginEngine.cpp",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/MacUiGitHubValidation.json"
+      ],
+      "notes": "Manifest menu groups, toolbar placeholders, manager Run Command, lazy coalesced activation and lifecycle-owned actions pass in the actual app.",
+      "phase": "development",
+      "historicalNotes": true,
+      "currentVerification": "2026-10-12: independent SDK-based public Markdown repository and remote CI passed; actual native URL registration/install v0.1.2/source refresh/update v0.1.3, unsaved Unicode preview, Mac chrome, affected Webviews and exit regression passed. Existing broad platform and fault limits are retained."
+    },
+    {
+      "id": "I1.documents",
+      "requirement": "Active-document watch, snapshots, ordered invalidation, close/rename/reload identity",
+      "status": "complete",
+      "evidence": [
+        "src/plugins/documents/DocumentBridge.cpp",
+        "tests/plugin-documents/PluginDocumentTests.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json"
+      ],
+      "notes": "Actual editor open/edit/save/reload/rename/close identity and Unicode/version/undo fixtures pass. Large-document budgets remain part of performance acceptance.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I1.webviews",
+      "requirement": "Real WebEngine panels, safe HTML/CSP, resource mapping, message bridge and stale context rejection",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/webviews/WebviewService.cpp",
+        "src/plugins/webviews/HtmlPolicy.cpp",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/evidence/static-zlib-lifecycle-conformance.log",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json",
+        "doc/plugin-system/evidence/MacUiGitHubValidation.json"
+      ],
+      "notes": "Native and compatible controlled-scheme WebEngine tests pass locally. Production native XHTML/CSP/UTF-8 preparation now uses a bounded 4-thread pool, one request per panel; GUI publication rechecks current document/version/panel sequence. Eight deterministic ownership/race cases plus real scroll/search and Markdown tests pass. Broader original webview/platform/UX acceptance remains. Native palette/font propagation, CSS/raw-style font escaping, theme changes during asynchronous preparation and no-reload scroll/document preservation now pass in real native and production-app tests. Broader requirements remain partial.",
+      "phase": "development",
+      "historicalNotes": true,
+      "currentVerification": "2026-10-12: independent SDK-based public Markdown repository and remote CI passed; actual native URL registration/install v0.1.2/source refresh/update v0.1.3, unsaved Unicode preview, Mac chrome, affected Webviews and exit regression passed. Existing broad platform and fault limits are retained."
+    },
+    {
+      "id": "I1.markdown",
+      "requirement": "TS plugin with headings/lists/code/images, native theme/fonts, unsaved edits, document switches, close/reopen and errors",
+      "status": "complete",
+      "evidence": [
+        "examples/markdown-preview/src/index.ts",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp",
+        "doc/plugin-system/evidence/gc-preview-intermittent-failure.log",
+        "doc/plugin-system/evidence/gc-preview-single-retry.log",
+        "doc/plugin-system/evidence/gc-preview-repeat-summary.log",
+        "doc/plugin-system/evidence/package-gc-conformance.log",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json"
+      ],
+      "notes": "Original first delivery passes locally: headings/lists/code, relative Unicode images with readable fallback, host palette/reading font/editor code font live updates without reload, real differing unsaved buffer snapshots, A-to-B stale rejection, non-Markdown/closed/encoding/size errors and recovery, single panel close/reopen/cleanup. 150ms debounce with 800ms maximum wait and busy retry retained; 1/5/10-instance 100KiB budgets pass. Dense 1MiB cost and broader release/platform assurance remain recorded under performance and I4. Future scroll-sync/source-navigation features were not original first-delivery requirements.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I1.developer",
+      "requirement": "Typed SDK, disposable lifecycle, build/package template and diagnostics",
+      "status": "partial",
+      "evidence": [
+        "packages/plugin-sdk/index.d.ts",
+        "packages/plugin-sdk/pack.cjs",
+        "packages/plugin-sdk/archive.cjs",
+        "packages/plugin-sdk/pack.test.cjs",
+        "examples/markdown-preview/README.md",
+        "src/plugins/diagnostics/PluginDiagnostics.cpp",
+        "doc/plugin-system/Diagnostics.zh-CN.md",
+        "doc/plugin-system/evidence/diagnostics-conformance.log",
+        "packages/plugin-sdk/release.cjs",
+        "doc/plugin-system/templates/github-release.yml",
+        "doc/plugin-system/AuthorRelease.zh-CN.md",
+        "doc/plugin-system/evidence/sdk-release-conformance.log",
+        "doc/plugin-system/evidence/AuthorReleaseValidation.json",
+        "tests/plugin-sources/PluginSourceTests.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp"
+      ],
+      "notes": "Typed API, disposables, pinned example build, no-hook dependency packer, ZIP/checksum release tool and reusable pinned draft-release CI template are implemented. Bounded source/session-bound persistent diagnostics, native manager fault categories/history and command exception stacks pass. Seven SDK packaging/release cases pass. Standalone author repository layout was rehearsed with locked no-hook dependency install, TS build/test, ZIP/checksum generation and independent Schema checks. Remote CI and broader developer recovery acceptance remain. Local metadata registration, cached reload and explicit production-manager installation now pass on macOS arm64 without a published repository or certificate. Broad requirement status remains unchanged.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I2.registration",
+      "requirement": "Unified metadata-only registration, Uninstalled/Installed/Sources, inspect/refresh/remove and persistence",
+      "status": "complete",
+      "evidence": [
+        "tests/plugin-sources/PluginSourceTests.cpp",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/SourceRegistration.zh-CN.md",
+        "examples/markdown-preview/README.md",
+        "tests/plugin-application/PluginApplicationTests.cpp"
+      ],
+      "notes": "Metadata-only single/marketplace registration, shared sources, inspect/refresh/remove, installed-resource transitions and persistence pass. Registration executes no plugin or installation. Local metadata registration, cached reload and explicit production-manager installation now pass on macOS arm64 without a published repository or certificate. Broad requirement status remains unchanged.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I2.github",
+      "requirement": "Release selection, bounded asynchronous download, integrity, source match, progress/cancel/failure and no hooks",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/packages/GitHubReleaseService.cpp",
+        "tests/plugin-packages/GitHubReleaseTests.cpp",
+        "doc/plugin-system/evidence/installation-update-conformance.log",
+        "doc/plugin-system/evidence/static-zlib-package-conformance.log",
+        "doc/plugin-system/AuthorRelease.zh-CN.md",
+        "doc/plugin-system/evidence/release-checksums-conformance.log",
+        "doc/plugin-system/evidence/MacUiGitHubValidation.json"
+      ],
+      "notes": "Explicit selection, bounded download, trusted redirect/SHA/size/provenance checks, cancellation/error cleanup and install transaction pass with fake network. Author checksum fallback pins a bounded same-release asset, validates plugin/version/name/size/hash and rejects missing or invalid integrity; native GitHub digest has priority. 39 QtTest cases pass, including a real install transaction. Release update preparation preserves the old index and rejects stale selections. Real public Release/remote author workflow remain.",
+      "phase": "development",
+      "historicalNotes": true,
+      "currentVerification": "2026-10-12: independent SDK-based public Markdown repository and remote CI passed; actual native URL registration/install v0.1.2/source refresh/update v0.1.3, unsaved Unicode preview, Mac chrome, affected Webviews and exit regression passed. Existing broad platform and fault limits are retained."
+    },
+    {
+      "id": "I2.installation",
+      "requirement": "Safe archive/path/icon/package checks, commit/recovery and explicit installation",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/packages/ZipExtractor.cpp",
+        "src/plugins/packages/PackageStore.cpp",
+        "src/plugins/packages/InstalledPluginRegistry.cpp",
+        "tests/plugin-packages/PluginPackageTests.cpp",
+        "src/plugins/packages/PackageCollection.cpp",
+        "src/plugins/packages/PackageLease.cpp",
+        "doc/plugin-system/PackageCollection.zh-CN.md",
+        "doc/plugin-system/evidence/package-gc-conformance.log",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json",
+        "doc/plugin-system/evidence/TransactionRecoveryValidation.json",
+        "doc/plugin-system/evidence/ApplicationPreparationExitValidation.json"
+      ],
+      "notes": "Bounded ZIP/path/icon/license/compatibility checks and explicit atomic installation pass. Pending update recovery, prepared-package ownership, cross-process leases, stale staging/trash recovery, corrupt-index fail-closed handling and bounded GC batches are implemented and tested. Broader disk/forced-exit fault injection and platform execution remain. A real GC/reinstall publication-lock race is fixed with bounded cancellable worker waiting; release/cancel/timeout tests keep the GUI responsive and do not remove live locks. Five compatible persistence lifecycle repeats and final full regression pass. Actual process death during partial copying, after immutable publication and after index commit now passes. A live preparation lock/lease preserves files; death permits stale stage/orphan cleanup. Fresh recovery, repeated stable disk state and independent post-collection version verification pass in 15 data rows. Disk-full/power-loss/in-syscall and broader GUI/platform faults remain. A sixth production-source exit now cancels pending update preparation while its real store lock remains held through exec return; the installer drains, the old enabled version/data remain and no replacement activates. All six exit rows pass (14 owned Node/descendant identities). This is cancellable lock contention, not an uninterruptible filesystem or outer-fallback proof.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I2.management",
+      "requirement": "Inspect/logs, enable/disable/reload/update/uninstall, keep/delete data and view transitions",
+      "status": "partial",
+      "evidence": [
+        "src/dialogs/PluginManagerDialog.cpp",
+        "src/plugins/runtime/PluginEngine.cpp",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/PluginData.zh-CN.md",
+        "doc/plugin-system/evidence/plugin-data-conformance.log",
+        "doc/plugin-system/evidence/native-uninstall-data-conformance.log",
+        "doc/plugin-system/evidence/wire-data-conformance.log",
+        "doc/plugin-system/evidence/repository-data-conformance.log",
+        "doc/plugin-system/evidence/package-gc-conformance.log",
+        "src/plugins/diagnostics/PluginDiagnostics.cpp",
+        "doc/plugin-system/Diagnostics.zh-CN.md",
+        "doc/plugin-system/evidence/diagnostics-conformance.log",
+        "doc/plugin-system/evidence/ApplicationExitValidation.json",
+        "doc/plugin-system/evidence/ApplicationPreparationExitValidation.json",
+        "examples/markdown-preview/README.md",
+        "tests/plugin-sources/PluginSourceTests.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp"
+      ],
+      "notes": "Installed inspect/logs/enable/disable/reload/update/manual rollback/uninstall and view transitions implemented. Native uninstall checkbox defaults to data retention; keep/delete/reinstall and serialized writes pass. Package collection preserves active/prepared/history versions and native uninstall removes the unreferenced directory. Persistent bounded source-bound logs/history, native fault inspection and immediate retry while a failed process drains pass. Broader management/exit races remain. Actual Application/MainWindow exit now cancels queued reload and delete-data uninstall before commit: append-only activation history has no replacement, installed enablement and storage remain. Full GUI operation/worker/disk/platform race matrix remains. A sixth production-source exit now cancels pending update preparation while its real store lock remains held through exec return; the installer drains, the old enabled version/data remain and no replacement activates. All six exit rows pass (14 owned Node/descendant identities). This is cancellable lock contention, not an uninterruptible filesystem or outer-fallback proof. Local metadata registration, cached reload and explicit production-manager installation now pass on macOS arm64 without a published repository or certificate. Broad requirement status remains unchanged.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I2.rollback",
+      "requirement": "Enablement-preserving updates, activation validation and last-known-good rollback",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/packages/InstalledPluginRegistry.cpp",
+        "src/plugins/runtime/PluginEngine.cpp",
+        "tests/plugin-packages/PluginPackageTests.cpp",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/evidence/installation-update-conformance.log",
+        "doc/plugin-system/evidence/static-zlib-lifecycle-conformance.log",
+        "src/plugins/diagnostics/PluginDiagnostics.cpp",
+        "doc/plugin-system/Diagnostics.zh-CN.md",
+        "doc/plugin-system/evidence/diagnostics-conformance.log",
+        "doc/plugin-system/evidence/TransactionRecoveryValidation.json",
+        "doc/plugin-system/evidence/ApplicationExitValidation.json",
+        "doc/plugin-system/evidence/ApplicationPreparationExitValidation.json"
+      ],
+      "notes": "Running updates validate before confirmation; disabled/inactive updates execute no code and defer validation to first use. Enablement/history preservation, failed activation rollback, pending-vs-deferred restart recovery and manual rollback pass. Broader disk/exit/concurrency fault injection remain. Source/session-bound failure diagnostics are now persisted and inspected in the native manager. Enabled and disabled process-death fixtures now prove pending update and started-deferred validation restore the original current/history/source; unstarted deferred updates preserve all three versions; confirmed update and interrupted rollback remain recoverable. A held recovery lock preserves disk and rejects writes until retry succeeds. Full GUI operation/exit and remaining disk/platform fault evidence remain. A real candidate is staged and stalls before activate returns; its panel stays hidden and index stays pending. Application exit cleans both generations and all child identities; parent index load restores the old verified package and storage. Broader disk/worker/platform faults remain. A sixth production-source exit now cancels pending update preparation while its real store lock remains held through exec return; the installer drains, the old enabled version/data remain and no replacement activates. All six exit rows pass (14 owned Node/descendant identities). This is cancellable lock contention, not an uninterruptible filesystem or outer-fallback proof.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I2.supervision",
+      "requirement": "Health checks, crash recovery, process groups/Job Objects and bounded resource ownership",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/rpc/RpcProcess.cpp",
+        "tests/plugin-rpc/PluginRpcTests.cpp",
+        "src/plugins/runtime/PluginSession.cpp",
+        "src/plugins/runtime/PluginEngine.cpp",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/evidence/static-zlib-lifecycle-conformance.log",
+        "doc/plugin-system/evidence/package-gc-conformance.log",
+        "src/plugins/packages/ProcessIdentity.cpp",
+        "packages/plugin-host/parent-watch.cjs",
+        "tests/plugin-packages/ParentCrashTests.cpp",
+        "doc/plugin-system/ProcessSupervision.zh-CN.md",
+        "doc/plugin-system/evidence/parent-supervision-conformance.log",
+        "src/plugins/diagnostics/PluginDiagnostics.cpp",
+        "doc/plugin-system/Diagnostics.zh-CN.md",
+        "doc/plugin-system/evidence/diagnostics-conformance.log",
+        "doc/plugin-system/evidence/PythonAdapterValidation.json",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json"
+      ],
+      "notes": "Mac process-group/child cleanup, bounded stderr/live logs, health/backoff and disable-during-backoff pass. Dedicated SIGKILL-parent fixture freezes a real spinning Node helper, verifies its PID/start-time lease retains the package, then resumes it and proves the independent pipe watcher kills the helper and same-group child before stale lease/package collection. Normal guarded shutdown and invalid startup descriptor fixtures pass. Windows Job and Linux identity branches lack execution proof; broader fault/resource evidence remain. Bounded persistent diagnostics, typed faults and 20 forced atomic writer exits pass. This is trusted-process supervision, not an OS sandbox. Python integration adds a green 16-target suite, blocked-Python independent reload, parent-death cleanup and compiled production/disabled editor verification on macOS arm64; distribution/platform limits remain. Latest document-delta integration passes the complete 17-target suite on local macOS arm64; formal distribution/platform evidence remains.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I2.stress",
+      "requirement": "100 enable/disable/reload cycles, races, crashes, unresponsive plugins and no owned resource leaks",
+      "status": "partial",
+      "evidence": [
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/evidence/static-zlib-lifecycle-conformance.log",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/LifecycleNativeResources.json",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/TransactionRecoveryValidation.json",
+        "doc/plugin-system/evidence/ApplicationExitValidation.json",
+        "doc/plugin-system/evidence/ApplicationPreparationExitValidation.json"
+      ],
+      "notes": "100 real Scintilla/PluginEngine/WebEngine enable/open/reload/disable cycles pass with zero per-stop sessions/panels/resources/focus connections; 200 PID-plus-native-start Node identities exited. Native file descriptors initial 30, warm 32, final 32; every cycle has raw resource snapshots. Whole-suite duration is not isolated cost attribution, RSS is not a peak/exact-baseline claim, and further original concurrent/fault/platform stress remains. Fifteen real native transaction-owner deaths now have PID-plus-start-time terminal proof, fresh-process recovery and independent integrity checks after collection. These are package transaction fixtures, not 15 real plugin activation/crash sessions or all original concurrent/platform stress. Five production-source application exit scenarios add 12 native PID-plus-start-time Node/descendant exits and zero scoped resources at exec return. Unresponsive plugin main threads and queued management operations are tested; no blocked filesystem or all-platform stress completion is claimed. A sixth production-source exit now cancels pending update preparation while its real store lock remains held through exec return; the installer drains, the old enabled version/data remain and no replacement activates. All six exit rows pass (14 owned Node/descendant identities). This is cancellable lock contention, not an uninterruptible filesystem or outer-fallback proof.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I3.vscode",
+      "requirement": "Versioned supported API table, importer/aliases, synchronous document mirrors and licensed real sample",
+      "status": "partial",
+      "evidence": [
+        "packages/plugin-host/vscode/documents.cjs",
+        "src/plugins/documents/DocumentBridge.cpp",
+        "src/plugins/runtime/PluginSession.cpp",
+        "tests/plugin-rpc/mirror.test.cjs",
+        "tests/plugin-rpc/host.test.cjs",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "doc/plugin-system/DocumentMirror.zh-CN.md",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "packages/plugin-host/vscode/adapter.cjs",
+        "packages/plugin-host/vscode/types.cjs",
+        "packages/plugin-sdk/import-vscode.cjs",
+        "tests/plugin-rpc/vscode.test.cjs",
+        "examples/vscode-hello-world",
+        "doc/plugin-system/VSCodeCompatibility.zh-CN.md",
+        "doc/plugin-system/evidence/VSCodeCoreCodeGraphValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "packages/plugin-host/vscode/webviews.cjs",
+        "src/plugins/webviews/compat-bootstrap.js",
+        "examples/vscode-webview",
+        "doc/plugin-system/evidence/VSCodeWebviewBundleValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewCodeGraphValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceSchemaValidation.json",
+        "packages/plugin-host/vscode/persistence.cjs",
+        "doc/plugin-system/VSCodePersistence.zh-CN.md",
+        "doc/plugin-system/evidence/VSCodePersistenceBundleValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceCodeGraphValidation.json"
+      ],
+      "notes": "Versioned bounded core, full HTML Webviews and private persistent Memento/Global configuration are delivered locally. Licensed HelloWorld and adapted Cat Coding remain validated. A single application editing session is the explicit workspaceState scope. Full 21-target suite plus final 4-target and actual native checks pass. I3 remains partial: activation writes, full workspace/configuration semantics, migration and broader original fault/performance acceptance remain; no original delivery scope is dropped.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I3.python",
+      "requirement": "Second-language adapter reads same unsaved snapshot and independently reloads; shared protocol fixtures",
+      "status": "complete",
+      "evidence": [
+        "packages/plugin-host/python-host.cjs",
+        "packages/plugin-host/python/host.py",
+        "packages/plugin-host/python/nnp_rpc.py",
+        "packages/plugin-host/python/nnp_wire.py",
+        "packages/plugin-host/python/nnp_client.py",
+        "tests/plugin-rpc/python.test.py",
+        "tests/plugin-rpc/python-host.test.cjs",
+        "tests/plugin-webviews/PluginWebviewTests.cpp",
+        "tests/plugin-packages/ParentCrashTests.cpp",
+        "tests/plugin-application/PluginApplicationTests.cpp",
+        "examples/python-inspector",
+        "doc/plugin-system/PythonAdapter.zh-CN.md",
+        "doc/plugin-system/evidence/PythonAdapterValidation.json",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceSchemaValidation.json"
+      ],
+      "notes": "Python 3.12 prototype retains the shared JSON-RPC profile and now validates 180 wire fixtures plus boundaries (216 cases), including SDK compare_exchange namespace/null/delete/conflict behavior. Real host, same unsaved text, independent reload and production uninstall remain green. Controlled developer interpreter is still unbundled/non-relocatable; I4 remains pending.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I3.edits",
+      "requirement": "Strict Unicode/version/read-only edit checks, configuration/storage and single undo",
+      "status": "partial",
+      "evidence": [
+        "src/plugins/documents/DocumentBridge.cpp",
+        "tests/plugin-documents/PluginDocumentTests.cpp",
+        "src/plugins/data/PluginDataStore.cpp",
+        "src/plugins/data/PluginDataService.cpp",
+        "tests/plugin-data/PluginDataTests.cpp",
+        "doc/plugin-system/evidence/plugin-data-conformance.log",
+        "doc/plugin-system/evidence/wire-data-conformance.log",
+        "doc/plugin-system/evidence/repository-data-conformance.log",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceSchemaValidation.json",
+        "packages/plugin-host/vscode/persistence.cjs",
+        "doc/plugin-system/VSCodePersistence.zh-CN.md",
+        "doc/plugin-system/evidence/VSCodePersistenceBundleValidation.json",
+        "doc/plugin-system/evidence/VSCodePersistenceCodeGraphValidation.json"
+      ],
+      "notes": "Strict Unicode/version/read-only Native and VS Code edit transactions with one undo pass. Native origin-bound configuration/storage now support conditional writes; bounded adapter globalState and single-session workspaceState hydrate before import, clone values and persist after publication. Declared Global configuration defaults/overrides/events and actual reload/keep-data/delete-data uninstall paths pass. Full workspace/configuration and migration semantics remain, so this item stays partial.",
+      "phase": "development",
+      "historicalNotes": true
+    },
+    {
+      "id": "I4.build",
+      "requirement": "Core and Webview feature switches, disabled build and editor regression",
+      "status": "partial",
+      "evidence": [
+        "CMakeLists.txt",
+        "src/CMakeLists.txt",
+        "tests/plugin-application/PluginApplicationTests.cpp",
+        "doc/plugin-system/evidence/disabled-editor-regression.log",
+        "src/DockedEditor.cpp",
+        "doc/plugin-system/evidence/static-zlib-lifecycle-conformance.log",
+        "doc/plugin-system/evidence/wire-data-conformance.log",
+        "doc/plugin-system/evidence/parent-supervision-ctest-summary.log",
+        "doc/plugin-system/evidence/diagnostics-ctest-summary.log",
+        "doc/plugin-system/evidence/diagnostics-disabled-editor-summary.log",
+        "doc/plugin-system/evidence/release-checksums-ctest-summary.log",
+        "doc/plugin-system/evidence/PythonAdapterValidation.json",
+        "doc/plugin-system/evidence/DocumentMirrorValidation.json",
+        "doc/plugin-system/evidence/VSCodeCoreValidation.json",
+        "doc/plugin-system/evidence/MacOSDeploymentValidation.json",
+        "doc/plugin-system/MacOSDeployment.zh-CN.md",
+        "doc/plugin-system/evidence/ApplicationExitValidation.json",
+        ".github/workflows/plugin-conformance.yml",
+        "doc/plugin-system/CrossPlatformCI.zh-CN.md",
+        "doc/plugin-system/evidence/PluginCIValidation.json",
+        "doc/plugin-system/evidence/MacUiGitHubValidation.json"
+      ],
+      "notes": "Enabled/WebEngine/static-zlib full app and plugins-disabled arm64 builds pass. Diagnostic 14-target full suite passes; subsequent release/source/application affected targets pass. Hidden-window/save/reload/rename/last-tab/exit regression passes in both. Disabled verification explicitly runs the compiled app target; an earlier unbuilt-target selection error is preserved. Other platform/Qt matrices remain. Python integration adds a green 16-target suite, blocked-Python independent reload, parent-death cleanup and compiled production/disabled editor verification on macOS arm64; distribution/platform limits remain. Latest document-delta integration passes the complete 17-target suite on local macOS arm64; formal distribution/platform evidence remains. Current core full 19-target suite, final affected checks and compiled plugins-disabled editor pass locally; other platforms and formal distribution remain. Local macOS arm64 Node-only Release closure, hardened ad-hoc signatures, relocated production-source application and verified DMG/copy/version smoke pass. Native Intel, actual minimum OS, clean machines, formal Developer ID/notarization, other platforms and complete license/source review remain; no original requirement removed. Current changed application-test main and conditional CMake wiring pass Release original/exit application targets plus freshly compiled Python developer (8 pass, no skips) and plugins-disabled application (8 pass). Other platform/Qt matrices remain. Developer-only core profile (plugins ON, WebEngine OFF, pinned Node and configured Python) now compiles and passes all 22 CTest targets on local macOS arm64. Dedicated 12-combination developer CI is actionlint-validated; remote runs are unexecuted. Developer ID/notary/publishing have been excluded by direct user instruction and are not blockers.",
+      "phase": "development",
+      "historicalNotes": true,
+      "currentVerification": "2026-10-12: independent SDK-based public Markdown repository and remote CI passed; actual native URL registration/install v0.1.2/source refresh/update v0.1.3, unsaved Unicode preview, Mac chrome, affected Webviews and exit regression passed. Existing broad platform and fault limits are retained."
+    },
+    {
+      "id": "I4.distribution",
+      "requirement": "Platform capability matrix, runtime/helper/resources, relocatable packages and clean-system installation",
+      "status": "deferred",
+      "evidence": [
+        "doc/plugin-system/evidence/MacOSDeploymentValidation.json",
+        "doc/plugin-system/MacOSDeployment.zh-CN.md",
+        "doc/plugin-system/PlatformCapabilities.zh-CN.md",
+        "doc/plugin-system/evidence/MacOSDeveloperIdValidation.json",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json"
+      ],
+      "notes": "Current local macOS arm64 Node-only Release closure, Developer ID application/DMG signatures, secure timestamps, relocated signed integration, package-contained runtime paths and checksum/mount/copy/version/JIT checks pass. Local Gatekeeper rejects the unnotarized Developer ID app. The user confirmed notary credentials are not configured. Notarization/stapling, clean-system installation/upgrade/uninstall, native Intel/minimum OS, other platforms and full license/source review remain; all original requirements are retained.",
+      "statusBeforeUserScopeChange": "partial",
+      "phase": "future-distribution",
+      "deferralReason": "User explicitly excludes identity/certification and publishing from the current development phase.",
+      "historicalNotes": true
+    },
+    {
+      "id": "I4.macos",
+      "requirement": "Intel/arm64 architecture, minimum OS, helper signing/notarization and DMG deployment evidence",
+      "status": "deferred",
+      "evidence": [
+        "doc/plugin-system/evidence/MacOSDeploymentValidation.json",
+        "doc/plugin-system/MacOSDeployment.zh-CN.md",
+        "doc/plugin-system/evidence/MacOSDeveloperIdValidation.json",
+        "doc/plugin-system/evidence/MacOSDeveloperIdRuntimeAudit.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json"
+      ],
+      "notes": "Fresh current-source Node-only arm64 Release application and DMG are signed with the local-keychain Developer ID identity. All 36 physical Mach-O signatures have one Team and secure timestamps; main library validation stays enabled. DMG integrity/mount/copy/detach, relocated production-source application tests and signed Node JIT pass. Local Gatekeeper returns Unnotarized Developer ID. The user confirmed notary credentials are not configured; notarization/stapling, native Intel/minimum OS, clean systems and full license/source review remain.",
+      "statusBeforeUserScopeChange": "partial",
+      "phase": "future-distribution",
+      "deferralReason": "User explicitly excludes identity/certification and publishing from the current development phase.",
+      "historicalNotes": true
+    },
+    {
+      "id": "I4.documentation",
+      "requirement": "Dependency/licenses, plugin author template, compatibility limits, recovery and maintenance documentation",
+      "status": "partial",
+      "evidence": [
+        "examples/markdown-preview/README.md",
+        "doc/plugin-system/Implementation.zh-CN.md",
+        "doc/plugin-system/SourceRegistration.zh-CN.md",
+        "packages/plugin-host/runtime-lock.json",
+        "doc/plugin-system/Dependencies.zh-CN.md",
+        "doc/plugin-system/licenses/zlib-1.3.2-LICENSE",
+        "README.md",
+        "doc/plugin-system/AuthorRelease.zh-CN.md",
+        "doc/plugin-system/Diagnostics.zh-CN.md",
+        "doc/plugin-system/ProcessSupervision.zh-CN.md",
+        "doc/plugin-system/evidence/VSCodeWebviewValidation.json",
+        "doc/plugin-system/evidence/VSCodeWebviewSchemaValidation.json",
+        "doc/plugin-system/evidence/MacOSDeploymentValidation.json",
+        "doc/plugin-system/MacOSDeployment.zh-CN.md",
+        "doc/plugin-system/evidence/MacOSDeveloperIdValidation.json",
+        "doc/plugin-system/evidence/MarkdownPerformanceValidation.json",
+        "doc/plugin-system/evidence/NativeAppearanceValidation.json",
+        "doc/plugin-system/evidence/MacUiGitHubValidation.json"
+      ],
+      "notes": "Author build/package/archive/install/update, deferred verification, health/recovery, metadata registration, language/API boundaries and local-keychain signing documented; author draft-release CI template exists. Node/host/zlib notices and Qt SDK SPDX/third-party notices are copied and verified. Current proof records preserve failures, high-RSS limits and all 27 original requirements. Complete component license/source obligations, remote author CI/Release execution and formal release/platform maintenance validation remain.",
+      "phase": "development",
+      "historicalNotes": true,
+      "currentVerification": "2026-10-12: independent SDK-based public Markdown repository and remote CI passed; actual native URL registration/install v0.1.2/source refresh/update v0.1.3, unsaved Unicode preview, Mac chrome, affected Webviews and exit regression passed. Existing broad platform and fault limits are retained."
+    }
+  ],
+  "note": "This ledger is a work map, not proof of completion. Completion requires inspection of current artifacts and runtime evidence for every requirement.",
+  "lastVerified": "2026-10-12",
+  "currentPhase": "local-development",
+  "currentScope": {
+    "included": [
+      "Local application development and feature acceptance",
+      "Plugin registration/manager, lifecycle and JSON-RPC services",
+      "Markdown, bounded VS Code and second-language developer adapters",
+      "Local build/runtime/regression evidence",
+      "Explicitly authorized public independent Markdown plugin repository, CI and plugin Releases"
+    ],
+    "excludedByUser": [
+      "Developer ID identity/certificate setup or use",
+      "Apple notarization/stapling and credential configuration",
+      "Publishing the main application",
+      "Formal distribution/clean-system installation gates"
+    ],
+    "signingPolicy": "No Developer ID required for local builds or runs. Optional local packaging defaults to ad-hoc identity - with an empty notary profile."
+  },
+  "scopeAmendments": [
+    {
+      "recordedUtc": "2026-10-11T08:54:59.155299+00:00",
+      "authority": "direct-user-instruction",
+      "instruction": "首先这个是在开发中，我不想要认证和发布，为什么本机在开发还需要认证ID",
+      "effect": "Move formal identity, notarization and release gates to a future distribution phase; do not continue formal signing or request notary credentials. Keep original requirement IDs and historical proof for traceability."
+    },
+    {
+      "recordedUtc": "2026-10-11T23:54:14.697773+00:00",
+      "authority": "direct-user-instruction",
+      "instruction": "把 Markdown 插件也整理成独立的 GitHub 仓库吧，用这个 SDK 开发，让我可以通过 repo URL 注册、安装和更新它。KMerdan/notepadnext-markdown-preview（公开）",
+      "effect": "Publish only this standalone plugin repository and its installation artifacts; retain main-app signing, notarization and distribution deferral."
+    }
+  ],
+  "developmentHandoff": {
+    "status": "verified",
+    "date": "2026-10-11",
+    "milestone": "Usable local macOS plugin development build",
+    "app": "build/plugin-dev/NotepadNext.app",
+    "metadata": "examples/markdown-preview/notepadnext-plugin.json",
+    "package": "build/plugin-dev/markdown-preview",
+    "flow": [
+      "Register Resources / Local metadata file",
+      "Uninstalled / Local Package",
+      "Installed / Enable",
+      "Run Command / Markdown Preview"
+    ],
+    "verified": [
+      "Local registration and refresh persist without network or installation",
+      "Local metadata cache survives missing author file",
+      "Production manager explicitly installs disabled then enables",
+      "Real unsaved Unicode Markdown renders",
+      "Production application drains owned plugin processes on exit"
+    ],
+    "remainingPlanScope": [
+      "Real remote GitHub Release and cross-platform CI execution",
+      "Broader lifecycle and filesystem fault coverage",
+      "Additional VS Code workspace/configuration and migration semantics"
+    ],
+    "excludedCurrentScope": [
+      "Developer ID",
+      "notarization",
+      "formal main-application publication"
+    ],
+    "evidence": [
+      "doc/plugin-system/evidence/local-registration-full-tests.log",
+      "doc/plugin-system/evidence/local-registration-full-tests.xml",
+      "doc/plugin-system/evidence/LocalDevelopmentValidation.json",
+      "doc/plugin-system/evidence/local-registration-webview-tests.log"
+    ],
+    "latestEvidence": "doc/plugin-system/evidence/MacUiGitHubValidation.json"
+  }
+}

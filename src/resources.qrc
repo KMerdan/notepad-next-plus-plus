@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/newfile.png</file>
+        <file>icons/markdown-preview.svg</file>
         <file>icons/saved.png</file>
         <file>icons/unsaved.png</file>
         <file>icons/openFile.png</file>
@@ -44,6 +45,7 @@
         <file>icons/wrapindicator.png</file>
         <file>icons/cross.svg</file>
         <file>icons/plus.svg</file>
+        <file>icons/plugins.svg</file>
         <file>icons/list_with_icons.svg</file>
     </qresource>
 </RCC>

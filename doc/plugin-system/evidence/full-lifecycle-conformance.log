@@ -1,0 +1,525 @@
+Start testing: Oct 11 10:01 JST
+----------------------------------------------------------
+1/10 Testing: PluginSourceTests
+1/10 Test: PluginSourceTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-sources/PluginSourceTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-sources
+"PluginSourceTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginSourceTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginSourceTests::initTestCase()
+PASS   : PluginSourceTests::repositoryNormalization()
+PASS   : PluginSourceTests::metadataDiscriminator()
+PASS   : PluginSourceTests::invalidMetadataIsRejected()
+PASS   : PluginSourceTests::registrationPersistenceAndMerging()
+PASS   : PluginSourceTests::conflictsAndFailedWritesAreAtomic()
+PASS   : PluginSourceTests::refreshReplacesOnlyItsOwnAssociations()
+PASS   : PluginSourceTests::corruptCacheIsPreserved()
+PASS   : PluginSourceTests::resolverPinsMetadataAndDoesNotInstall()
+PASS   : PluginSourceTests::resolverFailureAndCancellation()
+QWARN  : PluginSourceTests::managerListsSearchesAndSharesRegistry() qt.qpa.fonts: Populating font family aliases took 55 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginSourceTests::managerListsSearchesAndSharesRegistry()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(direct-plugin)
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(marketplace)
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(cancel-confirmation)
+PASS   : PluginSourceTests::cleanupTestCase()
+Totals: 15 passed, 0 failed, 0 skipped, 0 blacklisted, 479ms
+********* Finished testing of PluginSourceTests *********
+<end of output>
+Test time =   0.51 sec
+----------------------------------------------------------
+Test Passed.
+"PluginSourceTests" end time: Oct 11 10:01 JST
+"PluginSourceTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/10 Testing: PluginPackageTests
+2/10 Test: PluginPackageTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginPackageTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginPackageTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginPackageTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginPackageTests::initTestCase()
+PASS   : PluginPackageTests::versionsAndRanges()
+PASS   : PluginPackageTests::immutableInstallationAndPersistence()
+PASS   : PluginPackageTests::updateTransactionsAndRecovery()
+PASS   : PluginPackageTests::registrationAndInstallationStaySeparate()
+PASS   : PluginPackageTests::metadataAndCompatibilityChecks()
+PASS   : PluginPackageTests::unsafePathsAndLinks()
+PASS   : PluginPackageTests::budgetsCancellationAndIntegrity()
+libpng error: Read Error
+PASS   : PluginPackageTests::icons()
+PASS   : PluginPackageTests::failedIndexWritesAndCorruptStorage()
+PASS   : PluginPackageTests::productionMarkdownPackage()
+PASS   : PluginPackageTests::zipRoundtripAndPackage()
+PASS   : PluginPackageTests::unsafeZip(../escape)
+PASS   : PluginPackageTests::unsafeZip(/absolute)
+PASS   : PluginPackageTests::unsafeZip(C:/drive)
+PASS   : PluginPackageTests::unsafeZip(a\b)
+PASS   : PluginPackageTests::unsafeZip(a//b)
+PASS   : PluginPackageTests::unsafeZip(./a)
+PASS   : PluginPackageTests::unsafeZip(a/../b)
+PASS   : PluginPackageTests::unsafeZip(CON.txt)
+PASS   : PluginPackageTests::unsafeZip(aux)
+PASS   : PluginPackageTests::unsafeZip(a.)
+PASS   : PluginPackageTests::unsafeZip(a )
+PASS   : PluginPackageTests::unsafeZip(a:b)
+PASS   : PluginPackageTests::unsafeZip(a?b)
+PASS   : PluginPackageTests::unsafeZip(.nnp-receipt.json)
+PASS   : PluginPackageTests::unsafeZip(case aliases)
+PASS   : PluginPackageTests::unsafeZip(duplicate file)
+PASS   : PluginPackageTests::unsafeZip(symlink)
+PASS   : PluginPackageTests::unsafeZip(device)
+PASS   : PluginPackageTests::unsafeZip(fifo)
+PASS   : PluginPackageTests::unsafeZip(encryption)
+PASS   : PluginPackageTests::unsafeZip(compression method)
+PASS   : PluginPackageTests::unsafeZip(invalid utf8)
+PASS   : PluginPackageTests::unsafeZip(undeclared utf8)
+PASS   : PluginPackageTests::unsafeZip(directory data)
+PASS   : PluginPackageTests::unsafeZip(file prefix)
+PASS   : PluginPackageTests::unsafeZip(directory prefix)
+PASS   : PluginPackageTests::unsafeZip(depth)
+PASS   : PluginPackageTests::unsafeZip(unicode aliases)
+PASS   : PluginPackageTests::corruptZipAndBudgets()
+PASS   : PluginPackageTests::cleanupTestCase()
+Totals: 42 passed, 0 failed, 0 skipped, 0 blacklisted, 237ms
+********* Finished testing of PluginPackageTests *********
+<end of output>
+Test time =   0.26 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPackageTests" end time: Oct 11 10:01 JST
+"PluginPackageTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/10 Testing: PluginGitHubReleaseTests
+3/10 Test: PluginGitHubReleaseTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginGitHubReleaseTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginGitHubReleaseTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+********* Start testing of GitHubReleaseTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : GitHubReleaseTests::initTestCase()
+PASS   : GitHubReleaseTests::matchingAssetsAndNoInstallation()
+PASS   : GitHubReleaseTests::paginationAndBudget()
+PASS   : GitHubReleaseTests::downloadRedirectAndProvenance()
+PASS   : GitHubReleaseTests::invalidDownload(sha mismatch)
+PASS   : GitHubReleaseTests::invalidDownload(oversize)
+PASS   : GitHubReleaseTests::invalidDownload(truncated)
+PASS   : GitHubReleaseTests::invalidDownload(redirect host)
+PASS   : GitHubReleaseTests::invalidDownload(redirect http)
+PASS   : GitHubReleaseTests::invalidDownload(too many redirects)
+PASS   : GitHubReleaseTests::invalidDownload(rate limit)
+PASS   : GitHubReleaseTests::invalidDownload(not found)
+PASS   : GitHubReleaseTests::invalidDownload(cancel)
+PASS   : GitHubReleaseTests::invalidDownload(declared size)
+PASS   : GitHubReleaseTests::lookupFailureAndCancel()
+PASS   : GitHubReleaseTests::installTransaction()
+PASS   : GitHubReleaseTests::cleanupTestCase()
+Totals: 17 passed, 0 failed, 0 skipped, 0 blacklisted, 279ms
+********* Finished testing of GitHubReleaseTests *********
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"PluginGitHubReleaseTests" end time: Oct 11 10:01 JST
+"PluginGitHubReleaseTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/10 Testing: PluginRpcTests
+4/10 Test: PluginRpcTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-rpc/PluginRpcTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginRpcTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginRpcTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginRpcTests::initTestCase()
+PASS   : PluginRpcTests::profileAgreement()
+PASS   : PluginRpcTests::conformance(named params)
+PASS   : PluginRpcTests::conformance(positional params)
+PASS   : PluginRpcTests::conformance(omitted params)
+PASS   : PluginRpcTests::conformance(null request id)
+PASS   : PluginRpcTests::conformance(numeric id token)
+PASS   : PluginRpcTests::conformance(exponent id token)
+PASS   : PluginRpcTests::conformance(fractional id token)
+PASS   : PluginRpcTests::conformance(escaped id key)
+PASS   : PluginRpcTests::conformance(notification)
+PASS   : PluginRpcTests::conformance(unknown notification)
+PASS   : PluginRpcTests::conformance(failing notification)
+PASS   : PluginRpcTests::conformance(unknown method)
+PASS   : PluginRpcTests::conformance(invalid method params)
+PASS   : PluginRpcTests::conformance(handler failure)
+PASS   : PluginRpcTests::conformance(parse error)
+PASS   : PluginRpcTests::conformance(invalid number grammar)
+PASS   : PluginRpcTests::conformance(multiple roots)
+PASS   : PluginRpcTests::conformance(scalar)
+PASS   : PluginRpcTests::conformance(null scalar)
+PASS   : PluginRpcTests::conformance(invalid id)
+PASS   : PluginRpcTests::conformance(invalid version)
+PASS   : PluginRpcTests::conformance(scalar params)
+PASS   : PluginRpcTests::conformance(empty batch)
+PASS   : PluginRpcTests::conformance(invalid batch items)
+PASS   : PluginRpcTests::conformance(mixed batch)
+PASS   : PluginRpcTests::conformance(all notifications)
+PASS   : PluginRpcTests::conformance(unknown response)
+PASS   : PluginRpcTests::conformance(invalid response)
+PASS   : PluginRpcTests::framing()
+PASS   : PluginRpcTests::invalidFraming(duplicate)
+PASS   : PluginRpcTests::invalidFraming(negative)
+PASS   : PluginRpcTests::invalidFraming(oversize)
+PASS   : PluginRpcTests::invalidFraming(overflow)
+PASS   : PluginRpcTests::invalidFraming(missing)
+PASS   : PluginRpcTests::invalidFraming(bare LF)
+PASS   : PluginRpcTests::invalidFraming(charset)
+PASS   : PluginRpcTests::invalidFraming(malformed charset)
+PASS   : PluginRpcTests::invalidFraming(header budget)
+PASS   : PluginRpcTests::invalidFraming(non ASCII)
+PASS   : PluginRpcTests::truncatedFrame()
+PASS   : PluginRpcTests::invalidUtf8()
+PASS   : PluginRpcTests::budgets()
+PASS   : PluginRpcTests::responseTimeoutCancelAndClose()
+PASS   : PluginRpcTests::asyncBatchAndIncomingCancel()
+PASS   : PluginRpcTests::realNodeProcess()
+PASS   : PluginRpcTests::repeatedProcesses()
+QINFO  : PluginRpcTests::processBenchmarks(1 process) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"6331 112448  31.8","processes":1,"roundtrips":[{"bytes":10240,"meanMs":3.1971542000000004,"p95Ms":4.608709,"samples":10},{"bytes":102400,"meanMs":6.101895900000001,"p95Ms":6.112209,"samples":10},{"bytes":1048576,"meanMs":42.5349959,"p95Ms":43.867208,"samples":10}]}
+PASS   : PluginRpcTests::processBenchmarks(1 process)
+QINFO  : PluginRpcTests::processBenchmarks(5 processes) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"6335 124032   5.1\n 6336 126320   7.0\n 6337 109536   8.3\n 6338 112064   6.4\n 6339 121840   4.4","processes":5,"roundtrips":[{"bytes":10240,"meanMs":3.18136748,"p95Ms":4.596333,"samples":50},{"bytes":102400,"meanMs":6.085375000000002,"p95Ms":6.155625,"samples":50},{"bytes":1048576,"meanMs":43.391988440000006,"p95Ms":46.709125,"samples":50}]}
+PASS   : PluginRpcTests::processBenchmarks(5 processes)
+QINFO  : PluginRpcTests::processBenchmarks(10 processes) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"6373 123200   1.8\n 6374 122384   1.8\n 6375 121216   2.2\n 6376 118304   3.0\n 6377 109776   3.9\n 6378 126912   5.0\n 6379 123104   4.6\n 6380 106032   5.8\n 6381 122016   1.3\n 6382 121872   1.5","processes":10,"roundtrips":[{"bytes":10240,"meanMs":3.2272808200000003,"p95Ms":4.649792,"samples":100},{"bytes":102400,"meanMs":6.137637860000001,"p95Ms":6.203291,"samples":100},{"bytes":1048576,"meanMs":41.989016240000026,"p95Ms":45.886375,"samples":100}]}
+PASS   : PluginRpcTests::processBenchmarks(10 processes)
+PASS   : PluginRpcTests::cleanupTestCase()
+Totals: 52 passed, 0 failed, 0 skipped, 0 blacklisted, 12143ms
+********* Finished testing of PluginRpcTests *********
+<end of output>
+Test time =  12.16 sec
+----------------------------------------------------------
+Test Passed.
+"PluginRpcTests" end time: Oct 11 10:01 JST
+"PluginRpcTests" time elapsed: 00:00:12
+----------------------------------------------------------
+
+5/10 Testing: PluginNodeRpcTests
+5/10 Test: PluginNodeRpcTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/rpc.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeRpcTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+✔ named params (1.518042ms)
+✔ positional params (0.158458ms)
+✔ omitted params (0.072041ms)
+✔ null request id (0.074041ms)
+✔ numeric id token (0.09ms)
+✔ exponent id token (0.060375ms)
+✔ fractional id token (0.053625ms)
+✔ escaped id key (0.062125ms)
+✔ notification (0.067459ms)
+✔ unknown notification (0.117042ms)
+✔ failing notification (0.077333ms)
+✔ unknown method (0.093709ms)
+✔ invalid method params (0.06425ms)
+✔ handler failure (0.063334ms)
+✔ parse error (0.04175ms)
+✔ invalid number grammar (0.0455ms)
+✔ multiple roots (0.032792ms)
+✔ scalar (0.043041ms)
+✔ null scalar (0.041583ms)
+✔ invalid id (0.037584ms)
+✔ invalid version (0.033583ms)
+✔ scalar params (0.040667ms)
+✔ empty batch (0.031875ms)
+✔ invalid batch items (4.634917ms)
+✔ mixed batch (0.100042ms)
+✔ all notifications (0.041708ms)
+✔ unknown response (0.02725ms)
+✔ invalid response (0.05925ms)
+✔ framing at every split and byte (1.029208ms)
+✔ invalid framing and truncation (0.411166ms)
+✔ invalid UTF8 and profile budgets (0.144166ms)
+✔ bidirectional requests, cancellation, timeout, invalid response and close (12.962458ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.767083
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeRpcTests" end time: Oct 11 10:01 JST
+"PluginNodeRpcTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/10 Testing: PluginNodeHostTests
+6/10 Test: PluginNodeHostTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/host.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeHostTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+✔ native package lifecycle and bidirectional document read (36.378208ms)
+✔ failed activation releases already registered resources (30.462791ms)
+✔ watch buffers events that arrive before its reply (0.471458ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.099833
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeHostTests" end time: Oct 11 10:01 JST
+"PluginNodeHostTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/10 Testing: PluginSdkPackageTests
+7/10 Test: PluginSdkPackageTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/../../packages/plugin-sdk/pack.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginSdkPackageTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (10.953834ms)
+✔ rejects escaping entry and clears failed staging (4.014875ms)
+✔ rejects links and native addons (5.9735ms)
+✔ rejects missing production dependency and source-contained output (6.864ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (21.068541ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87.222
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"PluginSdkPackageTests" end time: Oct 11 10:01 JST
+"PluginSdkPackageTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/10 Testing: PluginDocumentTests
+8/10 Test: PluginDocumentTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-documents/PluginDocumentTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-documents
+"PluginDocumentTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginDocumentTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDocumentTests::initTestCase()
+QWARN  : PluginDocumentTests::snapshotAndIdentity() qt.qpa.fonts: Populating font family aliases took 51 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginDocumentTests::snapshotAndIdentity()
+PASS   : PluginDocumentTests::unicodePositions()
+PASS   : PluginDocumentTests::invalidEncodingAndBudget()
+PASS   : PluginDocumentTests::editsAreAtomicAndUndoable()
+QWARN  : PluginDocumentTests::sequenceAndSwitching() QWidget::paintEngine: Should no longer be called
+QWARN  : PluginDocumentTests::sequenceAndSwitching() QWidget::paintEngine: Should no longer be called
+PASS   : PluginDocumentTests::sequenceAndSwitching()
+QINFO  : PluginDocumentTests::snapshotPerformance(10KiB) Snapshot bytes=10240, average=0.131ms
+PASS   : PluginDocumentTests::snapshotPerformance(10KiB)
+QINFO  : PluginDocumentTests::snapshotPerformance(100KiB) Snapshot bytes=102400, average=1.308ms
+PASS   : PluginDocumentTests::snapshotPerformance(100KiB)
+QINFO  : PluginDocumentTests::snapshotPerformance(1MiB) Snapshot bytes=1048576, average=13.318ms
+PASS   : PluginDocumentTests::snapshotPerformance(1MiB)
+PASS   : PluginDocumentTests::cleanupTestCase()
+Totals: 10 passed, 0 failed, 0 skipped, 0 blacklisted, 1617ms
+********* Finished testing of PluginDocumentTests *********
+<end of output>
+Test time =   1.65 sec
+----------------------------------------------------------
+Test Passed.
+"PluginDocumentTests" end time: Oct 11 10:01 JST
+"PluginDocumentTests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+9/10 Testing: PluginWebviewTests
+9/10 Test: PluginWebviewTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-webviews/PluginWebviewTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-webviews
+"PluginWebviewTests" start time: Oct 11 10:01 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[6426:259:1011/100140.769396:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[6426:259:1011/100140.769635:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+PASS   : PluginWebviewTests::activationResourceStaging()
+PASS   : PluginWebviewTests::healthTimeout()
+PASS   : PluginWebviewTests::boundedCrashRecovery()
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 1 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 11 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 21 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 31 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 41 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 51 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 61 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 71 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 81 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 91 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() 100 lifecycle cycles elapsed ms 37541
+PASS   : PluginWebviewTests::lifecycleStress100Cycles()
+PASS   : PluginWebviewTests::updateValidationAndRollback()
+PASS   : PluginWebviewTests::installedManagerLifecycle()
+PASS   : PluginWebviewTests::htmlPolicy()
+PASS   : PluginWebviewTests::imageContainment()
+PASS   : PluginWebviewTests::realPageAndCleanup()
+PASS   : PluginWebviewTests::realMarkdownSession()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 12 passed, 0 failed, 0 skipped, 0 blacklisted, 64848ms
+********* Finished testing of PluginWebviewTests *********
+<end of output>
+Test time =  64.99 sec
+----------------------------------------------------------
+Test Passed.
+"PluginWebviewTests" end time: Oct 11 10:02 JST
+"PluginWebviewTests" time elapsed: 00:01:04
+----------------------------------------------------------
+
+10/10 Testing: PluginApplicationTests
+10/10 Test: PluginApplicationTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+"PluginApplicationTests" start time: Oct 11 10:02 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 10:02:45.723 PluginApplicationTests[7754:14636058] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+void MainWindow::openFileList(const QStringList &)
+/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-zZAelz/sample.md
+Read 16 bytes
+sample.md last modified Sun Oct 11 10:02:45 2026
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-zZAelz/sample.md"
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+sample.md last modified Sun Oct 11 10:02:45 2026
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError ScintillaNext::save()
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+sample.md last modified Sun Oct 11 10:02:45 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Read 11 bytes
+sample.md last modified Sun Oct 11 10:02:45 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+renamed.md last modified Sun Oct 11 10:02:45 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void RecentFilesListManager::addFile(const QString &)
+void MainWindow::newFile()
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Text
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+[7754:259:1011/100246.180210:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[7754:259:1011/100246.181209:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void SessionManager::saveSession(MainWindow *)
+void MacroManager::saveSettings() const
+QWidget::paintEngine: Should no longer be called
+QWidget::paintEngine: Should no longer be called
+PASS   : PluginApplicationTests::productionManagerAndExit()
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 722ms
+********* Finished testing of PluginApplicationTests *********
+<end of output>
+Test time =   0.98 sec
+----------------------------------------------------------
+Test Passed.
+"PluginApplicationTests" end time: Oct 11 10:02 JST
+"PluginApplicationTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 11 10:02 JST

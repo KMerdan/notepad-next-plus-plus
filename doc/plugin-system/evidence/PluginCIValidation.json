@@ -1,0 +1,86 @@
+{
+  "recordedUtc": "2026-10-11T08:57:40.193604+00:00",
+  "status": "local-developer-core-profile-and-ci-tooling-passed",
+  "goalComplete": false,
+  "currentPhase": "local-development",
+  "userScope": "Developer ID, notary credentials, notarization and publishing are explicitly excluded by direct user instruction. Formal distribution requirements remain deferred future records, not development blockers.",
+  "checks": {
+    "workflowActionlint": {
+      "passed": true,
+      "version": "1.7.11",
+      "definedCombinations": 12,
+      "remoteRunsExecuted": false,
+      "raw": "plugin-ci-actionlint.log"
+    },
+    "runtimePreparationTests": {
+      "passed": true,
+      "unittestMethods": 5,
+      "raw": "plugin-ci-runtime-tests.log"
+    },
+    "realArchives": {
+      "verified": [
+        "darwin-arm64",
+        "linux-x64",
+        "win-x64"
+      ],
+      "executedForVersion": [
+        "darwin-arm64"
+      ],
+      "version": "v24.21.0",
+      "record": "PluginCIRuntimeRecords.json"
+    },
+    "localCoreProfile": {
+      "passed": true,
+      "os": "macOS 27.0.1",
+      "architecture": "arm64",
+      "qtVersion": "6.10.0",
+      "plugins": true,
+      "webviews": false,
+      "nodeVersion": "24.21.0",
+      "pythonVersion": "3.12.13",
+      "buildType": "Release",
+      "generator": "Unix Makefiles",
+      "targetsPassed": 22,
+      "elapsedSeconds": 45.39,
+      "raw": "plugin-ci-core-conformance.log",
+      "summary": "plugin-ci-core-ctest.log",
+      "junit": "plugin-ci-core-tests.xml",
+      "applicationQtTestRowsPassed": 8,
+      "applicationWebEngineSlots": "Compile out in this profile; this is not native WebEngine/Python-panel acceptance."
+    },
+    "localDevelopmentSigningConfiguration": {
+      "notepadnext-macos-release-build": {
+        "identityAdHocOrUnset": true,
+        "notaryProfileConfigured": false
+      },
+      "notepadnext-app-build-610": {
+        "identityAdHocOrUnset": true,
+        "notaryProfileConfigured": false
+      },
+      "notepadnext-app-build-disabled": {
+        "identityAdHocOrUnset": true,
+        "notaryProfileConfigured": false
+      },
+      "nnp-plugin-ci-core-build": {
+        "identityAdHocOrUnset": true,
+        "notaryProfileConfigured": false
+      }
+    },
+    "developerIdUsedThisIncrement": false,
+    "notarizationSubmitted": false,
+    "remotePublished": false
+  },
+  "sourceHashes": "PluginCISourceSha256.json",
+  "codeGraph": "PluginCICodeGraphValidation.json",
+  "diagnostics": [
+    "Initial local Ninja configure failed because Ninja was absent. No compile ran in that attempt. Fresh Unix Makefiles configure/build/full test succeeded; original diagnostic is retained.",
+    "Initial public API lookup in the restricted sandbox could not access network; approved read-only lookups returned the pinned Action commits."
+  ],
+  "remainingDevelopment": [
+    "Review current feature/fault requirements against the revised development scope; prior formal-release gaps do not block development.",
+    "The 12 remote CI combinations have not run; no Windows/Linux/Intel native execution is claimed."
+  ],
+  "futureDistribution": [
+    "Identity/certificates/notarization/publishing and clean-system distribution validation are excluded from the current task."
+  ]
+}

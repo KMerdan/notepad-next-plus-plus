@@ -1,0 +1,49 @@
+Test project /private/tmp/nnp-plugin-ci-core-build
+      Start  1: PluginSourceTests
+ 1/22 Test  #1: PluginSourceTests ................   Passed    1.15 sec
+      Start  2: PluginPackageTests
+ 2/22 Test  #2: PluginPackageTests ...............   Passed    1.41 sec
+      Start  3: PluginTransactionCrashTests
+ 3/22 Test  #3: PluginTransactionCrashTests ......   Passed    2.68 sec
+      Start  4: PluginGitHubReleaseTests
+ 4/22 Test  #4: PluginGitHubReleaseTests .........   Passed    2.10 sec
+      Start  5: PluginParentCrashTests
+ 5/22 Test  #5: PluginParentCrashTests ...........   Passed    1.10 sec
+      Start  6: PluginPythonContractTests
+ 6/22 Test  #6: PluginPythonContractTests ........   Passed    0.14 sec
+      Start  7: PluginPythonHostTests
+ 7/22 Test  #7: PluginPythonHostTests ............   Passed    0.44 sec
+      Start  8: PluginRpcTests
+ 8/22 Test  #8: PluginRpcTests ...................   Passed   11.16 sec
+      Start  9: PluginNodeRpcTests
+ 9/22 Test  #9: PluginNodeRpcTests ...............   Passed    0.10 sec
+      Start 10: PluginNodeHostTests
+10/22 Test #10: PluginNodeHostTests ..............   Passed    0.40 sec
+      Start 11: PluginNodeWireTests
+11/22 Test #11: PluginNodeWireTests ..............   Passed    0.11 sec
+      Start 12: PluginDocumentMirrorTests
+12/22 Test #12: PluginDocumentMirrorTests ........   Passed    0.10 sec
+      Start 13: PluginVSCodeCoreTests
+13/22 Test #13: PluginVSCodeCoreTests ............   Passed    0.16 sec
+      Start 14: PluginVSCodeWebviewsTests
+14/22 Test #14: PluginVSCodeWebviewsTests ........   Passed    0.10 sec
+      Start 15: PluginVSCodeSampleBuild
+15/22 Test #15: PluginVSCodeSampleBuild ..........   Passed    0.23 sec
+      Start 16: PluginVSCodeWebviewSampleBuild
+16/22 Test #16: PluginVSCodeWebviewSampleBuild ...   Passed    0.23 sec
+      Start 17: PluginSdkPackageTests
+17/22 Test #17: PluginSdkPackageTests ............   Passed    0.17 sec
+      Start 18: PluginDocumentTests
+18/22 Test #18: PluginDocumentTests ..............   Passed    0.51 sec
+      Start 19: PluginDataTests
+19/22 Test #19: PluginDataTests ..................   Passed    0.82 sec
+      Start 20: PluginDiagnosticTests
+20/22 Test #20: PluginDiagnosticTests ............   Passed    2.40 sec
+      Start 21: PluginApplicationTests
+21/22 Test #21: PluginApplicationTests ...........   Passed    2.92 sec
+      Start 22: PluginMacBundleTests
+22/22 Test #22: PluginMacBundleTests .............   Passed   16.97 sec
+
+100% tests passed out of 22
+
+Total Test time (real) =  45.39 sec

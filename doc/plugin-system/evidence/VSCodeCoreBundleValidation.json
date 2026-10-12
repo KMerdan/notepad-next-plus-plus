@@ -1,0 +1,29 @@
+{
+  "sourceMatchesBundles": true,
+  "bundles": [
+    "/private/tmp/notepadnext-app-build-610/src/NotepadNext.app/Contents/Resources/plugin-host",
+    "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/Resources/plugin-host"
+  ],
+  "files": {
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "host.cjs": "d71e420814094c1d563646fd960add0875004ce2759d493528e3c02bbc66bad0",
+    "python-host.cjs": "c4e2702124e2470c4bdac6f9ce38921d74a0914a522c2f3d1106d9a41a0d1b00",
+    "client.cjs": "2e7460c94bdf0230a90b3d655202a8480e2111c9cc166be2b283ed5d56db7055",
+    "parent-watch.cjs": "1861d1a86863b7a5b1eeb7896f2de73933ceee5bc48a4471c731e81f9329cc24",
+    "rpc.cjs": "b9f5eb1b7e84b27b6edcd8a7a700f7517a8128d2f2bfb4b1e68c2551ea6849e5",
+    "protocol-profile.json": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f",
+    "wire.cjs": "1a642d6f8562875a64a971b70629126b8a5c612ef1ea2d87f6fd2d3e256d69c4",
+    "wire.schema.json": "1241f88fca438288ddcaba2c2b2b2a0e85125d3d5501c8e32dd6e1c5881445e9",
+    "wire-contract.json": "70c218b20242c516db324f60d3e1a5ae9052b19dea3881d4aa0a04e7f20075cb",
+    "runtime-lock.json": "1da63efd009fc0389da06bf96003f104f0a5a70a1f655ff9893093bdc3b28c75",
+    "python/host.py": "59b3eb2b8a19afe2207dd98d4c0a1a789b2aa3e68ada8316792a88eaafc6afc6",
+    "python/nnp_rpc.py": "8f3c7f488ebb59510241edb8a9345e34571017dcb979a2b790561f151e1f5132",
+    "python/nnp_wire.py": "4231f06d58280394e618e9ff5ca30fabe5fbd3b3a3fe0637b1ed6cecf8ca26e3",
+    "python/nnp_client.py": "b0f4d41749a19fc974088474f2a65945b63e78d1cdb3e394774e33e532a8a4f2",
+    "vscode/documents.cjs": "76e2511d05ccaa8a1158339d77c8d3c6920490cf3266104ab64e9fc4452abf4b",
+    "vscode/types.cjs": "96dffea3a9ce3087a5c32a22bb0a6ae50b152c740fe0a272b1d989aa06197a60",
+    "vscode/adapter.cjs": "691cc68b980f42ad7000cc98153d94d5ea8237c215872d61d03fa06393b6b401"
+  },
+  "scope": "Local arm64 app and production-test controlled host copies; not relocation, signing, notarization or clean-machine proof",
+  "testBundleRefreshFix": "PluginApplicationTests inherits NotepadNext LINK_DEPENDS so host-only changes rerun its bundle copy"
+}

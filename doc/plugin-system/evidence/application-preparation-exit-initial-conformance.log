@@ -1,0 +1,164 @@
+Start testing: Oct 11 17:42 JST
+----------------------------------------------------------
+20/23 Testing: PluginApplicationTests
+20/23 Test: PluginApplicationTests
+Command: "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests"
+Directory: /private/tmp/notepadnext-macos-release-build/tests/plugin-application
+"PluginApplicationTests" start time: Oct 11 17:42 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 17:42:33.109 PluginApplicationTests[68346:17306553] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+void MainWindow::openFileList(const QStringList &)
+/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-uwVTvQ/sample.md
+Read 16 bytes
+sample.md last modified Sun Oct 11 17:42:33 2026
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-uwVTvQ/sample.md"
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+sample.md last modified Sun Oct 11 17:42:33 2026
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError ScintillaNext::save()
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+sample.md last modified Sun Oct 11 17:42:33 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Read 11 bytes
+sample.md last modified Sun Oct 11 17:42:33 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+renamed.md last modified Sun Oct 11 17:42:33 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void RecentFilesListManager::addFile(const QString &)
+void MainWindow::newFile()
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Text
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+PASS   : PluginApplicationTests::deployedLibraryAudit()
+SKIP   : PluginApplicationTests::productionPythonAdapter() The developer Python interpreter is not configured.
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/PluginApplicationTests.cpp(100)]
+PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+[68346:259:1011/174234.515533:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[68346:259:1011/174234.516812:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+js: Uncaught ReferenceError: acquireVsCodeApi is not defined
+PASS   : PluginApplicationTests::productionVSCodeWebview()
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void SessionManager::saveSession(MainWindow *)
+void MacroManager::saveSettings() const
+QWidget::paintEngine: Should no longer be called
+QWidget::paintEngine: Should no longer be called
+PASS   : PluginApplicationTests::productionManagerAndExit()
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 7 passed, 0 failed, 1 skipped, 0 blacklisted, 3010ms
+********* Finished testing of PluginApplicationTests *********
+<end of output>
+Test time =   9.85 sec
+----------------------------------------------------------
+Test Passed.
+"PluginApplicationTests" end time: Oct 11 17:42 JST
+"PluginApplicationTests" time elapsed: 00:00:09
+----------------------------------------------------------
+
+21/23 Testing: PluginApplicationExitTests
+21/23 Test: PluginApplicationExitTests
+Command: "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginApplicationExitTests"
+Directory: /private/tmp/notepadnext-macos-release-build/tests/plugin-application
+"PluginApplicationExitTests" start time: Oct 11 17:42 JST
+Output:
+----------------------------------------------------------
+********* Start testing of ApplicationExitTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ApplicationExitTests::initTestCase()
+PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+FAIL!  : ApplicationExitTests::lastWindowClose(update-preparation-pending) 'application.exitStatus()==QProcess::NormalExit&&application.exitCode()==0' returned FALSE. ({
+    "error": "Cannot hold the real package store lock.",
+    "log": "2026-10-11T08:42:50.240Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: starting\n2026-10-11T08:42:50.338Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: initializing\n2026-10-11T08:42:50.381Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: activating\n2026-10-11T08:42:50.398Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: active\n",
+    "scenario": "update-preparation-pending",
+    "status": "failed"
+}
+)
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp(38)]
+PASS   : ApplicationExitTests::cleanupTestCase()
+Totals: 7 passed, 1 failed, 0 skipped, 0 blacklisted, 14766ms
+********* Finished testing of ApplicationExitTests *********
+<end of output>
+Test time =  15.02 sec
+----------------------------------------------------------
+Test Failed.
+"PluginApplicationExitTests" end time: Oct 11 17:42 JST
+"PluginApplicationExitTests" time elapsed: 00:00:15
+----------------------------------------------------------
+
+End testing: Oct 11 17:42 JST

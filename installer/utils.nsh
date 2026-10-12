@@ -74,11 +74,11 @@
 !macro CheckIfRunning un
 	Function ${un}CheckIfRunning
 		Check:
-		System::Call 'kernel32::OpenMutex(i 0x100000, b 0, t "NotepadNextMutex") i .R0'
+		System::Call 'kernel32::OpenMutex(i 0x100000, b 0, t "NotepadNextPlusPlusMutex") i .R0'
 		
 		IntCmp $R0 0 NotRunning
 			System::Call 'kernel32::CloseHandle(i $R0)'
-			MessageBox MB_RETRYCANCEL|MB_DEFBUTTON1|MB_ICONSTOP "Notepad Next is currently running.$\r$\nPlease, close all instances of it and click Retry to continue, or Cancel to exit." IDRETRY Retry IDCANCEL Cancel
+			MessageBox MB_RETRYCANCEL|MB_DEFBUTTON1|MB_ICONSTOP "Notepad Next ++ is currently running.$\r$\nPlease, close all instances of it and click Retry to continue, or Cancel to exit." IDRETRY Retry IDCANCEL Cancel
 			Retry:
 				Goto Check
 			Cancel:

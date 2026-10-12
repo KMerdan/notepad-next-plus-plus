@@ -54,7 +54,11 @@ public:
 protected:
     QSize sizeHint() const override {
         QSize size = ClickableLabel::sizeHint();
+#ifdef Q_OS_MACOS
+        size.setWidth(size.width()+16);
+#else
         size.setWidth(preferredSize);
+#endif
         return size;
     }
 

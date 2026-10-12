@@ -1,0 +1,127 @@
+{
+  "source": "src/NativeAppearance.h::colors",
+  "roles": {
+    "chrome": {
+      "Light": "#f1f1f1",
+      "Dark": "#29292c"
+    },
+    "surface": {
+      "Light": "#ffffff",
+      "Dark": "#202023"
+    },
+    "text": {
+      "Light": "#242424",
+      "Dark": "#eeeeef"
+    },
+    "secondary": {
+      "Light": "#626267",
+      "Dark": "#b6b6bd"
+    },
+    "border": {
+      "Light": "#cbcbcb",
+      "Dark": "#4b4b50"
+    },
+    "hover": {
+      "Light": "#e4e4e8",
+      "Dark": "#3a3a3f"
+    },
+    "selected": {
+      "Light": "#e7effb",
+      "Dark": "#253c57"
+    },
+    "accent": {
+      "Light": "#005ec5",
+      "Dark": "#85baff"
+    },
+    "fieldBorder": {
+      "Light": "#85858c",
+      "Dark": "#777780"
+    },
+    "disabled": {
+      "Light": "#85858c",
+      "Dark": "#898990"
+    },
+    "onAccent": {
+      "Light": "#ffffff",
+      "Dark": "#202023"
+    },
+    "successText": {
+      "Light": "#22643a",
+      "Dark": "#85d0a1"
+    },
+    "successSurface": {
+      "Light": "#edf6ef",
+      "Dark": "#243b2d"
+    },
+    "errorText": {
+      "Light": "#b3261e",
+      "Dark": "#ffb4b0"
+    },
+    "errorSurface": {
+      "Light": "#fff0ef",
+      "Dark": "#482c30"
+    },
+    "gutter": {
+      "Light": "#f7f7f7",
+      "Dark": "#26262a"
+    },
+    "destructive": {
+      "Light": "#b3261e",
+      "Dark": "#ffb4b0"
+    },
+    "onDestructive": {
+      "Light": "#ffffff",
+      "Dark": "#202023"
+    }
+  },
+  "typography": {
+    "title": [
+      20,
+      26,
+      600
+    ],
+    "section": [
+      16,
+      22,
+      600
+    ],
+    "body": [
+      13,
+      18,
+      400
+    ],
+    "emphasis": [
+      13,
+      18,
+      600
+    ],
+    "help": [
+      12,
+      18,
+      400
+    ],
+    "caption": [
+      11,
+      16,
+      400
+    ],
+    "editor": [
+      13,
+      22,
+      400
+    ]
+  },
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32
+  ],
+  "radius": [
+    4,
+    6,
+    8
+  ]
+}

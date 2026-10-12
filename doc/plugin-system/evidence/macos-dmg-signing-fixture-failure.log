@@ -1,0 +1,52 @@
+Test project /private/tmp/notepadnext-macos-release-build
+    Start 21: PluginMacBundleTests
+1/1 Test #21: PluginMacBundleTests .............***Failed    5.54 sec
+test_debug_entitlement (__main__.BundleTests.test_debug_entitlement) ... ok
+test_disk_image_signature_is_verified (__main__.BundleTests.test_disk_image_signature_is_verified) ... ERROR
+test_escaping_qt_config (__main__.BundleTests.test_escaping_qt_config) ... ok
+test_external_rpath (__main__.BundleTests.test_external_rpath) ... ok
+test_machine_specific_qt_config (__main__.BundleTests.test_machine_specific_qt_config) ... ok
+test_missing_dependency (__main__.BundleTests.test_missing_dependency) ... ok
+test_missing_hardened_runtime (__main__.BundleTests.test_missing_hardened_runtime) ... ok
+test_missing_webengine_resources (__main__.BundleTests.test_missing_webengine_resources) ... ok
+test_python_developer_profile_cannot_be_packaged (__main__.BundleTests.test_python_developer_profile_cannot_be_packaged) ... ok
+test_rejected_notarization_does_not_staple (__main__.BundleTests.test_rejected_notarization_does_not_staple) ... ok
+test_signed_contained_bundle (__main__.BundleTests.test_signed_contained_bundle) ... ok
+test_symlink_escape (__main__.BundleTests.test_symlink_escape) ... ok
+test_tampered_resource_seal (__main__.BundleTests.test_tampered_resource_seal) ... ok
+test_underdeclared_minimum_os (__main__.BundleTests.test_underdeclared_minimum_os) ... ok
+test_unverified_node_archive (__main__.BundleTests.test_unverified_node_archive) ... ok
+
+======================================================================
+ERROR: test_disk_image_signature_is_verified (__main__.BundleTests.test_disk_image_signature_is_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py", line 103, in test_disk_image_signature_is_verified
+    packager.sign_disk_image(image,'-',io.StringIO())
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/merdankiji/localGit/NotepadNext/scripts/package-macos.py", line 83, in sign_disk_image
+    subprocess.run(['/usr/bin/codesign','--force','--sign',identity,'--timestamp=none' if identity=='-' else '--timestamp',str(path)],stdout=log,stderr=log,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 555, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1005, in __init__
+    errread, errwrite) = self._get_handles(stdin, stdout, stderr)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1759, in _get_handles
+    c2pwrite = stdout.fileno()
+io.UnsupportedOperation: fileno
+
+----------------------------------------------------------------------
+Ran 15 tests in 5.457s
+
+FAILED (errors=1)
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   5.54 sec
+
+The following tests FAILED:
+	 21 - PluginMacBundleTests (Failed)
+Errors while running CTest

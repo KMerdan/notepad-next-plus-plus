@@ -1,0 +1,9 @@
+WARN `--no-project` was provided, but no project was found
+INFO    : aqtinstall(aqt) v3.3.0 on Python 3.12.13 [CPython Clang 21.1.4 ]
+INFO    : Found extension qtwebengine
+INFO    : Found extension qtpdf
+INFO    : Downloading qtserialport...
+INFO    : Redirected: ftp.jaist.ac.jp
+INFO    : Finished installation of qtserialport-MacOS-MacOS_15-Clang-MacOS-MacOS_15-X86_64-ARM64.7z in 2.69226296
+INFO    : Finished installation
+INFO    : Time elapsed: 10.00182242 second

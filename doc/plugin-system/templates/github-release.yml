@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copy to .github/workflows/plugin-release.yml in a standalone plugin repo.
+# Vendor the SDK at tools/plugin-sdk and keep metadata/package-lock at the root.
+name: Build plugin release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+concurrency:
+  group: plugin-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          node-version: '24.21.0'
+          package-manager-cache: false
+      - name: Install locked author dependencies without hooks
+        run: npm ci --ignore-scripts
+      - name: Build and test
+        run: |
+          npm run build
+          npm test
+      - name: Package built code and author checksums
+        env:
+          PLUGIN_RELEASE_TAG: ${{ github.ref_name }}
+        run: node tools/plugin-sdk/release.cjs . "$RUNNER_TEMP/plugin-release" "$PLUGIN_RELEASE_TAG"
+      - name: Create a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PLUGIN_RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$PLUGIN_RELEASE_TAG" \
+            "$RUNNER_TEMP/plugin-release/notepadnext-plugin.zip" \
+            "$RUNNER_TEMP/plugin-release/notepadnext-plugin-checksums.json" \
+            --verify-tag --draft --title "$PLUGIN_RELEASE_TAG" --generate-notes

@@ -1,0 +1,1882 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NotepadNext plugin wire definitions 0.1",
+  "description": "Only method payloads/results, independent of JSON-RPC 2.0 envelopes. x-nnp-maxUtf8Bytes is an additional runtime budget.",
+  "$defs": {
+    "null": {
+      "type": "null"
+    },
+    "json": {},
+    "identity": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation"
+      ],
+      "additionalProperties": false
+    },
+    "handle": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$"
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)*@[1-9][0-9]*$"
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "maxFrameBytes": {
+          "const": 16777216
+        },
+        "maxHeaderBytes": {
+          "const": 8192
+        },
+        "maxBatchEntries": {
+          "const": 64
+        },
+        "maxPendingRequests": {
+          "const": 64
+        },
+        "maxJsonDepth": {
+          "const": 128
+        },
+        "maxIdTokenBytes": {
+          "const": 1024
+        },
+        "maxSnapshotUtf8Bytes": {
+          "const": 2097152
+        },
+        "maxHtmlUtf8Bytes": {
+          "const": 6291456
+        },
+        "maxWebviewMessageBytes": {
+          "const": 65536
+        },
+        "maxPluginDataBytes": {
+          "const": 1048576
+        },
+        "maxPluginDataValueBytes": {
+          "const": 65536
+        },
+        "maxPluginDataKeys": {
+          "const": 256
+        },
+        "maxPluginDataDepth": {
+          "const": 32
+        }
+      },
+      "required": [
+        "maxFrameBytes",
+        "maxHeaderBytes",
+        "maxBatchEntries",
+        "maxPendingRequests",
+        "maxJsonDepth",
+        "maxIdTokenBytes",
+        "maxSnapshotUtf8Bytes",
+        "maxHtmlUtf8Bytes",
+        "maxWebviewMessageBytes",
+        "maxPluginDataBytes",
+        "maxPluginDataValueBytes",
+        "maxPluginDataKeys",
+        "maxPluginDataDepth"
+      ],
+      "additionalProperties": false
+    },
+    "position": {
+      "type": "object",
+      "properties": {
+        "line": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "character": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "line",
+        "character"
+      ],
+      "additionalProperties": false
+    },
+    "documentInfo": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/handle"
+        },
+        "uri": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16384
+        },
+        "languageId": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "isDirty": {
+          "type": "boolean"
+        },
+        "isReadonly": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "documentId",
+        "uri",
+        "languageId",
+        "version",
+        "isDirty",
+        "isReadonly"
+      ],
+      "additionalProperties": false
+    },
+    "activeDocument": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/documentInfo"
+        },
+        {
+          "$ref": "#/$defs/null"
+        }
+      ]
+    },
+    "snapshot": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/handle"
+        },
+        "uri": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16384
+        },
+        "languageId": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "isDirty": {
+          "type": "boolean"
+        },
+        "isReadonly": {
+          "type": "boolean"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 2097152,
+          "x-nnp-maxUtf8Bytes": 2097152
+        },
+        "positionEncoding": {
+          "const": "utf-16"
+        }
+      },
+      "required": [
+        "documentId",
+        "uri",
+        "languageId",
+        "version",
+        "isDirty",
+        "isReadonly",
+        "text",
+        "positionEncoding"
+      ],
+      "additionalProperties": false
+    },
+    "edit": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "$ref": "#/$defs/position"
+            },
+            "end": {
+              "$ref": "#/$defs/position"
+            }
+          },
+          "required": [
+            "start",
+            "end"
+          ],
+          "additionalProperties": false
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 2097152,
+          "x-nnp-maxUtf8Bytes": 2097152
+        }
+      },
+      "required": [
+        "range",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "renderContext": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "$ref": "#/$defs/handle"
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "documentId",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "$ref": "#/$defs/null"
+            },
+            "version": {
+              "$ref": "#/$defs/null"
+            }
+          },
+          "required": [
+            "documentId",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "image": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "package"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "required": [
+            "kind",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "documentImage"
+            },
+            "documentId": {
+              "$ref": "#/$defs/handle"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "required": [
+            "kind",
+            "documentId",
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "message": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 4096
+        },
+        "data": {
+          "$ref": "#/$defs/json"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.initialize.params": {
+      "type": "object",
+      "properties": {
+        "pluginId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z0-9][a-z0-9-]*\\.[a-z0-9][a-z0-9-]*$"
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "protocolVersions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 16
+          },
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "hostVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "apiVersion": {
+          "const": "0.1.0"
+        },
+        "grantedCapabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability"
+          },
+          "minItems": 0,
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        }
+      },
+      "required": [
+        "pluginId",
+        "sessionId",
+        "generation",
+        "protocolVersions",
+        "hostVersion",
+        "apiVersion",
+        "grantedCapabilities",
+        "limits"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.initialize.result": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "const": "0.1"
+        },
+        "apiVersion": {
+          "const": "0.1.0"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability"
+          },
+          "minItems": 0,
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "apiVersion",
+        "capabilities",
+        "limits"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.plugin.activate.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.plugin.activate.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.plugin.deactivate.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.plugin.deactivate.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.shutdown.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.shutdown.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.health.ping.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.health.ping.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.documents.getActive.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.getActive.result": {
+      "$ref": "#/$defs/activeDocument"
+    },
+    "nnp.documents.getSnapshot.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "documentId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "documentId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.getSnapshot.result": {
+      "$ref": "#/$defs/snapshot"
+    },
+    "nnp.documents.watch.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "target": {
+          "const": "active"
+        },
+        "mode": {
+          "const": "invalidate"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "target",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.watch.result": {
+      "type": "object",
+      "properties": {
+        "subscriptionId": {
+          "$ref": "#/$defs/handle"
+        },
+        "document": {
+          "$ref": "#/$defs/activeDocument"
+        },
+        "eventSeq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "subscriptionId",
+        "document",
+        "eventSeq"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.event.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "subscriptionId": {
+          "$ref": "#/$defs/handle"
+        },
+        "eventSeq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "type": {
+          "enum": [
+            "activeChanged",
+            "contentInvalidated",
+            "metadataChanged",
+            "closed",
+            "reset",
+            "opened"
+          ]
+        },
+        "document": {
+          "$ref": "#/$defs/activeDocument"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "subscriptionId",
+        "eventSeq",
+        "type",
+        "document"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.event.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.documents.applyEdits.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "documentId": {
+          "$ref": "#/$defs/handle"
+        },
+        "expectedVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "edits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edit"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "documentId",
+        "expectedVersion",
+        "edits"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.applyEdits.result": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.commands.register.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "commandId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[a-zA-Z0-9_.-]+$"
+        },
+        "callbackId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "commandId",
+        "callbackId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.commands.register.result": {
+      "type": "object",
+      "properties": {
+        "registrationId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "registrationId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.commands.invoke.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "callbackId": {
+          "$ref": "#/$defs/handle"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/json"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "callbackId",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.commands.invoke.result": {
+      "$ref": "#/$defs/json"
+    },
+    "nnp.webviews.create.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "viewType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "position": {
+          "enum": [
+            "right",
+            "bottom"
+          ]
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "viewType",
+        "title",
+        "position"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.create.result": {
+      "type": "object",
+      "properties": {
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "panelId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.reveal.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "preserveFocus": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.reveal.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.webviews.setHtml.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "html": {
+          "type": "string",
+          "maxLength": 6291456,
+          "x-nnp-maxUtf8Bytes": 6291456
+        },
+        "renderContext": {
+          "$ref": "#/$defs/renderContext"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "html",
+        "renderContext"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.setHtml.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.webviews.mapResource.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "resource": {
+          "$ref": "#/$defs/image"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "resource"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.mapResource.result": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^nnp-resource:[a-zA-Z0-9-]+$"
+    },
+    "nnp.webviews.postMessage.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "message": {
+          "$ref": "#/$defs/json"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.postMessage.result": {
+      "type": "boolean"
+    },
+    "nnp.webviews.event.params": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/nativePanelEvent"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "panelId": {
+              "$ref": "#/$defs/handle"
+            },
+            "type": {
+              "const": "viewState"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "visible": {
+                  "type": "boolean"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "viewColumn": {
+                  "const": 1
+                }
+              },
+              "required": [
+                "visible",
+                "active",
+                "viewColumn"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "sessionId",
+            "generation",
+            "panelId",
+            "type",
+            "payload"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "nnp.webviews.event.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.storage.get.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.storage.get.result": {
+      "$ref": "#/$defs/json"
+    },
+    "nnp.storage.update.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "value": {
+          "$ref": "#/$defs/json"
+        },
+        "expectedValue": {
+          "$ref": "#/$defs/json"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.storage.update.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.configuration.get.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.configuration.get.result": {
+      "$ref": "#/$defs/json"
+    },
+    "nnp.configuration.update.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "value": {
+          "$ref": "#/$defs/json"
+        },
+        "expectedValue": {
+          "$ref": "#/$defs/json"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.configuration.update.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.resources.dispose.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "resourceId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "resourceId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.resources.dispose.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.request.cancel.params": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.request.cancel.result": {
+      "$ref": "#/$defs/null"
+    },
+    "range": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/position"
+        },
+        "end": {
+          "$ref": "#/$defs/position"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "deltaChange": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "$ref": "#/$defs/range"
+        },
+        "rangeOffset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "rangeLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "text": {
+          "type": "string",
+          "x-nnp-maxUtf8Bytes": 2097152
+        }
+      },
+      "required": [
+        "range",
+        "rangeOffset",
+        "rangeLength",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.delta.params": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "subscriptionId": {
+              "$ref": "#/$defs/handle"
+            },
+            "eventSeq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "type": {
+              "const": "changed"
+            },
+            "document": {
+              "$ref": "#/$defs/documentInfo"
+            },
+            "baseVersion": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/deltaChange"
+              },
+              "minItems": 1,
+              "maxItems": 256
+            },
+            "reason": {
+              "enum": [
+                "edit",
+                "undo",
+                "redo"
+              ]
+            }
+          },
+          "required": [
+            "sessionId",
+            "generation",
+            "subscriptionId",
+            "eventSeq",
+            "type",
+            "document",
+            "baseVersion",
+            "changes",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "subscriptionId": {
+              "$ref": "#/$defs/handle"
+            },
+            "eventSeq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "type": {
+              "const": "reset"
+            },
+            "document": {
+              "$ref": "#/$defs/documentInfo"
+            },
+            "reason": {
+              "enum": [
+                "bufferReset",
+                "unmappableChange"
+              ]
+            }
+          },
+          "required": [
+            "sessionId",
+            "generation",
+            "subscriptionId",
+            "eventSeq",
+            "type",
+            "document",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "subscriptionId": {
+              "$ref": "#/$defs/handle"
+            },
+            "eventSeq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "type": {
+              "enum": [
+                "opened",
+                "closed",
+                "metadataChanged"
+              ]
+            },
+            "document": {
+              "$ref": "#/$defs/documentInfo"
+            }
+          },
+          "required": [
+            "sessionId",
+            "generation",
+            "subscriptionId",
+            "eventSeq",
+            "type",
+            "document"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "subscriptionId": {
+              "$ref": "#/$defs/handle"
+            },
+            "eventSeq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "type": {
+              "const": "activeChanged"
+            },
+            "document": {
+              "$ref": "#/$defs/activeDocument"
+            }
+          },
+          "required": [
+            "sessionId",
+            "generation",
+            "subscriptionId",
+            "eventSeq",
+            "type",
+            "document"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "nnp.documents.delta.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.documents.watchAll.params": {
+      "$ref": "#/$defs/identity"
+    },
+    "nnp.documents.watchAll.result": {
+      "type": "object",
+      "properties": {
+        "subscriptionId": {
+          "$ref": "#/$defs/handle"
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/documentInfo"
+          },
+          "maxItems": 64
+        },
+        "activeDocumentId": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/handle"
+            },
+            {
+              "$ref": "#/$defs/null"
+            }
+          ]
+        },
+        "eventSeq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxDocuments": {
+          "const": 64
+        },
+        "maxTotalUtf8Bytes": {
+          "const": 4194304
+        }
+      },
+      "required": [
+        "subscriptionId",
+        "documents",
+        "activeDocumentId",
+        "eventSeq",
+        "maxDocuments",
+        "maxTotalUtf8Bytes"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.getMirrorSnapshot.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "subscriptionId": {
+          "$ref": "#/$defs/handle"
+        },
+        "documentId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "subscriptionId",
+        "documentId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.documents.getMirrorSnapshot.result": {
+      "type": "object",
+      "properties": {
+        "snapshot": {
+          "$ref": "#/$defs/snapshot"
+        },
+        "eventSeq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "snapshot",
+        "eventSeq"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.window.showMessage.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "x-nnp-maxUtf8Bytes": 8192
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "x-nnp-maxUtf8Bytes": 1024
+          }
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "severity",
+        "message",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.window.showMessage.result": {
+      "type": "object",
+      "properties": {
+        "messageId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "messageId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.window.messageEvent.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "messageId": {
+          "$ref": "#/$defs/handle"
+        },
+        "selected": {
+          "oneOf": [
+            {
+              "type": "string",
+              "x-nnp-maxUtf8Bytes": 1024
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "messageId",
+        "selected"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.window.messageEvent.result": {
+      "type": "null"
+    },
+    "nnp.webviews.createCompatible.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$",
+          "minLength": 32,
+          "maxLength": 32
+        },
+        "viewType": {
+          "$ref": "#/$defs/key"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "enableScripts": {
+          "type": "boolean"
+        },
+        "localResourceRoots": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "viewType",
+        "title",
+        "enableScripts",
+        "localResourceRoots"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.createCompatible.result": {
+      "type": "object",
+      "properties": {
+        "panelId": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$",
+          "minLength": 32,
+          "maxLength": 32
+        }
+      },
+      "required": [
+        "panelId"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.setDocument.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "html": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 6291456,
+          "x-nnp-maxUtf8Bytes": 6291456
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "html"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.setDocument.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nnp.webviews.mapAsset.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.mapAsset.result": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^nnp-plugin://[a-f0-9]{32}/[a-f0-9]{32}/asset/"
+    },
+    "nnp.webviews.setTitle.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "title"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.setTitle.result": {
+      "$ref": "#/$defs/null"
+    },
+    "nativePanelEvent": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "type": {
+          "enum": [
+            "message",
+            "closed",
+            "loadFailed"
+          ]
+        },
+        "payload": {
+          "$ref": "#/$defs/json"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

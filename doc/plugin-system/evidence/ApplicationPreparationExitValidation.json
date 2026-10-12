@@ -1,0 +1,135 @@
+{
+  "recordedUtc": "2026-10-11T08:44:38.194650+00:00",
+  "goalComplete": false,
+  "status": "local-pending-preparation-application-exit-passed",
+  "scope": "All original P0/I1/I2/I3/I4 and 27 requirements retained. Production Application/MainWindow/services compiled into the separate test application; no shipped main flag, environment override or production hook added.",
+  "environment": {
+    "os": "macOS 27.0.1",
+    "architecture": "arm64",
+    "qtVersion": "6.10.0",
+    "profile": "Node-only Release with WebEngine"
+  },
+  "checks": {
+    "releaseApplicationTargets": {
+      "passed": true,
+      "targets": 2,
+      "elapsedSeconds": 18.71,
+      "originalApplicationCasesPassed": 7,
+      "originalApplicationPythonSkips": 1,
+      "exitDataRows": 6,
+      "exitCasesIncludingSetupCleanup": 8,
+      "raw": "application-preparation-exit-conformance.log",
+      "summary": "application-preparation-exit-ctest.log"
+    },
+    "originalExitDeadlineMs": 8000,
+    "largestObservedQuitMs": 2563,
+    "ownedNodeAndDescendantIdentitiesExited": 14,
+    "allIdentitiesExitedAtExecReturn": true,
+    "zeroSessionsAndScopedResourcesAtExecReturn": true,
+    "pendingPreparationCancelledWhileRealStoreLockStillHeld": true,
+    "originalVersionEnablementAndDataRetained": true,
+    "noReplacementActivation": true
+  },
+  "rows": [
+    {
+      "scenario": "normal-close",
+      "quitElapsedMs": 32,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "installerBusy": false,
+        "resources": 4,
+        "state": "active",
+        "updatePending": false
+      },
+      "installerBusyAtExecReturn": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "unresponsive-deactivate",
+      "quitElapsedMs": 2420,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "installerBusy": false,
+        "resources": 4,
+        "state": "active",
+        "updatePending": false
+      },
+      "installerBusyAtExecReturn": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "reload-pending",
+      "quitElapsedMs": 2379,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "installerBusy": false,
+        "resources": 0,
+        "state": "stopping",
+        "updatePending": false
+      },
+      "installerBusyAtExecReturn": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "uninstall-pending",
+      "quitElapsedMs": 2378,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "installerBusy": false,
+        "resources": 0,
+        "state": "stopping",
+        "updatePending": false
+      },
+      "installerBusyAtExecReturn": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "update-activating",
+      "quitElapsedMs": 2563,
+      "beforeExit": {
+        "installedVersion": "1.0.1",
+        "installerBusy": false,
+        "resources": 4,
+        "state": "updating",
+        "updatePending": true
+      },
+      "installerBusyAtExecReturn": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    },
+    {
+      "scenario": "update-preparation-pending",
+      "quitElapsedMs": 2409,
+      "beforeExit": {
+        "installedVersion": "1.0.0",
+        "installerBusy": true,
+        "resources": 4,
+        "state": "active",
+        "updatePending": false
+      },
+      "installerBusyAtExecReturn": false,
+      "recoveredVersion": "1.0.0",
+      "retainedDataVerified": true
+    }
+  ],
+  "sourceHashes": "ApplicationPreparationExitSourceSha256.json",
+  "measurements": "ApplicationPreparationExitMeasurements.json",
+  "codeGraph": "ApplicationPreparationExitCodeGraphValidation.json",
+  "diagnostics": {
+    "initialAttempt": "The wait predicate retried tryLock after successful acquisition, returning false because it already held the lock. The test predicate now accepts isLocked before tryLock; no production fix was needed. Initial five green rows and failing raw log are preserved as diagnostics, not accepted current-source six-row evidence.",
+    "files": [
+      "application-preparation-exit-initial-results.json",
+      "application-preparation-exit-initial-conformance.log",
+      "application-preparation-exit-initial-ctest.log"
+    ]
+  },
+  "remaining": [
+    "The request is observed busy for at least 100ms under a held live store lock; this does not prove a particular worker instruction or uninterruptible kernel file-system stall.",
+    "Outer application 5s/8s fallback, remaining disk/worker/platform fault evidence, clean machines, native Intel/minimum OS, notarization and full license/source review remain.",
+    "Only the two Release application targets were rebuilt and rerun for these test-only changes; prior full-suite, Python developer and plugins-disabled results remain historical evidence with their recorded sources."
+  ]
+}

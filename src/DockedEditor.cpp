@@ -26,6 +26,7 @@
 #include "DockAreaTitleBar.h"
 
 #include "ScintillaNext.h"
+#include "NativeAppearance.h"
 
 #include <QUuid>
 
@@ -70,11 +71,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=, this](ads::CDockWidget* old, ads::CDockWidget* now) {
         Q_UNUSED(old)
 
-        ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
-
-        currentEditor = editor;
-        editor->grabFocus();
-        emit editorActivated(editor);
+        if (now) selectEditor(qobject_cast<ScintillaNext *>(now->widget()));
     });
 
     connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [=, this](ads::CDockAreaWidget* DockArea) {
@@ -98,7 +95,15 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 
 ScintillaNext *DockedEditor::getCurrentEditor() const
 {
-    return currentEditor;
+    return currentEditor.data();
+}
+
+void DockedEditor::selectEditor(ScintillaNext *editor)
+{
+    if (!editor || currentEditor == editor) return;
+    currentEditor = editor;
+    editor->grabFocus();
+    emit editorActivated(editor);
 }
 
 int DockedEditor::count() const
@@ -134,6 +139,10 @@ void DockedEditor::switchToEditor(const ScintillaNext *editor)
     }
     else {
         dockWidget->raise();
+        // ADS focus changes depend on the native window being active. A
+        // programmatic tab selection must also update the editor identity
+        // when the application is in the background.
+        selectEditor(qobject_cast<ScintillaNext *>(dockWidget->widget()));
     }
 }
 
@@ -147,7 +156,14 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget *DockedEditor::currentDockArea() const
 {
-    return dockManager->focusedDockWidget() ? dockManager->focusedDockWidget()->dockAreaWidget() : latestDockArea;
+    const auto areas = dockManager->openedDockAreas();
+    const auto *focused = dockManager->focusedDockWidget();
+    auto *candidate = focused ? focused->dockAreaWidget() : latestDockArea.data();
+    // An empty area may already be detached while its QObject is still alive
+    // until deleteLater. ADS cannot accept it as a new tab's target container.
+    if (areas.contains(candidate)) return candidate;
+    if (areas.contains(latestDockArea.data())) return latestDockArea.data();
+    return areas.isEmpty() ? nullptr : areas.last();
 }
 
 void DockedEditor::addEditor(ScintillaNext *editor)
@@ -155,10 +171,6 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     qInfo(Q_FUNC_INFO);
 
     Q_ASSERT(editor != Q_NULLPTR);
-
-    if (currentEditor == Q_NULLPTR) {
-        currentEditor = editor;
-    }
 
     // Create the dock widget for the editor
     ads::CDockWidget *dockWidget = dockManager->createDockWidget(editor->getName());
@@ -191,20 +203,29 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the icon
     if (editor->readOnly()) {
-        dockWidget->tabWidget()->setIcon(QIcon(":/icons/readonly.png"));
+        NativeAppearance::documentTab(dockWidget->tabWidget(),false,true);
     }
     else {
-        dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
+        NativeAppearance::documentTab(dockWidget->tabWidget(),editor->canSaveToDisk(),false);
         connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=, this](bool dirty) {
             Q_UNUSED(dirty)
             const bool actuallyDirty = editor->canSaveToDisk();
-            const QString iconPath = actuallyDirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
-            dockWidget->tabWidget()->setIcon(QIcon(iconPath));
+            NativeAppearance::documentTab(dockWidget->tabWidget(),actuallyDirty,false);
         });
     }
 
     connect(editor, &ScintillaNext::closed, dockWidget, &ads::CDockWidget::closeDockWidget);
-    connect(editor, &ScintillaNext::closed, this, [=, this]() { emit editorClosed(editor); });
+    connect(editor, &ScintillaNext::closed, this, [=, this]() {
+        if (currentEditor == editor) {
+            currentEditor.clear();
+            const auto remaining = editors();
+            for (auto *candidate : remaining) if (candidate && candidate != editor) {
+                switchToEditor(candidate);
+                break;
+            }
+        }
+        emit editorClosed(editor);
+    });
     connect(editor, &ScintillaNext::renamed, this, [=, this]() { editorRenamed(editor); });
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
@@ -212,6 +233,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     latestDockArea = dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
 
     emit editorAdded(editor);
+    selectEditor(editor);
 }
 
 void DockedEditor::editorRenamed(ScintillaNext *editor)

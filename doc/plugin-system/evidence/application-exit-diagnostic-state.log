@@ -1,0 +1,36 @@
+Start testing: Oct 11 17:20 JST
+----------------------------------------------------------
+21/23 Testing: PluginApplicationExitTests
+21/23 Test: PluginApplicationExitTests
+Command: "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginApplicationExitTests"
+Directory: /private/tmp/notepadnext-macos-release-build/tests/plugin-application
+"PluginApplicationExitTests" start time: Oct 11 17:20 JST
+Output:
+----------------------------------------------------------
+********* Start testing of ApplicationExitTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ApplicationExitTests::initTestCase()
+PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+FAIL!  : ApplicationExitTests::lastWindowClose(update-activating) 'application.exitStatus()==QProcess::NormalExit&&application.exitCode()==0' returned FALSE. ({
+    "error": "Candidate is not in activation.",
+    "log": "2026-10-11T08:20:20.829Z [state] [97c10630-f557-4596-b517-acce0891436b]\nstate: starting\n2026-10-11T08:20:20.927Z [state] [97c10630-f557-4596-b517-acce0891436b]\nstate: initializing\n2026-10-11T08:20:20.969Z [state] [97c10630-f557-4596-b517-acce0891436b]\nstate: activating\n2026-10-11T08:20:20.988Z [state] [97c10630-f557-4596-b517-acce0891436b]\nstate: active\n2026-10-11T08:20:21.096Z [command] [97c10630-f557-4596-b517-acce0891436b] nnp.commands.invoke (108 ms)\nCommand completed.\n2026-10-11T08:20:21.118Z [state] [97c10630-f557-4596-b517-acce0891436b]\nstate: stopping\n2026-10-11T08:20:21.150Z [state] [97c10630-f557-4596-b517-acce0891436b]\nstate: stopped\n2026-10-11T08:20:21.150Z [exit] [97c10630-f557-4596-b517-acce0891436b] exit=0\n\n2026-10-11T08:20:21.170Z [state] [24ec8345-1d55-4cbb-a078-74bba48bd077]\nstate: starting\n2026-10-11T08:20:21.272Z [state] [24ec8345-1d55-4cbb-a078-74bba48bd077]\nstate: initializing\n2026-10-11T08:20:21.313Z [state] [24ec8345-1d55-4cbb-a078-74bba48bd077]\nstate: activating\n",
+    "scenario": "update-activating",
+    "status": "failed"
+}
+)
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp(38)]
+PASS   : ApplicationExitTests::cleanupTestCase()
+Totals: 6 passed, 1 failed, 0 skipped, 0 blacklisted, 16075ms
+********* Finished testing of ApplicationExitTests *********
+<end of output>
+Test time =  16.51 sec
+----------------------------------------------------------
+Test Failed.
+"PluginApplicationExitTests" end time: Oct 11 17:20 JST
+"PluginApplicationExitTests" time elapsed: 00:00:16
+----------------------------------------------------------
+
+End testing: Oct 11 17:20 JST

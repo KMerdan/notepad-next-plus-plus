@@ -1,0 +1,101 @@
+Start testing: Oct 11 12:14 JST
+----------------------------------------------------------
+2/14 Testing: PluginPackageTests
+2/14 Test: PluginPackageTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginPackageTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginPackageTests" start time: Oct 11 12:14 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginPackageTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginPackageTests::initTestCase()
+PASS   : PluginPackageTests::versionsAndRanges()
+PASS   : PluginPackageTests::immutableInstallationAndPersistence()
+PASS   : PluginPackageTests::updateTransactionsAndRecovery()
+PASS   : PluginPackageTests::registrationAndInstallationStaySeparate()
+PASS   : PluginPackageTests::metadataAndCompatibilityChecks()
+PASS   : PluginPackageTests::unsafePathsAndLinks()
+PASS   : PluginPackageTests::budgetsCancellationAndIntegrity()
+libpng error: Read Error
+PASS   : PluginPackageTests::icons()
+PASS   : PluginPackageTests::failedIndexWritesAndCorruptStorage()
+PASS   : PluginPackageTests::productionMarkdownPackage()
+PASS   : PluginPackageTests::zipRoundtripAndPackage()
+PASS   : PluginPackageTests::unsafeZip(../escape)
+PASS   : PluginPackageTests::unsafeZip(/absolute)
+PASS   : PluginPackageTests::unsafeZip(C:/drive)
+PASS   : PluginPackageTests::unsafeZip(a\b)
+PASS   : PluginPackageTests::unsafeZip(a//b)
+PASS   : PluginPackageTests::unsafeZip(./a)
+PASS   : PluginPackageTests::unsafeZip(a/../b)
+PASS   : PluginPackageTests::unsafeZip(CON.txt)
+PASS   : PluginPackageTests::unsafeZip(aux)
+PASS   : PluginPackageTests::unsafeZip(a.)
+PASS   : PluginPackageTests::unsafeZip(a )
+PASS   : PluginPackageTests::unsafeZip(a:b)
+PASS   : PluginPackageTests::unsafeZip(a?b)
+PASS   : PluginPackageTests::unsafeZip(.nnp-receipt.json)
+PASS   : PluginPackageTests::unsafeZip(case aliases)
+PASS   : PluginPackageTests::unsafeZip(duplicate file)
+PASS   : PluginPackageTests::unsafeZip(symlink)
+PASS   : PluginPackageTests::unsafeZip(device)
+PASS   : PluginPackageTests::unsafeZip(fifo)
+PASS   : PluginPackageTests::unsafeZip(encryption)
+PASS   : PluginPackageTests::unsafeZip(compression method)
+PASS   : PluginPackageTests::unsafeZip(invalid utf8)
+PASS   : PluginPackageTests::unsafeZip(undeclared utf8)
+PASS   : PluginPackageTests::unsafeZip(directory data)
+PASS   : PluginPackageTests::unsafeZip(file prefix)
+PASS   : PluginPackageTests::unsafeZip(directory prefix)
+PASS   : PluginPackageTests::unsafeZip(depth)
+PASS   : PluginPackageTests::unsafeZip(unicode aliases)
+PASS   : PluginPackageTests::corruptZipAndBudgets()
+PASS   : PluginPackageTests::collectionReferencesAndPreparedLeases()
+PASS   : PluginPackageTests::collectionPreservesUnsafeAndCorruptStorage()
+PASS   : PluginPackageTests::collectionCrossProcessAndCrashRecovery()
+PASS   : PluginPackageTests::collectionRunsOnWorker()
+PASS   : PluginPackageTests::collectionBatchesAndInvalidActiveLease()
+PASS   : PluginPackageTests::runtimeIdentityPinsAndPidReuse()
+PASS   : PluginPackageTests::cleanupTestCase()
+Totals: 48 passed, 0 failed, 0 skipped, 0 blacklisted, 1203ms
+********* Finished testing of PluginPackageTests *********
+<end of output>
+Test time =   1.61 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPackageTests" end time: Oct 11 12:14 JST
+"PluginPackageTests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+9/14 Testing: PluginSdkPackageTests
+9/14 Test: PluginSdkPackageTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/../../packages/plugin-sdk/pack.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginSdkPackageTests" start time: Oct 11 12:14 JST
+Output:
+----------------------------------------------------------
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (11.408875ms)
+✔ rejects escaping entry and clears failed staging (4.82775ms)
+✔ rejects links and native addons (4.993459ms)
+✔ rejects missing production dependency and source-contained output (5.018917ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (22.465416ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (16.008917ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (8.269333ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.382459
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"PluginSdkPackageTests" end time: Oct 11 12:14 JST
+"PluginSdkPackageTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 11 12:14 JST

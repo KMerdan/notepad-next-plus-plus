@@ -20,7 +20,7 @@ set(WINDEPLOYQT_ARGS --no-translations --no-system-d3d-compiler --no-compiler-ru
 if(PACKAGE_CONFIG STREQUAL "Debug")
 	list(APPEND WINDEPLOYQT_ARGS --debug)
 endif()
-list(APPEND WINDEPLOYQT_ARGS "${PACKAGE_DIR}/NotepadNext.exe")
+list(APPEND WINDEPLOYQT_ARGS "${PACKAGE_DIR}/NotepadNextPlusPlus.exe")
 
 file(GLOB EXTRA_DLLS "${EXTRA_DLL_DIR}/*.dll")
 
@@ -54,7 +54,7 @@ add_custom_target(package
 	# Copy executable
 	COMMAND ${CMAKE_COMMAND} -E copy_if_different
 		"${TARGET_EXE}"
-		"${PACKAGE_DIR}/NotepadNext.exe"
+		"${PACKAGE_DIR}/NotepadNextPlusPlus.exe"
 
 	# Copy LICENSE
 	COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -68,7 +68,7 @@ add_custom_target(package
 	COMMAND windeployqt ${WINDEPLOYQT_ARGS}
 )
 
-set(ZIP_FILE "${CMAKE_BINARY_DIR}/NotepadNext-v${PROJECT_VERSION}.zip")
+set(ZIP_FILE "${CMAKE_BINARY_DIR}/NotepadNextPlusPlus-v${PROJECT_VERSION}.zip")
 add_custom_target(zip
 	DEPENDS package
 	COMMENT "Creating zip archive of NotepadNext package"

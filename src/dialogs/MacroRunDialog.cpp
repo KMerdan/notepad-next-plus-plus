@@ -21,6 +21,8 @@
 #include "MacroRunDialog.h"
 
 #include "ui_MacroRunDialog.h"
+#include "NativeAppearance.h"
+#include <QDialogButtonBox>
 
 
 MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
@@ -40,6 +42,15 @@ MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
 
         emit execute(selectedMacro, times);
     });
+#ifdef Q_OS_MACOS
+    ui->verticalLayout->removeItem(ui->horizontalLayout);delete ui->horizontalLayout;
+    auto *buttons=new QDialogButtonBox(this);buttons->addButton(ui->buttonCancel,QDialogButtonBox::RejectRole);buttons->addButton(ui->buttonRun,QDialogButtonBox::ActionRole);ui->verticalLayout->addWidget(buttons);
+    NativeAppearance::polishDialog(this,tr("Run Macro"),tr("Repeat a macro a set number of times or until the end of the file."));
+    NativeAppearance::setDialogPrimary(this,ui->buttonRun);
+    ui->spinTimes->setAccessibleName(tr("Number of repetitions"));
+    ui->spinTimes->setEnabled(ui->radioExecute->isChecked());
+    setMinimumSize(440,300);resize(520,340);
+#endif
 }
 
 MacroRunDialog::~MacroRunDialog()
@@ -58,6 +69,11 @@ void MacroRunDialog::showEvent(QShowEvent *event)
     for (Macro *macro : macroManager->availableMacros()) {
         ui->comboBox->addItem(macro->getName(), QVariant::fromValue(macro));
     }
+#ifdef Q_OS_MACOS
+    const bool available=ui->comboBox->count()>0;
+    ui->buttonRun->setEnabled(available);
+    ui->comboBox->setPlaceholderText(available?QString():tr("Record or save a macro first"));
+#endif
 
     QDialog::showEvent(event);
 }

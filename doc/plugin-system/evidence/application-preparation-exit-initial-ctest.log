@@ -1,0 +1,33 @@
+Test project /private/tmp/notepadnext-macos-release-build
+    Start 20: PluginApplicationTests
+1/2 Test #20: PluginApplicationTests ...........   Passed    9.85 sec
+    Start 21: PluginApplicationExitTests
+2/2 Test #21: PluginApplicationExitTests .......***Failed   15.02 sec
+********* Start testing of ApplicationExitTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ApplicationExitTests::initTestCase()
+PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+FAIL!  : ApplicationExitTests::lastWindowClose(update-preparation-pending) 'application.exitStatus()==QProcess::NormalExit&&application.exitCode()==0' returned FALSE. ({
+    "error": "Cannot hold the real package store lock.",
+    "log": "2026-10-11T08:42:50.240Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: starting\n2026-10-11T08:42:50.338Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: initializing\n2026-10-11T08:42:50.381Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: activating\n2026-10-11T08:42:50.398Z [state] [4555cc1d-a7e0-4989-9291-b4315bf7cd1b]\nstate: active\n",
+    "scenario": "update-preparation-pending",
+    "status": "failed"
+}
+)
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp(38)]
+PASS   : ApplicationExitTests::cleanupTestCase()
+Totals: 7 passed, 1 failed, 0 skipped, 0 blacklisted, 14766ms
+********* Finished testing of ApplicationExitTests *********
+
+
+50% tests passed, 1 tests failed out of 2
+
+Total Test time (real) =  24.87 sec
+
+The following tests FAILED:
+	 21 - PluginApplicationExitTests (Failed)
+Errors while running CTest

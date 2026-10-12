@@ -1,0 +1,217 @@
+{
+  "recordedUtc": "2026-10-11T07:09:35.245343+00:00",
+  "goalComplete": false,
+  "status": "local-reference-budgets-passed",
+  "scope": "Original P0/I1/I2/I3/I4 and all 27 requirements remain. Reference macOS arm64 performance and lifecycle evidence only; not a full release or cross-platform acceptance.",
+  "referenceHardware": {
+    "hw.memsize": "68719476736",
+    "hw.physicalcpu": "16",
+    "hw.logicalcpu": "16",
+    "machdep.cpu.brand_string": "Apple M4 Max"
+  },
+  "checks": {
+    "isolatedPerformanceCTest": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 125.93,
+      "raw": "markdown-performance-acceptance.log"
+    },
+    "fullNodeReleaseCTest": {
+      "passed": true,
+      "targets": 20,
+      "elapsedSeconds": 169.99,
+      "raw": "markdown-full-conformance.log",
+      "qualification": "37 Webview cases pass with 2 Python skips; 7 application cases pass with 1 Python skip. Node-only profile; skips do not prove Python functionality."
+    },
+    "finalMacPackagingTarget": {
+      "passed": true,
+      "cases": 15,
+      "elapsedSeconds": 5.62,
+      "raw": "macos-dmg-signing-boundaries.log"
+    },
+    "developerPythonApplication": {
+      "passed": true,
+      "targets": 1,
+      "elapsedSeconds": 3.72,
+      "raw": "python-background-html-application.log"
+    },
+    "relocatedDeveloperIdApplication": {
+      "passed": true,
+      "casesPassed": 7,
+      "pythonSkipped": true,
+      "raw": "macos-developer-id-relocated-application.log"
+    },
+    "previewOwnershipAndScrollSearch": {
+      "passed": true,
+      "casesIncludingSetupCleanup": 12,
+      "raw": "markdown-native-preview-races.log"
+    },
+    "markdownBusyRetryUnit": {
+      "passed": true,
+      "cases": 2,
+      "raw": "markdown-busy-retry-unit.log"
+    }
+  },
+  "budgets": {
+    "latest100KiBAllPanelsP95Ms": 500,
+    "maxObservedGuiTaskMs": 50,
+    "disableResourceRevokeMs": 3000
+  },
+  "populations": [
+    {
+      "pluginProcesses": 1,
+      "sizes": [
+        {
+          "bytes": 10240,
+          "latestAllPanelsP95Ms": 199.241,
+          "maxGuiDispatchMs": 3.126334,
+          "maxDirectEditMs": 0.087584,
+          "aggregateProcessRssBytesAfterWorkload": 497467392
+        },
+        {
+          "bytes": 102400,
+          "latestAllPanelsP95Ms": 315.067542,
+          "maxGuiDispatchMs": 3.168,
+          "maxDirectEditMs": 0.089958,
+          "aggregateProcessRssBytesAfterWorkload": 1030897664
+        },
+        {
+          "bytes": 1048576,
+          "latestAllPanelsP95Ms": 1983.305583,
+          "maxGuiDispatchMs": 10.382125,
+          "maxDirectEditMs": 0.123917,
+          "aggregateProcessRssBytesAfterWorkload": 1964589056
+        }
+      ],
+      "revokeMs": 6.220584,
+      "idleWireDeltas": {
+        "queuedBytes": 190,
+        "receivedBytes": 99,
+        "receivedFrames": 1,
+        "sentFrames": 1
+      },
+      "idleDocumentEvents": 0
+    },
+    {
+      "pluginProcesses": 5,
+      "sizes": [
+        {
+          "bytes": 10240,
+          "latestAllPanelsP95Ms": 233.633833,
+          "maxGuiDispatchMs": 3.176667,
+          "maxDirectEditMs": 0.139958,
+          "aggregateProcessRssBytesAfterWorkload": 1400406016
+        },
+        {
+          "bytes": 102400,
+          "latestAllPanelsP95Ms": 316.083208,
+          "maxGuiDispatchMs": 3.222542,
+          "maxDirectEditMs": 0.152917,
+          "aggregateProcessRssBytesAfterWorkload": 3969810432
+        },
+        {
+          "bytes": 1048576,
+          "latestAllPanelsP95Ms": 2017.507875,
+          "maxGuiDispatchMs": 12.340208,
+          "maxDirectEditMs": 0.179834,
+          "aggregateProcessRssBytesAfterWorkload": 8579645440
+        }
+      ],
+      "revokeMs": 31.542167,
+      "idleWireDeltas": {
+        "queuedBytes": 950,
+        "receivedBytes": 495,
+        "receivedFrames": 5,
+        "sentFrames": 5
+      },
+      "idleDocumentEvents": 0
+    },
+    {
+      "pluginProcesses": 10,
+      "sizes": [
+        {
+          "bytes": 10240,
+          "latestAllPanelsP95Ms": 271.991084,
+          "maxGuiDispatchMs": 3.212875,
+          "maxDirectEditMs": 0.270625,
+          "aggregateProcessRssBytesAfterWorkload": 2585591808
+        },
+        {
+          "bytes": 102400,
+          "latestAllPanelsP95Ms": 349.784292,
+          "maxGuiDispatchMs": 3.904042,
+          "maxDirectEditMs": 0.272583,
+          "aggregateProcessRssBytesAfterWorkload": 7656800256
+        },
+        {
+          "bytes": 1048576,
+          "latestAllPanelsP95Ms": 3249.504167,
+          "maxGuiDispatchMs": 26.397917,
+          "maxDirectEditMs": 0.41075,
+          "aggregateProcessRssBytesAfterWorkload": 17053663232
+        }
+      ],
+      "revokeMs": 78.660167,
+      "idleWireDeltas": {
+        "queuedBytes": 1900,
+        "receivedBytes": 990,
+        "receivedFrames": 10,
+        "sentFrames": 10
+      },
+      "idleDocumentEvents": 0
+    }
+  ],
+  "lifecycle": {
+    "cycles": 100,
+    "exitedNodeIdentities": 200,
+    "initialFileDescriptors": 30,
+    "warmAfterCycles": 3,
+    "warmFileDescriptors": 32,
+    "finalFileDescriptors": 32,
+    "focusConnectionsAfterEachStop": 0,
+    "raw": "LifecycleNativeResources.json"
+  },
+  "packageCost": {
+    "applicationBytes": 759641698,
+    "diskImageBytes": 308892207,
+    "diskImageSha256": "6e3efb228e0b6313d8f92f8e5e440604cf34413caeda2b7c66de7df12c9eeafd",
+    "signing": "Developer ID Application",
+    "notarized": false
+  },
+  "methodology": [
+    "Production Application/MainWindow, Scintilla buffer and production services; fixture instances differ by manifest and command IDs only.",
+    "Input heading edit to matching h1 after two requestAnimationFrame callbacks and native message receipt; physical pixels are not directly measured. Includes 150ms debounce.",
+    "Nearest-rank p95: 30 samples for 100KiB, 10 for 10KiB and 6 for 1MiB. Per-panel and last-of-all-panels raw samples retained.",
+    "CPU uses PROC_PIDTASKINFO Mach ticks scaled by mach_timebase_info; deltas match both PID and native creation time; one core is 100%.",
+    "RSS is sampled after workloads, not a peak or unique physical-memory total; summing processes can count shared mappings more than once.",
+    "Single benchmark process; no concurrent builds, other tests, graph updates or native UI inspection during the accepted measurement. Other user/system software is not asserted to be idle.",
+    "Wire counters are four per-start relaxed atomic samples; queued bytes do not prove peer consumption. Idle frames are health pings; no document invalidations occurred.",
+    "100-cycle resource test is real Scintilla/PluginEngine/WebEngine; its duration is a whole-suite observation, not isolated worker or diagnostic cost attribution. Three warm-up cycles account for shared provider handles; RSS need not return exactly to baseline."
+  ],
+  "diagnosticRunsNotForAcceptance": [
+    {
+      "raw": "MarkdownPerformanceDiagnosticInitial.json",
+      "log": "markdown-performance-diagnostic-initial.log",
+      "accepted": false,
+      "reason": "An additional benchmark instance was accidentally launched during native UI inspection; original failed run is not an isolated comparison."
+    },
+    {
+      "raw": "MarkdownPerformanceDiagnosticBackground.json",
+      "log": "markdown-performance-diagnostic-background.log",
+      "accepted": false,
+      "reason": "Overlapped the extra diagnostic instance and was stopped after contamination was identified; partial data preserved."
+    }
+  ],
+  "knownLimits": [
+    "The dense 1MiB fixture still has 1.98–3.25s last-panel p95 and high per-process RSS; no 500ms budget is claimed for 1MiB.",
+    "Clean machines, native Intel/minimum OS and Windows/Linux remain unvalidated.",
+    "Formal Developer ID signing passes, but notarization/profile and Gatekeeper acceptance remain incomplete.",
+    "Full license/source, remaining faults/workspace/migration and other original partial requirements remain."
+  ],
+  "primarySources": {
+    "machCpuUnits": "https://raw.githubusercontent.com/apple-oss-distributions/xnu/main/osfmk/kern/bsd_kern.c",
+    "machRecountUnits": "https://raw.githubusercontent.com/apple-oss-distributions/xnu/main/osfmk/kern/recount.h",
+    "qtPromise": "https://doc.qt.io/qt-6/qpromise.html",
+    "offscreenLayout": "https://www.w3.org/TR/css-contain-2/#content-visibility"
+  }
+}

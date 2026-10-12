@@ -1,0 +1,9 @@
+Test project /private/tmp/notepadnext-macos-release-build
+    Start 20: PluginApplicationTests
+1/2 Test #20: PluginApplicationTests ...........   Passed    2.97 sec
+    Start 21: PluginApplicationExitTests
+2/2 Test #21: PluginApplicationExitTests .......   Passed   13.52 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =  16.50 sec

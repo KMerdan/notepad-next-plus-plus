@@ -1,0 +1,33 @@
+{
+  "sampleRepository": "https://github.com/microsoft/vscode-extension-samples",
+  "sampleCommit": "65c1c44800eeac6fb065a54823ee5ae62c79540a",
+  "apiDeclaration": "https://raw.githubusercontent.com/microsoft/vscode/1.100.0/src/vscode-dts/vscode.d.ts",
+  "sourceModifications": false,
+  "files": [
+    {
+      "path": "src/extension.ts",
+      "sha256": "4503530001d2809b406bc2d76618d987d21f22273632c960db94738f00ffdf26",
+      "bytes": 1167
+    },
+    {
+      "path": "package.json",
+      "sha256": "a840a9953f45dc1339c5a3753693f376494c1919bbab14152dd451f027bae751",
+      "bytes": 874
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "20535828272932407c2f5172aeb714ac7b374a34e5ecb1825af509f2902cde54",
+      "bytes": 1087
+    },
+    {
+      "path": "types/vscode.d.ts",
+      "sha256": "78ff43fccce4600f6f266a4d237342ddbdcbda75bf29d732ba1533a83318a7be",
+      "bytes": 716407
+    },
+    {
+      "path": "types/LICENSE",
+      "sha256": "9480271317925265e806a9a196aaa33410a962fa9d4d1e248a4a5187bc8c9df9",
+      "bytes": 1088
+    }
+  ]
+}

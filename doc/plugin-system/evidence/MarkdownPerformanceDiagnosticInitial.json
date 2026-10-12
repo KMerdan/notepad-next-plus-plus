@@ -1,0 +1,4010 @@
+{
+    "cpuUnits": "PROC_PIDTASKINFO Mach CPU ticks converted using mach_timebase_info; interval percent uses one core as 100%.",
+    "guiEndpoint": "QApplication::notify dispatch wall duration plus direct heading edit duration; includes scheduling delays, not isolated added plugin CPU.",
+    "machTimebaseDenominator": 3,
+    "machTimebaseNumerator": 125,
+    "noPluginGuiBaseline": [
+        {
+            "bytes": 10240,
+            "longDispatches": [
+            ],
+            "maxDispatchMs": 3.609792,
+            "maxEditMs": 0.050292
+        },
+        {
+            "bytes": 102400,
+            "longDispatches": [
+            ],
+            "maxDispatchMs": 4.616833,
+            "maxEditMs": 0.082084
+        },
+        {
+            "bytes": 1048576,
+            "longDispatches": [
+            ],
+            "maxDispatchMs": 6.527584,
+            "maxEditMs": 0.503958
+        }
+    ],
+    "populations": [
+        {
+            "idle": {
+                "after": [
+                    {
+                        "available": true,
+                        "cpuMs": 3944.3345416666666,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 331464704,
+                        "threads": 31
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3489.9440833333333,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55046,
+                        "role": "plugin",
+                        "rssBytes": 376242176,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23344.846375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55050,
+                        "role": "renderer",
+                        "rssBytes": 7601815552,
+                        "threads": 10
+                    }
+                ],
+                "before": [
+                    {
+                        "available": true,
+                        "cpuMs": 3937.6664166666665,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 331513856,
+                        "threads": 32
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3489.35225,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55046,
+                        "role": "plugin",
+                        "rssBytes": 376242176,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23340.762375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55050,
+                        "role": "renderer",
+                        "rssBytes": 7601815552,
+                        "threads": 10
+                    }
+                ],
+                "cpu": {
+                    "elapsedMs": 10492.0085,
+                    "matchedProcesses": 3,
+                    "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                    "roleCpuPercentOneCore": {
+                        "application": 0.06355432327375779,
+                        "plugin": 0.0056408011233825975,
+                        "renderer": 0.038924863623609925
+                    },
+                    "samples": [
+                        {
+                            "cpuMs": 6.6681250000001455,
+                            "cpuPercentOneCore": 0.06355432327375779,
+                            "pid": 54965,
+                            "role": "application"
+                        },
+                        {
+                            "cpuMs": 0.5918333333333976,
+                            "cpuPercentOneCore": 0.0056408011233825975,
+                            "pid": 55046,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 4.084000000002561,
+                            "cpuPercentOneCore": 0.038924863623609925,
+                            "pid": 55050,
+                            "role": "renderer"
+                        }
+                    ]
+                },
+                "documentEvents": 0,
+                "wireDeltas": {
+                    "queuedBytes": 190,
+                    "receivedBytes": 99,
+                    "receivedFrames": 1,
+                    "sentFrames": 1
+                }
+            },
+            "processes": 1,
+            "sizes": [
+                {
+                    "bytes": 10240,
+                    "cpu": {
+                        "elapsedMs": 2665.945083,
+                        "matchedProcesses": 3,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 10.595573347249879,
+                            "plugin": 5.160787102380083,
+                            "renderer": 10.238497037087441
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 282.4721666666667,
+                                "cpuPercentOneCore": 10.595573347249879,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 137.58375,
+                                "cpuPercentOneCore": 5.160787102380083,
+                                "pid": 55046,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 272.9527083333333,
+                                "cpuPercentOneCore": 10.238497037087441,
+                                "pid": 55050,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 282.433958,
+                        "meanMs": 265.4264499,
+                        "p95Ms": 282.433958,
+                        "rawMs": [
+                            264.286542,
+                            265.93075,
+                            264.57625,
+                            249.540083,
+                            264.546,
+                            265.680958,
+                            266.279,
+                            282.433958,
+                            265.512833,
+                            265.478125
+                        ],
+                        "samples": 10
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 282.433958,
+                        "meanMs": 265.4264499,
+                        "p95Ms": 282.433958,
+                        "rawMs": [
+                            264.286542,
+                            265.93075,
+                            264.57625,
+                            249.540083,
+                            264.546,
+                            265.680958,
+                            266.279,
+                            282.433958,
+                            265.512833,
+                            265.478125
+                        ],
+                        "samples": 10
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.101916,
+                    "maxGuiDispatchMs": 3.883125,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 1371.6634166666668,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 270008320,
+                            "threads": 45
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 368.47075,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55046,
+                            "role": "plugin",
+                            "rssBytes": 96894976,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 411.76754166666666,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55050,
+                            "role": "renderer",
+                            "rssBytes": 198148096,
+                            "threads": 11
+                        }
+                    ]
+                },
+                {
+                    "bytes": 102400,
+                    "cpu": {
+                        "elapsedMs": 13349.080459,
+                        "matchedProcesses": 3,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 9.033326642762628,
+                            "plugin": 8.487701045376303,
+                            "renderer": 40.31984431335528
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 1205.8660416666667,
+                                "cpuPercentOneCore": 9.033326642762628,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 1133.0300416666669,
+                                "cpuPercentOneCore": 8.487701045376303,
+                                "pid": 55046,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5382.328458333333,
+                                "cpuPercentOneCore": 40.31984431335528,
+                                "pid": 55050,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 449.824375,
+                        "meanMs": 443.781164,
+                        "p95Ms": 449.415209,
+                        "rawMs": [
+                            447.749791,
+                            432.373,
+                            449.2005,
+                            431.498791,
+                            448.155208,
+                            433.725542,
+                            447.635209,
+                            448.971334,
+                            449.415209,
+                            431.309042,
+                            448.953167,
+                            448.15675,
+                            433.380458,
+                            431.541125,
+                            448.612834,
+                            449.824375,
+                            448.202208,
+                            448.40725,
+                            432.481917,
+                            448.36525,
+                            448.628667,
+                            432.703875,
+                            448.114417,
+                            448.793916,
+                            448.94775,
+                            449.331709,
+                            448.735959,
+                            431.832792,
+                            449.00275,
+                            449.384125
+                        ],
+                        "samples": 30
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 449.824375,
+                        "meanMs": 443.781164,
+                        "p95Ms": 449.415209,
+                        "rawMs": [
+                            447.749791,
+                            432.373,
+                            449.2005,
+                            431.498791,
+                            448.155208,
+                            433.725542,
+                            447.635209,
+                            448.971334,
+                            449.415209,
+                            431.309042,
+                            448.953167,
+                            448.15675,
+                            433.380458,
+                            431.541125,
+                            448.612834,
+                            449.824375,
+                            448.202208,
+                            448.40725,
+                            432.481917,
+                            448.36525,
+                            448.628667,
+                            432.703875,
+                            448.114417,
+                            448.793916,
+                            448.94775,
+                            449.331709,
+                            448.735959,
+                            431.832792,
+                            449.00275,
+                            449.384125
+                        ],
+                        "samples": 30
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.110292,
+                    "maxGuiDispatchMs": 7.151083,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 2615.6222916666666,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 271712256,
+                            "threads": 40
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1580.1266666666668,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55046,
+                            "role": "plugin",
+                            "rssBytes": 273334272,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 5961.176833333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55050,
+                            "role": "renderer",
+                            "rssBytes": 2432827392,
+                            "threads": 10
+                        }
+                    ]
+                },
+                {
+                    "bytes": 1048576,
+                    "cpu": {
+                        "elapsedMs": 17524.134916,
+                        "matchedProcesses": 3,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 6.515916746475857,
+                            "plugin": 9.577571682588005,
+                            "renderer": 85.04120096713062
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 1141.8580416666668,
+                                "cpuPercentOneCore": 6.515916746475857,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 1678.3865833333332,
+                                "cpuPercentOneCore": 9.577571682588005,
+                                "pid": 55046,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 14902.734791666666,
+                                "cpuPercentOneCore": 85.04120096713062,
+                                "pid": 55050,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 2948.093333,
+                        "meanMs": 2919.494708166667,
+                        "p95Ms": 2948.093333,
+                        "rawMs": [
+                            2941.096541,
+                            2915.215833,
+                            2865.169542,
+                            2899.837583,
+                            2948.093333,
+                            2947.555417
+                        ],
+                        "samples": 6
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 2948.093333,
+                        "meanMs": 2919.494708166667,
+                        "p95Ms": 2948.093333,
+                        "rawMs": [
+                            2941.096541,
+                            2915.215833,
+                            2865.169542,
+                            2899.837583,
+                            2948.093333,
+                            2947.555417
+                        ],
+                        "samples": 6
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.188916,
+                    "maxGuiDispatchMs": 49.364042,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 3937.4199583333334,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 331513856,
+                            "threads": 32
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3489.35225,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55046,
+                            "role": "plugin",
+                            "rssBytes": 376242176,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 23340.762375,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55050,
+                            "role": "renderer",
+                            "rssBytes": 7601815552,
+                            "threads": 10
+                        }
+                    ]
+                }
+            ],
+            "stop": {
+                "allOwnedNodeIdentitiesExited": true,
+                "idleMs": 283.285416,
+                "processesAfter": [
+                    {
+                        "available": true,
+                        "cpuMs": 4015.1888333333336,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 348831744,
+                        "threads": 29
+                    }
+                ],
+                "resourcesAfter": 0,
+                "revokeMs": 17.721583,
+                "sessionsAfter": 0
+            }
+        },
+        {
+            "idle": {
+                "after": [
+                    {
+                        "available": true,
+                        "cpuMs": 12471.529583333335,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 220839936,
+                        "threads": 38
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3343.848625,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55271,
+                        "role": "plugin",
+                        "rssBytes": 207716352,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 24528.470125,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55272,
+                        "role": "renderer",
+                        "rssBytes": 3440295936,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3174.866125,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55273,
+                        "role": "plugin",
+                        "rssBytes": 201818112,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23638.354958333333,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55274,
+                        "role": "renderer",
+                        "rssBytes": 3410427904,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3215.1715416666666,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55275,
+                        "role": "plugin",
+                        "rssBytes": 194101248,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23757.077375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55276,
+                        "role": "renderer",
+                        "rssBytes": 3418636288,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3513.4497083333335,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55277,
+                        "role": "plugin",
+                        "rssBytes": 224313344,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23567.02491666667,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55278,
+                        "role": "renderer",
+                        "rssBytes": 3411099648,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3590.2057916666663,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55279,
+                        "role": "plugin",
+                        "rssBytes": 229638144,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23721.31604166667,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55283,
+                        "role": "renderer",
+                        "rssBytes": 3406479360,
+                        "threads": 10
+                    }
+                ],
+                "before": [
+                    {
+                        "available": true,
+                        "cpuMs": 12464.210083333333,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 277069824,
+                        "threads": 39
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3343.091125,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55271,
+                        "role": "plugin",
+                        "rssBytes": 317997056,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 24524.830208333333,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55272,
+                        "role": "renderer",
+                        "rssBytes": 4087660544,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3172.1487916666665,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55273,
+                        "role": "plugin",
+                        "rssBytes": 314540032,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23636.926,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55274,
+                        "role": "renderer",
+                        "rssBytes": 4069195776,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3214.3742916666665,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55275,
+                        "role": "plugin",
+                        "rssBytes": 319766528,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23755.56154166667,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55276,
+                        "role": "renderer",
+                        "rssBytes": 4076077056,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3513.085875,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55277,
+                        "role": "plugin",
+                        "rssBytes": 330366976,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23565.60375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55278,
+                        "role": "renderer",
+                        "rssBytes": 4074668032,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3589.86075,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55279,
+                        "role": "plugin",
+                        "rssBytes": 339607552,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 23719.429375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55283,
+                        "role": "renderer",
+                        "rssBytes": 4069179392,
+                        "threads": 10
+                    }
+                ],
+                "cpu": {
+                    "elapsedMs": 9643.149333,
+                    "matchedProcesses": 11,
+                    "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                    "roleCpuPercentOneCore": {
+                        "application": 0.07590362595498994,
+                        "plugin": 0.05165281757369574,
+                        "renderer": 0.10258621250236324
+                    },
+                    "samples": [
+                        {
+                            "cpuMs": 7.319500000001426,
+                            "cpuPercentOneCore": 0.07590362595498994,
+                            "pid": 54965,
+                            "role": "application"
+                        },
+                        {
+                            "cpuMs": 0.7575000000001637,
+                            "cpuPercentOneCore": 0.007855317530009714,
+                            "pid": 55271,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 3.639916666666977,
+                            "cpuPercentOneCore": 0.03774614019727716,
+                            "pid": 55272,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 2.7173333333334995,
+                            "cpuPercentOneCore": 0.02817889923196007,
+                            "pid": 55273,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 1.428958333333867,
+                            "cpuPercentOneCore": 0.014818378145859488,
+                            "pid": 55274,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 0.7972500000000764,
+                            "cpuPercentOneCore": 0.008267527261781506,
+                            "pid": 55275,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 1.515833333331102,
+                            "cpuPercentOneCore": 0.015719276773447248,
+                            "pid": 55276,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 0.3638333333333321,
+                            "cpuPercentOneCore": 0.003772972094171054,
+                            "pid": 55277,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 1.421166666670615,
+                            "cpuPercentOneCore": 0.014737578125096688,
+                            "pid": 55278,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 0.34504166666647507,
+                            "cpuPercentOneCore": 0.0035781014557733914,
+                            "pid": 55279,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 1.8866666666690435,
+                            "cpuPercentOneCore": 0.019564839260682677,
+                            "pid": 55283,
+                            "role": "renderer"
+                        }
+                    ]
+                },
+                "documentEvents": 0,
+                "wireDeltas": {
+                    "queuedBytes": 950,
+                    "receivedBytes": 495,
+                    "receivedFrames": 5,
+                    "sentFrames": 5
+                }
+            },
+            "processes": 5,
+            "sizes": [
+                {
+                    "bytes": 10240,
+                    "cpu": {
+                        "elapsedMs": 2956.108125,
+                        "matchedProcesses": 11,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 25.04215600480896,
+                            "plugin": 21.330767177762368,
+                            "renderer": 46.89511455764719
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 740.2732083333331,
+                                "cpuPercentOneCore": 25.04215600480896,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 140.90091666666666,
+                                "cpuPercentOneCore": 4.766433117755685,
+                                "pid": 55271,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 289.5417083333333,
+                                "cpuPercentOneCore": 9.794692754458476,
+                                "pid": 55272,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 119.31879166666667,
+                                "cpuPercentOneCore": 4.036347339854718,
+                                "pid": 55273,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 278.0073333333333,
+                                "cpuPercentOneCore": 9.404504895548545,
+                                "pid": 55274,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 119.86745833333336,
+                                "cpuPercentOneCore": 4.054907779577019,
+                                "pid": 55275,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 281.81874999999997,
+                                "cpuPercentOneCore": 9.533438496942663,
+                                "pid": 55276,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 114.22795833333333,
+                                "cpuPercentOneCore": 3.8641332963195767,
+                                "pid": 55277,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 270.04204166666665,
+                                "cpuPercentOneCore": 9.135052922553928,
+                                "pid": 55278,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 136.24541666666664,
+                                "cpuPercentOneCore": 4.608945644255371,
+                                "pid": 55279,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 266.8604583333333,
+                                "cpuPercentOneCore": 9.027425488143582,
+                                "pid": 55283,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 299.767333,
+                        "meanMs": 287.2332874000001,
+                        "p95Ms": 299.677416,
+                        "rawMs": [
+                            288.324292,
+                            288.199458,
+                            288.280375,
+                            288.147208,
+                            288.241167,
+                            299.597542,
+                            299.634958,
+                            299.508958,
+                            282.217542,
+                            299.556542,
+                            264.758,
+                            264.875958,
+                            264.839791,
+                            264.806375,
+                            282.018166,
+                            281.906375,
+                            265.533333,
+                            265.489208,
+                            281.807042,
+                            281.866958,
+                            281.440833,
+                            281.492292,
+                            298.982958,
+                            281.53725,
+                            299.0325,
+                            280.785208,
+                            298.350958,
+                            280.836333,
+                            280.881,
+                            298.403333,
+                            298.6805,
+                            281.34375,
+                            298.730917,
+                            281.393458,
+                            281.448625,
+                            281.844875,
+                            281.796625,
+                            298.154167,
+                            281.883958,
+                            281.926125,
+                            299.677416,
+                            299.571041,
+                            299.629458,
+                            299.725458,
+                            299.767333,
+                            298.274917,
+                            281.914625,
+                            298.127917,
+                            298.187167,
+                            298.234125
+                        ],
+                        "samples": 50
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 299.767333,
+                        "meanMs": 294.4246958,
+                        "p95Ms": 299.767333,
+                        "rawMs": [
+                            288.324292,
+                            299.634958,
+                            282.018166,
+                            281.906375,
+                            299.0325,
+                            298.403333,
+                            298.730917,
+                            298.154167,
+                            299.767333,
+                            298.274917
+                        ],
+                        "samples": 10
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.174417,
+                    "maxGuiDispatchMs": 3.481167,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 5527.474208333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 348340224,
+                            "threads": 41
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 349.6224583333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55271,
+                            "role": "plugin",
+                            "rssBytes": 97681408,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 421.59325,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55272,
+                            "role": "renderer",
+                            "rssBytes": 197967872,
+                            "threads": 12
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 327.24941666666666,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55273,
+                            "role": "plugin",
+                            "rssBytes": 96518144,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 387.8587083333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55274,
+                            "role": "renderer",
+                            "rssBytes": 193118208,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 325.555625,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55275,
+                            "role": "plugin",
+                            "rssBytes": 96993280,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 401.5304583333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55276,
+                            "role": "renderer",
+                            "rssBytes": 193167360,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 333.037375,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55277,
+                            "role": "plugin",
+                            "rssBytes": 95846400,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 379.4834583333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55278,
+                            "role": "renderer",
+                            "rssBytes": 192970752,
+                            "threads": 12
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 343.87775,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55279,
+                            "role": "plugin",
+                            "rssBytes": 96763904,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 378.64125,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55283,
+                            "role": "renderer",
+                            "rssBytes": 193019904,
+                            "threads": 11
+                        }
+                    ]
+                },
+                {
+                    "bytes": 102400,
+                    "cpu": {
+                        "elapsedMs": 14160.808416,
+                        "matchedProcesses": 11,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 21.100282523117038,
+                            "plugin": 35.93099243014291,
+                            "renderer": 187.74529328161393
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 2987.9705833333346,
+                                "cpuPercentOneCore": 21.100282523117038,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 934.3429999999998,
+                                "cpuPercentOneCore": 6.598090819054549,
+                                "pid": 55271,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5405.679125,
+                                "cpuPercentOneCore": 38.17352065078599,
+                                "pid": 55272,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 930.5900833333332,
+                                "cpuPercentOneCore": 6.571588683326009,
+                                "pid": 55273,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5285.442625000001,
+                                "cpuPercentOneCore": 37.32444130116251,
+                                "pid": 55274,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 922.9679583333332,
+                                "cpuPercentOneCore": 6.517763189921355,
+                                "pid": 55275,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5327.11375,
+                                "cpuPercentOneCore": 37.61871210672553,
+                                "pid": 55276,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1089.6695,
+                                "cpuPercentOneCore": 7.6949667560561394,
+                                "pid": 55277,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5279.107041666667,
+                                "cpuPercentOneCore": 37.279701035301876,
+                                "pid": 55278,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1210.5484583333334,
+                                "cpuPercentOneCore": 8.548582981784854,
+                                "pid": 55279,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5288.9087500000005,
+                                "cpuPercentOneCore": 37.34891818763803,
+                                "pid": 55283,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 482.790625,
+                        "meanMs": 462.8782941800002,
+                        "p95Ms": 482.578792,
+                        "rawMs": [
+                            460.524834,
+                            460.483917,
+                            460.560542,
+                            460.4365,
+                            476.88775,
+                            465.96375,
+                            448.473459,
+                            448.559834,
+                            432.257,
+                            448.521667,
+                            465.101709,
+                            465.043459,
+                            465.232584,
+                            465.148417,
+                            465.187167,
+                            448.895458,
+                            448.805041,
+                            465.237416,
+                            448.854833,
+                            465.284041,
+                            448.524,
+                            448.485167,
+                            465.971584,
+                            448.432709,
+                            466.0165,
+                            464.127167,
+                            464.210708,
+                            464.246292,
+                            448.065,
+                            464.171417,
+                            465.858375,
+                            449.01225,
+                            465.818,
+                            465.770208,
+                            465.893208,
+                            465.3025,
+                            482.65575,
+                            482.713125,
+                            482.752875,
+                            482.790625,
+                            465.386334,
+                            448.342917,
+                            465.436,
+                            448.397334,
+                            448.44,
+                            481.695417,
+                            481.780792,
+                            481.741542,
+                            447.499958,
+                            447.546917,
+                            465.198375,
+                            448.060625,
+                            482.458458,
+                            465.242792,
+                            482.414958,
+                            448.763708,
+                            448.871625,
+                            464.977417,
+                            448.82275,
+                            465.018667,
+                            448.606167,
+                            465.812667,
+                            465.8915,
+                            465.855667,
+                            465.924334,
+                            431.628125,
+                            465.662583,
+                            465.698166,
+                            431.673583,
+                            465.620625,
+                            448.078958,
+                            465.32225,
+                            465.284875,
+                            448.12575,
+                            465.239166,
+                            464.807583,
+                            448.856375,
+                            464.857458,
+                            464.894833,
+                            464.934208,
+                            415.723334,
+                            465.930042,
+                            465.974625,
+                            448.721875,
+                            466.012042,
+                            448.572125,
+                            448.607958,
+                            464.6825,
+                            448.522083,
+                            464.72525,
+                            449.733875,
+                            449.823208,
+                            449.857583,
+                            449.781833,
+                            465.962333,
+                            448.771958,
+                            464.979333,
+                            465.022125,
+                            464.89175,
+                            464.937541,
+                            466.044041,
+                            466.004791,
+                            482.232458,
+                            465.952291,
+                            466.085583,
+                            465.942667,
+                            466.020625,
+                            465.983583,
+                            449.597625,
+                            465.893208,
+                            464.88975,
+                            482.357584,
+                            482.305625,
+                            482.400792,
+                            482.436875,
+                            465.365041,
+                            465.4415,
+                            465.480083,
+                            465.312666,
+                            465.405208,
+                            482.12525,
+                            482.074459,
+                            482.166834,
+                            464.652834,
+                            464.702125,
+                            481.659375,
+                            465.400083,
+                            465.348416,
+                            481.712666,
+                            481.764458,
+                            482.685875,
+                            482.727334,
+                            482.634334,
+                            465.106042,
+                            482.578792,
+                            481.385917,
+                            448.368459,
+                            465.043417,
+                            465.094125,
+                            465.133834,
+                            448.543167,
+                            448.597833,
+                            465.98125,
+                            465.935625,
+                            466.021458,
+                            448.393708,
+                            464.647833,
+                            464.576917,
+                            464.535458,
+                            464.612583
+                        ],
+                        "samples": 150
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 482.790625,
+                        "meanMs": 470.84977499999985,
+                        "p95Ms": 482.727334,
+                        "rawMs": [
+                            476.88775,
+                            465.96375,
+                            465.232584,
+                            465.284041,
+                            466.0165,
+                            464.246292,
+                            465.893208,
+                            482.790625,
+                            465.436,
+                            481.780792,
+                            482.458458,
+                            465.018667,
+                            465.924334,
+                            465.698166,
+                            465.32225,
+                            464.934208,
+                            466.012042,
+                            464.72525,
+                            465.962333,
+                            465.022125,
+                            482.232458,
+                            466.020625,
+                            482.436875,
+                            465.480083,
+                            482.166834,
+                            481.764458,
+                            482.727334,
+                            481.385917,
+                            466.021458,
+                            464.647833
+                        ],
+                        "samples": 30
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.181667,
+                    "maxGuiDispatchMs": 7.071917,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 8623.337708333334,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 354254848,
+                            "threads": 40
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1362.0117083333332,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55271,
+                            "role": "plugin",
+                            "rssBytes": 266010624,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6002.6725,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55272,
+                            "role": "renderer",
+                            "rssBytes": 2432532480,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1337.7959583333331,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55273,
+                            "role": "plugin",
+                            "rssBytes": 274317312,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 5840.825125,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55274,
+                            "role": "renderer",
+                            "rssBytes": 2424078336,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1328.1944583333332,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55275,
+                            "role": "plugin",
+                            "rssBytes": 273596416,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 5896.74975,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55276,
+                            "role": "renderer",
+                            "rssBytes": 2424373248,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1504.45275,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55277,
+                            "role": "plugin",
+                            "rssBytes": 267862016,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 5823.323166666667,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55278,
+                            "role": "renderer",
+                            "rssBytes": 2424422400,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1629.8839166666667,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55279,
+                            "role": "plugin",
+                            "rssBytes": 268992512,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 5838.790416666667,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55283,
+                            "role": "renderer",
+                            "rssBytes": 2424094720,
+                            "threads": 10
+                        }
+                    ]
+                },
+                {
+                    "bytes": 1048576,
+                    "cpu": {
+                        "elapsedMs": 19795.556167,
+                        "matchedProcesses": 11,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 16.79476998247857,
+                            "plugin": 42.12412188870093,
+                            "renderer": 390.75836354769154
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 3324.618125000001,
+                                "cpuPercentOneCore": 16.79476998247857,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 1719.4588333333331,
+                                "cpuPercentOneCore": 8.686084992144556,
+                                "pid": 55271,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 15991.153833333334,
+                                "cpuPercentOneCore": 80.78153348371814,
+                                "pid": 55272,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1582.7745833333333,
+                                "cpuPercentOneCore": 7.995605528739239,
+                                "pid": 55273,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 15322.568333333333,
+                                "cpuPercentOneCore": 77.40408101731782,
+                                "pid": 55274,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1629.8721249999999,
+                                "cpuPercentOneCore": 8.233525298556973,
+                                "pid": 55275,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 15373.47054166667,
+                                "cpuPercentOneCore": 77.6612205889667,
+                                "pid": 55276,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1721.3492083333335,
+                                "cpuPercentOneCore": 8.695634483879232,
+                                "pid": 55277,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 15274.847416666666,
+                                "cpuPercentOneCore": 77.16301218215055,
+                                "pid": 55278,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1685.249458333333,
+                                "cpuPercentOneCore": 8.513271585380929,
+                                "pid": 55279,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 15390.751208333333,
+                                "cpuPercentOneCore": 77.74851627553836,
+                                "pid": 55283,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 3364.584,
+                        "meanMs": 3216.5005346000003,
+                        "p95Ms": 3332.35675,
+                        "rawMs": [
+                            3145.381416,
+                            3145.332125,
+                            3261.2345,
+                            3161.370416,
+                            3161.410166,
+                            3165.651292,
+                            3165.6995,
+                            3165.739458,
+                            3183.099083,
+                            3183.146208,
+                            3214.748208,
+                            3198.037875,
+                            3330.890333,
+                            3214.70425,
+                            3230.789917,
+                            3199.730291,
+                            3182.387958,
+                            3332.35675,
+                            3199.642375,
+                            3199.692375,
+                            3199.058333,
+                            3199.098375,
+                            3316.261,
+                            3199.006625,
+                            3216.172666,
+                            3231.305875,
+                            3231.265709,
+                            3364.584,
+                            3248.585042,
+                            3248.633917
+                        ],
+                        "samples": 30
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 3364.584,
+                        "meanMs": 3298.0787984999993,
+                        "p95Ms": 3364.584,
+                        "rawMs": [
+                            3261.2345,
+                            3183.146208,
+                            3330.890333,
+                            3332.35675,
+                            3316.261,
+                            3364.584
+                        ],
+                        "samples": 6
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.3375,
+                    "maxGuiDispatchMs": 48.804209,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 12463.734458333334,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 276807680,
+                            "threads": 39
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3343.091125,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55271,
+                            "role": "plugin",
+                            "rssBytes": 317997056,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 24524.830208333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55272,
+                            "role": "renderer",
+                            "rssBytes": 4087660544,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3172.1487916666665,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55273,
+                            "role": "plugin",
+                            "rssBytes": 314540032,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 23636.926,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55274,
+                            "role": "renderer",
+                            "rssBytes": 4069195776,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3214.3742916666665,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55275,
+                            "role": "plugin",
+                            "rssBytes": 319766528,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 23755.56154166667,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55276,
+                            "role": "renderer",
+                            "rssBytes": 4076077056,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3513.085875,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55277,
+                            "role": "plugin",
+                            "rssBytes": 330366976,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 23565.60375,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55278,
+                            "role": "renderer",
+                            "rssBytes": 4074668032,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3589.86075,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55279,
+                            "role": "plugin",
+                            "rssBytes": 339607552,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 23719.429375,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55283,
+                            "role": "renderer",
+                            "rssBytes": 4069179392,
+                            "threads": 10
+                        }
+                    ]
+                }
+            ],
+            "stop": {
+                "allOwnedNodeIdentitiesExited": true,
+                "idleMs": 305.9395,
+                "processesAfter": [
+                    {
+                        "available": true,
+                        "cpuMs": 12579.374458333334,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 284540928,
+                        "threads": 37
+                    },
+                    {
+                        "available": false,
+                        "pid": 55272,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55274,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55276,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55278,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55283,
+                        "role": "shared-or-other-child"
+                    }
+                ],
+                "resourcesAfter": 0,
+                "revokeMs": 32.935,
+                "sessionsAfter": 0
+            }
+        },
+        {
+            "idle": {
+                "after": [
+                    {
+                        "available": true,
+                        "cpuMs": 31596.053666666667,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 170393600,
+                        "threads": 51
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3575.9979166666667,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55632,
+                        "role": "plugin",
+                        "rssBytes": 46825472,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 33047.32654166667,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55637,
+                        "role": "renderer",
+                        "rssBytes": 89374720,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3324.3929166666667,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55638,
+                        "role": "plugin",
+                        "rssBytes": 46497792,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 35905.772833333336,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55639,
+                        "role": "renderer",
+                        "rssBytes": 1452720128,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3545.009875,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55640,
+                        "role": "plugin",
+                        "rssBytes": 47382528,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 35922.23,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55646,
+                        "role": "renderer",
+                        "rssBytes": 1439744000,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3315.870875,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55647,
+                        "role": "plugin",
+                        "rssBytes": 46858240,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 36271.024875,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55648,
+                        "role": "renderer",
+                        "rssBytes": 1525301248,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3397.0242916666666,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55649,
+                        "role": "plugin",
+                        "rssBytes": 47153152,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 36339.330708333335,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55650,
+                        "role": "renderer",
+                        "rssBytes": 1450655744,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3267.0782916666667,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55651,
+                        "role": "plugin",
+                        "rssBytes": 46235648,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 35971.56025,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55652,
+                        "role": "renderer",
+                        "rssBytes": 1442037760,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3327.274,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55653,
+                        "role": "plugin",
+                        "rssBytes": 46678016,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 36127.24883333334,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55654,
+                        "role": "renderer",
+                        "rssBytes": 1468956672,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3446.5954583333337,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55655,
+                        "role": "plugin",
+                        "rssBytes": 47218688,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 36034.670791666664,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55656,
+                        "role": "renderer",
+                        "rssBytes": 1444675584,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3520.5759166666667,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55657,
+                        "role": "plugin",
+                        "rssBytes": 47251456,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 36276.71325,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55658,
+                        "role": "renderer",
+                        "rssBytes": 1464238080,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3485.0188333333335,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55659,
+                        "role": "plugin",
+                        "rssBytes": 49348608,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 35908.57041666666,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55694,
+                        "role": "renderer",
+                        "rssBytes": 1485570048,
+                        "threads": 10
+                    }
+                ],
+                "before": [
+                    {
+                        "available": true,
+                        "cpuMs": 30263.10445833333,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 248020992,
+                        "threads": 49
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3572.3490416666664,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55632,
+                        "role": "plugin",
+                        "rssBytes": 112328704,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 30801.053,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55637,
+                        "role": "renderer",
+                        "rssBytes": 1188216832,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3320.6972083333335,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55638,
+                        "role": "plugin",
+                        "rssBytes": 138100736,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29679.943,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55639,
+                        "role": "renderer",
+                        "rssBytes": 1185251328,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3541.5109583333333,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55640,
+                        "role": "plugin",
+                        "rssBytes": 114393088,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29730.025166666666,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55646,
+                        "role": "renderer",
+                        "rssBytes": 1186938880,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3312.4192916666666,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55647,
+                        "role": "plugin",
+                        "rssBytes": 123682816,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29860.784666666666,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55648,
+                        "role": "renderer",
+                        "rssBytes": 1183793152,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3393.8589583333337,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55649,
+                        "role": "plugin",
+                        "rssBytes": 117522432,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29881.94875,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55650,
+                        "role": "renderer",
+                        "rssBytes": 1177501696,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3263.5075833333335,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55651,
+                        "role": "plugin",
+                        "rssBytes": 129794048,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29687.773375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55652,
+                        "role": "renderer",
+                        "rssBytes": 1179926528,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3323.6015416666664,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55653,
+                        "role": "plugin",
+                        "rssBytes": 119570432,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29904.91395833333,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55654,
+                        "role": "renderer",
+                        "rssBytes": 1191297024,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3443.2811666666666,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55655,
+                        "role": "plugin",
+                        "rssBytes": 115736576,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29808.288875,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55656,
+                        "role": "renderer",
+                        "rssBytes": 1066336256,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3516.736125,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55657,
+                        "role": "plugin",
+                        "rssBytes": 116703232,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29843.391125,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55658,
+                        "role": "renderer",
+                        "rssBytes": 1188921344,
+                        "threads": 10
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 3477.3073333333336,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                        "pid": 55659,
+                        "role": "plugin",
+                        "rssBytes": 158285824,
+                        "threads": 8
+                    },
+                    {
+                        "available": true,
+                        "cpuMs": 29688.453375,
+                        "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                        "pid": 55694,
+                        "role": "renderer",
+                        "rssBytes": 1180549120,
+                        "threads": 10
+                    }
+                ],
+                "cpu": {
+                    "elapsedMs": 9527.337417,
+                    "matchedProcesses": 21,
+                    "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                    "roleCpuPercentOneCore": {
+                        "application": 13.990784098345271,
+                        "plugin": 0.41532240262701625,
+                        "renderer": 618.4085923440045
+                    },
+                    "samples": [
+                        {
+                            "cpuMs": 1332.9492083333353,
+                            "cpuPercentOneCore": 13.990784098345271,
+                            "pid": 54965,
+                            "role": "application"
+                        },
+                        {
+                            "cpuMs": 3.6488750000003165,
+                            "cpuPercentOneCore": 0.03829900044780073,
+                            "pid": 55632,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 2246.273541666669,
+                            "cpuPercentOneCore": 23.577138536718092,
+                            "pid": 55637,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.6957083333331866,
+                            "cpuPercentOneCore": 0.038790568356892555,
+                            "pid": 55638,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6225.829833333337,
+                            "cpuPercentOneCore": 65.34700683765377,
+                            "pid": 55639,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.4989166666669007,
+                            "cpuPercentOneCore": 0.03672502099509614,
+                            "pid": 55640,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6192.204833333337,
+                            "cpuPercentOneCore": 64.99407507373826,
+                            "pid": 55646,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.451583333333474,
+                            "cpuPercentOneCore": 0.03622820503002947,
+                            "pid": 55647,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6410.240208333336,
+                            "cpuPercentOneCore": 67.28259877618372,
+                            "pid": 55648,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.16533333333291,
+                            "cpuPercentOneCore": 0.03322369298776888,
+                            "pid": 55649,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6457.381958333335,
+                            "cpuPercentOneCore": 67.77740386113729,
+                            "pid": 55650,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.5707083333331866,
+                            "cpuPercentOneCore": 0.037478554364641606,
+                            "pid": 55651,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6283.786875000002,
+                            "cpuPercentOneCore": 65.95533043458285,
+                            "pid": 55652,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.672458333333452,
+                            "cpuPercentOneCore": 0.03854653375433666,
+                            "pid": 55653,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6222.334875000008,
+                            "cpuPercentOneCore": 65.31032336376848,
+                            "pid": 55654,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.3142916666670317,
+                            "cpuPercentOneCore": 0.03478717632854287,
+                            "pid": 55655,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6226.381916666665,
+                            "cpuPercentOneCore": 65.3528015661195,
+                            "pid": 55656,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 3.8397916666667697,
+                            "cpuPercentOneCore": 0.0403028831519631,
+                            "pid": 55657,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6433.322125000002,
+                            "cpuPercentOneCore": 67.52486915726081,
+                            "pid": 55658,
+                            "role": "renderer"
+                        },
+                        {
+                            "cpuMs": 7.711499999999887,
+                            "cpuPercentOneCore": 0.08094076720994427,
+                            "pid": 55659,
+                            "role": "plugin"
+                        },
+                        {
+                            "cpuMs": 6220.117041666661,
+                            "cpuPercentOneCore": 65.28704473684184,
+                            "pid": 55694,
+                            "role": "renderer"
+                        }
+                    ]
+                },
+                "documentEvents": 0,
+                "wireDeltas": {
+                    "queuedBytes": 1900,
+                    "receivedBytes": 990,
+                    "receivedFrames": 10,
+                    "sentFrames": 10
+                }
+            },
+            "processes": 10,
+            "sizes": [
+                {
+                    "bytes": 10240,
+                    "cpu": {
+                        "elapsedMs": 3100.532375,
+                        "matchedProcesses": 21,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 32.121540095190895,
+                            "plugin": 22.98720688787088,
+                            "renderer": 74.72666958793917
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 995.9387499999993,
+                                "cpuPercentOneCore": 32.121540095190895,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 79.58862499999998,
+                                "cpuPercentOneCore": 2.5669341704583872,
+                                "pid": 55632,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 248.7540833333333,
+                                "cpuPercentOneCore": 8.022947456993844,
+                                "pid": 55637,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 69.05854166666663,
+                                "cpuPercentOneCore": 2.2273123874949583,
+                                "pid": 55638,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 227.86766666666665,
+                                "cpuPercentOneCore": 7.34930776740129,
+                                "pid": 55639,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 71.82666666666665,
+                                "cpuPercentOneCore": 2.31659141010152,
+                                "pid": 55640,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 230.7758333333333,
+                                "cpuPercentOneCore": 7.443103487456193,
+                                "pid": 55646,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 68.73887500000001,
+                                "cpuPercentOneCore": 2.217002330124033,
+                                "pid": 55647,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 232.036375,
+                                "cpuPercentOneCore": 7.483759139912223,
+                                "pid": 55648,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 74.44637499999996,
+                                "cpuPercentOneCore": 2.4010836203572934,
+                                "pid": 55649,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 229.04316666666665,
+                                "cpuPercentOneCore": 7.387220611320553,
+                                "pid": 55650,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 70.46116666666668,
+                                "cpuPercentOneCore": 2.2725505863058983,
+                                "pid": 55651,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 229.39641666666665,
+                                "cpuPercentOneCore": 7.398613816011732,
+                                "pid": 55652,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 69.90325000000001,
+                                "cpuPercentOneCore": 2.2545563646952735,
+                                "pid": 55653,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 229.2568333333333,
+                                "cpuPercentOneCore": 7.394111900970985,
+                                "pid": 55654,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 68.24258333333333,
+                                "cpuPercentOneCore": 2.2009956704075164,
+                                "pid": 55655,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 233.61125000000004,
+                                "cpuPercentOneCore": 7.534552836268967,
+                                "pid": 55656,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 70.78895833333328,
+                                "cpuPercentOneCore": 2.2831226954478514,
+                                "pid": 55657,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 229.79529166666669,
+                                "cpuPercentOneCore": 7.411478542186378,
+                                "pid": 55658,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 69.67075,
+                                "cpuPercentOneCore": 2.247057652478149,
+                                "pid": 55659,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 226.38766666666663,
+                                "cpuPercentOneCore": 7.301574029417017,
+                                "pid": 55694,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 332.135375,
+                        "meanMs": 299.1133449199999,
+                        "p95Ms": 315.21875,
+                        "rawMs": [
+                            299.841125,
+                            299.915667,
+                            299.771,
+                            299.806,
+                            285.486667,
+                            299.684375,
+                            299.877792,
+                            299.951125,
+                            299.730625,
+                            317.265042,
+                            298.393792,
+                            298.322208,
+                            298.241042,
+                            298.505917,
+                            284.124625,
+                            298.469083,
+                            298.286125,
+                            298.540333,
+                            298.434458,
+                            298.356833,
+                            297.565833,
+                            297.443417,
+                            297.490542,
+                            297.528208,
+                            283.486417,
+                            297.645875,
+                            283.443375,
+                            297.684875,
+                            297.607375,
+                            297.725375,
+                            299.819667,
+                            299.895833,
+                            283.440792,
+                            299.615708,
+                            283.489083,
+                            299.743208,
+                            299.706875,
+                            299.782,
+                            299.666083,
+                            299.858,
+                            299.551958,
+                            299.392166,
+                            299.274708,
+                            299.353,
+                            283.739791,
+                            299.311208,
+                            283.695916,
+                            332.135375,
+                            299.232541,
+                            299.185583,
+                            298.5195,
+                            298.670167,
+                            298.705458,
+                            298.591625,
+                            298.357208,
+                            298.408583,
+                            298.450083,
+                            298.555375,
+                            298.48575,
+                            298.628042,
+                            298.85075,
+                            298.6655,
+                            298.816708,
+                            298.745916,
+                            315.062,
+                            298.708083,
+                            315.108458,
+                            315.146791,
+                            298.780833,
+                            298.884583,
+                            298.353792,
+                            298.45,
+                            315.802458,
+                            298.405708,
+                            315.84775,
+                            298.529333,
+                            298.567167,
+                            298.642792,
+                            298.489417,
+                            298.603583,
+                            298.799458,
+                            298.887583,
+                            315.21875,
+                            299.069958,
+                            315.265,
+                            298.959666,
+                            298.997291,
+                            299.034875,
+                            298.846958,
+                            298.92225,
+                            298.002042,
+                            298.267042,
+                            298.115834,
+                            298.187667,
+                            298.152042,
+                            298.042625,
+                            297.95525,
+                            298.0775,
+                            298.226167,
+                            285.9585
+                        ],
+                        "samples": 100
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 332.135375,
+                        "meanMs": 308.8793999,
+                        "p95Ms": 332.135375,
+                        "rawMs": [
+                            317.265042,
+                            298.540333,
+                            297.725375,
+                            299.895833,
+                            332.135375,
+                            298.705458,
+                            315.146791,
+                            315.84775,
+                            315.265,
+                            298.267042
+                        ],
+                        "samples": 10
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.259083,
+                    "maxGuiDispatchMs": 2.826625,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 15125.934125,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 313278464,
+                            "threads": 59
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 275.54658333333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55632,
+                            "role": "plugin",
+                            "rssBytes": 96813056,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 388.4809583333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55637,
+                            "role": "renderer",
+                            "rssBytes": 198639616,
+                            "threads": 12
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 258.675125,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55638,
+                            "role": "plugin",
+                            "rssBytes": 96419840,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 338.7667083333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55639,
+                            "role": "renderer",
+                            "rssBytes": 193200128,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 267.41741666666667,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55640,
+                            "role": "plugin",
+                            "rssBytes": 96993280,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 340.895375,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55646,
+                            "role": "renderer",
+                            "rssBytes": 193052672,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 263.365875,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55647,
+                            "role": "plugin",
+                            "rssBytes": 96681984,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 340.755,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55648,
+                            "role": "renderer",
+                            "rssBytes": 193019904,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 266.69429166666663,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55649,
+                            "role": "plugin",
+                            "rssBytes": 96796672,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 336.0058333333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55650,
+                            "role": "renderer",
+                            "rssBytes": 193216512,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 257.588,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55651,
+                            "role": "plugin",
+                            "rssBytes": 97058816,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 335.09070833333334,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55652,
+                            "role": "renderer",
+                            "rssBytes": 193036288,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 262.73379166666666,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55653,
+                            "role": "plugin",
+                            "rssBytes": 96911360,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 335.9085833333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55654,
+                            "role": "renderer",
+                            "rssBytes": 193118208,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 260.37775,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55655,
+                            "role": "plugin",
+                            "rssBytes": 96780288,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 339.8952916666667,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55656,
+                            "role": "renderer",
+                            "rssBytes": 193216512,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 264.11254166666663,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55657,
+                            "role": "plugin",
+                            "rssBytes": 97501184,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 338.307875,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55658,
+                            "role": "renderer",
+                            "rssBytes": 193265664,
+                            "threads": 11
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 257.02958333333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55659,
+                            "role": "plugin",
+                            "rssBytes": 96714752,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 332.5493333333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55694,
+                            "role": "renderer",
+                            "rssBytes": 193183744,
+                            "threads": 11
+                        }
+                    ]
+                },
+                {
+                    "bytes": 102400,
+                    "cpu": {
+                        "elapsedMs": 15743.280958,
+                        "matchedProcesses": 21,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 35.096162174879915,
+                            "plugin": 46.9353205009352,
+                            "renderer": 375.6261366320632
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 5525.287416666668,
+                                "cpuPercentOneCore": 35.096162174879915,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 871.0371666666665,
+                                "cpuPercentOneCore": 5.532755014602253,
+                                "pid": 55632,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 6056.009375,
+                                "cpuPercentOneCore": 38.46726353392442,
+                                "pid": 55637,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 712.3377083333335,
+                                "cpuPercentOneCore": 4.524709367975528,
+                                "pid": 55638,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5871.173500000001,
+                                "cpuPercentOneCore": 37.2932015611177,
+                                "pid": 55639,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 735.0657916666667,
+                                "cpuPercentOneCore": 4.6690762467345825,
+                                "pid": 55640,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5862.429666666666,
+                                "cpuPercentOneCore": 37.23766146527197,
+                                "pid": 55646,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 701.8726250000002,
+                                "cpuPercentOneCore": 4.458236036519067,
+                                "pid": 55647,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5913.462458333333,
+                                "cpuPercentOneCore": 37.561817476987784,
+                                "pid": 55648,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 766.1755416666666,
+                                "cpuPercentOneCore": 4.8666827690535,
+                                "pid": 55649,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5895.135125000001,
+                                "cpuPercentOneCore": 37.4454037930662,
+                                "pid": 55650,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 707.5123333333333,
+                                "cpuPercentOneCore": 4.494058990758268,
+                                "pid": 55651,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5903.892958333333,
+                                "cpuPercentOneCore": 37.5010328157375,
+                                "pid": 55652,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 730.6510833333332,
+                                "cpuPercentOneCore": 4.641034389734692,
+                                "pid": 55653,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5922.3720416666665,
+                                "cpuPercentOneCore": 37.61841040292934,
+                                "pid": 55654,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 724.436,
+                                "cpuPercentOneCore": 4.601556701761557,
+                                "pid": 55655,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5949.963208333334,
+                                "cpuPercentOneCore": 37.79366717907578,
+                                "pid": 55656,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 719.1189999999999,
+                                "cpuPercentOneCore": 4.567783563784888,
+                                "pid": 55657,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5889.821958333333,
+                                "cpuPercentOneCore": 37.41165500410129,
+                                "pid": 55658,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 720.952125,
+                                "cpuPercentOneCore": 4.579427420010858,
+                                "pid": 55659,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 5871.61775,
+                                "cpuPercentOneCore": 37.296023399851215,
+                                "pid": 55694,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 565.797458,
+                        "meanMs": 506.4106451700001,
+                        "p95Ms": 532.6865,
+                        "rawMs": [
+                            509.673084,
+                            525.996042,
+                            509.74725,
+                            525.956834,
+                            525.912792,
+                            509.625,
+                            509.785,
+                            526.031709,
+                            509.713084,
+                            492.311792,
+                            482.424625,
+                            499.46225,
+                            499.257584,
+                            499.383792,
+                            516.834875,
+                            433.479084,
+                            499.304292,
+                            499.344292,
+                            499.499084,
+                            499.423,
+                            498.040625,
+                            497.88675,
+                            497.92925,
+                            481.415125,
+                            514.110375,
+                            498.076625,
+                            431.112125,
+                            481.562875,
+                            498.0025,
+                            497.966458,
+                            482.333167,
+                            498.680167,
+                            432.978042,
+                            498.833292,
+                            498.797792,
+                            482.41675,
+                            482.378125,
+                            498.725958,
+                            482.454292,
+                            498.762417,
+                            499.433209,
+                            481.528875,
+                            499.396834,
+                            499.31875,
+                            515.466042,
+                            499.357625,
+                            499.247542,
+                            499.467709,
+                            481.606417,
+                            515.50775,
+                            516.257458,
+                            432.58,
+                            498.664292,
+                            498.625375,
+                            516.217375,
+                            498.514125,
+                            481.997167,
+                            498.58625,
+                            498.725292,
+                            516.171208,
+                            514.621666,
+                            498.579708,
+                            481.149875,
+                            498.544666,
+                            498.619083,
+                            514.657083,
+                            481.10075,
+                            498.476125,
+                            514.584208,
+                            514.542291,
+                            499.454709,
+                            482.274834,
+                            499.501542,
+                            482.190834,
+                            499.539792,
+                            482.105542,
+                            482.150084,
+                            499.574875,
+                            499.613542,
+                            482.23275,
+                            498.56275,
+                            481.378792,
+                            498.447583,
+                            515.908833,
+                            515.861875,
+                            498.523292,
+                            481.330833,
+                            498.483167,
+                            498.359375,
+                            498.406792,
+                            497.310042,
+                            515.479833,
+                            515.278417,
+                            515.44325,
+                            531.682792,
+                            497.352208,
+                            515.326833,
+                            515.403333,
+                            497.263292,
+                            515.367833,
+                            497.876708,
+                            431.177708,
+                            498.093,
+                            498.056416,
+                            497.913875,
+                            497.833958,
+                            497.951125,
+                            498.022666,
+                            515.349666,
+                            497.9895,
+                            481.235292,
+                            515.769167,
+                            499.781875,
+                            499.597917,
+                            499.712,
+                            499.747292,
+                            499.514875,
+                            499.633917,
+                            499.559584,
+                            499.672709,
+                            514.807875,
+                            481.8725,
+                            514.91925,
+                            514.730458,
+                            532.067625,
+                            481.921291,
+                            514.77,
+                            514.843875,
+                            514.685916,
+                            514.881958,
+                            481.482333,
+                            498.301792,
+                            498.229458,
+                            481.415792,
+                            515.498333,
+                            515.540167,
+                            498.196583,
+                            498.265667,
+                            498.161917,
+                            498.117125,
+                            514.030833,
+                            481.100083,
+                            497.904458,
+                            514.188791,
+                            514.113958,
+                            465.834375,
+                            497.98525,
+                            514.073791,
+                            514.15175,
+                            497.949416,
+                            499.318708,
+                            516.850708,
+                            499.512958,
+                            499.440958,
+                            516.795333,
+                            499.47575,
+                            432.319875,
+                            499.362041,
+                            482.584333,
+                            499.404166,
+                            515.594917,
+                            498.274084,
+                            515.525542,
+                            448.269375,
+                            515.663209,
+                            498.230042,
+                            498.310084,
+                            515.483084,
+                            515.562042,
+                            515.628459,
+                            514.758,
+                            514.9115,
+                            514.836459,
+                            481.513667,
+                            514.800917,
+                            514.981125,
+                            514.874209,
+                            514.94475,
+                            497.59025,
+                            481.461417,
+                            482.290958,
+                            514.996833,
+                            498.660541,
+                            482.241708,
+                            515.065416,
+                            498.700625,
+                            514.9075,
+                            515.031958,
+                            498.618416,
+                            514.954375,
+                            515.61025,
+                            499.189084,
+                            515.481792,
+                            499.336417,
+                            499.235292,
+                            515.533292,
+                            499.373917,
+                            515.571709,
+                            499.295167,
+                            499.410042,
+                            532.632333,
+                            515.411208,
+                            498.358541,
+                            532.6865,
+                            515.372166,
+                            515.204708,
+                            498.309708,
+                            515.291916,
+                            515.333166,
+                            515.252166,
+                            497.377334,
+                            497.449459,
+                            497.299584,
+                            515.832042,
+                            515.752459,
+                            431.2865,
+                            497.485834,
+                            515.795334,
+                            497.34075,
+                            497.411084,
+                            498.434583,
+                            514.778208,
+                            530.957917,
+                            514.621333,
+                            530.916542,
+                            514.735042,
+                            514.571125,
+                            514.658667,
+                            498.384542,
+                            514.694417,
+                            531.539,
+                            531.663042,
+                            531.622333,
+                            515.611667,
+                            548.663917,
+                            515.652375,
+                            515.566083,
+                            515.694083,
+                            499.705292,
+                            531.585167,
+                            549.7475,
+                            532.737666,
+                            532.694583,
+                            549.705125,
+                            565.797458,
+                            516.433875,
+                            516.479041,
+                            532.774625,
+                            532.812541,
+                            499.568083,
+                            515.285708,
+                            532.745541,
+                            515.358708,
+                            515.322125,
+                            532.702875,
+                            515.397208,
+                            499.460833,
+                            515.43325,
+                            515.468666,
+                            515.239875,
+                            548.566917,
+                            482.415292,
+                            515.572709,
+                            531.816292,
+                            564.778584,
+                            531.854875,
+                            548.611084,
+                            548.685375,
+                            548.650417,
+                            531.771709,
+                            532.310416,
+                            532.351083,
+                            516.123625,
+                            532.269833,
+                            532.431875,
+                            516.077375,
+                            498.478208,
+                            532.390166,
+                            532.222583,
+                            498.427666,
+                            532.165541,
+                            499.88525,
+                            532.314791,
+                            532.384416,
+                            532.208958,
+                            482.409541,
+                            514.931791,
+                            532.27925,
+                            532.349375,
+                            532.24425,
+                            515.23375,
+                            515.050084,
+                            515.197875,
+                            515.086667,
+                            515.159084,
+                            515.123334,
+                            515.007292,
+                            531.345334,
+                            498.220584,
+                            531.389209
+                        ],
+                        "samples": 300
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 565.797458,
+                        "meanMs": 523.6063764,
+                        "p95Ms": 564.778584,
+                        "rawMs": [
+                            526.031709,
+                            516.834875,
+                            514.110375,
+                            498.833292,
+                            515.50775,
+                            516.257458,
+                            514.657083,
+                            499.613542,
+                            515.908833,
+                            531.682792,
+                            515.349666,
+                            515.769167,
+                            532.067625,
+                            515.540167,
+                            514.188791,
+                            516.850708,
+                            515.663209,
+                            514.981125,
+                            515.065416,
+                            515.61025,
+                            532.6865,
+                            515.832042,
+                            530.957917,
+                            548.663917,
+                            565.797458,
+                            532.745541,
+                            564.778584,
+                            532.431875,
+                            532.384416,
+                            531.389209
+                        ],
+                        "samples": 30
+                    },
+                    "longGuiDispatches": [
+                    ],
+                    "maxEditMs": 0.305166,
+                    "maxGuiDispatchMs": 6.417083,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 20826.17679166667,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 328056832,
+                            "threads": 58
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1199.9299583333332,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55632,
+                            "role": "plugin",
+                            "rssBytes": 253804544,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6629.3175833333335,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55637,
+                            "role": "renderer",
+                            "rssBytes": 1917485056,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1031.0774583333334,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55638,
+                            "role": "plugin",
+                            "rssBytes": 273039360,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6397.831291666667,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55639,
+                            "role": "renderer",
+                            "rssBytes": 1934884864,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1056.0578333333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55640,
+                            "role": "plugin",
+                            "rssBytes": 272613376,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6384.579458333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55646,
+                            "role": "renderer",
+                            "rssBytes": 1925824512,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1028.7662083333335,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55647,
+                            "role": "plugin",
+                            "rssBytes": 266289152,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6438.054125,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55648,
+                            "role": "renderer",
+                            "rssBytes": 1945255936,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1082.84775,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55649,
+                            "role": "plugin",
+                            "rssBytes": 274022400,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6414.929041666667,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55650,
+                            "role": "renderer",
+                            "rssBytes": 1928216576,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1013.251875,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55651,
+                            "role": "plugin",
+                            "rssBytes": 274677760,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6420.461875,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55652,
+                            "role": "renderer",
+                            "rssBytes": 1923940352,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1046.3921666666665,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55653,
+                            "role": "plugin",
+                            "rssBytes": 275611648,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6442.071583333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55654,
+                            "role": "renderer",
+                            "rssBytes": 1926348800,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1033.2088333333334,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55655,
+                            "role": "plugin",
+                            "rssBytes": 275070976,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6471.9425833333335,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55656,
+                            "role": "renderer",
+                            "rssBytes": 1939095552,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1042.4709166666667,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55657,
+                            "role": "plugin",
+                            "rssBytes": 273088512,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6408.173833333333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55658,
+                            "role": "renderer",
+                            "rssBytes": 1926463488,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 1028.88825,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55659,
+                            "role": "plugin",
+                            "rssBytes": 261144576,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 6387.04575,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55694,
+                            "role": "renderer",
+                            "rssBytes": 1924104192,
+                            "threads": 10
+                        }
+                    ]
+                },
+                {
+                    "bytes": 1048576,
+                    "cpu": {
+                        "elapsedMs": 27566.244916,
+                        "matchedProcesses": 21,
+                        "qualification": "CPU deltas for processes present in both samples; not a system-wide idle or peak measurement.",
+                        "roleCpuPercentOneCore": {
+                            "application": 30.13194195283942,
+                            "plugin": 74.65105791898831,
+                            "renderer": 740.8450717135269
+                        },
+                        "samples": [
+                            {
+                                "cpuMs": 8306.244916666667,
+                                "cpuPercentOneCore": 30.13194195283942,
+                                "pid": 54965,
+                                "role": "application"
+                            },
+                            {
+                                "cpuMs": 2051.4134166666663,
+                                "cpuPercentOneCore": 7.441758654171954,
+                                "pid": 55632,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 21104.494833333334,
+                                "cpuPercentOneCore": 76.55919367198202,
+                                "pid": 55637,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1987.7995416666668,
+                                "cpuPercentOneCore": 7.210991369059875,
+                                "pid": 55638,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20309.688666666665,
+                                "cpuPercentOneCore": 73.67593492894825,
+                                "pid": 55639,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 2189.4202916666663,
+                                "cpuPercentOneCore": 7.942395848031819,
+                                "pid": 55640,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20331.61020833333,
+                                "cpuPercentOneCore": 73.75545806216232,
+                                "pid": 55646,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1994.1897916666667,
+                                "cpuPercentOneCore": 7.234172799898469,
+                                "pid": 55647,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20405.516,
+                                "cpuPercentOneCore": 74.02356056176599,
+                                "pid": 55648,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1991.6357500000004,
+                                "cpuPercentOneCore": 7.224907694424551,
+                                "pid": 55649,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20432.576583333335,
+                                "cpuPercentOneCore": 74.12172621115275,
+                                "pid": 55650,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1953.1010416666668,
+                                "cpuPercentOneCore": 7.085118222007264,
+                                "pid": 55651,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20219.500416666666,
+                                "cpuPercentOneCore": 73.3487657759685,
+                                "pid": 55652,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 1973.2237499999997,
+                                "cpuPercentOneCore": 7.158115862399166,
+                                "pid": 55653,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20430.206999999995,
+                                "cpuPercentOneCore": 74.11313025134552,
+                                "pid": 55654,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 2115.2855833333333,
+                                "cpuPercentOneCore": 7.673462924598697,
+                                "pid": 55655,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20324.43591666666,
+                                "cpuPercentOneCore": 73.7294324221503,
+                                "pid": 55656,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 2167.017041666667,
+                                "cpuPercentOneCore": 7.8611252576113,
+                                "pid": 55657,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20396.457208333333,
+                                "cpuPercentOneCore": 73.99069866238771,
+                                "pid": 55658,
+                                "role": "renderer"
+                            },
+                            {
+                                "cpuMs": 2155.40725,
+                                "cpuPercentOneCore": 7.819009286785227,
+                                "pid": 55659,
+                                "role": "plugin"
+                            },
+                            {
+                                "cpuMs": 20268.680083333333,
+                                "cpuPercentOneCore": 73.5271711656635,
+                                "pid": 55694,
+                                "role": "renderer"
+                            }
+                        ]
+                    },
+                    "individualPanels": {
+                        "maxMs": 5016.06225,
+                        "meanMs": 4492.847920133334,
+                        "p95Ms": 4982.072667,
+                        "rawMs": [
+                            4381.63575,
+                            4364.741417,
+                            4348.441084,
+                            4364.6495,
+                            4398.452417,
+                            4348.160667,
+                            4348.104959,
+                            4364.696125,
+                            4381.598584,
+                            4331.680709,
+                            4348.433,
+                            4299.574916,
+                            4298.284416,
+                            4332.278083,
+                            4348.385291,
+                            4315.121541,
+                            4298.229541,
+                            4298.332166,
+                            4299.631541,
+                            4332.323583,
+                            4482.471208,
+                            4383.170083,
+                            4431.566375,
+                            4414.909541,
+                            4532.391041,
+                            4414.964083,
+                            4448.883875,
+                            4448.928791,
+                            4482.540083,
+                            4448.826791,
+                            4364.848417,
+                            4364.954042,
+                            4415.063209,
+                            4381.048959,
+                            4481.577709,
+                            4364.903459,
+                            4349.059834,
+                            4381.000709,
+                            4381.173,
+                            3798.56875,
+                            3966.174625,
+                            4548.828041,
+                            4582.222916,
+                            4582.16825,
+                            4782.260958,
+                            4548.897416,
+                            4582.09825,
+                            4582.33825,
+                            4582.277166,
+                            4532.316916,
+                            4965.863,
+                            4982.072667,
+                            5016.06225,
+                            4949.424709,
+                            4998.171375,
+                            4917.049834,
+                            4981.954834,
+                            4998.104334,
+                            4982.015709,
+                            4916.968459
+                        ],
+                        "samples": 60
+                    },
+                    "latestAllPanels": {
+                        "maxMs": 5016.06225,
+                        "meanMs": 4593.196229166667,
+                        "p95Ms": 5016.06225,
+                        "rawMs": [
+                            4398.452417,
+                            4348.433,
+                            4532.391041,
+                            4481.577709,
+                            4782.260958,
+                            5016.06225
+                        ],
+                        "samples": 6
+                    },
+                    "longGuiDispatches": [
+                        {
+                            "durationMs": 52.902042,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 51.134334,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.090375,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 57.394417,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 51.477916,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.423458,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 60.189708,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 52.3535,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.740875,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.345667,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.094166,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 56.513542,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 53.051417,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 53.6,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.972208,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 51.584,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 66.066,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.163625,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 51.274583,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 51.810792,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.743791,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 55.073709,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 54.536458,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 53.118166,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.81575,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 51.681792,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        },
+                        {
+                            "durationMs": 50.855666,
+                            "eventType": 43,
+                            "receiver": "PluginRpc::RpcProcess"
+                        }
+                    ],
+                    "maxEditMs": 0.488,
+                    "maxGuiDispatchMs": 66.066,
+                    "resourcesAfterWorkload": [
+                        {
+                            "available": true,
+                            "cpuMs": 30262.237083333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                            "pid": 54965,
+                            "role": "application",
+                            "rssBytes": 247611392,
+                            "threads": 49
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3572.3490416666664,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55632,
+                            "role": "plugin",
+                            "rssBytes": 112328704,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 30801.053,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55637,
+                            "role": "renderer",
+                            "rssBytes": 1188216832,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3320.6972083333335,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55638,
+                            "role": "plugin",
+                            "rssBytes": 138100736,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29679.943,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55639,
+                            "role": "renderer",
+                            "rssBytes": 1185251328,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3541.5109583333333,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55640,
+                            "role": "plugin",
+                            "rssBytes": 114393088,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29730.025166666666,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55646,
+                            "role": "renderer",
+                            "rssBytes": 1186938880,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3312.4192916666666,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55647,
+                            "role": "plugin",
+                            "rssBytes": 123682816,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29860.784666666666,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55648,
+                            "role": "renderer",
+                            "rssBytes": 1183793152,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3393.8589583333337,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55649,
+                            "role": "plugin",
+                            "rssBytes": 117522432,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29881.94875,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55650,
+                            "role": "renderer",
+                            "rssBytes": 1177501696,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3263.5075833333335,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55651,
+                            "role": "plugin",
+                            "rssBytes": 129794048,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29687.773375,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55652,
+                            "role": "renderer",
+                            "rssBytes": 1179926528,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3323.6015416666664,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55653,
+                            "role": "plugin",
+                            "rssBytes": 119570432,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29904.91395833333,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55654,
+                            "role": "renderer",
+                            "rssBytes": 1191297024,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3443.2811666666666,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55655,
+                            "role": "plugin",
+                            "rssBytes": 115736576,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29808.288875,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55656,
+                            "role": "renderer",
+                            "rssBytes": 1066336256,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3516.736125,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55657,
+                            "role": "plugin",
+                            "rssBytes": 116703232,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29843.391125,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55658,
+                            "role": "renderer",
+                            "rssBytes": 1188921344,
+                            "threads": 10
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 3477.3073333333336,
+                            "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/Helpers/nnp-node",
+                            "pid": 55659,
+                            "role": "plugin",
+                            "rssBytes": 158285824,
+                            "threads": 8
+                        },
+                        {
+                            "available": true,
+                            "cpuMs": 29688.453375,
+                            "path": "/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess",
+                            "pid": 55694,
+                            "role": "renderer",
+                            "rssBytes": 1180549120,
+                            "threads": 10
+                        }
+                    ]
+                }
+            ],
+            "stop": {
+                "allOwnedNodeIdentitiesExited": true,
+                "idleMs": 1028.503125,
+                "processesAfter": [
+                    {
+                        "available": true,
+                        "cpuMs": 31887.32575,
+                        "path": "/private/tmp/notepadnext-macos-release-build/tests/plugin-application/PluginPerformanceTests.app/Contents/MacOS/PluginPerformanceTests",
+                        "pid": 54965,
+                        "role": "application",
+                        "rssBytes": 267649024,
+                        "threads": 42
+                    },
+                    {
+                        "available": false,
+                        "pid": 55637,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55639,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55646,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55648,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55650,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55652,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55654,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55656,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55658,
+                        "role": "shared-or-other-child"
+                    },
+                    {
+                        "available": false,
+                        "pid": 55694,
+                        "role": "shared-or-other-child"
+                    }
+                ],
+                "resourcesAfter": 0,
+                "revokeMs": 136.44225,
+                "sessionsAfter": 0
+            }
+        }
+    ],
+    "previewEndpoint": "Input heading replacement to verified matching DOM after two requestAnimationFrame callbacks and native message reception; includes 200ms debounce.",
+    "qtVersion": "6.10.0",
+    "scope": "Release production Application/MainWindow services; 1/5/10 independent Markdown instances, differentiated only by manifest/command ID."
+}

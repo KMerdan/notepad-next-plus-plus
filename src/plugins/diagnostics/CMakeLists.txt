@@ -1,0 +1,4 @@
+add_library(NotepadNextPluginDiagnostics STATIC PluginDiagnostics.cpp PluginDiagnostics.h)
+target_link_libraries(NotepadNextPluginDiagnostics PUBLIC Qt6::Core)
+target_include_directories(NotepadNextPluginDiagnostics PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set_target_properties(NotepadNextPluginDiagnostics PROPERTIES AUTOMOC ON)

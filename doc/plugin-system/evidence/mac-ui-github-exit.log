@@ -1,0 +1,34 @@
+UpdateCTestConfiguration  from :/private/tmp/notepadnext-app-build-610/DartConfiguration.tcl
+Test project /private/tmp/notepadnext-app-build-610
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 24
+    Start 24: PluginApplicationExitTests
+
+24: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationExitTests
+24: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+24: Test timeout computed to be: 90
+24: ********* Start testing of ApplicationExitTests *********
+24: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+24: PASS   : ApplicationExitTests::initTestCase()
+24: PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+24: PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+24: PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+24: PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+24: PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+24: PASS   : ApplicationExitTests::lastWindowClose(update-preparation-pending)
+24: PASS   : ApplicationExitTests::cleanupTestCase()
+24: Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 18184ms
+24: ********* Finished testing of ApplicationExitTests *********
+1/1 Test #24: PluginApplicationExitTests .......   Passed   18.45 sec
+
+The following tests passed:
+	PluginApplicationExitTests
+
+100% tests passed out of 1
+
+Total Test time (real) =  18.45 sec

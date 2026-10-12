@@ -1,0 +1,18 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[67458:259:1011/155046.567542:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[67458:259:1011/155046.571240:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+PASS   : PluginWebviewTests::nativeLongPageScrollsToOffscreenText()
+PASS   : PluginWebviewTests::asyncHtmlOwnership(publish-and-bounded-overlap)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(document-edited-before-publication)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(active-document-changed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(document-closed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(panel-disposed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(synchronous-publication-wins)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(service-destroyed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(unsafe-html-rejected)
+PASS   : PluginWebviewTests::realMarkdownSession()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 12 passed, 0 failed, 0 skipped, 0 blacklisted, 1884ms
+********* Finished testing of PluginWebviewTests *********

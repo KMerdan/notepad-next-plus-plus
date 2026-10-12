@@ -1,0 +1,180 @@
+{
+  "createdNodeIds": [
+    "VariableID:37:11698",
+    "VariableID:37:11699",
+    "VariableID:37:11700",
+    "VariableID:37:11701",
+    "VariableID:37:11702",
+    "VariableID:37:11703",
+    "VariableID:37:11704",
+    "VariableID:37:11705",
+    "VariableID:37:11706",
+    "VariableID:37:11707",
+    "VariableID:37:11708",
+    "VariableID:37:11709",
+    "VariableID:37:11710",
+    "VariableID:37:11711",
+    "VariableID:37:11712",
+    "VariableID:37:11713",
+    "VariableID:37:11714",
+    "VariableID:37:11715",
+    "VariableID:37:11716",
+    "VariableID:37:11717",
+    "VariableID:37:11718",
+    "VariableID:37:11719",
+    "VariableID:37:11720",
+    "VariableID:37:11721",
+    "VariableID:37:11722",
+    "VariableID:37:11723",
+    "VariableID:37:11724",
+    "S:44c65c3f979b03edb03460d42d9c8822890c31ea,",
+    "S:86a21b211a4efe79022de3c6bcde814320750d53,"
+  ],
+  "mutatedNodeIds": [
+    "VariableCollectionId:2:19",
+    "VariableID:2:21",
+    "VariableID:2:25",
+    "VariableID:2:26",
+    "VariableID:2:23",
+    "VariableID:2:20",
+    "VariableID:2:22",
+    "VariableID:2:24",
+    "VariableID:2:27",
+    "VariableID:2:28",
+    "VariableID:2:29",
+    "VariableID:2:30",
+    "VariableID:2:31",
+    "VariableID:2:32",
+    "VariableID:2:33",
+    "VariableID:2:34",
+    "VariableID:2:35"
+  ],
+  "collection": "VariableCollectionId:2:19",
+  "modes": {
+    "Light": "2:1",
+    "Dark": "37:0"
+  },
+  "aliases": {
+    "chrome": "VariableID:2:21",
+    "surface": "VariableID:37:11714",
+    "text": "VariableID:2:25",
+    "secondary": "VariableID:2:26",
+    "border": "VariableID:2:23",
+    "hover": "VariableID:37:11715",
+    "selected": "VariableID:37:11716",
+    "accent": "VariableID:37:11717",
+    "fieldBorder": "VariableID:37:11718",
+    "disabled": "VariableID:37:11719",
+    "onAccent": "VariableID:37:11720",
+    "successText": "VariableID:37:11721",
+    "successSurface": "VariableID:37:11722",
+    "errorText": "VariableID:37:11723",
+    "errorSurface": "VariableID:37:11724"
+  },
+  "textStyles": [
+    {
+      "id": "S:9efb3903f5d19233e74ed4e32c2a2e20d0ace3d8,",
+      "name": "Draft/UI/Body",
+      "font": {
+        "family": "SF Pro",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "wdth": 100
+        }
+      },
+      "size": 13,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 18
+      }
+    },
+    {
+      "id": "S:c4cb044bfc194e98648a377b33c72eca4a8e7f15,",
+      "name": "Draft/UI/Emphasis",
+      "font": {
+        "family": "SF Pro",
+        "style": "Semibold",
+        "variationSettings": {
+          "wght": 590,
+          "wdth": 100
+        }
+      },
+      "size": 13,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 18
+      }
+    },
+    {
+      "id": "S:1adee05298240127ce4cb513e5da293fc92875b2,",
+      "name": "Draft/UI/Caption",
+      "font": {
+        "family": "SF Pro",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "wdth": 100
+        }
+      },
+      "size": 11,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 16
+      }
+    },
+    {
+      "id": "S:d590511cc9df6ec7c54c8d436423830a86e3243f,",
+      "name": "Draft/UI/Heading",
+      "font": {
+        "family": "SF Pro",
+        "style": "Semibold",
+        "variationSettings": {
+          "wght": 590,
+          "wdth": 100
+        }
+      },
+      "size": 20,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 26
+      }
+    },
+    {
+      "id": "S:44c65c3f979b03edb03460d42d9c8822890c31ea,",
+      "name": "Draft/UI/Section",
+      "font": {
+        "family": "SF Pro",
+        "style": "Semibold",
+        "variationSettings": {
+          "wght": 590,
+          "wdth": 100
+        }
+      },
+      "size": 16,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 22
+      }
+    },
+    {
+      "id": "S:86a21b211a4efe79022de3c6bcde814320750d53,",
+      "name": "Draft/UI/Help",
+      "font": {
+        "family": "SF Pro",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "wdth": 100
+        }
+      },
+      "size": 12,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 18
+      }
+    }
+  ],
+  "primitiveCount": 32,
+  "clearX": 11760
+}

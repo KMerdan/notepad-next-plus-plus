@@ -1,0 +1,1605 @@
+Start testing: Oct 11 18:08 JST
+----------------------------------------------------------
+1/24 Testing: PluginSourceTests
+1/24 Test: PluginSourceTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-sources/PluginSourceTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-sources
+"PluginSourceTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginSourceTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginSourceTests::initTestCase()
+PASS   : PluginSourceTests::repositoryNormalization()
+PASS   : PluginSourceTests::metadataDiscriminator()
+PASS   : PluginSourceTests::invalidMetadataIsRejected()
+PASS   : PluginSourceTests::vscodeCompatibilityMetadata()
+PASS   : PluginSourceTests::registrationPersistenceAndMerging()
+PASS   : PluginSourceTests::conflictsAndFailedWritesAreAtomic()
+PASS   : PluginSourceTests::refreshReplacesOnlyItsOwnAssociations()
+PASS   : PluginSourceTests::corruptCacheIsPreserved()
+PASS   : PluginSourceTests::resolverPinsMetadataAndDoesNotInstall()
+PASS   : PluginSourceTests::resolverFailureAndCancellation()
+QWARN  : PluginSourceTests::managerListsSearchesAndSharesRegistry() qt.qpa.fonts: Populating font family aliases took 73 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginSourceTests::managerListsSearchesAndSharesRegistry()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(direct-plugin)
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(marketplace)
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::managerRegistrationFlow(cancel-confirmation)
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+PASS   : PluginSourceTests::localRegistrationRefreshAndPersistence()
+PASS   : PluginSourceTests::localMetadataValidation()
+PASS   : PluginSourceTests::cleanupTestCase()
+Totals: 18 passed, 0 failed, 0 skipped, 0 blacklisted, 545ms
+********* Finished testing of PluginSourceTests *********
+<end of output>
+Test time =   0.83 sec
+----------------------------------------------------------
+Test Passed.
+"PluginSourceTests" end time: Oct 11 18:08 JST
+"PluginSourceTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/24 Testing: PluginPackageTests
+2/24 Test: PluginPackageTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginPackageTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginPackageTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginPackageTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginPackageTests::initTestCase()
+PASS   : PluginPackageTests::versionsAndRanges()
+PASS   : PluginPackageTests::immutableInstallationAndPersistence()
+PASS   : PluginPackageTests::updateTransactionsAndRecovery()
+PASS   : PluginPackageTests::registrationAndInstallationStaySeparate()
+PASS   : PluginPackageTests::metadataAndCompatibilityChecks()
+PASS   : PluginPackageTests::unsafePathsAndLinks()
+PASS   : PluginPackageTests::budgetsCancellationAndIntegrity()
+libpng error: Read Error
+PASS   : PluginPackageTests::icons()
+PASS   : PluginPackageTests::failedIndexWritesAndCorruptStorage()
+PASS   : PluginPackageTests::productionMarkdownPackage()
+PASS   : PluginPackageTests::zipRoundtripAndPackage()
+PASS   : PluginPackageTests::unsafeZip(../escape)
+PASS   : PluginPackageTests::unsafeZip(/absolute)
+PASS   : PluginPackageTests::unsafeZip(C:/drive)
+PASS   : PluginPackageTests::unsafeZip(a\b)
+PASS   : PluginPackageTests::unsafeZip(a//b)
+PASS   : PluginPackageTests::unsafeZip(./a)
+PASS   : PluginPackageTests::unsafeZip(a/../b)
+PASS   : PluginPackageTests::unsafeZip(CON.txt)
+PASS   : PluginPackageTests::unsafeZip(aux)
+PASS   : PluginPackageTests::unsafeZip(a.)
+PASS   : PluginPackageTests::unsafeZip(a )
+PASS   : PluginPackageTests::unsafeZip(a:b)
+PASS   : PluginPackageTests::unsafeZip(a?b)
+PASS   : PluginPackageTests::unsafeZip(.nnp-receipt.json)
+PASS   : PluginPackageTests::unsafeZip(case aliases)
+PASS   : PluginPackageTests::unsafeZip(duplicate file)
+PASS   : PluginPackageTests::unsafeZip(symlink)
+PASS   : PluginPackageTests::unsafeZip(device)
+PASS   : PluginPackageTests::unsafeZip(fifo)
+PASS   : PluginPackageTests::unsafeZip(encryption)
+PASS   : PluginPackageTests::unsafeZip(compression method)
+PASS   : PluginPackageTests::unsafeZip(invalid utf8)
+PASS   : PluginPackageTests::unsafeZip(undeclared utf8)
+PASS   : PluginPackageTests::unsafeZip(directory data)
+PASS   : PluginPackageTests::unsafeZip(file prefix)
+PASS   : PluginPackageTests::unsafeZip(directory prefix)
+PASS   : PluginPackageTests::unsafeZip(depth)
+PASS   : PluginPackageTests::unsafeZip(unicode aliases)
+PASS   : PluginPackageTests::corruptZipAndBudgets()
+PASS   : PluginPackageTests::collectionReferencesAndPreparedLeases()
+PASS   : PluginPackageTests::collectionPreservesUnsafeAndCorruptStorage()
+PASS   : PluginPackageTests::collectionCrossProcessAndCrashRecovery()
+PASS   : PluginPackageTests::collectionRunsOnWorker()
+PASS   : PluginPackageTests::collectionBatchesAndInvalidActiveLease()
+PASS   : PluginPackageTests::runtimeIdentityPinsAndPidReuse()
+PASS   : PluginPackageTests::cleanupTestCase()
+Totals: 48 passed, 0 failed, 0 skipped, 0 blacklisted, 1271ms
+********* Finished testing of PluginPackageTests *********
+<end of output>
+Test time =   1.51 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPackageTests" end time: Oct 11 18:08 JST
+"PluginPackageTests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+3/24 Testing: PluginTransactionCrashTests
+3/24 Test: PluginTransactionCrashTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginTransactionCrashTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginTransactionCrashTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of TransactionCrashTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : TransactionCrashTests::initTestCase()
+PASS   : TransactionCrashTests::processDeath(copying)
+PASS   : TransactionCrashTests::processDeath(published)
+PASS   : TransactionCrashTests::processDeath(installed)
+PASS   : TransactionCrashTests::processDeath(update-pending-disabled)
+PASS   : TransactionCrashTests::processDeath(update-pending-enabled)
+PASS   : TransactionCrashTests::processDeath(update-deferred-disabled)
+PASS   : TransactionCrashTests::processDeath(update-deferred-enabled)
+PASS   : TransactionCrashTests::processDeath(validation-started-disabled)
+PASS   : TransactionCrashTests::processDeath(validation-started-enabled)
+PASS   : TransactionCrashTests::processDeath(update-confirmed-disabled)
+PASS   : TransactionCrashTests::processDeath(update-confirmed-enabled)
+PASS   : TransactionCrashTests::processDeath(rollback-pending-disabled)
+PASS   : TransactionCrashTests::processDeath(rollback-pending-enabled)
+PASS   : TransactionCrashTests::processDeath(recovery-busy-disabled)
+PASS   : TransactionCrashTests::processDeath(recovery-busy-enabled)
+PASS   : TransactionCrashTests::cleanupTestCase()
+Totals: 17 passed, 0 failed, 0 skipped, 0 blacklisted, 3007ms
+********* Finished testing of TransactionCrashTests *********
+<end of output>
+Test time =   3.24 sec
+----------------------------------------------------------
+Test Passed.
+"PluginTransactionCrashTests" end time: Oct 11 18:08 JST
+"PluginTransactionCrashTests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+4/24 Testing: PluginGitHubReleaseTests
+4/24 Test: PluginGitHubReleaseTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginGitHubReleaseTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginGitHubReleaseTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of GitHubReleaseTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : GitHubReleaseTests::initTestCase()
+PASS   : GitHubReleaseTests::matchingAssetsAndNoInstallation()
+PASS   : GitHubReleaseTests::paginationAndBudget()
+PASS   : GitHubReleaseTests::downloadRedirectAndProvenance()
+PASS   : GitHubReleaseTests::invalidDownload(sha mismatch)
+PASS   : GitHubReleaseTests::invalidDownload(oversize)
+PASS   : GitHubReleaseTests::invalidDownload(truncated)
+PASS   : GitHubReleaseTests::invalidDownload(redirect host)
+PASS   : GitHubReleaseTests::invalidDownload(redirect http)
+PASS   : GitHubReleaseTests::invalidDownload(too many redirects)
+PASS   : GitHubReleaseTests::invalidDownload(rate limit)
+PASS   : GitHubReleaseTests::invalidDownload(not found)
+PASS   : GitHubReleaseTests::invalidDownload(cancel)
+PASS   : GitHubReleaseTests::invalidDownload(declared size)
+PASS   : GitHubReleaseTests::lookupFailureAndCancel()
+PASS   : GitHubReleaseTests::installTransaction()
+PASS   : GitHubReleaseTests::releaseUpdatePreparation()
+PASS   : GitHubReleaseTests::authorChecksumFallback()
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(wrong plugin)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(wrong version)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(missing archive)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(duplicate name)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(unknown field)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(invalid sha)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(path entry)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(archive size)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(truncated checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(checksum digest)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(oversized checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(redirect host)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(redirect http)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(rate limit)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(missing checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(cancel checksum)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(archive hash mismatch)
+PASS   : GitHubReleaseTests::invalidAuthorChecksum(extra root field)
+PASS   : GitHubReleaseTests::checksumDiscoveryAndSelection()
+PASS   : GitHubReleaseTests::installWithAuthorChecksum()
+PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(release-lock-and-install)
+PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(cancel-while-lock-held)
+PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(bounded-lock-timeout)
+PASS   : GitHubReleaseTests::cleanupTestCase()
+Totals: 42 passed, 0 failed, 0 skipped, 0 blacklisted, 1931ms
+********* Finished testing of GitHubReleaseTests *********
+<end of output>
+Test time =   2.16 sec
+----------------------------------------------------------
+Test Passed.
+"PluginGitHubReleaseTests" end time: Oct 11 18:08 JST
+"PluginGitHubReleaseTests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+5/24 Testing: PluginParentCrashTests
+5/24 Test: PluginParentCrashTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-packages/PluginParentCrashTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-packages
+"PluginParentCrashTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of ParentCrashTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ParentCrashTests::initTestCase()
+PASS   : ParentCrashTests::parentDeathWhilePluginSpins(node)
+PASS   : ParentCrashTests::parentDeathWhilePluginSpins(python)
+PASS   : ParentCrashTests::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 1008ms
+********* Finished testing of ParentCrashTests *********
+<end of output>
+Test time =   1.32 sec
+----------------------------------------------------------
+Test Passed.
+"PluginParentCrashTests" end time: Oct 11 18:08 JST
+"PluginParentCrashTests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+6/24 Testing: PluginPythonContractTests
+6/24 Test: PluginPythonContractTests
+Command: "/Users/merdankiji/.local/share/mise/installs/python/3.12/bin/python3" "-B" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/python.test.py"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginPythonContractTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+test_bidirectional_timeout_cancel_late_response_and_close (__main__.Boundaries.test_bidirectional_timeout_cancel_late_response_and_close) ... ok
+test_closed_panels_retire_python_handles (__main__.Boundaries.test_closed_panels_retire_python_handles) ... ok
+test_data_compare_exchange_preserves_namespace_null_and_deletion (__main__.Boundaries.test_data_compare_exchange_preserves_namespace_null_and_deletion) ... ok
+test_fragmentation_and_invalid_framing (__main__.Boundaries.test_fragmentation_and_invalid_framing) ... ok
+test_integer_error_response_and_decoder_depth (__main__.Boundaries.test_integer_error_response_and_decoder_depth) ... ok
+test_reliable_notification_overload_faults_instead_of_dropping (__main__.Boundaries.test_reliable_notification_overload_faults_instead_of_dropping) ... ok
+test_request_kind_and_result_contract (__main__.Boundaries.test_request_kind_and_result_contract) ... ok
+test_utf8_and_profile_budgets (__main__.Boundaries.test_utf8_and_profile_budgets) ... ok
+test_000_named_params (__main__.SharedRpc.test_000_named_params) ... ok
+test_001_positional_params (__main__.SharedRpc.test_001_positional_params) ... ok
+test_002_omitted_params (__main__.SharedRpc.test_002_omitted_params) ... ok
+test_003_null_request_id (__main__.SharedRpc.test_003_null_request_id) ... ok
+test_004_numeric_id_token (__main__.SharedRpc.test_004_numeric_id_token) ... ok
+test_005_exponent_id_token (__main__.SharedRpc.test_005_exponent_id_token) ... ok
+test_006_fractional_id_token (__main__.SharedRpc.test_006_fractional_id_token) ... ok
+test_007_escaped_id_key (__main__.SharedRpc.test_007_escaped_id_key) ... ok
+test_008_notification (__main__.SharedRpc.test_008_notification) ... ok
+test_009_unknown_notification (__main__.SharedRpc.test_009_unknown_notification) ... ok
+test_010_failing_notification (__main__.SharedRpc.test_010_failing_notification) ... ok
+test_011_unknown_method (__main__.SharedRpc.test_011_unknown_method) ... ok
+test_012_invalid_method_params (__main__.SharedRpc.test_012_invalid_method_params) ... ok
+test_013_handler_failure (__main__.SharedRpc.test_013_handler_failure) ... ok
+test_014_parse_error (__main__.SharedRpc.test_014_parse_error) ... ok
+test_015_invalid_number_grammar (__main__.SharedRpc.test_015_invalid_number_grammar) ... ok
+test_016_multiple_roots (__main__.SharedRpc.test_016_multiple_roots) ... ok
+test_017_scalar (__main__.SharedRpc.test_017_scalar) ... ok
+test_018_null_scalar (__main__.SharedRpc.test_018_null_scalar) ... ok
+test_019_invalid_id (__main__.SharedRpc.test_019_invalid_id) ... ok
+test_020_invalid_version (__main__.SharedRpc.test_020_invalid_version) ... ok
+test_021_scalar_params (__main__.SharedRpc.test_021_scalar_params) ... ok
+test_022_empty_batch (__main__.SharedRpc.test_022_empty_batch) ... ok
+test_023_invalid_batch_items (__main__.SharedRpc.test_023_invalid_batch_items) ... ok
+test_024_mixed_batch (__main__.SharedRpc.test_024_mixed_batch) ... ok
+test_025_all_notifications (__main__.SharedRpc.test_025_all_notifications) ... ok
+test_026_unknown_response (__main__.SharedRpc.test_026_unknown_response) ... ok
+test_027_invalid_response (__main__.SharedRpc.test_027_invalid_response) ... ok
+test_000_nnp.initialize_valid_params (__main__.SharedWire.test_000_nnp.initialize_valid_params) ... ok
+test_001_nnp.initialize_extra_param (__main__.SharedWire.test_001_nnp.initialize_extra_param) ... ok
+test_002_nnp.initialize_missing_identity/field (__main__.SharedWire.test_002_nnp.initialize_missing_identity/field) ... ok
+test_003_nnp.initialize_valid_result (__main__.SharedWire.test_003_nnp.initialize_valid_result) ... ok
+test_004_nnp.initialize_invalid_result (__main__.SharedWire.test_004_nnp.initialize_invalid_result) ... ok
+test_005_nnp.plugin.activate_valid_params (__main__.SharedWire.test_005_nnp.plugin.activate_valid_params) ... ok
+test_006_nnp.plugin.activate_extra_param (__main__.SharedWire.test_006_nnp.plugin.activate_extra_param) ... ok
+test_007_nnp.plugin.activate_missing_identity/field (__main__.SharedWire.test_007_nnp.plugin.activate_missing_identity/field) ... ok
+test_008_nnp.plugin.activate_valid_result (__main__.SharedWire.test_008_nnp.plugin.activate_valid_result) ... ok
+test_009_nnp.plugin.activate_invalid_result (__main__.SharedWire.test_009_nnp.plugin.activate_invalid_result) ... ok
+test_010_nnp.plugin.deactivate_valid_params (__main__.SharedWire.test_010_nnp.plugin.deactivate_valid_params) ... ok
+test_011_nnp.plugin.deactivate_extra_param (__main__.SharedWire.test_011_nnp.plugin.deactivate_extra_param) ... ok
+test_012_nnp.plugin.deactivate_missing_identity/field (__main__.SharedWire.test_012_nnp.plugin.deactivate_missing_identity/field) ... ok
+test_013_nnp.plugin.deactivate_valid_result (__main__.SharedWire.test_013_nnp.plugin.deactivate_valid_result) ... ok
+test_014_nnp.plugin.deactivate_invalid_result (__main__.SharedWire.test_014_nnp.plugin.deactivate_invalid_result) ... ok
+test_015_nnp.shutdown_valid_params (__main__.SharedWire.test_015_nnp.shutdown_valid_params) ... ok
+test_016_nnp.shutdown_extra_param (__main__.SharedWire.test_016_nnp.shutdown_extra_param) ... ok
+test_017_nnp.shutdown_missing_identity/field (__main__.SharedWire.test_017_nnp.shutdown_missing_identity/field) ... ok
+test_018_nnp.shutdown_valid_result (__main__.SharedWire.test_018_nnp.shutdown_valid_result) ... ok
+test_019_nnp.shutdown_invalid_result (__main__.SharedWire.test_019_nnp.shutdown_invalid_result) ... ok
+test_020_nnp.health.ping_valid_params (__main__.SharedWire.test_020_nnp.health.ping_valid_params) ... ok
+test_021_nnp.health.ping_extra_param (__main__.SharedWire.test_021_nnp.health.ping_extra_param) ... ok
+test_022_nnp.health.ping_missing_identity/field (__main__.SharedWire.test_022_nnp.health.ping_missing_identity/field) ... ok
+test_023_nnp.health.ping_valid_result (__main__.SharedWire.test_023_nnp.health.ping_valid_result) ... ok
+test_024_nnp.health.ping_invalid_result (__main__.SharedWire.test_024_nnp.health.ping_invalid_result) ... ok
+test_025_nnp.documents.getActive_valid_params (__main__.SharedWire.test_025_nnp.documents.getActive_valid_params) ... ok
+test_026_nnp.documents.getActive_extra_param (__main__.SharedWire.test_026_nnp.documents.getActive_extra_param) ... ok
+test_027_nnp.documents.getActive_missing_identity/field (__main__.SharedWire.test_027_nnp.documents.getActive_missing_identity/field) ... ok
+test_028_nnp.documents.getActive_valid_result (__main__.SharedWire.test_028_nnp.documents.getActive_valid_result) ... ok
+test_029_nnp.documents.getActive_invalid_result (__main__.SharedWire.test_029_nnp.documents.getActive_invalid_result) ... ok
+test_030_nnp.documents.getSnapshot_valid_params (__main__.SharedWire.test_030_nnp.documents.getSnapshot_valid_params) ... ok
+test_031_nnp.documents.getSnapshot_extra_param (__main__.SharedWire.test_031_nnp.documents.getSnapshot_extra_param) ... ok
+test_032_nnp.documents.getSnapshot_missing_identity/field (__main__.SharedWire.test_032_nnp.documents.getSnapshot_missing_identity/field) ... ok
+test_033_nnp.documents.getSnapshot_valid_result (__main__.SharedWire.test_033_nnp.documents.getSnapshot_valid_result) ... ok
+test_034_nnp.documents.getSnapshot_invalid_result (__main__.SharedWire.test_034_nnp.documents.getSnapshot_invalid_result) ... ok
+test_035_nnp.documents.watch_valid_params (__main__.SharedWire.test_035_nnp.documents.watch_valid_params) ... ok
+test_036_nnp.documents.watch_extra_param (__main__.SharedWire.test_036_nnp.documents.watch_extra_param) ... ok
+test_037_nnp.documents.watch_missing_identity/field (__main__.SharedWire.test_037_nnp.documents.watch_missing_identity/field) ... ok
+test_038_nnp.documents.watch_valid_result (__main__.SharedWire.test_038_nnp.documents.watch_valid_result) ... ok
+test_039_nnp.documents.watch_invalid_result (__main__.SharedWire.test_039_nnp.documents.watch_invalid_result) ... ok
+test_040_nnp.documents.event_valid_params (__main__.SharedWire.test_040_nnp.documents.event_valid_params) ... ok
+test_041_nnp.documents.event_extra_param (__main__.SharedWire.test_041_nnp.documents.event_extra_param) ... ok
+test_042_nnp.documents.event_missing_identity/field (__main__.SharedWire.test_042_nnp.documents.event_missing_identity/field) ... ok
+test_043_nnp.documents.applyEdits_valid_params (__main__.SharedWire.test_043_nnp.documents.applyEdits_valid_params) ... ok
+test_044_nnp.documents.applyEdits_extra_param (__main__.SharedWire.test_044_nnp.documents.applyEdits_extra_param) ... ok
+test_045_nnp.documents.applyEdits_missing_identity/field (__main__.SharedWire.test_045_nnp.documents.applyEdits_missing_identity/field) ... ok
+test_046_nnp.documents.applyEdits_valid_result (__main__.SharedWire.test_046_nnp.documents.applyEdits_valid_result) ... ok
+test_047_nnp.documents.applyEdits_invalid_result (__main__.SharedWire.test_047_nnp.documents.applyEdits_invalid_result) ... ok
+test_048_nnp.commands.register_valid_params (__main__.SharedWire.test_048_nnp.commands.register_valid_params) ... ok
+test_049_nnp.commands.register_extra_param (__main__.SharedWire.test_049_nnp.commands.register_extra_param) ... ok
+test_050_nnp.commands.register_missing_identity/field (__main__.SharedWire.test_050_nnp.commands.register_missing_identity/field) ... ok
+test_051_nnp.commands.register_valid_result (__main__.SharedWire.test_051_nnp.commands.register_valid_result) ... ok
+test_052_nnp.commands.register_invalid_result (__main__.SharedWire.test_052_nnp.commands.register_invalid_result) ... ok
+test_053_nnp.commands.invoke_valid_params (__main__.SharedWire.test_053_nnp.commands.invoke_valid_params) ... ok
+test_054_nnp.commands.invoke_extra_param (__main__.SharedWire.test_054_nnp.commands.invoke_extra_param) ... ok
+test_055_nnp.commands.invoke_missing_identity/field (__main__.SharedWire.test_055_nnp.commands.invoke_missing_identity/field) ... ok
+test_056_nnp.commands.invoke_valid_result (__main__.SharedWire.test_056_nnp.commands.invoke_valid_result) ... ok
+test_057_nnp.webviews.create_valid_params (__main__.SharedWire.test_057_nnp.webviews.create_valid_params) ... ok
+test_058_nnp.webviews.create_extra_param (__main__.SharedWire.test_058_nnp.webviews.create_extra_param) ... ok
+test_059_nnp.webviews.create_missing_identity/field (__main__.SharedWire.test_059_nnp.webviews.create_missing_identity/field) ... ok
+test_060_nnp.webviews.create_valid_result (__main__.SharedWire.test_060_nnp.webviews.create_valid_result) ... ok
+test_061_nnp.webviews.create_invalid_result (__main__.SharedWire.test_061_nnp.webviews.create_invalid_result) ... ok
+test_062_nnp.webviews.reveal_valid_params (__main__.SharedWire.test_062_nnp.webviews.reveal_valid_params) ... ok
+test_063_nnp.webviews.reveal_extra_param (__main__.SharedWire.test_063_nnp.webviews.reveal_extra_param) ... ok
+test_064_nnp.webviews.reveal_missing_identity/field (__main__.SharedWire.test_064_nnp.webviews.reveal_missing_identity/field) ... ok
+test_065_nnp.webviews.reveal_valid_result (__main__.SharedWire.test_065_nnp.webviews.reveal_valid_result) ... ok
+test_066_nnp.webviews.reveal_invalid_result (__main__.SharedWire.test_066_nnp.webviews.reveal_invalid_result) ... ok
+test_067_nnp.webviews.setHtml_valid_params (__main__.SharedWire.test_067_nnp.webviews.setHtml_valid_params) ... ok
+test_068_nnp.webviews.setHtml_extra_param (__main__.SharedWire.test_068_nnp.webviews.setHtml_extra_param) ... ok
+test_069_nnp.webviews.setHtml_missing_identity/field (__main__.SharedWire.test_069_nnp.webviews.setHtml_missing_identity/field) ... ok
+test_070_nnp.webviews.setHtml_valid_result (__main__.SharedWire.test_070_nnp.webviews.setHtml_valid_result) ... ok
+test_071_nnp.webviews.setHtml_invalid_result (__main__.SharedWire.test_071_nnp.webviews.setHtml_invalid_result) ... ok
+test_072_nnp.webviews.mapResource_valid_params (__main__.SharedWire.test_072_nnp.webviews.mapResource_valid_params) ... ok
+test_073_nnp.webviews.mapResource_extra_param (__main__.SharedWire.test_073_nnp.webviews.mapResource_extra_param) ... ok
+test_074_nnp.webviews.mapResource_missing_identity/field (__main__.SharedWire.test_074_nnp.webviews.mapResource_missing_identity/field) ... ok
+test_075_nnp.webviews.mapResource_valid_result (__main__.SharedWire.test_075_nnp.webviews.mapResource_valid_result) ... ok
+test_076_nnp.webviews.mapResource_invalid_result (__main__.SharedWire.test_076_nnp.webviews.mapResource_invalid_result) ... ok
+test_077_nnp.webviews.postMessage_valid_params (__main__.SharedWire.test_077_nnp.webviews.postMessage_valid_params) ... ok
+test_078_nnp.webviews.postMessage_extra_param (__main__.SharedWire.test_078_nnp.webviews.postMessage_extra_param) ... ok
+test_079_nnp.webviews.postMessage_missing_identity/field (__main__.SharedWire.test_079_nnp.webviews.postMessage_missing_identity/field) ... ok
+test_080_nnp.webviews.postMessage_valid_result (__main__.SharedWire.test_080_nnp.webviews.postMessage_valid_result) ... ok
+test_081_nnp.webviews.postMessage_invalid_result (__main__.SharedWire.test_081_nnp.webviews.postMessage_invalid_result) ... ok
+test_082_nnp.webviews.event_valid_params (__main__.SharedWire.test_082_nnp.webviews.event_valid_params) ... ok
+test_083_nnp.webviews.event_extra_param (__main__.SharedWire.test_083_nnp.webviews.event_extra_param) ... ok
+test_084_nnp.webviews.event_missing_identity/field (__main__.SharedWire.test_084_nnp.webviews.event_missing_identity/field) ... ok
+test_085_nnp.storage.get_valid_params (__main__.SharedWire.test_085_nnp.storage.get_valid_params) ... ok
+test_086_nnp.storage.get_extra_param (__main__.SharedWire.test_086_nnp.storage.get_extra_param) ... ok
+test_087_nnp.storage.get_missing_identity/field (__main__.SharedWire.test_087_nnp.storage.get_missing_identity/field) ... ok
+test_088_nnp.storage.get_valid_result (__main__.SharedWire.test_088_nnp.storage.get_valid_result) ... ok
+test_089_nnp.storage.update_valid_params (__main__.SharedWire.test_089_nnp.storage.update_valid_params) ... ok
+test_090_nnp.storage.update_extra_param (__main__.SharedWire.test_090_nnp.storage.update_extra_param) ... ok
+test_091_nnp.storage.update_missing_identity/field (__main__.SharedWire.test_091_nnp.storage.update_missing_identity/field) ... ok
+test_092_nnp.storage.update_valid_result (__main__.SharedWire.test_092_nnp.storage.update_valid_result) ... ok
+test_093_nnp.storage.update_invalid_result (__main__.SharedWire.test_093_nnp.storage.update_invalid_result) ... ok
+test_094_nnp.configuration.get_valid_params (__main__.SharedWire.test_094_nnp.configuration.get_valid_params) ... ok
+test_095_nnp.configuration.get_extra_param (__main__.SharedWire.test_095_nnp.configuration.get_extra_param) ... ok
+test_096_nnp.configuration.get_missing_identity/field (__main__.SharedWire.test_096_nnp.configuration.get_missing_identity/field) ... ok
+test_097_nnp.configuration.get_valid_result (__main__.SharedWire.test_097_nnp.configuration.get_valid_result) ... ok
+test_098_nnp.configuration.update_valid_params (__main__.SharedWire.test_098_nnp.configuration.update_valid_params) ... ok
+test_099_nnp.configuration.update_extra_param (__main__.SharedWire.test_099_nnp.configuration.update_extra_param) ... ok
+test_100_nnp.configuration.update_missing_identity/field (__main__.SharedWire.test_100_nnp.configuration.update_missing_identity/field) ... ok
+test_101_nnp.configuration.update_valid_result (__main__.SharedWire.test_101_nnp.configuration.update_valid_result) ... ok
+test_102_nnp.configuration.update_invalid_result (__main__.SharedWire.test_102_nnp.configuration.update_invalid_result) ... ok
+test_103_nnp.resources.dispose_valid_params (__main__.SharedWire.test_103_nnp.resources.dispose_valid_params) ... ok
+test_104_nnp.resources.dispose_extra_param (__main__.SharedWire.test_104_nnp.resources.dispose_extra_param) ... ok
+test_105_nnp.resources.dispose_missing_identity/field (__main__.SharedWire.test_105_nnp.resources.dispose_missing_identity/field) ... ok
+test_106_nnp.resources.dispose_valid_result (__main__.SharedWire.test_106_nnp.resources.dispose_valid_result) ... ok
+test_107_nnp.resources.dispose_invalid_result (__main__.SharedWire.test_107_nnp.resources.dispose_invalid_result) ... ok
+test_108_nnp.request.cancel_valid_params (__main__.SharedWire.test_108_nnp.request.cancel_valid_params) ... ok
+test_109_nnp.request.cancel_extra_param (__main__.SharedWire.test_109_nnp.request.cancel_extra_param) ... ok
+test_110_nnp.request.cancel_missing_identity/field (__main__.SharedWire.test_110_nnp.request.cancel_missing_identity/field) ... ok
+test_111_future_protocol_alongside_current (__main__.SharedWire.test_111_future_protocol_alongside_current) ... ok
+test_112_future_API (__main__.SharedWire.test_112_future_API) ... ok
+test_113_future_limits (__main__.SharedWire.test_113_future_limits) ... ok
+test_114_duplicate_capability (__main__.SharedWire.test_114_duplicate_capability) ... ok
+test_115_unsafe_generation (__main__.SharedWire.test_115_unsafe_generation) ... ok
+test_116_delete_storage_key (__main__.SharedWire.test_116_delete_storage_key) ... ok
+test_117_unpaired_render_context (__main__.SharedWire.test_117_unpaired_render_context) ... ok
+test_118_nnp.documents.watchAll_valid_params (__main__.SharedWire.test_118_nnp.documents.watchAll_valid_params) ... ok
+test_119_nnp.documents.watchAll_valid_result (__main__.SharedWire.test_119_nnp.documents.watchAll_valid_result) ... ok
+test_120_nnp.documents.watchAll_rejects_extra_param (__main__.SharedWire.test_120_nnp.documents.watchAll_rejects_extra_param) ... ok
+test_121_nnp.documents.watchAll_requires_session_identity (__main__.SharedWire.test_121_nnp.documents.watchAll_requires_session_identity) ... ok
+test_122_nnp.documents.getMirrorSnapshot_valid_params (__main__.SharedWire.test_122_nnp.documents.getMirrorSnapshot_valid_params) ... ok
+test_123_nnp.documents.getMirrorSnapshot_valid_result (__main__.SharedWire.test_123_nnp.documents.getMirrorSnapshot_valid_result) ... ok
+test_124_nnp.documents.getMirrorSnapshot_rejects_extra_param (__main__.SharedWire.test_124_nnp.documents.getMirrorSnapshot_rejects_extra_param) ... ok
+test_125_nnp.documents.getMirrorSnapshot_requires_session_identity (__main__.SharedWire.test_125_nnp.documents.getMirrorSnapshot_requires_session_identity) ... ok
+test_126_nnp.documents.delta_valid_params (__main__.SharedWire.test_126_nnp.documents.delta_valid_params) ... ok
+test_127_nnp.documents.delta_valid_result (__main__.SharedWire.test_127_nnp.documents.delta_valid_result) ... ok
+test_128_nnp.documents.delta_rejects_extra_param (__main__.SharedWire.test_128_nnp.documents.delta_rejects_extra_param) ... ok
+test_129_nnp.documents.delta_requires_session_identity (__main__.SharedWire.test_129_nnp.documents.delta_requires_session_identity) ... ok
+test_130_ordered_delta_opened (__main__.SharedWire.test_130_ordered_delta_opened) ... ok
+test_131_ordered_delta_closed (__main__.SharedWire.test_131_ordered_delta_closed) ... ok
+test_132_ordered_delta_metadataChanged (__main__.SharedWire.test_132_ordered_delta_metadataChanged) ... ok
+test_133_ordered_delta_activeChanged (__main__.SharedWire.test_133_ordered_delta_activeChanged) ... ok
+test_134_ordered_delta_reset (__main__.SharedWire.test_134_ordered_delta_reset) ... ok
+test_135_negative_old_offset (__main__.SharedWire.test_135_negative_old_offset) ... ok
+test_136_missing_base_version (__main__.SharedWire.test_136_missing_base_version) ... ok
+test_137_empty_delta_changes (__main__.SharedWire.test_137_empty_delta_changes) ... ok
+test_138_invalid_reset_reason (__main__.SharedWire.test_138_invalid_reset_reason) ... ok
+test_139_mirror_snapshot_requires_barrier (__main__.SharedWire.test_139_mirror_snapshot_requires_barrier) ... ok
+test_140_mirror_budget_must_match (__main__.SharedWire.test_140_mirror_budget_must_match) ... ok
+test_141_show_message (__main__.SharedWire.test_141_show_message) ... ok
+test_142_message_result (__main__.SharedWire.test_142_message_result) ... ok
+test_143_message_selected (__main__.SharedWire.test_143_message_selected) ... ok
+test_144_message_dismissed (__main__.SharedWire.test_144_message_dismissed) ... ok
+test_145_message_severity_invalid (__main__.SharedWire.test_145_message_severity_invalid) ... ok
+test_146_message_fields_closed (__main__.SharedWire.test_146_message_fields_closed) ... ok
+test_147_message_action_object_unsupported (__main__.SharedWire.test_147_message_action_object_unsupported) ... ok
+test_148_message_missing_id (__main__.SharedWire.test_148_message_missing_id) ... ok
+test_149_message_selected_must_be_string (__main__.SharedWire.test_149_message_selected_must_be_string) ... ok
+test_150_message_result_fields_closed (__main__.SharedWire.test_150_message_result_fields_closed) ... ok
+test_151_nnp.webviews.createCompatible_valid (__main__.SharedWire.test_151_nnp.webviews.createCompatible_valid) ... ok
+test_152_nnp.webviews.createCompatible_result (__main__.SharedWire.test_152_nnp.webviews.createCompatible_result) ... ok
+test_153_nnp.webviews.createCompatible_closed_params (__main__.SharedWire.test_153_nnp.webviews.createCompatible_closed_params) ... ok
+test_154_nnp.webviews.createCompatible_missing_handle (__main__.SharedWire.test_154_nnp.webviews.createCompatible_missing_handle) ... ok
+test_155_nnp.webviews.createCompatible_invalid_result (__main__.SharedWire.test_155_nnp.webviews.createCompatible_invalid_result) ... ok
+test_156_nnp.webviews.setDocument_valid (__main__.SharedWire.test_156_nnp.webviews.setDocument_valid) ... ok
+test_157_nnp.webviews.setDocument_result (__main__.SharedWire.test_157_nnp.webviews.setDocument_result) ... ok
+test_158_nnp.webviews.setDocument_closed_params (__main__.SharedWire.test_158_nnp.webviews.setDocument_closed_params) ... ok
+test_159_nnp.webviews.setDocument_missing_handle (__main__.SharedWire.test_159_nnp.webviews.setDocument_missing_handle) ... ok
+test_160_nnp.webviews.setDocument_invalid_result (__main__.SharedWire.test_160_nnp.webviews.setDocument_invalid_result) ... ok
+test_161_nnp.webviews.mapAsset_valid (__main__.SharedWire.test_161_nnp.webviews.mapAsset_valid) ... ok
+test_162_nnp.webviews.mapAsset_result (__main__.SharedWire.test_162_nnp.webviews.mapAsset_result) ... ok
+test_163_nnp.webviews.mapAsset_closed_params (__main__.SharedWire.test_163_nnp.webviews.mapAsset_closed_params) ... ok
+test_164_nnp.webviews.mapAsset_missing_handle (__main__.SharedWire.test_164_nnp.webviews.mapAsset_missing_handle) ... ok
+test_165_nnp.webviews.mapAsset_invalid_result (__main__.SharedWire.test_165_nnp.webviews.mapAsset_invalid_result) ... ok
+test_166_nnp.webviews.setTitle_valid (__main__.SharedWire.test_166_nnp.webviews.setTitle_valid) ... ok
+test_167_nnp.webviews.setTitle_result (__main__.SharedWire.test_167_nnp.webviews.setTitle_result) ... ok
+test_168_nnp.webviews.setTitle_closed_params (__main__.SharedWire.test_168_nnp.webviews.setTitle_closed_params) ... ok
+test_169_nnp.webviews.setTitle_missing_handle (__main__.SharedWire.test_169_nnp.webviews.setTitle_missing_handle) ... ok
+test_170_nnp.webviews.setTitle_invalid_result (__main__.SharedWire.test_170_nnp.webviews.setTitle_invalid_result) ... ok
+test_171_view_state (__main__.SharedWire.test_171_view_state) ... ok
+test_172_view_state_invalid_active (__main__.SharedWire.test_172_view_state_invalid_active) ... ok
+test_173_view_state_closed_payload (__main__.SharedWire.test_173_view_state_closed_payload) ... ok
+test_174_nnp.storage.update_compare_object (__main__.SharedWire.test_174_nnp.storage.update_compare_object) ... ok
+test_175_nnp.storage.update_compare_absent_delete (__main__.SharedWire.test_175_nnp.storage.update_compare_absent_delete) ... ok
+test_176_nnp.storage.get_rejects_comparison (__main__.SharedWire.test_176_nnp.storage.get_rejects_comparison) ... ok
+test_177_nnp.configuration.update_compare_object (__main__.SharedWire.test_177_nnp.configuration.update_compare_object) ... ok
+test_178_nnp.configuration.update_compare_absent_delete (__main__.SharedWire.test_178_nnp.configuration.update_compare_absent_delete) ... ok
+test_179_nnp.configuration.get_rejects_comparison (__main__.SharedWire.test_179_nnp.configuration.get_rejects_comparison) ... ok
+
+----------------------------------------------------------------------
+Ran 216 tests in 0.088s
+
+OK
+<end of output>
+Test time =   0.15 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPythonContractTests" end time: Oct 11 18:08 JST
+"PluginPythonContractTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/24 Testing: PluginPythonHostTests
+7/24 Test: PluginPythonHostTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/python-host.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginPythonHostTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+✔ Python lifecycle, early watch events, Unicode snapshot and stdout isolation (117.054792ms)
+✔ Python initialize rejects incompatible contracts without importing the module (94.140083ms)
+✔ Python partial activation preserves diagnostics and releases resources (92.687541ms)
+✔ Python command exceptions retain stacks outside stdout and keep the session usable (93.141417ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 445.74825
+<end of output>
+Test time =   0.48 sec
+----------------------------------------------------------
+Test Passed.
+"PluginPythonHostTests" end time: Oct 11 18:08 JST
+"PluginPythonHostTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/24 Testing: PluginRpcTests
+8/24 Test: PluginRpcTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-rpc/PluginRpcTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginRpcTests" start time: Oct 11 18:08 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginRpcTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginRpcTests::initTestCase()
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.deactivate valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.deactivate extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.deactivate missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.deactivate valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.deactivate invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.shutdown valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.shutdown extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.shutdown missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.shutdown valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.shutdown invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.health.ping valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.health.ping extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.health.ping missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.health.ping valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.health.ping invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getActive valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getActive extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getActive missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getActive valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getActive invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getSnapshot valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getSnapshot extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getSnapshot missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getSnapshot valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getSnapshot invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watch valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watch extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watch missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watch valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watch invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.event valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.event extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.event missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.applyEdits valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.applyEdits extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.applyEdits missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.applyEdits valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.applyEdits invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.register valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.register extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.register missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.register valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.register invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.invoke valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.invoke extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.invoke missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.commands.invoke valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.create valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.create extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.create missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.create valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.create invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.reveal valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.reveal extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.reveal missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.reveal valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.reveal invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setHtml valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setHtml extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setHtml missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setHtml valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setHtml invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapResource valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapResource extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapResource missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapResource valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapResource invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.postMessage valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.postMessage extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.postMessage missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.postMessage valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.postMessage invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.event valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.event extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.event missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.get valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.get extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.get missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.get valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.get valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.get extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.get missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.get valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.resources.dispose valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.resources.dispose extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.resources.dispose missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.resources.dispose valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.resources.dispose invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.request.cancel valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.request.cancel extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.request.cancel missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(future protocol alongside current)
+PASS   : PluginRpcTests::wireFixtures(future API)
+PASS   : PluginRpcTests::wireFixtures(future limits)
+PASS   : PluginRpcTests::wireFixtures(duplicate capability)
+PASS   : PluginRpcTests::wireFixtures(unsafe generation)
+PASS   : PluginRpcTests::wireFixtures(delete storage key)
+PASS   : PluginRpcTests::wireFixtures(unpaired render context)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watchAll valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watchAll valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watchAll rejects extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.watchAll requires session identity)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getMirrorSnapshot valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getMirrorSnapshot valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getMirrorSnapshot rejects extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.getMirrorSnapshot requires session identity)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.delta valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.delta valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.delta rejects extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.documents.delta requires session identity)
+PASS   : PluginRpcTests::wireFixtures(ordered delta opened)
+PASS   : PluginRpcTests::wireFixtures(ordered delta closed)
+PASS   : PluginRpcTests::wireFixtures(ordered delta metadataChanged)
+PASS   : PluginRpcTests::wireFixtures(ordered delta activeChanged)
+PASS   : PluginRpcTests::wireFixtures(ordered delta reset)
+PASS   : PluginRpcTests::wireFixtures(negative old offset)
+PASS   : PluginRpcTests::wireFixtures(missing base version)
+PASS   : PluginRpcTests::wireFixtures(empty delta changes)
+PASS   : PluginRpcTests::wireFixtures(invalid reset reason)
+PASS   : PluginRpcTests::wireFixtures(mirror snapshot requires barrier)
+PASS   : PluginRpcTests::wireFixtures(mirror budget must match)
+PASS   : PluginRpcTests::wireFixtures(show message)
+PASS   : PluginRpcTests::wireFixtures(message result)
+PASS   : PluginRpcTests::wireFixtures(message selected)
+PASS   : PluginRpcTests::wireFixtures(message dismissed)
+PASS   : PluginRpcTests::wireFixtures(message severity invalid)
+PASS   : PluginRpcTests::wireFixtures(message fields closed)
+PASS   : PluginRpcTests::wireFixtures(message action object unsupported)
+PASS   : PluginRpcTests::wireFixtures(message missing id)
+PASS   : PluginRpcTests::wireFixtures(message selected must be string)
+PASS   : PluginRpcTests::wireFixtures(message result fields closed)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.createCompatible valid)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.createCompatible result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.createCompatible closed params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.createCompatible missing handle)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.createCompatible invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setDocument valid)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setDocument result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setDocument closed params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setDocument missing handle)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setDocument invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapAsset valid)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapAsset result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapAsset closed params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapAsset missing handle)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.mapAsset invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setTitle valid)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setTitle result)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setTitle closed params)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setTitle missing handle)
+PASS   : PluginRpcTests::wireFixtures(nnp.webviews.setTitle invalid result)
+PASS   : PluginRpcTests::wireFixtures(view state)
+PASS   : PluginRpcTests::wireFixtures(view state invalid active)
+PASS   : PluginRpcTests::wireFixtures(view state closed payload)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update compare object)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.update compare absent delete)
+PASS   : PluginRpcTests::wireFixtures(nnp.storage.get rejects comparison)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update compare object)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.update compare absent delete)
+PASS   : PluginRpcTests::wireFixtures(nnp.configuration.get rejects comparison)
+PASS   : PluginRpcTests::wireMethodCoverage()
+PASS   : PluginRpcTests::profileAgreement()
+PASS   : PluginRpcTests::conformance(named params)
+PASS   : PluginRpcTests::conformance(positional params)
+PASS   : PluginRpcTests::conformance(omitted params)
+PASS   : PluginRpcTests::conformance(null request id)
+PASS   : PluginRpcTests::conformance(numeric id token)
+PASS   : PluginRpcTests::conformance(exponent id token)
+PASS   : PluginRpcTests::conformance(fractional id token)
+PASS   : PluginRpcTests::conformance(escaped id key)
+PASS   : PluginRpcTests::conformance(notification)
+PASS   : PluginRpcTests::conformance(unknown notification)
+PASS   : PluginRpcTests::conformance(failing notification)
+PASS   : PluginRpcTests::conformance(unknown method)
+PASS   : PluginRpcTests::conformance(invalid method params)
+PASS   : PluginRpcTests::conformance(handler failure)
+PASS   : PluginRpcTests::conformance(parse error)
+PASS   : PluginRpcTests::conformance(invalid number grammar)
+PASS   : PluginRpcTests::conformance(multiple roots)
+PASS   : PluginRpcTests::conformance(scalar)
+PASS   : PluginRpcTests::conformance(null scalar)
+PASS   : PluginRpcTests::conformance(invalid id)
+PASS   : PluginRpcTests::conformance(invalid version)
+PASS   : PluginRpcTests::conformance(scalar params)
+PASS   : PluginRpcTests::conformance(empty batch)
+PASS   : PluginRpcTests::conformance(invalid batch items)
+PASS   : PluginRpcTests::conformance(mixed batch)
+PASS   : PluginRpcTests::conformance(all notifications)
+PASS   : PluginRpcTests::conformance(unknown response)
+PASS   : PluginRpcTests::conformance(invalid response)
+PASS   : PluginRpcTests::framing()
+PASS   : PluginRpcTests::invalidFraming(duplicate)
+PASS   : PluginRpcTests::invalidFraming(negative)
+PASS   : PluginRpcTests::invalidFraming(oversize)
+PASS   : PluginRpcTests::invalidFraming(overflow)
+PASS   : PluginRpcTests::invalidFraming(missing)
+PASS   : PluginRpcTests::invalidFraming(bare LF)
+PASS   : PluginRpcTests::invalidFraming(charset)
+PASS   : PluginRpcTests::invalidFraming(malformed charset)
+PASS   : PluginRpcTests::invalidFraming(header budget)
+PASS   : PluginRpcTests::invalidFraming(non ASCII)
+PASS   : PluginRpcTests::truncatedFrame()
+PASS   : PluginRpcTests::invalidUtf8()
+PASS   : PluginRpcTests::budgets()
+PASS   : PluginRpcTests::responseTimeoutCancelAndClose()
+PASS   : PluginRpcTests::pausedDeadlineRetainsBudgetAndCanCancelOrClose()
+PASS   : PluginRpcTests::asyncBatchAndIncomingCancel()
+PASS   : PluginRpcTests::realNodeProcess()
+PASS   : PluginRpcTests::wireAccountingRoundtripAndRestart()
+PASS   : PluginRpcTests::repeatedProcesses()
+QINFO  : PluginRpcTests::processBenchmarks(1 process) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"27889 106992  33.7","processes":1,"roundtrips":[{"bytes":10240,"meanMs":2.9946707999999997,"p95Ms":4.623292,"samples":10},{"bytes":102400,"meanMs":5.984220799999999,"p95Ms":6.88975,"samples":10},{"bytes":1048576,"meanMs":51.1968792,"p95Ms":53.59975,"samples":10}]}
+PASS   : PluginRpcTests::processBenchmarks(1 process)
+QINFO  : PluginRpcTests::processBenchmarks(5 processes) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"27891 117664   4.5\n27892 123312   5.2\n27893 128272   7.1\n27897 127808   7.4\n27900 122464   6.8","processes":5,"roundtrips":[{"bytes":10240,"meanMs":3.193966660000001,"p95Ms":4.639,"samples":50},{"bytes":102400,"meanMs":6.081011659999999,"p95Ms":6.554417,"samples":50},{"bytes":1048576,"meanMs":50.72871088000001,"p95Ms":52.895042,"samples":50}]}
+PASS   : PluginRpcTests::processBenchmarks(5 processes)
+QINFO  : PluginRpcTests::processBenchmarks(10 processes) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"27909 105488   1.2\n27910 109648   1.4\n27983 135232   2.1\n27985 103120   2.2\n27986 102704   3.2\n28023  98624   4.1\n28024 119024   3.7\n28025 101312   6.9\n28026 132352   5.8\n28027  98528   3.6","processes":10,"roundtrips":[{"bytes":10240,"meanMs":3.170765000000001,"p95Ms":4.640917,"samples":100},{"bytes":102400,"meanMs":6.079889570000002,"p95Ms":6.846833,"samples":100},{"bytes":1048576,"meanMs":50.797660430000015,"p95Ms":53.725583,"samples":100}]}
+PASS   : PluginRpcTests::processBenchmarks(10 processes)
+PASS   : PluginRpcTests::cleanupTestCase()
+Totals: 235 passed, 0 failed, 0 skipped, 0 blacklisted, 16981ms
+********* Finished testing of PluginRpcTests *********
+<end of output>
+Test time =  17.19 sec
+----------------------------------------------------------
+Test Passed.
+"PluginRpcTests" end time: Oct 11 18:09 JST
+"PluginRpcTests" time elapsed: 00:00:17
+----------------------------------------------------------
+
+9/24 Testing: PluginNodeRpcTests
+9/24 Test: PluginNodeRpcTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/rpc.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeRpcTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ named params (2.046584ms)
+✔ positional params (0.288667ms)
+✔ omitted params (0.118166ms)
+✔ null request id (0.096667ms)
+✔ numeric id token (0.123417ms)
+✔ exponent id token (0.084875ms)
+✔ fractional id token (0.142375ms)
+✔ escaped id key (0.098209ms)
+✔ notification (0.075875ms)
+✔ unknown notification (0.138583ms)
+✔ failing notification (0.150708ms)
+✔ unknown method (0.153042ms)
+✔ invalid method params (0.091ms)
+✔ handler failure (0.074541ms)
+✔ parse error (0.088708ms)
+✔ invalid number grammar (0.061792ms)
+✔ multiple roots (0.049ms)
+✔ scalar (0.050375ms)
+✔ null scalar (0.037584ms)
+✔ invalid id (0.043458ms)
+✔ invalid version (0.041708ms)
+✔ scalar params (0.048916ms)
+✔ empty batch (0.032542ms)
+✔ invalid batch items (6.9795ms)
+✔ mixed batch (0.195833ms)
+✔ all notifications (0.056042ms)
+✔ unknown response (0.039875ms)
+✔ invalid response (0.051833ms)
+✔ framing at every split and byte (1.361209ms)
+✔ invalid framing and truncation (0.487333ms)
+✔ invalid UTF8 and profile budgets (0.200708ms)
+✔ reliable notification overload faults explicitly instead of dropping history (1.071084ms)
+✔ bidirectional requests, cancellation, timeout, invalid response and close (12.658875ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 73.842542
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeRpcTests" end time: Oct 11 18:09 JST
+"PluginNodeRpcTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/24 Testing: PluginNodeHostTests
+10/24 Test: PluginNodeHostTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/host.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeHostTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ native package lifecycle and bidirectional document read (48.084542ms)
+✔ failed activation releases already registered resources (43.248792ms)
+✔ command exceptions retain stack diagnostics outside protocol stdout (43.125875ms)
+✔ watch buffers events that arrive before its reply (1.310084ms)
+✔ delta watch buffers startup events, uses owned snapshot barriers and disposes (1.207834ms)
+✔ delta startup overflow fails explicitly and releases the acquired watch (3.788292ms)
+✔ incompatible version and limits reject before module import (41.997542ms)
+✔ parent-lifetime watcher permits normal shutdown (54.143209ms)
+✔ parent pipe EOF terminates a blocked plugin main thread (89.452916ms)
+✔ invalid watcher descriptor rejects before plugin import (36.219375ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 408.360917
+<end of output>
+Test time =   0.44 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeHostTests" end time: Oct 11 18:09 JST
+"PluginNodeHostTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/24 Testing: PluginNodeWireTests
+11/24 Test: PluginNodeWireTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/wire.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeWireTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ nnp.initialize valid params (1.493291ms)
+✔ nnp.initialize extra param (0.142875ms)
+✔ nnp.initialize missing identity/field (0.050916ms)
+✔ nnp.initialize valid result (0.070166ms)
+✔ nnp.initialize invalid result (0.048917ms)
+✔ nnp.plugin.activate valid params (0.348ms)
+✔ nnp.plugin.activate extra param (0.044958ms)
+✔ nnp.plugin.activate missing identity/field (0.033167ms)
+✔ nnp.plugin.activate valid result (0.046583ms)
+✔ nnp.plugin.activate invalid result (0.090458ms)
+✔ nnp.plugin.deactivate valid params (0.053667ms)
+✔ nnp.plugin.deactivate extra param (0.037292ms)
+✔ nnp.plugin.deactivate missing identity/field (0.026125ms)
+✔ nnp.plugin.deactivate valid result (0.022625ms)
+✔ nnp.plugin.deactivate invalid result (0.034209ms)
+✔ nnp.shutdown valid params (0.02725ms)
+✔ nnp.shutdown extra param (0.02225ms)
+✔ nnp.shutdown missing identity/field (0.018833ms)
+✔ nnp.shutdown valid result (0.019375ms)
+✔ nnp.shutdown invalid result (0.026458ms)
+✔ nnp.health.ping valid params (0.039083ms)
+✔ nnp.health.ping extra param (0.031ms)
+✔ nnp.health.ping missing identity/field (0.0225ms)
+✔ nnp.health.ping valid result (0.019667ms)
+✔ nnp.health.ping invalid result (0.017291ms)
+✔ nnp.documents.getActive valid params (0.02125ms)
+✔ nnp.documents.getActive extra param (0.020208ms)
+✔ nnp.documents.getActive missing identity/field (0.016375ms)
+✔ nnp.documents.getActive valid result (0.044875ms)
+✔ nnp.documents.getActive invalid result (0.018ms)
+✔ nnp.documents.getSnapshot valid params (0.020875ms)
+✔ nnp.documents.getSnapshot extra param (0.021083ms)
+✔ nnp.documents.getSnapshot missing identity/field (0.01625ms)
+✔ nnp.documents.getSnapshot valid result (0.038834ms)
+✔ nnp.documents.getSnapshot invalid result (0.016333ms)
+✔ nnp.documents.watch valid params (0.02175ms)
+✔ nnp.documents.watch extra param (0.020625ms)
+✔ nnp.documents.watch missing identity/field (0.016375ms)
+✔ nnp.documents.watch valid result (0.028917ms)
+✔ nnp.documents.watch invalid result (0.017875ms)
+✔ nnp.documents.event valid params (0.040291ms)
+✔ nnp.documents.event extra param (0.038542ms)
+✔ nnp.documents.event missing identity/field (0.0195ms)
+✔ nnp.documents.applyEdits valid params (0.037125ms)
+✔ nnp.documents.applyEdits extra param (0.028459ms)
+✔ nnp.documents.applyEdits missing identity/field (0.019ms)
+✔ nnp.documents.applyEdits valid result (0.020666ms)
+✔ nnp.documents.applyEdits invalid result (0.017083ms)
+✔ nnp.commands.register valid params (0.042167ms)
+✔ nnp.commands.register extra param (0.044833ms)
+✔ nnp.commands.register missing identity/field (0.028917ms)
+✔ nnp.commands.register valid result (0.020375ms)
+✔ nnp.commands.register invalid result (0.018125ms)
+✔ nnp.commands.invoke valid params (0.031459ms)
+✔ nnp.commands.invoke extra param (0.028625ms)
+✔ nnp.commands.invoke missing identity/field (0.020666ms)
+✔ nnp.commands.invoke valid result (0.020542ms)
+✔ nnp.webviews.create valid params (0.034875ms)
+✔ nnp.webviews.create extra param (0.037917ms)
+✔ nnp.webviews.create missing identity/field (0.017541ms)
+✔ nnp.webviews.create valid result (0.019875ms)
+✔ nnp.webviews.create invalid result (0.016708ms)
+✔ nnp.webviews.reveal valid params (0.0205ms)
+✔ nnp.webviews.reveal extra param (0.028541ms)
+✔ nnp.webviews.reveal missing identity/field (0.052125ms)
+✔ nnp.webviews.reveal valid result (0.038833ms)
+✔ nnp.webviews.reveal invalid result (0.023458ms)
+✔ nnp.webviews.setHtml valid params (0.038916ms)
+✔ nnp.webviews.setHtml extra param (0.0365ms)
+✔ nnp.webviews.setHtml missing identity/field (0.022375ms)
+✔ nnp.webviews.setHtml valid result (0.017209ms)
+✔ nnp.webviews.setHtml invalid result (0.015084ms)
+✔ nnp.webviews.mapResource valid params (0.025125ms)
+✔ nnp.webviews.mapResource extra param (0.02225ms)
+✔ nnp.webviews.mapResource missing identity/field (0.015416ms)
+✔ nnp.webviews.mapResource valid result (0.039292ms)
+✔ nnp.webviews.mapResource invalid result (0.015333ms)
+✔ nnp.webviews.postMessage valid params (0.020834ms)
+✔ nnp.webviews.postMessage extra param (0.018708ms)
+✔ nnp.webviews.postMessage missing identity/field (0.014583ms)
+✔ nnp.webviews.postMessage valid result (0.014333ms)
+✔ nnp.webviews.postMessage invalid result (0.015375ms)
+✔ nnp.webviews.event valid params (0.028041ms)
+✔ nnp.webviews.event extra param (0.022167ms)
+✔ nnp.webviews.event missing identity/field (0.016042ms)
+✔ nnp.storage.get valid params (0.043958ms)
+✔ nnp.storage.get extra param (0.043583ms)
+✔ nnp.storage.get missing identity/field (0.017125ms)
+✔ nnp.storage.get valid result (0.019416ms)
+✔ nnp.storage.update valid params (0.02975ms)
+✔ nnp.storage.update extra param (0.02775ms)
+✔ nnp.storage.update missing identity/field (0.022459ms)
+✔ nnp.storage.update valid result (0.015333ms)
+✔ nnp.storage.update invalid result (0.014792ms)
+✔ nnp.configuration.get valid params (0.019916ms)
+✔ nnp.configuration.get extra param (0.017417ms)
+✔ nnp.configuration.get missing identity/field (0.0145ms)
+✔ nnp.configuration.get valid result (0.015791ms)
+✔ nnp.configuration.update valid params (0.019417ms)
+✔ nnp.configuration.update extra param (0.018458ms)
+✔ nnp.configuration.update missing identity/field (0.015459ms)
+✔ nnp.configuration.update valid result (0.014667ms)
+✔ nnp.configuration.update invalid result (0.013875ms)
+✔ nnp.resources.dispose valid params (0.017542ms)
+✔ nnp.resources.dispose extra param (0.017291ms)
+✔ nnp.resources.dispose missing identity/field (0.014291ms)
+✔ nnp.resources.dispose valid result (0.014458ms)
+✔ nnp.resources.dispose invalid result (0.014542ms)
+✔ nnp.request.cancel valid params (0.015542ms)
+✔ nnp.request.cancel extra param (0.014625ms)
+✔ nnp.request.cancel missing identity/field (0.014334ms)
+✔ future protocol alongside current (0.058833ms)
+✔ future API (0.022917ms)
+✔ future limits (0.026667ms)
+✔ duplicate capability (0.031084ms)
+✔ unsafe generation (0.018541ms)
+✔ delete storage key (0.023625ms)
+✔ unpaired render context (0.022417ms)
+✔ nnp.documents.watchAll valid params (0.02475ms)
+✔ nnp.documents.watchAll valid result (0.036084ms)
+✔ nnp.documents.watchAll rejects extra param (0.016084ms)
+✔ nnp.documents.watchAll requires session identity (0.014417ms)
+✔ nnp.documents.getMirrorSnapshot valid params (0.018792ms)
+✔ nnp.documents.getMirrorSnapshot valid result (0.023208ms)
+✔ nnp.documents.getMirrorSnapshot rejects extra param (0.019833ms)
+✔ nnp.documents.getMirrorSnapshot requires session identity (0.013916ms)
+✔ nnp.documents.delta valid params (0.055208ms)
+✔ nnp.documents.delta valid result (0.01525ms)
+✔ nnp.documents.delta rejects extra param (0.042667ms)
+✔ nnp.documents.delta requires session identity (0.017166ms)
+✔ ordered delta opened (0.027291ms)
+✔ ordered delta closed (0.026917ms)
+✔ ordered delta metadataChanged (0.0275ms)
+✔ ordered delta activeChanged (0.024208ms)
+✔ ordered delta reset (0.030375ms)
+✔ negative old offset (0.038ms)
+✔ missing base version (0.028334ms)
+✔ empty delta changes (0.033417ms)
+✔ invalid reset reason (0.447541ms)
+✔ mirror snapshot requires barrier (0.01625ms)
+✔ mirror budget must match (0.031541ms)
+✔ show message (0.025334ms)
+✔ message result (0.016834ms)
+✔ message selected (0.021417ms)
+✔ message dismissed (0.0185ms)
+✔ message severity invalid (0.016625ms)
+✔ message fields closed (0.02775ms)
+✔ message action object unsupported (0.019209ms)
+✔ message missing id (0.014833ms)
+✔ message selected must be string (0.018084ms)
+✔ message result fields closed (0.016ms)
+✔ nnp.webviews.createCompatible valid (0.0415ms)
+✔ nnp.webviews.createCompatible result (0.032334ms)
+✔ nnp.webviews.createCompatible closed params (0.022459ms)
+✔ nnp.webviews.createCompatible missing handle (0.014208ms)
+✔ nnp.webviews.createCompatible invalid result (0.014583ms)
+✔ nnp.webviews.setDocument valid (0.025584ms)
+✔ nnp.webviews.setDocument result (0.014334ms)
+✔ nnp.webviews.setDocument closed params (0.022292ms)
+✔ nnp.webviews.setDocument missing handle (0.01475ms)
+✔ nnp.webviews.setDocument invalid result (0.013667ms)
+✔ nnp.webviews.mapAsset valid (0.027542ms)
+✔ nnp.webviews.mapAsset result (0.042334ms)
+✔ nnp.webviews.mapAsset closed params (0.020208ms)
+✔ nnp.webviews.mapAsset missing handle (0.015584ms)
+✔ nnp.webviews.mapAsset invalid result (0.023417ms)
+✔ nnp.webviews.setTitle valid (0.020375ms)
+✔ nnp.webviews.setTitle result (0.014334ms)
+✔ nnp.webviews.setTitle closed params (0.019125ms)
+✔ nnp.webviews.setTitle missing handle (0.021542ms)
+✔ nnp.webviews.setTitle invalid result (0.019917ms)
+✔ view state (0.037583ms)
+✔ view state invalid active (0.025375ms)
+✔ view state closed payload (0.025375ms)
+✔ nnp.storage.update compare object (0.022458ms)
+✔ nnp.storage.update compare absent delete (0.018792ms)
+✔ nnp.storage.get rejects comparison (0.016417ms)
+✔ nnp.configuration.update compare object (0.021125ms)
+✔ nnp.configuration.update compare absent delete (0.017959ms)
+✔ nnp.configuration.get rejects comparison (0.016875ms)
+✔ every negotiated method has positive and negative shared fixtures (0.282583ms)
+✔ request-only lifecycle notifications perform no mutation (0.817583ms)
+✔ schema guards unsafe JSON and byte budgets before transport (5.412458ms)
+✔ SDK undefined deletes a key by omitting its wire value (0.929083ms)
+✔ SDK compare-and-exchange preserves null, deletion and conflict responses (0.888375ms)
+ℹ tests 185
+ℹ suites 0
+ℹ pass 185
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.455833
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeWireTests" end time: Oct 11 18:09 JST
+"PluginNodeWireTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/24 Testing: PluginDocumentMirrorTests
+12/24 Test: PluginDocumentMirrorTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/mirror.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginDocumentMirrorTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ synchronous Unicode/CRLF text, line objects and position clamping (1.29525ms)
+✔ initial snapshot barrier applies early changes once and before listeners read (0.651834ms)
+✔ atomic old-text edits preserve UTF-16 coordinates and publish the final version (0.183458ms)
+✔ version mismatch pauses synchronous reads and explicitly closes/reopens on resync (2.712875ms)
+✔ sequence gap rebuilds the complete census including an unseen opened document (0.248375ms)
+✔ rename and reset create explicit document identities, close remains readable (0.200959ms)
+✔ aggregate budget excludes a document explicitly and recovers after space is released (12.078542ms)
+✔ invalid old range uses resync and never publishes a fabricated change (0.235875ms)
+✔ reliable queue overflow faults the mirror and releases the watch (1.315334ms)
+✔ dispose during a snapshot prevents late document resurrection (0.319667ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.565208
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"PluginDocumentMirrorTests" end time: Oct 11 18:09 JST
+"PluginDocumentMirrorTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/24 Testing: PluginVSCodeCoreTests
+13/24 Test: PluginVSCodeCoreTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/vscode.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginVSCodeCoreTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ core values preserve Unicode URI paths and immutable position/range semantics (1.6075ms)
+✔ Disposable and EventEmitter handle reentrancy, thisArg, exceptions and cleanup once (0.26825ms)
+✔ static alias validation rejects foreign, duplicate and missing contributions (0.270417ms)
+✔ registration returns synchronously, readiness waits, dispose-before-ack permits safe re-registration (5.048292ms)
+✔ unknown APIs fail explicitly and the CJS vscode alias is contained and restored (2.103541ms)
+✔ synchronous document facades expose typed ranges and ordered changed events before commands (1.980709ms)
+✔ editor edit uses one expected-version transaction and expires its builder (2.084ms)
+✔ message promises await choice without blocking activation and reject unsupported overloads (1.375958ms)
+✔ persistence permissions and activation publication barrier reject writes explicitly (3.234542ms)
+✔ Memento separates scopes, preserves null and Unicode keys, clones values and survives reload (2.66775ms)
+✔ Memento rejects lossy JSON and budgets without poisoning later writes or adapter readiness (1.747167ms)
+✔ compare-and-exchange merges concurrent other keys and bounds persistent contention (3.458125ms)
+✔ Memento bounds namespace keys and queued writes before sending overflowing data (38.982167ms)
+✔ plugin configuration exposes defaults, dotted sections, inspect, confirmed events and deletion (4.368708ms)
+✔ corrupt or incompatible cached records fail before subscribing and preserve disk values (1.015292ms)
+✔ dispose drains an in-flight write, rejects queued stale writes and closes cached facades (1.243625ms)
+✔ configuration importer validates bounded schemas and requires explicit persistence capabilities (6.609917ms)
+✔ SDK message selection before acknowledgement, dismissal and stop reclaim owned handles (2.103291ms)
+✔ importer requires explicit paired Webview capabilities and bounded resource copies (8.863291ms)
+✔ importer publishes native aliases and provenance without executing source or hooks (3.910375ms)
+✔ importer rejects unsupported engines, ESM, contributions, malformed versions and symlink ancestors (12.953791ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 157.685875
+<end of output>
+Test time =   0.19 sec
+----------------------------------------------------------
+Test Passed.
+"PluginVSCodeCoreTests" end time: Oct 11 18:09 JST
+"PluginVSCodeCoreTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/24 Testing: PluginVSCodeWebviewsTests
+14/24 Test: PluginVSCodeWebviewsTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/webviews.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginVSCodeWebviewsTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ panel is synchronous and queues deterministic URIs, title/HTML/message after create (5.6725ms)
+✔ dispose before create acknowledgement skips queued publication and closes remote once (2.260166ms)
+✔ actual state/message/close events preserve listeners and do not recreate resources (1.776375ms)
+✔ resource containment, unsupported options/columns and local queue budgets are explicit (3.261375ms)
+✔ SDK accepts close before create reply and releases the late owned handle (2.141958ms)
+✔ creation snapshots options and resource paths use encoded Unicode URIs (2.807208ms)
+✔ native close overtaking an in-flight HTML write does not fault the adapter (3.334375ms)
+✔ permission and renderer contract errors still fail queued HTML publication (1.70825ms)
+✔ unacknowledged creation bounds both operation count and queued HTML bytes (6.275792ms)
+✔ browser bootstrap ignores provisional pages, reuses transport and keeps old API revision ownership (1.303708ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80.676458
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"PluginVSCodeWebviewsTests" end time: Oct 11 18:09 JST
+"PluginVSCodeWebviewsTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/24 Testing: PluginVSCodeSampleBuild
+15/24 Test: PluginVSCodeSampleBuild
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/../../examples/vscode-hello-world/build.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginVSCodeSampleBuild" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"PluginVSCodeSampleBuild" end time: Oct 11 18:09 JST
+"PluginVSCodeSampleBuild" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/24 Testing: PluginVSCodeWebviewSampleBuild
+16/24 Test: PluginVSCodeWebviewSampleBuild
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/../../examples/vscode-webview/build.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginVSCodeWebviewSampleBuild" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.26 sec
+----------------------------------------------------------
+Test Passed.
+"PluginVSCodeWebviewSampleBuild" end time: Oct 11 18:09 JST
+"PluginVSCodeWebviewSampleBuild" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/24 Testing: PluginSdkPackageTests
+17/24 Test: PluginSdkPackageTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/../../packages/plugin-sdk/pack.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginSdkPackageTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (14.758375ms)
+✔ rejects escaping entry and clears failed staging (6.204417ms)
+✔ rejects links and native addons (8.387ms)
+✔ rejects missing production dependency and source-contained output (9.16975ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (20.639833ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (19.142208ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (9.306625ms)
+✔ Python release vendors built modules without imports, bytecode or npm hooks (15.070458ms)
+✔ Python packages reject npm runtime dependencies and remove failed staging (5.13625ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 152.949625
+<end of output>
+Test time =   0.19 sec
+----------------------------------------------------------
+Test Passed.
+"PluginSdkPackageTests" end time: Oct 11 18:09 JST
+"PluginSdkPackageTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/24 Testing: PluginDocumentTests
+18/24 Test: PluginDocumentTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-documents/PluginDocumentTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-documents
+"PluginDocumentTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginDocumentTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDocumentTests::initTestCase()
+QWARN  : PluginDocumentTests::deletionDeltaUsesOldUnicodeCoordinates() qt.qpa.fonts: Populating font family aliases took 68 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginDocumentTests::deletionDeltaUsesOldUnicodeCoordinates()
+PASS   : PluginDocumentTests::multilineDeltaAndUndoRedo()
+PASS   : PluginDocumentTests::atomicEditDeltaAndExplicitReset()
+PASS   : PluginDocumentTests::unsupportedDeltaIsAnExplicitReset()
+PASS   : PluginDocumentTests::oversizedDeltaResetsAndCanRecover()
+PASS   : PluginDocumentTests::orderedDeltaTopologyAndMetadata()
+PASS   : PluginDocumentTests::snapshotAndIdentity()
+PASS   : PluginDocumentTests::unicodePositions()
+PASS   : PluginDocumentTests::invalidEncodingAndBudget()
+PASS   : PluginDocumentTests::editsAreAtomicAndUndoable()
+QWARN  : PluginDocumentTests::sequenceAndSwitching() QWidget::paintEngine: Should no longer be called
+QWARN  : PluginDocumentTests::sequenceAndSwitching() QWidget::paintEngine: Should no longer be called
+PASS   : PluginDocumentTests::sequenceAndSwitching()
+QINFO  : PluginDocumentTests::snapshotPerformance(10KiB) Snapshot bytes=10240, average=0.170ms
+PASS   : PluginDocumentTests::snapshotPerformance(10KiB)
+QINFO  : PluginDocumentTests::snapshotPerformance(100KiB) Snapshot bytes=102400, average=1.634ms
+PASS   : PluginDocumentTests::snapshotPerformance(100KiB)
+QINFO  : PluginDocumentTests::snapshotPerformance(1MiB) Snapshot bytes=1048576, average=16.696ms
+PASS   : PluginDocumentTests::snapshotPerformance(1MiB)
+PASS   : PluginDocumentTests::cleanupTestCase()
+Totals: 16 passed, 0 failed, 0 skipped, 0 blacklisted, 2069ms
+********* Finished testing of PluginDocumentTests *********
+<end of output>
+Test time =   2.34 sec
+----------------------------------------------------------
+Test Passed.
+"PluginDocumentTests" end time: Oct 11 18:09 JST
+"PluginDocumentTests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+19/24 Testing: PluginDataTests
+19/24 Test: PluginDataTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-data/PluginDataTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-data
+"PluginDataTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginDataTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDataTests::initTestCase()
+PASS   : PluginDataTests::compareAndExchangePreservesConcurrentWriters()
+PASS   : PluginDataTests::persistenceAndIsolation()
+PASS   : PluginDataTests::boundsAndPreservation()
+PASS   : PluginDataTests::serializedWorkersAndErase()
+PASS   : PluginDataTests::totalFileBudget()
+PASS   : PluginDataTests::repositoryIdentityIsolation()
+PASS   : PluginDataTests::cleanupTestCase()
+Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 775ms
+********* Finished testing of PluginDataTests *********
+<end of output>
+Test time =   0.98 sec
+----------------------------------------------------------
+Test Passed.
+"PluginDataTests" end time: Oct 11 18:09 JST
+"PluginDataTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/24 Testing: PluginDiagnosticTests
+20/24 Test: PluginDiagnosticTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-diagnostics/PluginDiagnosticTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-diagnostics
+"PluginDiagnosticTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginDiagnosticTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDiagnosticTests::initTestCase()
+PASS   : PluginDiagnosticTests::durableOriginBoundFailures()
+PASS   : PluginDiagnosticTests::rotationAndGlobalBudgets()
+PASS   : PluginDiagnosticTests::invalidAndCorruptRecordsArePreserved()
+PASS   : PluginDiagnosticTests::interruptedAtomicWritesAreReclaimed()
+PASS   : PluginDiagnosticTests::busyAndUnsafePathsDoNotOverwrite()
+PASS   : PluginDiagnosticTests::unicodeAndClosedEventContract()
+PASS   : PluginDiagnosticTests::workerQueueFailurePriorityAndFlush()
+PASS   : PluginDiagnosticTests::boundedStorageFailureDoesNotHoldShutdown()
+PASS   : PluginDiagnosticTests::cleanupTestCase()
+Totals: 10 passed, 0 failed, 0 skipped, 0 blacklisted, 2260ms
+********* Finished testing of PluginDiagnosticTests *********
+<end of output>
+Test time =   2.47 sec
+----------------------------------------------------------
+Test Passed.
+"PluginDiagnosticTests" end time: Oct 11 18:09 JST
+"PluginDiagnosticTests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+21/24 Testing: PluginWebviewTests
+21/24 Test: PluginWebviewTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-webviews/PluginWebviewTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-webviews
+"PluginWebviewTests" start time: Oct 11 18:09 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[28098:259:1011/180919.948354:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[28098:259:1011/180919.948696:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+2026-10-11 18:09:20.885 PluginWebviewTests[28098:17483964] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::compatibleFullPagePolicyAndStateBridge()
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to load the script 'nnp-plugin://3d74afbdf6fd4f679a96efb593065ee4/cccccccccccccccccccccccccccccccc/asset/dist/media/own.js' because it violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'none'". Either the 'unsafe-inline' keyword, a hash ('sha256-FUFLEu5vjA/VQJw34usTCC7o69Ot9eK/DwKQVszYQAg='), or a nonce ('nonce-...') is required to enable inline execution.
+
+PASS   : PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy()
+PASS   : PluginWebviewTests::focusNotificationsAfterDeferredDockCleanup()
+PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleNativeCapabilityPair()
+PASS   : PluginWebviewTests::nativeMessagesEnforceCapabilitiesPublicationAndOwnership()
+PASS   : PluginWebviewTests::originalVSCodeHelloWorldInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleEditorTransactionAndHumanMessageWait()
+PASS   : PluginWebviewTests::nativeDeltaCapabilitiesAndCensusLimit()
+PASS   : PluginWebviewTests::nativeDocumentMirrorLifecycle()
+PASS   : PluginWebviewTests::pythonInspectorExample()
+PASS   : PluginWebviewTests::pythonPluginLifecycle()
+PASS   : PluginWebviewTests::collectionPreservesRunningSession()
+PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+PASS   : PluginWebviewTests::largeCommandFailureIsBounded()
+PASS   : PluginWebviewTests::retryWhileFailedProcessDrains()
+PASS   : PluginWebviewTests::compatiblePersistenceLifecycle()
+PASS   : PluginWebviewTests::pluginDataLifecycle()
+PASS   : PluginWebviewTests::activationResourceStaging()
+PASS   : PluginWebviewTests::healthTimeout()
+PASS   : PluginWebviewTests::boundedCrashRecovery()
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 1 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 11 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 21 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 31 owned resources 0
+<end of output>
+Test time =  90.03 sec
+----------------------------------------------------------
+Test Failed.
+"PluginWebviewTests" end time: Oct 11 18:10 JST
+"PluginWebviewTests" time elapsed: 00:01:30
+----------------------------------------------------------
+
+22/24 Testing: PluginApplicationTests
+22/24 Test: PluginApplicationTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+"PluginApplicationTests" start time: Oct 11 18:10 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 18:10:49.969 PluginApplicationTests[28848:17490107] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+void MainWindow::openFileList(const QStringList &)
+/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-taDhbC/sample.md
+Read 16 bytes
+sample.md last modified Sun Oct 11 18:10:50 2026
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-taDhbC/sample.md"
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+sample.md last modified Sun Oct 11 18:10:50 2026
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError ScintillaNext::save()
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+sample.md last modified Sun Oct 11 18:10:50 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+Read 11 bytes
+sample.md last modified Sun Oct 11 18:10:50 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+renamed.md last modified Sun Oct 11 18:10:50 2026
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Markdown
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void RecentFilesListManager::addFile(const QString &)
+void MainWindow::newFile()
+void EditorManager::setupEditor(ScintillaNext *)
+int EditorManager::detectEOLMode(ScintillaNext *) const
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+void MainWindow::addEditor(ScintillaNext *)
+void MainWindow::detectLanguage(ScintillaNext *)
+void MainWindow::setLanguage(ScintillaNext *, const QString &)
+Language Name: Text
+void DockedEditor::addEditor(ScintillaNext *)
+void MainWindow::activateEditor(ScintillaNext *)
+bool MainWindow::checkFileForModification(ScintillaNext *)
+void MainWindow::updateGui(ScintillaNext *)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateEOLBasedUi(ScintillaNext *)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+PASS   : PluginApplicationTests::deployedLibraryAudit()
+void MainWindow::focusIn()
+bool MainWindow::checkFileForModification(ScintillaNext *)
+2026-10-11 18:10:50.246 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.246 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.246 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.246 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.246 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+[28848:259:1011/181050.566156:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[28848:259:1011/181050.566469:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-11 18:10:50.644 PluginApplicationTests[28848:17490107] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+2026-10-11 18:10:50.654 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.656 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.660 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:50.666 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::productionPythonAdapter()
+2026-10-11 18:10:51.221 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:51.223 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:51.225 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:51.518 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:51.521 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:51.524 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:51.524 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+PASS   : PluginApplicationTests::productionVSCodeWebview()
+2026-10-11 18:10:53.058 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.059 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.062 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.063 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.288 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.289 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.293 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.294 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.298 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-11 18:10:53.298 PluginApplicationTests[28848:17490107] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void SessionManager::saveSession(MainWindow *)
+void MacroManager::saveSettings() const
+QWidget::paintEngine: Should no longer be called
+QWidget::paintEngine: Should no longer be called
+PASS   : PluginApplicationTests::productionManagerAndExit()
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 6457ms
+********* Finished testing of PluginApplicationTests *********
+<end of output>
+Test time =   6.93 sec
+----------------------------------------------------------
+Test Passed.
+"PluginApplicationTests" end time: Oct 11 18:10 JST
+"PluginApplicationTests" time elapsed: 00:00:06
+----------------------------------------------------------
+
+23/24 Testing: PluginApplicationExitTests
+23/24 Test: PluginApplicationExitTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationExitTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+"PluginApplicationExitTests" start time: Oct 11 18:10 JST
+Output:
+----------------------------------------------------------
+********* Start testing of ApplicationExitTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ApplicationExitTests::initTestCase()
+PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+PASS   : ApplicationExitTests::lastWindowClose(update-preparation-pending)
+PASS   : ApplicationExitTests::cleanupTestCase()
+Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 18198ms
+********* Finished testing of ApplicationExitTests *********
+<end of output>
+Test time =  18.48 sec
+----------------------------------------------------------
+Test Passed.
+"PluginApplicationExitTests" end time: Oct 11 18:11 JST
+"PluginApplicationExitTests" time elapsed: 00:00:18
+----------------------------------------------------------
+
+24/24 Testing: PluginMacBundleTests
+24/24 Test: PluginMacBundleTests
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py"
+Directory: /private/tmp/notepadnext-app-build-610/tests/macos-packaging
+"PluginMacBundleTests" start time: Oct 11 18:11 JST
+Output:
+----------------------------------------------------------
+test_debug_entitlement (__main__.BundleTests.test_debug_entitlement) ... ok
+test_disk_image_signature_is_verified (__main__.BundleTests.test_disk_image_signature_is_verified) ... ok
+test_escaping_qt_config (__main__.BundleTests.test_escaping_qt_config) ... ok
+test_external_rpath (__main__.BundleTests.test_external_rpath) ... ok
+test_machine_specific_qt_config (__main__.BundleTests.test_machine_specific_qt_config) ... ok
+test_missing_dependency (__main__.BundleTests.test_missing_dependency) ... ok
+test_missing_hardened_runtime (__main__.BundleTests.test_missing_hardened_runtime) ... ok
+test_missing_webengine_resources (__main__.BundleTests.test_missing_webengine_resources) ... ok
+test_python_developer_profile_cannot_be_packaged (__main__.BundleTests.test_python_developer_profile_cannot_be_packaged) ... ok
+test_rejected_notarization_does_not_staple (__main__.BundleTests.test_rejected_notarization_does_not_staple) ... ok
+test_signed_contained_bundle (__main__.BundleTests.test_signed_contained_bundle) ... ok
+test_symlink_escape (__main__.BundleTests.test_symlink_escape) ... ok
+test_tampered_resource_seal (__main__.BundleTests.test_tampered_resource_seal) ... ok
+test_underdeclared_minimum_os (__main__.BundleTests.test_underdeclared_minimum_os) ... ok
+test_unverified_node_archive (__main__.BundleTests.test_unverified_node_archive) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 5.620s
+
+OK
+<end of output>
+Test time =   5.73 sec
+----------------------------------------------------------
+Test Passed.
+"PluginMacBundleTests" end time: Oct 11 18:11 JST
+"PluginMacBundleTests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+End testing: Oct 11 18:11 JST

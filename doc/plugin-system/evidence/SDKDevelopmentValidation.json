@@ -1,0 +1,211 @@
+{
+  "date": "2026-10-11",
+  "platform": "macOS arm64",
+  "node": "24.21.0",
+  "qt": "6.10.0",
+  "developmentKit": {
+    "version": "0.1.0",
+    "archive": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/notepadnext-plugin-sdk-0.1.0.tgz",
+    "bytes": 42890,
+    "sha256": "b211997b6d698bf12588c34f96856a7b19ecd0f9054dab02224c04c4e8f51b59",
+    "files": 39,
+    "templates": [
+      "hello",
+      "markdown"
+    ],
+    "docs": [
+      "GettingStarted.zh-CN.md",
+      "MarkdownWalkthrough.zh-CN.md",
+      "Debugging.zh-CN.md",
+      "API.zh-CN.md"
+    ]
+  },
+  "checks": [
+    {
+      "name": "SDK packaging and developer unit tests",
+      "result": "passed",
+      "tests": 14,
+      "log": "sdk-development-unit.log",
+      "coverage": [
+        "no overwrite and invalid identity rejection",
+        "vendored SDK and matching command bindings",
+        "deactivation error cleanup",
+        "stale render rejection",
+        "watch code reload and atomic input saves",
+        "legacy directory/ZIP/release checks"
+      ]
+    },
+    {
+      "name": "Standalone tarball workflow",
+      "result": "passed",
+      "steps": [
+        {
+          "name": "01-sdk-pack",
+          "result": "passed"
+        },
+        {
+          "name": "02-install-sdk-tarball",
+          "result": "passed"
+        },
+        {
+          "name": "03-create-markdown",
+          "result": "passed"
+        },
+        {
+          "name": "04-markdown-install",
+          "result": "passed"
+        },
+        {
+          "name": "05-markdown-locked-install",
+          "result": "passed"
+        },
+        {
+          "name": "05a-sdk-typecheck",
+          "result": "passed"
+        },
+        {
+          "name": "06-markdown-build",
+          "result": "passed"
+        },
+        {
+          "name": "07-markdown-test",
+          "result": "passed"
+        },
+        {
+          "name": "08-markdown-debug",
+          "result": "passed"
+        },
+        {
+          "name": "09-markdown-edited-debug",
+          "result": "passed"
+        },
+        {
+          "name": "10-local-package",
+          "result": "passed"
+        },
+        {
+          "name": "11-plugin-bundle",
+          "result": "passed"
+        },
+        {
+          "name": "12-create-hello",
+          "result": "passed"
+        },
+        {
+          "name": "13-hello-install",
+          "result": "passed"
+        },
+        {
+          "name": "14-hello-build",
+          "result": "passed"
+        },
+        {
+          "name": "15-hello-test",
+          "result": "passed"
+        },
+        {
+          "name": "16-hello-debug",
+          "result": "passed"
+        }
+      ],
+      "log": "sdk-development-standalone.log",
+      "coverage": [
+        "actual npm tarball and public file list",
+        "project moved before dependency installation",
+        "locked install",
+        "API and test-host TypeScript checks including a negative type case",
+        "hello and Markdown compilation, unit tests and debugging",
+        "changed Markdown debug input",
+        "local install directory and ZIP generation",
+        "SHA-256 matching and exclusion of SDK/development dependencies"
+      ]
+    },
+    {
+      "name": "Native application with standalone Markdown project",
+      "result": "passed",
+      "rows": 8,
+      "log": "sdk-development-native-workflow.log",
+      "project": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/markdown-demo",
+      "pluginId": "demo.markdown-preview",
+      "coverage": [
+        "production register dialog and explicit local install",
+        "installation leaves plugin disabled",
+        "enable and command activation",
+        "unsaved Unicode Markdown rendering",
+        "theme/font updates without page navigation",
+        "manager shows one open panel",
+        "last-window exit cleans plugin process"
+      ]
+    },
+    {
+      "name": "SDK generated Markdown installed screenshot",
+      "result": "reviewed",
+      "path": "../screenshots/sdk-markdown-installed.png"
+    },
+    {
+      "name": "CodeGraph refresh",
+      "result": "passed",
+      "log": "sdk-development-codegraph.log"
+    }
+  ],
+  "outputs": {
+    "markdownProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/markdown-demo",
+    "helloProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/hello-demo",
+    "localPluginPackage": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/artifacts/markdown-preview-0.1.0",
+    "pluginZip": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/artifacts/markdown-preview-0.1.0-zip/notepadnext-plugin.zip",
+    "preview": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk/markdown-demo/.debug/preview.html"
+  },
+  "notes": [
+    "Validation used an existing npm cache in offline mode; no npm/GitHub publication, signing or notarization.",
+    "Native integration uses temporary test settings and leaves the user plugin registry unchanged.",
+    "The local debug host is a test double; it does not provide Qt/RPC/CSP/security/quota conformance.",
+    "The native local installation UI selects a built directory, while ZIP is the distribution artifact.",
+    "All checks ran on this Mac; other platforms were not independently exercised."
+  ],
+  "sourceSha256": {
+    "packages/plugin-sdk/LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "packages/plugin-sdk/README.md": "d46882cd5836622426a3031a18acb6ee098d706a7b41e4e8f4a97124c4c3601a",
+    "packages/plugin-sdk/archive.cjs": "c32a9faacff1d3ebc22f020b0683938dba70df7a11b3a7da33526cd32e7ee8cf",
+    "packages/plugin-sdk/create.cjs": "8faf53937205baa13eb36bc9f66b2f649169a02363382b3ec4784544eec074d8",
+    "packages/plugin-sdk/debug.cjs": "3ef55288393cc6611103be86f075f2db87ec028a65f8ec22ebe79cf4c804b930",
+    "packages/plugin-sdk/developer.test.cjs": "ac042604ea5782396be839aa4c0cf836c8c23ebfdf518f507c7ce159b78005fa",
+    "packages/plugin-sdk/docs/API.zh-CN.md": "f315e566d75a246f082f03e812a62462ce625fcbf3aabe8ba50d79803c29f6f6",
+    "packages/plugin-sdk/docs/Debugging.zh-CN.md": "91914031466cc4c2758ec6ba5f3a6ae9ed15d54e9f53d432a12525a2f4b259cc",
+    "packages/plugin-sdk/docs/GettingStarted.zh-CN.md": "08696cf0b368fd1e1bff7745dd669c5817ec4c7c1e929c7a6983fe10faf38a93",
+    "packages/plugin-sdk/docs/MarkdownWalkthrough.zh-CN.md": "63e60f6e5e4ec540b7ee6ed23177ec2c3663557f5b0be94aa753895aa102b74e",
+    "packages/plugin-sdk/import-vscode.cjs": "0999e4345c55a5264fc2ca6b71c993a32c196a46942901aa6ba82dc920f91ad6",
+    "packages/plugin-sdk/index.d.ts": "838cf221fa1d8e551fb568c151a1918c9e6e872faf59710bc53dbeb0ab3d5794",
+    "packages/plugin-sdk/pack.cjs": "fdca3303c8795540c48998a7fa42c4c39556b8e64fc3ef23dfddabfa8b1db603",
+    "packages/plugin-sdk/pack.test.cjs": "0f9bc4833748ba226229a0c957aba38c389c8de654763d886b3bcd142c1bb7f0",
+    "packages/plugin-sdk/package.json": "44a3ebb9362f4fac907b0098fd0c4bd737617f4c7dd5110b9a28c1cf56fd7296",
+    "packages/plugin-sdk/release.cjs": "9613577315b58da93903ebcdee578dfa6f7ae6a173280d97201417373ecf86be",
+    "packages/plugin-sdk/schemas/manifest.schema.json": "e079cfa7e8ed6e57b45dc7ba503d47e044d8df519dfe66679c746c9ccc425d32",
+    "packages/plugin-sdk/schemas/release-checksums.schema.json": "1bf2014855e1f3f7b644d63fa11bd3cc4f1bcc5a7739a719a6016fdd84edcfe7",
+    "packages/plugin-sdk/templates/hello/.vscode/launch.json": "ba6a285df8c457e532219e88bd553fa573fb9306ff83e664f484a76f2c49530b",
+    "packages/plugin-sdk/templates/hello/.vscode/settings.json": "4e950ed45c8459f8ef611e02b55aaffea0b8b3ed8ce66f86ed31e4a13a58eaac",
+    "packages/plugin-sdk/templates/hello/README.md": "8c0d82163d3815f3c91c5aafd14e3bc70be0bdf808bd8650935e6c5e8dd4b2d9",
+    "packages/plugin-sdk/templates/hello/demo.md": "64a88e460c045b160233bf5e996abe79b382b54ab5a1e433d9db15d644891f23",
+    "packages/plugin-sdk/templates/hello/gitignore.txt": "141f772eb36196b00895df9c9f3cf2be579d0e1298e133ba5393a580261be94c",
+    "packages/plugin-sdk/templates/hello/notepadnext-plugin.json": "3c010e568498ea048505d307f0bd5f72c1a13fa6cf7b8bcd415c048a1d1d7c75",
+    "packages/plugin-sdk/templates/hello/package.json": "a59b9eb15e7a27d64714a7d99468f05a1038db348782cb88d67b7e36cb12f682",
+    "packages/plugin-sdk/templates/hello/src/index.ts": "59a1d490b65afc7ddd63f29da8f9de3e7185826e5ee32734d407391005d9b5e2",
+    "packages/plugin-sdk/templates/hello/test.cjs": "69dc3b0de5becf46c0cf99a37c856b724e7360d972391a13827bb7094a4f439d",
+    "packages/plugin-sdk/templates/hello/tsconfig.json": "af56de9b855784c29d2727db44ef53e01b816f53ae907e1e5947cfc07ba284ed",
+    "packages/plugin-sdk/templates/markdown/.vscode/launch.json": "ba6a285df8c457e532219e88bd553fa573fb9306ff83e664f484a76f2c49530b",
+    "packages/plugin-sdk/templates/markdown/.vscode/settings.json": "4e950ed45c8459f8ef611e02b55aaffea0b8b3ed8ce66f86ed31e4a13a58eaac",
+    "packages/plugin-sdk/templates/markdown/README.md": "8c0d82163d3815f3c91c5aafd14e3bc70be0bdf808bd8650935e6c5e8dd4b2d9",
+    "packages/plugin-sdk/templates/markdown/demo.md": "261317e3cb7124cdf5543150ea1208eb60229236b5175f66d110dabe29f0d41f",
+    "packages/plugin-sdk/templates/markdown/gitignore.txt": "141f772eb36196b00895df9c9f3cf2be579d0e1298e133ba5393a580261be94c",
+    "packages/plugin-sdk/templates/markdown/notepadnext-plugin.json": "59273b6654d63a0aba8660acb7f1a9dfec826935f77d3de0e7a244a0656cf2d3",
+    "packages/plugin-sdk/templates/markdown/package.json": "dd7decccabedd79fcda66ba392a73755fa47b2fbd573a29c9fdfbe37b7e74455",
+    "packages/plugin-sdk/templates/markdown/src/index.ts": "c331481ac30b4f426ed233d346a7d5e2087fa01652afa84594c038522e9fad74",
+    "packages/plugin-sdk/templates/markdown/src/markdown-it.d.ts": "5b216ffd1e8ed9d2a5b22f778894beee25d3bf1755e60340987d39dbb91aecd3",
+    "packages/plugin-sdk/templates/markdown/test.cjs": "4b5f0ce0ae8a14d9772d4806b9f50ceaee9169c2074adefa4f41d5dd50748d45",
+    "packages/plugin-sdk/templates/markdown/tsconfig.json": "af56de9b855784c29d2727db44ef53e01b816f53ae907e1e5947cfc07ba284ed",
+    "packages/plugin-sdk/testing.cjs": "7fdfaf7d4f09b3bc0adee96aab48267847d6a79be97452f3e3e86adf77deca0b",
+    "packages/plugin-sdk/testing.d.ts": "dcff20c27f45e9c1cc8de2c5fddb9f5f50720a21f593d7d786cf5138ecd65cb9",
+    "tests/plugin-application/PluginApplicationTests.cpp": "3eec8fa4f86c44cf2e5f2d76cf4d2914fa39d5b2e2fd963298fa731ee44a4ae6",
+    "tests/plugin-rpc/CMakeLists.txt": "9877f6276a8c85698845693a21c254e0097bc2a6b9dbe46582b8f3ce92982436",
+    "tests/plugin-sdk/standalone.cjs": "e57763c2e5b721d1165968e07031816557f9f5641c395c370d44c5f176e70844"
+  }
+}

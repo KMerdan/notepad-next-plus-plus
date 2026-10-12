@@ -1,0 +1,124 @@
+{
+  "graph": {
+    "status": "ok",
+    "summary": "Graph statistics for NotepadNext:\n  Files: 1014\n  Total nodes: 22043\n  Total edges: 114628\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T15:22:28\n\nNodes by kind:\n  Class: 2164\n  File: 1014\n  Function: 18661\n  Signal: 7\n  Test: 197\n\nEdges by kind:\n  CALLS: 82157\n  CONTAINS: 23104\n  IMPORTS_FROM: 7050\n  INHERITS: 446\n  REFERENCES: 611\n  TESTED_BY: 1260\n\nCALLS by target resolution: 11498 direct, 70659 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+    "total_nodes": 22043,
+    "total_edges": 114628,
+    "nodes_by_kind": {
+      "Class": 2164,
+      "File": 1014,
+      "Function": 18661,
+      "Signal": 7,
+      "Test": 197
+    },
+    "edges_by_kind": {
+      "CALLS": 82157,
+      "CONTAINS": 23104,
+      "IMPORTS_FROM": 7050,
+      "INHERITS": 446,
+      "REFERENCES": 611,
+      "TESTED_BY": 1260
+    },
+    "calls_by_resolution": {
+      "direct": 11498,
+      "unresolved": 70659
+    },
+    "languages": [
+      "bash",
+      "c",
+      "cpp",
+      "dart",
+      "gdscript",
+      "javascript",
+      "julia",
+      "lua",
+      "nix",
+      "objc",
+      "perl",
+      "php",
+      "powershell",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "sql",
+      "typescript",
+      "vbnet",
+      "verilog",
+      "zig"
+    ],
+    "files_count": 1014,
+    "last_updated": "2026-10-11T15:22:28",
+    "embeddings_count": 0,
+    "_graph": {
+      "updated_at": "2026-10-11T15:22:28",
+      "age_seconds": 64,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "queries": [
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "scripts/verify-macos-bundle.py",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 12 result(s) for file_summary('scripts/verify-macos-bundle.py') — showing 2, 10 omitted",
+      "result_count": 12,
+      "results_omitted": 10,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/scripts/verify-macos-bundle.py",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/verify-macos-bundle.py"
+        },
+        {
+          "name": "run",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/verify-macos-bundle.py"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T15:22:28",
+        "age_seconds": 66,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/macos-packaging/test_bundle.py",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 23 result(s) for file_summary('tests/macos-packaging/test_bundle.py') — showing 2, 21 omitted",
+      "result_count": 23,
+      "results_omitted": 21,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py"
+        },
+        {
+          "name": "load",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/macos-packaging/test_bundle.py"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T15:22:28",
+        "age_seconds": 68,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ],
+  "qualification": "The CodeGraph CLI summary precedes full postprocessing; MCP counts above are the persisted postprocessed graph. A matching Git HEAD does not alone prove uncommitted working-tree contents; source hashes are recorded separately.",
+  "source": "scripts/update-codegraph.py full working-tree collector; subsequent MCP read-only stats/file_summary"
+}

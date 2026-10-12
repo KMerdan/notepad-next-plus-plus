@@ -1,0 +1,1248 @@
+{
+  "date": "2026-10-12",
+  "fileKey": "cJPphvdJ1ztsU0tzMFIBpD",
+  "scope": "Reconcile existing design language and review main editor, manager and native dialogs; preserve earlier lifecycle/resource flows.",
+  "phase": "screens-complete",
+  "inventory": {
+    "pages": [
+      {
+        "id": "0:1",
+        "name": "Markdown Plugin · Draft"
+      }
+    ],
+    "currentPage": "0:1",
+    "top": [
+      {
+        "id": "1:1456",
+        "name": "Review board / editable desktop flow",
+        "x": 200,
+        "y": 100,
+        "width": 2640,
+        "height": 2490
+      },
+      {
+        "id": "1:1477",
+        "name": "Local source components",
+        "x": 3000,
+        "y": 100,
+        "width": 2640,
+        "height": 2272
+      },
+      {
+        "id": "1:1461",
+        "name": "01 Install from GitHub",
+        "x": 3000,
+        "y": 2600,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "1:1465",
+        "name": "02 Installed plugins / enabled and idle",
+        "x": 4320,
+        "y": 2600,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "1:1470",
+        "name": "03 Menu entry",
+        "x": 3000,
+        "y": 3440,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "1:1474",
+        "name": "04 Markdown preview",
+        "x": 4320,
+        "y": 3440,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "11:1925",
+        "name": "Plugin Manager / Lifecycle review",
+        "x": 200,
+        "y": 2840,
+        "width": 2640,
+        "height": 5218
+      },
+      {
+        "id": "11:1973",
+        "name": "Plugin Manager / Local components",
+        "x": 5900,
+        "y": 100,
+        "width": 1300,
+        "height": 254
+      },
+      {
+        "id": "13:4002",
+        "name": "Lifecycle / LIST",
+        "x": 5900,
+        "y": 1500,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "13:4397",
+        "name": "Lifecycle / INSPECT",
+        "x": 7220,
+        "y": 1500,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "13:4792",
+        "name": "Lifecycle / UPDATE",
+        "x": 5900,
+        "y": 2350,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "13:5202",
+        "name": "Lifecycle / PROGRESS",
+        "x": 7220,
+        "y": 2350,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "13:5544",
+        "name": "Lifecycle / SUCCESS",
+        "x": 5900,
+        "y": 3200,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:3372",
+        "name": "Lifecycle / DISABLED",
+        "x": 7220,
+        "y": 3200,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:3714",
+        "name": "Lifecycle / UNINSTALL",
+        "x": 5900,
+        "y": 4050,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:4129",
+        "name": "Lifecycle / REMOVED",
+        "x": 7220,
+        "y": 4050,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:4409",
+        "name": "Lifecycle / ROLLBACK",
+        "x": 5900,
+        "y": 4900,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:4759",
+        "name": "Lifecycle / CRASH",
+        "x": 7220,
+        "y": 4900,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:5111",
+        "name": "Lifecycle / REENABLED",
+        "x": 5900,
+        "y": 5750,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "14:5451",
+        "name": "Lifecycle / RESTARTED",
+        "x": 7220,
+        "y": 5750,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "17:8009",
+        "name": "Return to editor / DISABLED",
+        "x": 5900,
+        "y": 6700,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "17:8199",
+        "name": "Return to editor / REMOVED",
+        "x": 7220,
+        "y": 6700,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "17:8389",
+        "name": "Return to editor / REENABLED",
+        "x": 5900,
+        "y": 7550,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "23:8653",
+        "name": "Plugin Manager / Unified source entry and marketplaces",
+        "x": 200,
+        "y": 8400,
+        "width": 2640,
+        "height": 3222
+      },
+      {
+        "id": "24:8653",
+        "name": "Sources / ENTRY",
+        "x": 9000,
+        "y": 1500,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "24:8881",
+        "name": "Sources / DETECTED_MARKETPLACE",
+        "x": 10320,
+        "y": 1500,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "24:9112",
+        "name": "Sources / UNINSTALLED",
+        "x": 9000,
+        "y": 2350,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "24:9432",
+        "name": "Sources / SOURCES",
+        "x": 10320,
+        "y": 2350,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "24:9727",
+        "name": "Sources / DETECTED_PLUGIN",
+        "x": 9000,
+        "y": 3200,
+        "width": 1200,
+        "height": 760
+      },
+      {
+        "id": "24:9958",
+        "name": "Sources / SOURCE_REMOVE",
+        "x": 10320,
+        "y": 3200,
+        "width": 1200,
+        "height": 760
+      }
+    ],
+    "collections": [
+      {
+        "id": "VariableCollectionId:2:2",
+        "name": "Draft / Primitives",
+        "modes": [
+          {
+            "name": "Value",
+            "modeId": "2:0"
+          }
+        ],
+        "count": 16
+      },
+      {
+        "id": "VariableCollectionId:2:19",
+        "name": "Draft / Qt light UI",
+        "modes": [
+          {
+            "name": "Light",
+            "modeId": "2:1"
+          }
+        ],
+        "count": 16
+      },
+      {
+        "id": "VariableCollectionId:2:36",
+        "name": "Draft / Layout",
+        "modes": [
+          {
+            "name": "Value",
+            "modeId": "2:2"
+          }
+        ],
+        "count": 17
+      }
+    ],
+    "variables": [
+      {
+        "id": "VariableID:2:3",
+        "name": "white",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:4",
+        "name": "chrome",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.9450980424880981,
+            "g": 0.9450980424880981,
+            "b": 0.9450980424880981,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:5",
+        "name": "gutter",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.9686274528503418,
+            "g": 0.9686274528503418,
+            "b": 0.9686274528503418,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:6",
+        "name": "border",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.7960784435272217,
+            "g": 0.7960784435272217,
+            "b": 0.7960784435272217,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:7",
+        "name": "controlBorder",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.5254902243614197,
+            "g": 0.5254902243614197,
+            "b": 0.545098066329956,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:8",
+        "name": "text",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.1411764770746231,
+            "g": 0.1411764770746231,
+            "b": 0.1411764770746231,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:9",
+        "name": "secondary",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.3843137323856354,
+            "g": 0.3843137323856354,
+            "b": 0.40392157435417175,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:10",
+        "name": "blue",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0,
+            "g": 0.3686274588108063,
+            "b": 0.772549033164978,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:11",
+        "name": "blueSoft",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.9058823585510254,
+            "g": 0.9372549057006836,
+            "b": 0.9843137264251709,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:12",
+        "name": "success",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.13333334028720856,
+            "g": 0.3921568691730499,
+            "b": 0.22745098173618317,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:13",
+        "name": "successSoft",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.929411768913269,
+            "g": 0.9647058844566345,
+            "b": 0.9372549057006836,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:14",
+        "name": "error",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.7019608020782471,
+            "g": 0.14901961386203766,
+            "b": 0.11764705926179886,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:15",
+        "name": "errorSoft",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 1,
+            "g": 0.9411764740943909,
+            "b": 0.9372549057006836,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:16",
+        "name": "code",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.125490203499794,
+            "g": 0.3137255012989044,
+            "b": 0.5843137502670288,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:17",
+        "name": "purple",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.45490196347236633,
+            "g": 0.26274511218070984,
+            "b": 0.6078431606292725,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:18",
+        "name": "board",
+        "collection": "VariableCollectionId:2:2",
+        "values": {
+          "2:0": {
+            "r": 0.9450980424880981,
+            "g": 0.9529411792755127,
+            "b": 0.9686274528503418,
+            "a": 1
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:20",
+        "name": "color/white",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:3"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:21",
+        "name": "color/chrome",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:4"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:22",
+        "name": "color/gutter",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:5"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:23",
+        "name": "color/border",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:6"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:24",
+        "name": "color/controlBorder",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:7"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:25",
+        "name": "color/text",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:8"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:26",
+        "name": "color/secondary",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:9"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:27",
+        "name": "color/blue",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:10"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:28",
+        "name": "color/blueSoft",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:11"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:29",
+        "name": "color/success",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:12"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:30",
+        "name": "color/successSoft",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:13"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:31",
+        "name": "color/error",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:14"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:32",
+        "name": "color/errorSoft",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:15"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:33",
+        "name": "color/code",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:16"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:34",
+        "name": "color/purple",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:17"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2:35",
+        "name": "color/board",
+        "collection": "VariableCollectionId:2:19",
+        "values": {
+          "2:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:2:18"
+          }
+        }
+      }
+    ],
+    "styles": [
+      {
+        "id": "S:9efb3903f5d19233e74ed4e32c2a2e20d0ace3d8,",
+        "name": "Draft/UI/Body",
+        "font": {
+          "family": "SF Pro",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "wdth": 100
+          }
+        },
+        "size": 13,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        }
+      },
+      {
+        "id": "S:c4cb044bfc194e98648a377b33c72eca4a8e7f15,",
+        "name": "Draft/UI/Emphasis",
+        "font": {
+          "family": "SF Pro",
+          "style": "Semibold",
+          "variationSettings": {
+            "wght": 590,
+            "wdth": 100
+          }
+        },
+        "size": 13,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        }
+      },
+      {
+        "id": "S:1adee05298240127ce4cb513e5da293fc92875b2,",
+        "name": "Draft/UI/Caption",
+        "font": {
+          "family": "SF Pro",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "wdth": 100
+          }
+        },
+        "size": 11,
+        "line": {
+          "unit": "PIXELS",
+          "value": 16
+        }
+      },
+      {
+        "id": "S:d590511cc9df6ec7c54c8d436423830a86e3243f,",
+        "name": "Draft/UI/Heading",
+        "font": {
+          "family": "SF Pro",
+          "style": "Semibold",
+          "variationSettings": {
+            "wght": 590,
+            "wdth": 100
+          }
+        },
+        "size": 20,
+        "line": {
+          "unit": "PIXELS",
+          "value": 26
+        }
+      },
+      {
+        "id": "S:e5838b7d5a03289cfd502fa2bae68e0a360ffaf3,",
+        "name": "Draft/Markdown/Title",
+        "font": {
+          "family": "SF Pro",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700,
+            "wdth": 100
+          }
+        },
+        "size": 28,
+        "line": {
+          "unit": "PIXELS",
+          "value": 34
+        }
+      },
+      {
+        "id": "S:e0712781e95162b15aae2c45e7f32ca9d1e5ca9c,",
+        "name": "Draft/Markdown/Heading",
+        "font": {
+          "family": "SF Pro",
+          "style": "Semibold",
+          "variationSettings": {
+            "wght": 590,
+            "wdth": 100
+          }
+        },
+        "size": 20,
+        "line": {
+          "unit": "PIXELS",
+          "value": 28
+        }
+      },
+      {
+        "id": "S:4fa7022928b90c8679ad78f2363e7c90801288be,",
+        "name": "Draft/Markdown/Body",
+        "font": {
+          "family": "SF Pro",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "wdth": 100
+          }
+        },
+        "size": 14,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        }
+      },
+      {
+        "id": "S:773e627c636255664d023131c4d0993d7b48af1c,",
+        "name": "Draft/Editor/Code",
+        "font": {
+          "family": "Cousine",
+          "style": "Regular"
+        },
+        "size": 13,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        }
+      },
+      {
+        "id": "S:0c1ffcba0628acf480a9e3ef6ad403390c59fd5a,",
+        "name": "Draft/Editor/Strong",
+        "font": {
+          "family": "Cousine",
+          "style": "Bold"
+        },
+        "size": 13,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        }
+      },
+      {
+        "id": "S:41a919a67b9d1e42173c61954c14b24d8ef04dcc,",
+        "name": "Draft/Notes/Body",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400
+          }
+        },
+        "size": 16,
+        "line": {
+          "unit": "PIXELS",
+          "value": 25
+        }
+      },
+      {
+        "id": "S:f52739f92ef06f8ba7ec975c32f91d6729c556cb,",
+        "name": "Draft/Notes/Title",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500
+          }
+        },
+        "size": 28,
+        "line": {
+          "unit": "PIXELS",
+          "value": 40
+        }
+      }
+    ],
+    "componentCount": 35,
+    "neededComponents": [
+      {
+        "id": "2:63",
+        "name": "Source icon/closeFile",
+        "key": "950d289e642f0b32b47b698b8afde2687e3fd67a",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:65",
+        "name": "Source icon/closeAll",
+        "key": "182b14ae44682db46b6bac374fee69a2d6c2aa22",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:100",
+        "name": "Icon/markdown",
+        "key": "750a2c6c80b749ff2162fae59ff505b3f8bffce9",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:104",
+        "name": "Icon/close",
+        "key": "8e708a1b0e9e87cc4d11ecc7b7cf2f80bac8c58b",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:112",
+        "name": "Icon/check",
+        "key": "65ef4851fb4367c825c1d27a7773516f653cebc1",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "12:2017",
+        "name": "Plugin Manager / Plugin list row",
+        "key": "8929f927edd53b672412bc6387ed698aea23e1e1",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "12:2026",
+        "name": "Plugin Manager / Icon json",
+        "key": "9283d4f2c2f2ac5c3ff17e9b08ff606df265e089",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "12:2029",
+        "name": "Plugin Manager / Icon format",
+        "key": "dff7da8279a9aed062c8a5a15ee0639dd790e77d",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "33:11730",
+        "name": "Plugin Manager / Icon plugins",
+        "key": "2047ea4a4b7c39c1ee090f1478759a8c930e909b",
+        "type": "COMPONENT"
+      }
+    ],
+    "mainInstances": [
+      {
+        "id": "3:146",
+        "name": "NotepadNext / macOS desktop shell",
+        "key": "0f53599b72e2aec0a825af2a219e0fff0e39d26d",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:55",
+        "name": "Source icon/newfile",
+        "key": "30ecb3d0376476c3a07837187b6e864c368f7a55",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:57",
+        "name": "Source icon/openFile",
+        "key": "5b76ff176572e390b25f6dbbaab68bbe234fca3c",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:59",
+        "name": "Source icon/saved",
+        "key": "b9aad874738fe87882ee621e15f5f820d8d4a2c2",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:61",
+        "name": "Source icon/saveAll",
+        "key": "ac659e78df9156fb5920182b2b435f8e09e21a54",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:63",
+        "name": "Source icon/closeFile",
+        "key": "950d289e642f0b32b47b698b8afde2687e3fd67a",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:65",
+        "name": "Source icon/closeAll",
+        "key": "182b14ae44682db46b6bac374fee69a2d6c2aa22",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:67",
+        "name": "Source icon/cut",
+        "key": "e78a21e1b7dee0e0c543625e340357117a7b3974",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:69",
+        "name": "Source icon/copy",
+        "key": "6406ea05370a72af2e313ae9f3ebf39be81684ee",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:71",
+        "name": "Source icon/paste",
+        "key": "182ef6467db5569ee31865cf24ae796695b0e1db",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:73",
+        "name": "Source icon/undo",
+        "key": "83696098cb1d4fba75ec9349df5fb19730e3b850",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:75",
+        "name": "Source icon/redo",
+        "key": "7692f93249bd3253408fb2d4689951311cedcbef",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:77",
+        "name": "Source icon/find",
+        "key": "124522ba6403f76d548aaf4c7a997c8ec9e0013b",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:79",
+        "name": "Source icon/findReplace",
+        "key": "8eb5b2204fe168b19d956e5c04e9a1c8678f5077",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:81",
+        "name": "Source icon/zoomIn",
+        "key": "c57d89ad92214afa3e1fd5110dd0b8bd0ee4d926",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:83",
+        "name": "Source icon/zoomOut",
+        "key": "66e1ff972f8f05f2cf840b2557a35fcf071d0426",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:85",
+        "name": "Source icon/wrap",
+        "key": "801a2530c6b4c732063df91b0819d04cac2b2541",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:87",
+        "name": "Source icon/invisibleChar",
+        "key": "3f37b7ccd79721ce60b9387475b1ae2e614386e5",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:89",
+        "name": "Source icon/indentGuide",
+        "key": "062e2f8450024f35bb9c4e6337e418fa91a829a1",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:91",
+        "name": "Source icon/startRecord",
+        "key": "d8d2d8b6364bb3311ff0483353682b69e1277111",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:93",
+        "name": "Source icon/playRecord",
+        "key": "e1451178a0f429c6909868e3dbaab43c7fc656ff",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:95",
+        "name": "Source icon/playRecord_m",
+        "key": "ab84e93501f78dcd5f3b5e9d0c53d82fedfe7522",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:97",
+        "name": "Source icon/saveRecord",
+        "key": "a84a5130afdcf96f4ef9456fb45c57fdf6af35fb",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:100",
+        "name": "Icon/markdown",
+        "key": "750a2c6c80b749ff2162fae59ff505b3f8bffce9",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "3:2",
+        "name": "Editor / active Markdown document",
+        "key": "e7833e2cb2f96c1332de26d4f2f740da09a26f08",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:104",
+        "name": "Icon/close",
+        "key": "8e708a1b0e9e87cc4d11ecc7b7cf2f80bac8c58b",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "3:94",
+        "name": "Plugin / Markdown preview dock",
+        "key": "13937a2bbd8695e81c009c5d9c7bfb99527d9464",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "2:112",
+        "name": "Icon/check",
+        "key": "65ef4851fb4367c825c1d27a7773516f653cebc1",
+        "type": "COMPONENT"
+      },
+      {
+        "id": "3:138",
+        "name": "Qt / Editor status bar",
+        "key": "975b88d05cb2992c0a2f7b0e24e0ff37e9b7eb13",
+        "type": "COMPONENT"
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Cousine",
+        "style": "Bold"
+      },
+      {
+        "family": "Cousine",
+        "style": "Bold Italic"
+      },
+      {
+        "family": "Cousine",
+        "style": "Regular"
+      },
+      {
+        "family": "Noto Sans SC",
+        "style": "Bold"
+      },
+      {
+        "family": "Noto Sans SC",
+        "style": "Regular"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Bold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Bold Italic"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Compressed Bold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Compressed Regular"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Compressed Semibold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Condensed Bold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Condensed Regular"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Condensed Semibold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Expanded Bold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Expanded Regular"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Expanded Semibold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Regular"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Regular Italic"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Semibold"
+      },
+      {
+        "family": "SF Pro",
+        "style": "Semibold Italic"
+      },
+      {
+        "family": "SF Pro Rounded",
+        "style": "Bold"
+      },
+      {
+        "family": "SF Pro Rounded",
+        "style": "Regular"
+      },
+      {
+        "family": "SF Pro Rounded",
+        "style": "Semibold"
+      }
+    ]
+  },
+  "board": {
+    "nodeId": "42:11715",
+    "url": "https://www.figma.com/design/cJPphvdJ1ztsU0tzMFIBpD?node-id=42-11715",
+    "size": [
+      2512,
+      5346
+    ]
+  },
+  "primaryScreenCount": 14,
+  "settingsPrototypeNode": "45:12075",
+  "controlLibraryNode": "39:11699",
+  "nativeIconsNode": "42:11698",
+  "appearanceModes": [
+    "Light",
+    "Dark"
+  ],
+  "settingsPrototypeFrames": [
+    {
+      "page": "General",
+      "dark": false,
+      "id": "45:12075"
+    },
+    {
+      "page": "General",
+      "dark": true,
+      "id": "45:12130"
+    },
+    {
+      "page": "Editor",
+      "dark": false,
+      "id": "45:12185"
+    },
+    {
+      "page": "Files",
+      "dark": false,
+      "id": "45:12239"
+    },
+    {
+      "page": "Search",
+      "dark": false,
+      "id": "45:12296"
+    },
+    {
+      "page": "Files",
+      "dark": true,
+      "small": true,
+      "id": "45:12332"
+    },
+    {
+      "page": "Editor",
+      "dark": true,
+      "id": "59:12217"
+    },
+    {
+      "page": "Files",
+      "dark": true,
+      "id": "59:12277"
+    },
+    {
+      "page": "Search",
+      "dark": true,
+      "id": "59:12339"
+    }
+  ]
+}

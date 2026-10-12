@@ -1,0 +1,2577 @@
+[
+  {
+    "name": "nnp.initialize valid params",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.initialize extra param",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.initialize missing identity/field",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.initialize valid result",
+    "method": "nnp.initialize",
+    "part": "result",
+    "value": {
+      "protocolVersion": "0.1",
+      "apiVersion": "0.1.0",
+      "capabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.initialize invalid result",
+    "method": "nnp.initialize",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.plugin.activate valid params",
+    "method": "nnp.plugin.activate",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "reason": "command"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.plugin.activate extra param",
+    "method": "nnp.plugin.activate",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "reason": "command",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.plugin.activate missing identity/field",
+    "method": "nnp.plugin.activate",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "reason": "command"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.plugin.activate valid result",
+    "method": "nnp.plugin.activate",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.plugin.activate invalid result",
+    "method": "nnp.plugin.activate",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.plugin.deactivate valid params",
+    "method": "nnp.plugin.deactivate",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "reason": "disable"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.plugin.deactivate extra param",
+    "method": "nnp.plugin.deactivate",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "reason": "disable",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.plugin.deactivate missing identity/field",
+    "method": "nnp.plugin.deactivate",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "reason": "disable"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.plugin.deactivate valid result",
+    "method": "nnp.plugin.deactivate",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.plugin.deactivate invalid result",
+    "method": "nnp.plugin.deactivate",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.shutdown valid params",
+    "method": "nnp.shutdown",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "reason": "exit"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.shutdown extra param",
+    "method": "nnp.shutdown",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "reason": "exit",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.shutdown missing identity/field",
+    "method": "nnp.shutdown",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "reason": "exit"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.shutdown valid result",
+    "method": "nnp.shutdown",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.shutdown invalid result",
+    "method": "nnp.shutdown",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.health.ping valid params",
+    "method": "nnp.health.ping",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.health.ping extra param",
+    "method": "nnp.health.ping",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.health.ping missing identity/field",
+    "method": "nnp.health.ping",
+    "part": "params",
+    "value": {
+      "generation": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.health.ping valid result",
+    "method": "nnp.health.ping",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.health.ping invalid result",
+    "method": "nnp.health.ping",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getActive valid params",
+    "method": "nnp.documents.getActive",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getActive extra param",
+    "method": "nnp.documents.getActive",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getActive missing identity/field",
+    "method": "nnp.documents.getActive",
+    "part": "params",
+    "value": {
+      "generation": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getActive valid result",
+    "method": "nnp.documents.getActive",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "untitled:test",
+      "languageId": "markdown",
+      "version": 1,
+      "isDirty": true,
+      "isReadonly": false
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getActive invalid result",
+    "method": "nnp.documents.getActive",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getSnapshot valid params",
+    "method": "nnp.documents.getSnapshot",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "documentId": "doc"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getSnapshot extra param",
+    "method": "nnp.documents.getSnapshot",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "documentId": "doc",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getSnapshot missing identity/field",
+    "method": "nnp.documents.getSnapshot",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "documentId": "doc"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getSnapshot valid result",
+    "method": "nnp.documents.getSnapshot",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "untitled:test",
+      "languageId": "markdown",
+      "version": 1,
+      "isDirty": true,
+      "isReadonly": false,
+      "text": "😀中\r\n",
+      "positionEncoding": "utf-16"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getSnapshot invalid result",
+    "method": "nnp.documents.getSnapshot",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.watch valid params",
+    "method": "nnp.documents.watch",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "target": "active",
+      "mode": "invalidate"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.watch extra param",
+    "method": "nnp.documents.watch",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "target": "active",
+      "mode": "invalidate",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.watch missing identity/field",
+    "method": "nnp.documents.watch",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "target": "active",
+      "mode": "invalidate"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.watch valid result",
+    "method": "nnp.documents.watch",
+    "part": "result",
+    "value": {
+      "subscriptionId": "watch",
+      "eventSeq": 1,
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:test",
+        "languageId": "markdown",
+        "version": 1,
+        "isDirty": true,
+        "isReadonly": false
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.watch invalid result",
+    "method": "nnp.documents.watch",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.event valid params",
+    "method": "nnp.documents.event",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 1,
+      "type": "activeChanged",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:test",
+        "languageId": "markdown",
+        "version": 1,
+        "isDirty": true,
+        "isReadonly": false
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.event extra param",
+    "method": "nnp.documents.event",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 1,
+      "type": "activeChanged",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:test",
+        "languageId": "markdown",
+        "version": 1,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.event missing identity/field",
+    "method": "nnp.documents.event",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 1,
+      "type": "activeChanged",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:test",
+        "languageId": "markdown",
+        "version": 1,
+        "isDirty": true,
+        "isReadonly": false
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.applyEdits valid params",
+    "method": "nnp.documents.applyEdits",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "documentId": "doc",
+      "expectedVersion": 1,
+      "edits": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 0
+            },
+            "end": {
+              "line": 0,
+              "character": 1
+            }
+          },
+          "text": "😀中"
+        }
+      ]
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.applyEdits extra param",
+    "method": "nnp.documents.applyEdits",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "documentId": "doc",
+      "expectedVersion": 1,
+      "edits": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 0
+            },
+            "end": {
+              "line": 0,
+              "character": 1
+            }
+          },
+          "text": "😀中"
+        }
+      ],
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.applyEdits missing identity/field",
+    "method": "nnp.documents.applyEdits",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "documentId": "doc",
+      "expectedVersion": 1,
+      "edits": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 0
+            },
+            "end": {
+              "line": 0,
+              "character": 1
+            }
+          },
+          "text": "😀中"
+        }
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.applyEdits valid result",
+    "method": "nnp.documents.applyEdits",
+    "part": "result",
+    "value": {
+      "version": 2
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.applyEdits invalid result",
+    "method": "nnp.documents.applyEdits",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.register valid params",
+    "method": "nnp.commands.register",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "commandId": "tests.native.open",
+      "callbackId": "callback"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.commands.register extra param",
+    "method": "nnp.commands.register",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "commandId": "tests.native.open",
+      "callbackId": "callback",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.register missing identity/field",
+    "method": "nnp.commands.register",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "commandId": "tests.native.open",
+      "callbackId": "callback"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.register valid result",
+    "method": "nnp.commands.register",
+    "part": "result",
+    "value": {
+      "registrationId": "command"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.commands.register invalid result",
+    "method": "nnp.commands.register",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.invoke valid params",
+    "method": "nnp.commands.invoke",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "callbackId": "callback",
+      "args": [
+        {
+          "text": "😀中"
+        }
+      ]
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.commands.invoke extra param",
+    "method": "nnp.commands.invoke",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "callbackId": "callback",
+      "args": [
+        {
+          "text": "😀中"
+        }
+      ],
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.invoke missing identity/field",
+    "method": "nnp.commands.invoke",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "callbackId": "callback",
+      "args": [
+        {
+          "text": "😀中"
+        }
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.invoke valid result",
+    "method": "nnp.commands.invoke",
+    "part": "result",
+    "value": [
+      1,
+      "😀中",
+      null
+    ],
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.create valid params",
+    "method": "nnp.webviews.create",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "viewType": "preview",
+      "title": "Preview",
+      "position": "right"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.create extra param",
+    "method": "nnp.webviews.create",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "viewType": "preview",
+      "title": "Preview",
+      "position": "right",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.create missing identity/field",
+    "method": "nnp.webviews.create",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "viewType": "preview",
+      "title": "Preview",
+      "position": "right"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.create valid result",
+    "method": "nnp.webviews.create",
+    "part": "result",
+    "value": {
+      "panelId": "panel"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.create invalid result",
+    "method": "nnp.webviews.create",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.reveal valid params",
+    "method": "nnp.webviews.reveal",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.reveal extra param",
+    "method": "nnp.webviews.reveal",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.reveal missing identity/field",
+    "method": "nnp.webviews.reveal",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "panelId": "panel"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.reveal valid result",
+    "method": "nnp.webviews.reveal",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.reveal invalid result",
+    "method": "nnp.webviews.reveal",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.setHtml valid params",
+    "method": "nnp.webviews.setHtml",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "html": "<h1>😀中</h1>",
+      "renderContext": {
+        "documentId": "doc",
+        "version": 1
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.setHtml extra param",
+    "method": "nnp.webviews.setHtml",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "html": "<h1>😀中</h1>",
+      "renderContext": {
+        "documentId": "doc",
+        "version": 1
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.setHtml missing identity/field",
+    "method": "nnp.webviews.setHtml",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "panelId": "panel",
+      "html": "<h1>😀中</h1>",
+      "renderContext": {
+        "documentId": "doc",
+        "version": 1
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.setHtml valid result",
+    "method": "nnp.webviews.setHtml",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.setHtml invalid result",
+    "method": "nnp.webviews.setHtml",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.mapResource valid params",
+    "method": "nnp.webviews.mapResource",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "resource": {
+        "kind": "package",
+        "path": "image.png"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.mapResource extra param",
+    "method": "nnp.webviews.mapResource",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "resource": {
+        "kind": "package",
+        "path": "image.png"
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.mapResource missing identity/field",
+    "method": "nnp.webviews.mapResource",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "panelId": "panel",
+      "resource": {
+        "kind": "package",
+        "path": "image.png"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.mapResource valid result",
+    "method": "nnp.webviews.mapResource",
+    "part": "result",
+    "value": "nnp-resource:abc",
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.mapResource invalid result",
+    "method": "nnp.webviews.mapResource",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.postMessage valid params",
+    "method": "nnp.webviews.postMessage",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "message": {
+        "hello": "😀中"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.postMessage extra param",
+    "method": "nnp.webviews.postMessage",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "message": {
+        "hello": "😀中"
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.postMessage missing identity/field",
+    "method": "nnp.webviews.postMessage",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "panelId": "panel",
+      "message": {
+        "hello": "😀中"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.postMessage valid result",
+    "method": "nnp.webviews.postMessage",
+    "part": "result",
+    "value": true,
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.postMessage invalid result",
+    "method": "nnp.webviews.postMessage",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.event valid params",
+    "method": "nnp.webviews.event",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "type": "message",
+      "payload": null
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.event extra param",
+    "method": "nnp.webviews.event",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "type": "message",
+      "payload": null,
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.event missing identity/field",
+    "method": "nnp.webviews.event",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "panelId": "panel",
+      "type": "message",
+      "payload": null
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.storage.get valid params",
+    "method": "nnp.storage.get",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.storage.get extra param",
+    "method": "nnp.storage.get",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.storage.get missing identity/field",
+    "method": "nnp.storage.get",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "key": "theme"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.storage.get valid result",
+    "method": "nnp.storage.get",
+    "part": "result",
+    "value": {
+      "count": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.storage.update valid params",
+    "method": "nnp.storage.update",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme",
+      "value": {
+        "label": "😀中"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.storage.update extra param",
+    "method": "nnp.storage.update",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme",
+      "value": {
+        "label": "😀中"
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.storage.update missing identity/field",
+    "method": "nnp.storage.update",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "key": "theme",
+      "value": {
+        "label": "😀中"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.storage.update valid result",
+    "method": "nnp.storage.update",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.storage.update invalid result",
+    "method": "nnp.storage.update",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.configuration.get valid params",
+    "method": "nnp.configuration.get",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.configuration.get extra param",
+    "method": "nnp.configuration.get",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.configuration.get missing identity/field",
+    "method": "nnp.configuration.get",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "key": "theme"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.configuration.get valid result",
+    "method": "nnp.configuration.get",
+    "part": "result",
+    "value": "dark",
+    "valid": true
+  },
+  {
+    "name": "nnp.configuration.update valid params",
+    "method": "nnp.configuration.update",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme",
+      "value": {
+        "label": "😀中"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.configuration.update extra param",
+    "method": "nnp.configuration.update",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme",
+      "value": {
+        "label": "😀中"
+      },
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.configuration.update missing identity/field",
+    "method": "nnp.configuration.update",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "key": "theme",
+      "value": {
+        "label": "😀中"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.configuration.update valid result",
+    "method": "nnp.configuration.update",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.configuration.update invalid result",
+    "method": "nnp.configuration.update",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.resources.dispose valid params",
+    "method": "nnp.resources.dispose",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "resourceId": "resource"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.resources.dispose extra param",
+    "method": "nnp.resources.dispose",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "resourceId": "resource",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.resources.dispose missing identity/field",
+    "method": "nnp.resources.dispose",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "resourceId": "resource"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.resources.dispose valid result",
+    "method": "nnp.resources.dispose",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.resources.dispose invalid result",
+    "method": "nnp.resources.dispose",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.request.cancel valid params",
+    "method": "nnp.request.cancel",
+    "part": "params",
+    "value": {
+      "requestId": "h:fixture"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.request.cancel extra param",
+    "method": "nnp.request.cancel",
+    "part": "params",
+    "value": {
+      "requestId": "h:fixture",
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.request.cancel missing identity/field",
+    "method": "nnp.request.cancel",
+    "part": "params",
+    "value": {},
+    "valid": false
+  },
+  {
+    "name": "future protocol alongside current",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.2",
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "future API",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.2.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "future limits",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 65,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "duplicate capability",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1",
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe generation",
+    "method": "nnp.initialize",
+    "part": "params",
+    "value": {
+      "pluginId": "tests.native",
+      "sessionId": "fixture-session",
+      "generation": 9007199254740992,
+      "protocolVersions": [
+        "0.1"
+      ],
+      "hostVersion": "0.15.0",
+      "apiVersion": "0.1.0",
+      "grantedCapabilities": [
+        "commands@1"
+      ],
+      "limits": {
+        "maxFrameBytes": 16777216,
+        "maxHeaderBytes": 8192,
+        "maxBatchEntries": 64,
+        "maxPendingRequests": 64,
+        "maxJsonDepth": 128,
+        "maxIdTokenBytes": 1024,
+        "maxSnapshotUtf8Bytes": 2097152,
+        "maxHtmlUtf8Bytes": 6291456,
+        "maxWebviewMessageBytes": 65536,
+        "maxPluginDataBytes": 1048576,
+        "maxPluginDataValueBytes": 65536,
+        "maxPluginDataKeys": 256,
+        "maxPluginDataDepth": 32
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "delete storage key",
+    "method": "nnp.storage.update",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "key": "theme"
+    },
+    "valid": true
+  },
+  {
+    "name": "unpaired render context",
+    "method": "nnp.webviews.setHtml",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "html": "<h1>😀中</h1>",
+      "renderContext": {
+        "documentId": null,
+        "version": 1
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.watchAll valid params",
+    "method": "nnp.documents.watchAll",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.watchAll valid result",
+    "method": "nnp.documents.watchAll",
+    "part": "result",
+    "value": {
+      "subscriptionId": "watch",
+      "documents": [
+        {
+          "documentId": "doc",
+          "uri": "untitled:doc",
+          "languageId": "text",
+          "version": 2,
+          "isDirty": true,
+          "isReadonly": false
+        }
+      ],
+      "activeDocumentId": "doc",
+      "eventSeq": 0,
+      "maxDocuments": 64,
+      "maxTotalUtf8Bytes": 4194304
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.watchAll rejects extra param",
+    "method": "nnp.documents.watchAll",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.watchAll requires session identity",
+    "method": "nnp.documents.watchAll",
+    "part": "params",
+    "value": {
+      "generation": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getMirrorSnapshot valid params",
+    "method": "nnp.documents.getMirrorSnapshot",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "documentId": "doc"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getMirrorSnapshot valid result",
+    "method": "nnp.documents.getMirrorSnapshot",
+    "part": "result",
+    "value": {
+      "snapshot": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false,
+        "text": "a😀中\r\n",
+        "positionEncoding": "utf-16"
+      },
+      "eventSeq": 5
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getMirrorSnapshot rejects extra param",
+    "method": "nnp.documents.getMirrorSnapshot",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "documentId": "doc",
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getMirrorSnapshot requires session identity",
+    "method": "nnp.documents.getMirrorSnapshot",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "subscriptionId": "watch",
+      "documentId": "doc"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.delta valid params",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "changed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "baseVersion": 1,
+      "changes": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 1
+            },
+            "end": {
+              "line": 0,
+              "character": 3
+            }
+          },
+          "rangeOffset": 1,
+          "rangeLength": 2,
+          "text": "中"
+        }
+      ],
+      "reason": "edit"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.delta valid result",
+    "method": "nnp.documents.delta",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.delta rejects extra param",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "changed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "baseVersion": 1,
+      "changes": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 1
+            },
+            "end": {
+              "line": 0,
+              "character": 3
+            }
+          },
+          "rangeOffset": 1,
+          "rangeLength": 2,
+          "text": "中"
+        }
+      ],
+      "reason": "edit",
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.delta requires session identity",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "changed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "baseVersion": 1,
+      "changes": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 1
+            },
+            "end": {
+              "line": 0,
+              "character": 3
+            }
+          },
+          "rangeOffset": 1,
+          "rangeLength": 2,
+          "text": "中"
+        }
+      ],
+      "reason": "edit"
+    },
+    "valid": false
+  },
+  {
+    "name": "ordered delta opened",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 7,
+      "type": "opened",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "ordered delta closed",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 7,
+      "type": "closed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "ordered delta metadataChanged",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 7,
+      "type": "metadataChanged",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "ordered delta activeChanged",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 7,
+      "type": "activeChanged",
+      "document": null
+    },
+    "valid": true
+  },
+  {
+    "name": "ordered delta reset",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 7,
+      "type": "reset",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "reason": "bufferReset"
+    },
+    "valid": true
+  },
+  {
+    "name": "negative old offset",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "changed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "baseVersion": 1,
+      "changes": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 1
+            },
+            "end": {
+              "line": 0,
+              "character": 3
+            }
+          },
+          "rangeOffset": -1,
+          "rangeLength": 2,
+          "text": "中"
+        }
+      ],
+      "reason": "edit"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing base version",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "changed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "changes": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 1
+            },
+            "end": {
+              "line": 0,
+              "character": 3
+            }
+          },
+          "rangeOffset": 1,
+          "rangeLength": 2,
+          "text": "中"
+        }
+      ],
+      "reason": "edit"
+    },
+    "valid": false
+  },
+  {
+    "name": "empty delta changes",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "changed",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "baseVersion": 1,
+      "changes": [],
+      "reason": "edit"
+    },
+    "valid": false
+  },
+  {
+    "name": "invalid reset reason",
+    "method": "nnp.documents.delta",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "subscriptionId": "watch",
+      "eventSeq": 6,
+      "type": "reset",
+      "document": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false
+      },
+      "baseVersion": 1,
+      "changes": [],
+      "reason": "silent"
+    },
+    "valid": false
+  },
+  {
+    "name": "mirror snapshot requires barrier",
+    "method": "nnp.documents.getMirrorSnapshot",
+    "part": "result",
+    "value": {
+      "snapshot": {
+        "documentId": "doc",
+        "uri": "untitled:doc",
+        "languageId": "text",
+        "version": 2,
+        "isDirty": true,
+        "isReadonly": false,
+        "text": "a😀中\r\n",
+        "positionEncoding": "utf-16"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "mirror budget must match",
+    "method": "nnp.documents.watchAll",
+    "part": "result",
+    "value": {
+      "subscriptionId": "watch",
+      "documents": [
+        {
+          "documentId": "doc",
+          "uri": "untitled:doc",
+          "languageId": "text",
+          "version": 2,
+          "isDirty": true,
+          "isReadonly": false
+        }
+      ],
+      "activeDocumentId": "doc",
+      "eventSeq": 0,
+      "maxDocuments": 64,
+      "maxTotalUtf8Bytes": 8388608
+    },
+    "valid": false
+  },
+  {
+    "name": "show message",
+    "method": "nnp.window.showMessage",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "severity": "info",
+      "message": "Hello World!",
+      "items": [
+        "Done"
+      ]
+    },
+    "valid": true
+  },
+  {
+    "name": "message result",
+    "method": "nnp.window.showMessage",
+    "part": "result",
+    "value": {
+      "messageId": "message"
+    },
+    "valid": true
+  },
+  {
+    "name": "message selected",
+    "method": "nnp.window.messageEvent",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "messageId": "message",
+      "selected": "Done"
+    },
+    "valid": true
+  },
+  {
+    "name": "message dismissed",
+    "method": "nnp.window.messageEvent",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "messageId": "message",
+      "selected": null
+    },
+    "valid": true
+  },
+  {
+    "name": "message severity invalid",
+    "method": "nnp.window.showMessage",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "severity": "fatal",
+      "message": "Hello World!",
+      "items": [
+        "Done"
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "message fields closed",
+    "method": "nnp.window.showMessage",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "severity": "info",
+      "message": "Hello World!",
+      "items": [
+        "Done"
+      ],
+      "modal": true
+    },
+    "valid": false
+  },
+  {
+    "name": "message action object unsupported",
+    "method": "nnp.window.showMessage",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "severity": "info",
+      "message": "Hello World!",
+      "items": [
+        {
+          "title": "Done"
+        }
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "message missing id",
+    "method": "nnp.window.messageEvent",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "selected": null
+    },
+    "valid": false
+  },
+  {
+    "name": "message selected must be string",
+    "method": "nnp.window.messageEvent",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "messageId": "message",
+      "selected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "message result fields closed",
+    "method": "nnp.window.showMessage",
+    "part": "result",
+    "value": {
+      "messageId": "message",
+      "text": "extra"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.createCompatible valid",
+    "method": "nnp.webviews.createCompatible",
+    "part": "params",
+    "valid": true,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "viewType": "catCoding",
+      "title": "Cat Coding",
+      "enableScripts": true,
+      "localResourceRoots": [
+        "dist/media"
+      ]
+    }
+  },
+  {
+    "name": "nnp.webviews.createCompatible result",
+    "method": "nnp.webviews.createCompatible",
+    "part": "result",
+    "valid": true,
+    "value": {
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "name": "nnp.webviews.createCompatible closed params",
+    "method": "nnp.webviews.createCompatible",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "viewType": "catCoding",
+      "title": "Cat Coding",
+      "enableScripts": true,
+      "localResourceRoots": [
+        "dist/media"
+      ],
+      "extra": true
+    }
+  },
+  {
+    "name": "nnp.webviews.createCompatible missing handle",
+    "method": "nnp.webviews.createCompatible",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "viewType": "catCoding",
+      "title": "Cat Coding",
+      "enableScripts": true,
+      "localResourceRoots": [
+        "dist/media"
+      ]
+    }
+  },
+  {
+    "name": "nnp.webviews.createCompatible invalid result",
+    "method": "nnp.webviews.createCompatible",
+    "part": "result",
+    "valid": false,
+    "value": 42
+  },
+  {
+    "name": "nnp.webviews.setDocument valid",
+    "method": "nnp.webviews.setDocument",
+    "part": "params",
+    "valid": true,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "html": "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>Full HTML</body></html>"
+    }
+  },
+  {
+    "name": "nnp.webviews.setDocument result",
+    "method": "nnp.webviews.setDocument",
+    "part": "result",
+    "valid": true,
+    "value": null
+  },
+  {
+    "name": "nnp.webviews.setDocument closed params",
+    "method": "nnp.webviews.setDocument",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "html": "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>Full HTML</body></html>",
+      "extra": true
+    }
+  },
+  {
+    "name": "nnp.webviews.setDocument missing handle",
+    "method": "nnp.webviews.setDocument",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "html": "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>Full HTML</body></html>"
+    }
+  },
+  {
+    "name": "nnp.webviews.setDocument invalid result",
+    "method": "nnp.webviews.setDocument",
+    "part": "result",
+    "valid": false,
+    "value": 42
+  },
+  {
+    "name": "nnp.webviews.mapAsset valid",
+    "method": "nnp.webviews.mapAsset",
+    "part": "params",
+    "valid": true,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "dist/media/main.js"
+    }
+  },
+  {
+    "name": "nnp.webviews.mapAsset result",
+    "method": "nnp.webviews.mapAsset",
+    "part": "result",
+    "valid": true,
+    "value": "nnp-plugin://bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/asset/dist/media/main.js"
+  },
+  {
+    "name": "nnp.webviews.mapAsset closed params",
+    "method": "nnp.webviews.mapAsset",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "dist/media/main.js",
+      "extra": true
+    }
+  },
+  {
+    "name": "nnp.webviews.mapAsset missing handle",
+    "method": "nnp.webviews.mapAsset",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "path": "dist/media/main.js"
+    }
+  },
+  {
+    "name": "nnp.webviews.mapAsset invalid result",
+    "method": "nnp.webviews.mapAsset",
+    "part": "result",
+    "valid": false,
+    "value": 42
+  },
+  {
+    "name": "nnp.webviews.setTitle valid",
+    "method": "nnp.webviews.setTitle",
+    "part": "params",
+    "valid": true,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "title": "Coding Cat"
+    }
+  },
+  {
+    "name": "nnp.webviews.setTitle result",
+    "method": "nnp.webviews.setTitle",
+    "part": "result",
+    "valid": true,
+    "value": null
+  },
+  {
+    "name": "nnp.webviews.setTitle closed params",
+    "method": "nnp.webviews.setTitle",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "title": "Coding Cat",
+      "extra": true
+    }
+  },
+  {
+    "name": "nnp.webviews.setTitle missing handle",
+    "method": "nnp.webviews.setTitle",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "title": "Coding Cat"
+    }
+  },
+  {
+    "name": "nnp.webviews.setTitle invalid result",
+    "method": "nnp.webviews.setTitle",
+    "part": "result",
+    "valid": false,
+    "value": 42
+  },
+  {
+    "name": "view state",
+    "method": "nnp.webviews.event",
+    "part": "params",
+    "valid": true,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "viewState",
+      "payload": {
+        "visible": true,
+        "active": false,
+        "viewColumn": 1
+      }
+    }
+  },
+  {
+    "name": "view state invalid active",
+    "method": "nnp.webviews.event",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "viewState",
+      "payload": {
+        "visible": true,
+        "active": "false",
+        "viewColumn": 1
+      }
+    }
+  },
+  {
+    "name": "view state closed payload",
+    "method": "nnp.webviews.event",
+    "part": "params",
+    "valid": false,
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "viewState",
+      "payload": {
+        "visible": true,
+        "active": false,
+        "viewColumn": 1,
+        "unknown": true
+      }
+    }
+  },
+  {
+    "name": "nnp.storage.update compare object",
+    "method": "nnp.storage.update",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "key": "_vscode.globalState.v1",
+      "expectedValue": {
+        "schemaVersion": 1,
+        "values": {
+          "old": 1
+        }
+      },
+      "value": {
+        "schemaVersion": 1,
+        "values": {
+          "new": 2
+        }
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.storage.update compare absent delete",
+    "method": "nnp.storage.update",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "key": "_vscode.globalState.v1",
+      "expectedValue": null
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.storage.get rejects comparison",
+    "method": "nnp.storage.get",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "key": "state",
+      "expectedValue": null
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.configuration.update compare object",
+    "method": "nnp.configuration.update",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "key": "_vscode.globalState.v1",
+      "expectedValue": {
+        "schemaVersion": 1,
+        "values": {
+          "old": 1
+        }
+      },
+      "value": {
+        "schemaVersion": 1,
+        "values": {
+          "new": 2
+        }
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.configuration.update compare absent delete",
+    "method": "nnp.configuration.update",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "key": "_vscode.globalState.v1",
+      "expectedValue": null
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.configuration.get rejects comparison",
+    "method": "nnp.configuration.get",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "key": "state",
+      "expectedValue": null
+    },
+    "valid": false
+  }
+]

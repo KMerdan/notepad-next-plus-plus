@@ -1,0 +1,52 @@
+{
+  "manifestVersion": 1,
+  "id": "notepadnext.markdown-preview",
+  "name": "Markdown Preview",
+  "version": "0.1.0",
+  "description": "Read-only preview of the current Markdown buffer.",
+  "engines": {
+    "notepadnext": ">=0.15.0 <0.16.0",
+    "api": "^0.1.0"
+  },
+  "runtime": {
+    "kind": "node",
+    "entry": "dist/index.js"
+  },
+  "capabilities": {
+    "required": [
+      "documents.read@1",
+      "documents.events@1",
+      "commands@1",
+      "webviews@1"
+    ],
+    "optional": []
+  },
+  "activationEvents": [
+    "onCommand:notepadnext.markdown-preview.open"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "notepadnext.markdown-preview.open",
+        "title": "Open Markdown Preview",
+        "icon": "resources/preview.png"
+      }
+    ],
+    "menus": [
+      {
+        "location": "plugins",
+        "command": "notepadnext.markdown-preview.open",
+        "order": 100
+      }
+    ],
+    "toolbar": [
+      {
+        "command": "notepadnext.markdown-preview.open",
+        "order": 100
+      }
+    ]
+  },
+  "list": false,
+  "repository": "https://github.com/example/markdown-preview",
+  "displayIcon": "markdown"
+}

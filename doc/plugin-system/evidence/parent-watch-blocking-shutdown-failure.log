@@ -1,0 +1,39 @@
+Test project /private/tmp/notepadnext-app-build-610
+    Start 2: PluginPackageTests
+1/4 Test #2: PluginPackageTests ...............   Passed    1.69 sec
+    Start 4: PluginParentCrashTests
+2/4 Test #4: PluginParentCrashTests ...........   Passed    0.80 sec
+    Start 5: PluginRpcTests
+3/4 Test #5: PluginRpcTests ...................   Passed   13.45 sec
+    Start 7: PluginNodeHostTests
+4/4 Test #7: PluginNodeHostTests ..............***Failed  145.10 sec
+✔ native package lifecycle and bidirectional document read (38.659333ms)
+✔ failed activation releases already registered resources (34.173459ms)
+✔ watch buffers events that arrive before its reply (0.844333ms)
+✔ incompatible version and limits reject before module import (33.424542ms)
+✖ parent-lifetime watcher permits normal shutdown (5001.771458ms)
+✔ parent pipe EOF terminates a blocked plugin main thread (76.764125ms)
+✔ invalid watcher descriptor rejects before plugin import (28.763417ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145066.616458
+
+✖ failing tests:
+
+test at ../../../../../Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/host.test.cjs:72:1
+✖ parent-lifetime watcher permits normal shutdown (5001.771458ms)
+  'test timed out after 5000ms'
+
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) = 161.04 sec
+
+The following tests FAILED:
+	  7 - PluginNodeHostTests (Failed)
+Errors while running CTest

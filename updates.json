@@ -1,9 +1,9 @@
 {
   "updates": {
     "windows": {
-      "open-url": "",
+      "open-url": "https://github.com/KMerdan/notepad-next-plus-plus/releases",
       "latest-version": "0.15",
-      "download-url": "https://github.com/dail8859/NotepadNext/releases/download/v0.15/NotepadNext-v0.15-Installer.exe",
+      "download-url": "",
       "changelog": "",
       "mandatory": false
     }

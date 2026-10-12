@@ -1,0 +1,51 @@
+{
+  "offline": {
+    "version": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "/private/tmp/nnp-plugin-ci-offline-runtime/node-v24.21.0-darwin-arm64/bin/node",
+    "archive": "/private/tmp/nnp-plugin-ci-offline-runtime/node-v24.21.0-darwin-arm64.tar.xz",
+    "archiveSha256": "6239d4cf92d864487ec8cd3615038f7b67e7f58b77b21cd2f09ea9fbd68065fe",
+    "nodeSha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b"
+  },
+  "linux": {
+    "version": "v24.21.0",
+    "platform": "linux",
+    "arch": "x64",
+    "node": "/private/tmp/nnp-plugin-ci-linux-runtime/node-v24.21.0-linux-x64/bin/node",
+    "archive": "/private/tmp/nnp-plugin-ci-linux-runtime/node-v24.21.0-linux-x64.tar.xz",
+    "archiveSha256": "fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6",
+    "nodeSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+  },
+  "win": {
+    "version": "v24.21.0",
+    "platform": "win",
+    "arch": "x64",
+    "node": "/private/tmp/nnp-plugin-ci-win-runtime/node-v24.21.0-win-x64/node.exe",
+    "archive": "/private/tmp/nnp-plugin-ci-win-runtime/node-v24.21.0-win-x64.zip",
+    "archiveSha256": "158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32"
+  },
+  "actionPins": [
+    {
+      "repo": "jurplel/install-qt-action",
+      "ref": "v4",
+      "sha": "a9c63c7c123f3069cff414e7e482d95dfa9d8125"
+    },
+    {
+      "repo": "actions/setup-python",
+      "ref": "v6",
+      "sha": "ece7cb06caefa5fff74198d8649806c4678c61a1"
+    },
+    {
+      "repo": "actions/upload-artifact",
+      "ref": "v6",
+      "sha": "b7c566a772e6b6bfb58ed0dc250532a479d7789f"
+    },
+    {
+      "repo": "ilammy/msvc-dev-cmd",
+      "ref": "v1",
+      "sha": "0b201ec74fa43914dc39ae48a89fd1d8cb592756"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-11",
+  "phase": "local-development",
+  "status": "verified",
+  "platform": "macOS arm64",
+  "qt": "6.10.0",
+  "node": "24.21.0",
+  "build": "Debug, plugins ON, WebEngine ON, developer Python configured",
+  "app": "build/plugin-dev/NotepadNext.app",
+  "appVersion": "NotepadNext 0.15",
+  "examplePackage": "build/plugin-dev/markdown-preview",
+  "tests": {
+    "targets": 24,
+    "passedTargets": 24,
+    "fullRun": {
+      "passed": 23,
+      "timeout": 1,
+      "timeoutSeconds": 90
+    },
+    "isolatedWebviewRerun": {
+      "passed": true,
+      "seconds": 150.48,
+      "invocationTimeoutSeconds": 300
+    },
+    "qtSummaries": {
+      "full": [
+        "Totals: 18 passed, 0 failed, 0 skipped, 0 blacklisted, 545ms",
+        "Totals: 48 passed, 0 failed, 0 skipped, 0 blacklisted, 1271ms",
+        "Totals: 17 passed, 0 failed, 0 skipped, 0 blacklisted, 3007ms",
+        "Totals: 42 passed, 0 failed, 0 skipped, 0 blacklisted, 1931ms",
+        "Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 1008ms",
+        "Totals: 235 passed, 0 failed, 0 skipped, 0 blacklisted, 16981ms",
+        "Totals: 16 passed, 0 failed, 0 skipped, 0 blacklisted, 2069ms",
+        "Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 775ms",
+        "Totals: 10 passed, 0 failed, 0 skipped, 0 blacklisted, 2260ms",
+        "Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 6457ms",
+        "Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 18198ms"
+      ],
+      "webview": [
+        "Totals: 43 passed, 0 failed, 0 skipped, 0 blacklisted, 150315ms"
+      ]
+    }
+  },
+  "validation": [
+    "Local UI registration without network, execution or installation",
+    "Same metadata/list contract for local resources",
+    "Persisted source provenance, refresh, and missing-file cache retention",
+    "Declared GitHub identity preserved for local author metadata",
+    "Actual file picker and explicit installation into Installed, disabled by default",
+    "Enable and render unsaved Unicode Markdown in real WebEngine",
+    "Python and bounded VS Code examples in the production Application",
+    "Real application shutdown cleans owned resources",
+    "Copied development app version check",
+    "Independent Draft 2020-12 local manifest validation"
+  ],
+  "failuresPreserved": [
+    "local-registration-selection-failure.log",
+    "local-registration-full-tests.log"
+  ],
+  "sourceSha256": {
+    "src/plugins/sources/PluginMetadata.h": "df20ff7c221b834753d6599ee806078ccb88595edbf3a6233fe46ae55ba8ce0e",
+    "src/plugins/sources/PluginMetadata.cpp": "cd1c279884d5ad5427946fe98dcde2ce0bddb62f7f1860cf63206c7b038bd122",
+    "src/plugins/sources/RegisteredResourceRegistry.cpp": "2dde65e629f084c604c12efb1f016f9e6dae7b699181cfff678aa8318f3025b9",
+    "src/dialogs/PluginManagerDialog.cpp": "bf9edb2e6c86f47c76658b15f750915043c4e52143592b5e6d4a48912b864314",
+    "doc/plugin-system/manifest.schema.json": "e079cfa7e8ed6e57b45dc7ba503d47e044d8df519dfe66679c746c9ccc425d32",
+    "tests/plugin-sources/PluginSourceTests.cpp": "49462fea33ffb23b4546a11d1d9e8475b6e9cd1423ed85a911e1dff3aadc91d8",
+    "tests/plugin-application/PluginApplicationTests.cpp": "86b2fea02c554418c1212ea878691f4e515dfa4826d9c6d218ac16a6e9b7f3cb"
+  },
+  "formalSigningPerformed": false,
+  "notarizationPerformed": false,
+  "publicationPerformed": false,
+  "limits": [
+    "Local host uses the configured Qt SDK and optional development Python interpreter",
+    "Remote GitHub and other-platform execution are not established by this proof",
+    "The wider plan remains in progress; this verifies the local development handoff"
+  ]
+}

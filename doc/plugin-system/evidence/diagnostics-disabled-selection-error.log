@@ -1,0 +1,290 @@
+Test project /private/tmp/notepadnext-app-build-disabled
+      Start  1: PluginSourceTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/PluginSourceTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Release/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Release/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Debug/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Debug/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/MinSizeRel/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/MinSizeRel/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/RelWithDebInfo/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/RelWithDebInfo/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Deployment/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Deployment/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Development/PluginSourceTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Development/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Release/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Release/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Debug/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Debug/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/MinSizeRel/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/MinSizeRel/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/RelWithDebInfo/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/RelWithDebInfo/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Deployment/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Deployment/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Development/PluginSourceTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/Development/PluginSourceTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-sources/PluginSourceTests
+ 1/13 Test  #1: PluginSourceTests ................***Not Run   0.00 sec
+      Start  2: PluginPackageTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginPackageTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginPackageTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginPackageTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginPackageTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginPackageTests
+ 2/13 Test  #2: PluginPackageTests ...............***Not Run   0.00 sec
+      Start  3: PluginGitHubReleaseTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginGitHubReleaseTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginGitHubReleaseTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginGitHubReleaseTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginGitHubReleaseTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginGitHubReleaseTests
+ 3/13 Test  #3: PluginGitHubReleaseTests .........***Not Run   0.00 sec
+      Start  4: PluginParentCrashTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginParentCrashTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginParentCrashTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Release/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Debug/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/MinSizeRel/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/RelWithDebInfo/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Deployment/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginParentCrashTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/Development/PluginParentCrashTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-packages/PluginParentCrashTests
+ 4/13 Test  #4: PluginParentCrashTests ...........***Not Run   0.00 sec
+      Start  5: PluginRpcTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/PluginRpcTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Release/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Release/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Debug/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Debug/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/MinSizeRel/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/MinSizeRel/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/RelWithDebInfo/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/RelWithDebInfo/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Deployment/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Deployment/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Development/PluginRpcTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Development/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Release/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Release/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Debug/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Debug/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/MinSizeRel/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/MinSizeRel/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/RelWithDebInfo/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/RelWithDebInfo/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Deployment/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Deployment/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Development/PluginRpcTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/Development/PluginRpcTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-rpc/PluginRpcTests
+ 5/13 Test  #5: PluginRpcTests ...................***Not Run   0.00 sec
+      Start  6: PluginNodeRpcTests
+ 6/13 Test  #6: PluginNodeRpcTests ...............   Passed    0.09 sec
+      Start  7: PluginNodeHostTests
+ 7/13 Test  #7: PluginNodeHostTests ..............   Passed    0.34 sec
+      Start  8: PluginNodeWireTests
+ 8/13 Test  #8: PluginNodeWireTests ..............   Passed    0.09 sec
+      Start  9: PluginSdkPackageTests
+ 9/13 Test  #9: PluginSdkPackageTests ............   Passed    0.11 sec
+      Start 10: PluginDocumentTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/PluginDocumentTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Release/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Release/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Debug/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Debug/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/MinSizeRel/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/MinSizeRel/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/RelWithDebInfo/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/RelWithDebInfo/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Deployment/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Deployment/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Development/PluginDocumentTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Development/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Release/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Release/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Debug/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Debug/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/MinSizeRel/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/MinSizeRel/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/RelWithDebInfo/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/RelWithDebInfo/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Deployment/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Deployment/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Development/PluginDocumentTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/Development/PluginDocumentTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-documents/PluginDocumentTests
+10/13 Test #10: PluginDocumentTests ..............***Not Run   0.00 sec
+      Start 11: PluginDataTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-data/PluginDataTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Release/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Release/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Debug/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Debug/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/MinSizeRel/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/MinSizeRel/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/RelWithDebInfo/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/RelWithDebInfo/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Deployment/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Deployment/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Development/PluginDataTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Development/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Release/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Release/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Debug/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Debug/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/MinSizeRel/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/MinSizeRel/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/RelWithDebInfo/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/RelWithDebInfo/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Deployment/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Deployment/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Development/PluginDataTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-data/Development/PluginDataTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-data/PluginDataTests
+11/13 Test #11: PluginDataTests ..................***Not Run   0.00 sec
+      Start 12: PluginDiagnosticTests
+Could not find executable /private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/PluginDiagnosticTests
+Looked in the following places:
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Release/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Release/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Debug/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Debug/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/MinSizeRel/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/MinSizeRel/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/RelWithDebInfo/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/RelWithDebInfo/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Deployment/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Deployment/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Development/PluginDiagnosticTests
+/private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Development/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Release/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Release/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Debug/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Debug/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/MinSizeRel/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/MinSizeRel/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/RelWithDebInfo/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/RelWithDebInfo/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Deployment/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Deployment/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Development/PluginDiagnosticTests
+private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/Development/PluginDiagnosticTests
+Unable to find executable: /private/tmp/notepadnext-app-build-disabled/tests/plugin-diagnostics/PluginDiagnosticTests
+12/13 Test #12: PluginDiagnosticTests ............***Not Run   0.00 sec
+      Start 13: PluginApplicationTests
+13/13 Test #13: PluginApplicationTests ...........   Passed    0.37 sec
+
+38% tests passed, 8 tests failed out of 13
+
+Total Test time (real) =   1.00 sec
+
+The following tests FAILED:
+	  1 - PluginSourceTests (Not Run)
+	  2 - PluginPackageTests (Not Run)
+	  3 - PluginGitHubReleaseTests (Not Run)
+	  4 - PluginParentCrashTests (Not Run)
+	  5 - PluginRpcTests (Not Run)
+	 10 - PluginDocumentTests (Not Run)
+	 11 - PluginDataTests (Not Run)
+	 12 - PluginDiagnosticTests (Not Run)
+Errors while running CTest

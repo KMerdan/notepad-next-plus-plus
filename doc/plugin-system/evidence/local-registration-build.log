@@ -1,0 +1,159 @@
+[  0%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target SingleApplication_autogen_timestamp_deps
+[  0%] Built target uchardet_autogen_timestamp_deps
+[  0%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  0%] Built target lua_autogen_timestamp_deps
+[  0%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  4%] Built target NotepadNext_lrelease
+[  4%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  4%] Built target zlibstatic_autogen_timestamp_deps
+[  4%] Built target NotepadNext_qmlimportscan
+[  4%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  4%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  7%] Built target NotepadNext_NotepadNext_translations
+[  7%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  7%] Built target DiagnosticCrashProbe_autogen_timestamp_deps
+[  7%] Built target uchardet_autogen
+[  7%] Built target PluginApplicationTests_qmlimportscan
+[  7%] Built target lua_autogen
+[  7%] Built target editorconfig-core-qt_autogen
+[  7%] Built target qtadvanceddocking-qt6_autogen
+[  7%] Built target QSimpleUpdater_autogen
+[  7%] Built target SingleApplication_autogen
+[  7%] Built target scintilla_autogen
+[  8%] Built target zlibstatic_autogen
+[  8%] Built target DiagnosticCrashProbe_autogen
+[  8%] Built target NotepadNextPluginRpc_autogen
+[  8%] Built target NotepadNextPluginDiagnostics_autogen
+[  8%] Automatic MOC and UIC for target NotepadNextPluginSources
+[  8%] Built target NotepadNextPluginData_autogen
+[  9%] Built target QSimpleUpdater
+[ 10%] Built target editorconfig-core-qt
+[ 20%] Built target lua
+[ 23%] Built target uchardet
+[ 24%] Built target SingleApplication
+[ 24%] Built target NotepadNextPluginSources_autogen
+[ 25%] Built target NotepadNextPluginDiagnostics
+[ 27%] Built target zlibstatic
+[ 31%] Built target qtadvanceddocking-qt6
+[ 31%] Built target NotepadNextPluginData
+[ 31%] Built target DiagnosticCrashProbe
+[ 31%] Building CXX object src/plugins/sources/CMakeFiles/NotepadNextPluginSources.dir/PluginMetadata.cpp.o
+[ 33%] Built target NotepadNextPluginRpc
+[ 33%] Built target PluginDataTests_autogen_timestamp_deps
+[ 33%] Built target PluginDiagnosticTests_autogen_timestamp_deps
+[ 33%] Built target PluginRpcTests_autogen_timestamp_deps
+[ 39%] Built target scintilla
+[ 39%] Built target PluginDataTests_autogen
+[ 39%] Built target lexilla_autogen_timestamp_deps
+[ 39%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 39%] Built target PluginDiagnosticTests_autogen
+[ 39%] Automatic MOC and UIC for target PluginRpcTests
+[ 39%] Built target lexilla_autogen
+[ 40%] Built target NotepadNextPluginDocuments_autogen
+[ 41%] Built target PluginDataTests
+[ 41%] Built target PluginDiagnosticTests
+[ 41%] Built target NotepadNextPluginDocuments
+[ 41%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 41%] Built target PluginDocumentTests_autogen_timestamp_deps
+[ 41%] Automatic MOC and UIC for target PluginDocumentTests
+[ 41%] Built target NotepadNextPluginWebviews_autogen
+[ 42%] Built target NotepadNextPluginWebviews
+[ 62%] Built target lexilla
+[ 62%] Built target PluginRpcTests_autogen
+[ 62%] Building CXX object tests/plugin-rpc/CMakeFiles/PluginRpcTests.dir/PluginRpcTests.cpp.o
+[ 62%] Built target PluginDocumentTests_autogen
+[ 63%] Building CXX object tests/plugin-documents/CMakeFiles/PluginDocumentTests.dir/PluginDocumentTests.cpp.o
+[ 63%] Linking CXX static library libNotepadNextPluginSources.a
+[ 64%] Built target NotepadNextPluginSources
+[ 64%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 64%] Built target NotepadNextPluginPackages_autogen
+[ 65%] Built target NotepadNextPluginPackages
+[ 65%] Built target PluginGitHubReleaseTests_autogen_timestamp_deps
+[ 65%] Built target PackageLeaseProbe_autogen_timestamp_deps
+[ 65%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 65%] Built target PluginManagerPreview_autogen_timestamp_deps
+[ 65%] Built target PluginSourceTests_autogen_timestamp_deps
+[ 65%] Built target PackageTransactionProbe_autogen_timestamp_deps
+[ 65%] Built target ParentCrashProbe_autogen_timestamp_deps
+[ 65%] Automatic MOC and UIC for target PackageTransactionProbe
+[ 65%] Automatic MOC and UIC for target PackageLeaseProbe
+[ 66%] Built target NotepadNextPluginRuntime_autogen
+[ 67%] Automatic MOC and UIC for target PluginManagerPreview
+[ 67%] Built target PluginSourceTests_autogen
+[ 67%] Built target PackageLeaseProbe_autogen
+[ 68%] Automatic MOC and UIC for target ParentCrashProbe
+[ 69%] Automatic MOC and UIC for target PluginGitHubReleaseTests
+[ 69%] Built target PackageTransactionProbe_autogen
+[ 69%] Built target NotepadNextPluginRuntime
+[ 69%] Built target ParentCrashProbe_autogen
+[ 70%] Building CXX object tests/plugin-packages/CMakeFiles/PackageTransactionProbe.dir/PackageTransactionProbe_autogen/mocs_compilation.cpp.o
+[ 70%] Built target PluginWebviewTests_autogen_timestamp_deps
+[ 70%] Building CXX object tests/plugin-packages/CMakeFiles/PackageLeaseProbe.dir/PackageLeaseProbe.cpp.o
+[ 70%] Linking CXX executable PluginSourceTests
+[ 70%] Building CXX object tests/plugin-packages/CMakeFiles/PackageTransactionProbe.dir/PackageTransactionProbe.cpp.o
+[ 70%] Built target NotepadNext_autogen_timestamp_deps
+[ 71%] Built target PluginSourceTests
+[ 71%] Building CXX object tests/plugin-packages/CMakeFiles/ParentCrashProbe.dir/ParentCrashProbe.cpp.o
+[ 71%] Automatic MOC and UIC for target PluginWebviewTests
+[ 71%] Built target PluginManagerPreview_autogen
+[ 71%] Built target NotepadNext_autogen
+[ 71%] Built target PluginGitHubReleaseTests_autogen
+[ 71%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/PluginManagerPreview_autogen/mocs_compilation.cpp.o
+[ 71%] Linking CXX executable PluginRpcTests
+[ 71%] Built target PluginRpcTests
+[ 71%] Linking CXX executable NotepadNext.app/Contents/MacOS/NotepadNext
+ld: warning: -undefined suppress is deprecated
+[ 71%] Linking CXX executable PluginDocumentTests
+[ 71%] Building CXX object tests/plugin-packages/CMakeFiles/PluginGitHubReleaseTests.dir/GitHubReleaseTests.cpp.o
+[ 71%] Built target PluginWebviewTests_autogen
+[ 71%] Built target PluginDocumentTests
+[ 71%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/PluginManagerPreview.cpp.o
+[ 71%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/PluginWebviewTests_autogen/mocs_compilation.cpp.o
+[ 71%] Linking CXX executable PackageLeaseProbe
+[ 71%] Built target PackageLeaseProbe
+[ 71%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/PluginWebviewTests.cpp.o
+[ 71%] Linking CXX executable PackageTransactionProbe
+[ 84%] Built target NotepadNext
+[ 84%] Built target PluginPackageTests_autogen_timestamp_deps
+[ 84%] Built target PluginApplicationTests_autogen_timestamp_deps
+[ 84%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 84%] Linking CXX executable ParentCrashProbe
+[ 84%] Built target PackageTransactionProbe
+[ 85%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 85%] Built target ParentCrashProbe
+[ 85%] Automatic MOC and UIC for target PluginPackageTests
+[ 85%] Built target PluginTransactionCrashTests_autogen_timestamp_deps
+[ 85%] Built target PluginParentCrashTests_autogen_timestamp_deps
+[ 85%] Built target PluginApplicationTests_autogen
+[ 85%] Automatic MOC and UIC for target PluginTransactionCrashTests
+[ 85%] Built target PluginPackageTests_autogen
+[ 85%] Automatic MOC and UIC for target PluginParentCrashTests
+[ 85%] Built target PluginTransactionCrashTests_autogen
+[ 85%] Building CXX object tests/plugin-packages/CMakeFiles/PluginTransactionCrashTests.dir/PluginTransactionCrashTests_autogen/mocs_compilation.cpp.o
+[ 85%] Building CXX object tests/plugin-packages/CMakeFiles/PluginPackageTests.dir/PluginPackageTests.cpp.o
+[ 86%] Building CXX object tests/plugin-packages/CMakeFiles/PluginTransactionCrashTests.dir/TransactionCrashTests.cpp.o
+[ 86%] Built target PluginParentCrashTests_autogen
+[ 86%] Building CXX object tests/plugin-packages/CMakeFiles/PluginParentCrashTests.dir/ParentCrashTests.cpp.o
+[ 86%] Linking CXX executable PluginGitHubReleaseTests
+[ 86%] Built target PluginGitHubReleaseTests
+[ 86%] Linking CXX executable PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+[ 86%] Linking CXX executable PluginManagerPreview
+[ 86%] Built target PluginManagerPreview
+[ 99%] Built target PluginApplicationTests
+[ 99%] Built target PluginApplicationExitTests_autogen_timestamp_deps
+[ 99%] Automatic MOC and UIC for target PluginApplicationExitTests
+[ 99%] Built target PluginApplicationExitTests_autogen
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationExitTests.dir/PluginApplicationExitTests_autogen/mocs_compilation.cpp.o
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationExitTests.dir/ApplicationExitTests.cpp.o
+[ 99%] Linking CXX executable PluginTransactionCrashTests
+[100%] Linking CXX executable PluginParentCrashTests
+[100%] Built target PluginTransactionCrashTests
+[100%] Built target PluginParentCrashTests
+[100%] Linking CXX executable PluginPackageTests
+[100%] Built target PluginPackageTests
+[100%] Linking CXX executable PluginWebviewTests
+[100%] Built target PluginWebviewTests
+[100%] Linking CXX executable PluginApplicationExitTests
+[100%] Built target PluginApplicationExitTests

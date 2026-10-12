@@ -1,0 +1,149 @@
+{
+  "minimal": {
+    "status": "ok",
+    "summary": "21805 nodes, 111770 edges across 1001 files. Risk: high (0.86). 34 test gaps.",
+    "key_entities": [
+      "DockedEditor",
+      "getCurrentEditor",
+      "selectEditor",
+      "switchToEditor",
+      "currentDockArea"
+    ],
+    "risk": "high",
+    "communities": [
+      "src-line",
+      "lexers-property",
+      "src-lua"
+    ],
+    "flows_affected": [
+      "RegenerateAll",
+      "RegenerateAll",
+      "DrawRGBAImage"
+    ],
+    "next_tool_suggestions": [
+      "detect_changes",
+      "semantic_search_nodes",
+      "get_architecture_overview"
+    ],
+    "_graph": {
+      "updated_at": "2026-10-11T13:43:50",
+      "age_seconds": 9,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "results": [
+    {
+      "status": "ok",
+      "summary": "Graph statistics for NotepadNext:\n  Files: 1001\n  Total nodes: 21805\n  Total edges: 111770\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T13:43:50\n\nNodes by kind:\n  Class: 2157\n  File: 1001\n  Function: 18479\n  Signal: 7\n  Test: 161\n\nEdges by kind:\n  CALLS: 80031\n  CONTAINS: 22840\n  IMPORTS_FROM: 6972\n  INHERITS: 444\n  REFERENCES: 592\n  TESTED_BY: 891\n\nCALLS by target resolution: 11151 direct, 68880 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+      "total_nodes": 21805,
+      "total_edges": 111770,
+      "nodes_by_kind": {
+        "Class": 2157,
+        "File": 1001,
+        "Function": 18479,
+        "Signal": 7,
+        "Test": 161
+      },
+      "edges_by_kind": {
+        "CALLS": 80031,
+        "CONTAINS": 22840,
+        "IMPORTS_FROM": 6972,
+        "INHERITS": 444,
+        "REFERENCES": 592,
+        "TESTED_BY": 891
+      },
+      "calls_by_resolution": {
+        "direct": 11151,
+        "unresolved": 68880
+      },
+      "languages": [
+        "bash",
+        "c",
+        "cpp",
+        "dart",
+        "gdscript",
+        "javascript",
+        "julia",
+        "lua",
+        "nix",
+        "objc",
+        "perl",
+        "php",
+        "powershell",
+        "python",
+        "r",
+        "ruby",
+        "rust",
+        "sql",
+        "typescript",
+        "vbnet",
+        "verilog",
+        "zig"
+      ],
+      "files_count": 1001,
+      "last_updated": "2026-10-11T13:43:50",
+      "embeddings_count": 0,
+      "_graph": {
+        "updated_at": "2026-10-11T13:43:50",
+        "age_seconds": 24,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "query": "createAdapter",
+      "search_mode": "fts",
+      "summary": "Found 1 node(s) matching 'createAdapter' (kind=Function)",
+      "results": [
+        {
+          "name": "createAdapter",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/adapter.cjs",
+          "score": 0.262295
+        }
+      ],
+      "result_count": 1,
+      "results_omitted": 0,
+      "_graph": {
+        "updated_at": "2026-10-11T13:43:50",
+        "age_seconds": 26,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "query": "importExtension",
+      "search_mode": "fts",
+      "summary": "Found 1 node(s) matching 'importExtension' (kind=Function)",
+      "results": [
+        {
+          "name": "importExtension",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-sdk/import-vscode.cjs",
+          "score": 0.262295
+        }
+      ],
+      "result_count": 1,
+      "results_omitted": 0,
+      "_graph": {
+        "updated_at": "2026-10-11T13:43:50",
+        "age_seconds": 28,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ],
+  "cliNote": "CLI pre-dedup collector: 1020 files, 23860 nodes, 115428 edges. MCP statistics above are the canonical persisted graph counts.",
+  "scope": "Working tree refresh including non-ignored untracked sources and CommonJS; Git index/history unchanged."
+}

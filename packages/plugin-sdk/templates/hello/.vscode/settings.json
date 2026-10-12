@@ -1,0 +1,10 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "notepadnext-plugin.json"
+      ],
+      "url": "./tools/plugin-sdk/schemas/manifest.schema.json"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "hostFiles": 19,
+  "sourceRoot": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host",
+  "bundles": {
+    "application": {
+      "hostRoot": "/private/tmp/notepadnext-app-build-610/src/NotepadNext.app/Contents/Resources/plugin-host",
+      "allSourceHashesMatch": true,
+      "sha256": {
+        "host.cjs": "d71e420814094c1d563646fd960add0875004ce2759d493528e3c02bbc66bad0",
+        "python-host.cjs": "c4e2702124e2470c4bdac6f9ce38921d74a0914a522c2f3d1106d9a41a0d1b00",
+        "client.cjs": "b07e2c10c5f1c1022330c9143bf9cbfa33b038df4f669a198ed4651af4f79327",
+        "parent-watch.cjs": "1861d1a86863b7a5b1eeb7896f2de73933ceee5bc48a4471c731e81f9329cc24",
+        "rpc.cjs": "b9f5eb1b7e84b27b6edcd8a7a700f7517a8128d2f2bfb4b1e68c2551ea6849e5",
+        "protocol-profile.json": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f",
+        "wire.cjs": "230110b9127d9820991d753453cce3b25beda8c4e30741ed2150fc62d5f90e40",
+        "wire.schema.json": "d993bdc3d383601ddfd445cb842003f392ce037d825e2d21344c652e16a08d81",
+        "wire-contract.json": "aa6934c46f44cf38fd2ea5c7c4d37eae120d63e6e3bc8e91cebec324c3a656ca",
+        "runtime-lock.json": "1da63efd009fc0389da06bf96003f104f0a5a70a1f655ff9893093bdc3b28c75",
+        "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "python/host.py": "59b3eb2b8a19afe2207dd98d4c0a1a789b2aa3e68ada8316792a88eaafc6afc6",
+        "python/nnp_rpc.py": "8f3c7f488ebb59510241edb8a9345e34571017dcb979a2b790561f151e1f5132",
+        "python/nnp_wire.py": "432575042523f1f83069ef8131e19013e36b72e62189de84cd31a82988cefe45",
+        "python/nnp_client.py": "b0f4d41749a19fc974088474f2a65945b63e78d1cdb3e394774e33e532a8a4f2",
+        "vscode/documents.cjs": "76e2511d05ccaa8a1158339d77c8d3c6920490cf3266104ab64e9fc4452abf4b",
+        "vscode/types.cjs": "96dffea3a9ce3087a5c32a22bb0a6ae50b152c740fe0a272b1d989aa06197a60",
+        "vscode/adapter.cjs": "731520dada3f63ee35a34331eea7af9c4dd8cb20e2547c6a65428108a8e0b0ea",
+        "vscode/webviews.cjs": "53e9a8bee05293def8aae89de6ec7ebc5562e2cf04030af4e3810f46dfc1f8e6"
+      },
+      "nodeVersion": "v24.21.0",
+      "nodeBinarySha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b"
+    },
+    "productionTest": {
+      "hostRoot": "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/Resources/plugin-host",
+      "allSourceHashesMatch": true,
+      "sha256": {
+        "host.cjs": "d71e420814094c1d563646fd960add0875004ce2759d493528e3c02bbc66bad0",
+        "python-host.cjs": "c4e2702124e2470c4bdac6f9ce38921d74a0914a522c2f3d1106d9a41a0d1b00",
+        "client.cjs": "b07e2c10c5f1c1022330c9143bf9cbfa33b038df4f669a198ed4651af4f79327",
+        "parent-watch.cjs": "1861d1a86863b7a5b1eeb7896f2de73933ceee5bc48a4471c731e81f9329cc24",
+        "rpc.cjs": "b9f5eb1b7e84b27b6edcd8a7a700f7517a8128d2f2bfb4b1e68c2551ea6849e5",
+        "protocol-profile.json": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f",
+        "wire.cjs": "230110b9127d9820991d753453cce3b25beda8c4e30741ed2150fc62d5f90e40",
+        "wire.schema.json": "d993bdc3d383601ddfd445cb842003f392ce037d825e2d21344c652e16a08d81",
+        "wire-contract.json": "aa6934c46f44cf38fd2ea5c7c4d37eae120d63e6e3bc8e91cebec324c3a656ca",
+        "runtime-lock.json": "1da63efd009fc0389da06bf96003f104f0a5a70a1f655ff9893093bdc3b28c75",
+        "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "python/host.py": "59b3eb2b8a19afe2207dd98d4c0a1a789b2aa3e68ada8316792a88eaafc6afc6",
+        "python/nnp_rpc.py": "8f3c7f488ebb59510241edb8a9345e34571017dcb979a2b790561f151e1f5132",
+        "python/nnp_wire.py": "432575042523f1f83069ef8131e19013e36b72e62189de84cd31a82988cefe45",
+        "python/nnp_client.py": "b0f4d41749a19fc974088474f2a65945b63e78d1cdb3e394774e33e532a8a4f2",
+        "vscode/documents.cjs": "76e2511d05ccaa8a1158339d77c8d3c6920490cf3266104ab64e9fc4452abf4b",
+        "vscode/types.cjs": "96dffea3a9ce3087a5c32a22bb0a6ae50b152c740fe0a272b1d989aa06197a60",
+        "vscode/adapter.cjs": "731520dada3f63ee35a34331eea7af9c4dd8cb20e2547c6a65428108a8e0b0ea",
+        "vscode/webviews.cjs": "53e9a8bee05293def8aae89de6ec7ebc5562e2cf04030af4e3810f46dfc1f8e6"
+      },
+      "nodeVersion": "v24.21.0",
+      "nodeBinarySha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b"
+    }
+  }
+}

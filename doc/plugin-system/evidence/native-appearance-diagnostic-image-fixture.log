@@ -1,0 +1,16 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[13759:259:1011/163225.969377:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[13759:259:1011/163225.969837:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+QWARN  : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload() QWidget::paintEngine: Should no longer be called
+QWARN  : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload() QWidget::paintEngine: Should no longer be called
+PASS   : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload()
+QWARN  : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data) qt.qpa.fonts: Populating font family aliases took 70 ms. Replace uses of missing font family "Host\"</style><script>window.fontInjected=true</script>&\\\n😀\";}body{color:red}/*" with one that exists to avoid this cost. 
+PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data)
+PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(theme-during-preparation)
+FAIL!  : PluginWebviewTests::realMarkdownImagesAndDocumentStates() '([&]{read();return (*state)["heading"]==(QString(QtPrivate::qMakeStringPrivate(u"" "unsaved rich preview 😀中")))&&(*state)["width"].toInt()==24;})()' returned FALSE. ()
+   Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-webviews/PluginWebviewTests.cpp(802)]
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 5 passed, 1 failed, 0 skipped, 0 blacklisted, 32395ms
+********* Finished testing of PluginWebviewTests *********

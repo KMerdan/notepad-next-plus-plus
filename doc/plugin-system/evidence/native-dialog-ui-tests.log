@@ -1,0 +1,257 @@
+UpdateCTestConfiguration  from :/private/tmp/notepadnext-app-build-610/DartConfiguration.tcl
+Test project /private/tmp/notepadnext-app-build-610
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start  1: PluginSourceTests
+
+1: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-sources/PluginSourceTests
+1: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-sources
+1: Environment variables: 
+1:  QT_QPA_PLATFORM=offscreen
+1: Test timeout computed to be: 180
+1: ********* Start testing of PluginSourceTests *********
+1: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+1: PASS   : PluginSourceTests::initTestCase()
+1: PASS   : PluginSourceTests::repositoryNormalization()
+1: PASS   : PluginSourceTests::metadataDiscriminator()
+1: PASS   : PluginSourceTests::invalidMetadataIsRejected()
+1: PASS   : PluginSourceTests::vscodeCompatibilityMetadata()
+1: PASS   : PluginSourceTests::registrationPersistenceAndMerging()
+1: PASS   : PluginSourceTests::conflictsAndFailedWritesAreAtomic()
+1: PASS   : PluginSourceTests::refreshReplacesOnlyItsOwnAssociations()
+1: PASS   : PluginSourceTests::corruptCacheIsPreserved()
+1: PASS   : PluginSourceTests::resolverPinsMetadataAndDoesNotInstall()
+1: PASS   : PluginSourceTests::resolverFailureAndCancellation()
+1: QWARN  : PluginSourceTests::managerListsSearchesAndSharesRegistry() qt.qpa.fonts: Populating font family aliases took 54 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+1: PASS   : PluginSourceTests::managerListsSearchesAndSharesRegistry()
+1: QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+1: QWARN  : PluginSourceTests::managerRegistrationFlow(direct-plugin) This plugin does not support propagateSizeHints()
+1: PASS   : PluginSourceTests::managerRegistrationFlow(direct-plugin)
+1: QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+1: QWARN  : PluginSourceTests::managerRegistrationFlow(marketplace) This plugin does not support propagateSizeHints()
+1: PASS   : PluginSourceTests::managerRegistrationFlow(marketplace)
+1: QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+1: QWARN  : PluginSourceTests::managerRegistrationFlow(cancel-confirmation) This plugin does not support propagateSizeHints()
+1: PASS   : PluginSourceTests::managerRegistrationFlow(cancel-confirmation)
+1: QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+1: QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+1: QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+1: QWARN  : PluginSourceTests::localRegistrationRefreshAndPersistence() This plugin does not support propagateSizeHints()
+1: PASS   : PluginSourceTests::localRegistrationRefreshAndPersistence()
+1: PASS   : PluginSourceTests::localMetadataValidation()
+1: PASS   : PluginSourceTests::cleanupTestCase()
+1: Totals: 18 passed, 0 failed, 0 skipped, 0 blacklisted, 573ms
+1: ********* Finished testing of PluginSourceTests *********
+1/3 Test  #1: PluginSourceTests ................   Passed    1.22 sec
+test 23
+    Start 23: PluginApplicationTests
+
+23: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+23: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+23: Test timeout computed to be: 180
+23: ********* Start testing of PluginApplicationTests *********
+23: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+23: QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+23: QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+23: QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+23: QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+23: QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+23: 2026-10-12 12:44:34.826 PluginApplicationTests[19635:20398202] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+23: QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+23: QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+23: QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+23: QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+23: QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+23: QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+23: QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+23: QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::initTestCase()
+23: void MainWindow::openFileList(const QStringList &)
+23: /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-yqULGi/sample.md
+23: Read 16 bytes
+23: sample.md last modified Mon Oct 12 12:44:34 2026
+23: void EditorManager::setupEditor(ScintillaNext *)
+23: int EditorManager::detectEOLMode(ScintillaNext *) const
+23: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+23: EditorConfig settings for: "/private/var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/qt_temp-yqULGi/sample.md"
+23: void MainWindow::addEditor(ScintillaNext *)
+23: void MainWindow::detectLanguage(ScintillaNext *)
+23: QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+23: QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+23: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: Language Name: Markdown
+23: void DockedEditor::addEditor(ScintillaNext *)
+23: void MainWindow::activateEditor(ScintillaNext *)
+23: bool MainWindow::checkFileForModification(ScintillaNext *)
+23: sample.md last modified Mon Oct 12 12:44:34 2026
+23: void MainWindow::updateGui(ScintillaNext *)
+23: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+23: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: QFileDevice::FileError ScintillaNext::save()
+23: QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+23: sample.md last modified Mon Oct 12 12:44:35 2026
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: Read 11 bytes
+23: sample.md last modified Mon Oct 12 12:44:35 2026
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: QFileDevice::FileError writeToDisk(const QByteArray &, const QString &, ScintillaNext::BomType)
+23: renamed.md last modified Mon Oct 12 12:44:35 2026
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::detectLanguage(ScintillaNext *)
+23: QString NotepadNextApplication::detectLanguage(ScintillaNext *) const
+23: QString NotepadNextApplication::detectLanguageFromExtension(const QString &) const
+23: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: Language Name: Markdown
+23: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: void RecentFilesListManager::addFile(const QString &)
+23: void MainWindow::newFile()
+23: void EditorManager::setupEditor(ScintillaNext *)
+23: int EditorManager::detectEOLMode(ScintillaNext *) const
+23: RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+23: void MainWindow::addEditor(ScintillaNext *)
+23: void MainWindow::detectLanguage(ScintillaNext *)
+23: void MainWindow::setLanguage(ScintillaNext *, const QString &)
+23: Language Name: Text
+23: void DockedEditor::addEditor(ScintillaNext *)
+23: void MainWindow::activateEditor(ScintillaNext *)
+23: bool MainWindow::checkFileForModification(ScintillaNext *)
+23: void MainWindow::updateGui(ScintillaNext *)
+23: void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateEOLBasedUi(ScintillaNext *)
+23: void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+23: PASS   : PluginApplicationTests::deployedLibraryAudit()
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::focusIn()
+23: bool MainWindow::checkFileForModification(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::macOSChrome()
+23: PASS   : PluginApplicationTests::macOSSettingsDialog()
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *, MainWindow *)
+23: void FindReplaceDialog::loadSettings()
+23: virtual void FindReplaceDialog::showEvent(QShowEvent *)
+23: void FindReplaceDialog::performFind(SearchDirection)
+23: void FindReplaceDialog::prepareToPerformSearch(bool)
+23: void ScintillaNext::goToRange(const Sci_CharacterRange &)
+23: void FindReplaceDialog::count()
+23: void FindReplaceDialog::prepareToPerformSearch(bool)
+23: void FindReplaceDialog::replace()
+23: void FindReplaceDialog::prepareToPerformSearch(bool)
+23: void ScintillaNext::goToRange(const Sci_CharacterRange &)
+23: void FindReplaceDialog::replaceAll()
+23: void FindReplaceDialog::prepareToPerformSearch(bool)
+23: void FindReplaceDialog::markAll()
+23: void FindReplaceDialog::prepareToPerformSearch(bool)
+23: void FindReplaceDialog::clearAllMarks()
+23: void FindReplaceDialog::performFind(SearchDirection)
+23: void FindReplaceDialog::prepareToPerformSearch(bool)
+23: void FindReplaceDialog::saveSettings()
+23: void FindReplaceDialog::savePosition()
+23: FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *, MainWindow *)
+23: void FindReplaceDialog::loadSettings()
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::macOSSearchDialogs()
+23: void Macro::addMacroStep(Message, uptr_t, sptr_t)
+23: MacroStep(Line Down, 0, 0)
+23: MacroManager::MacroManager(QObject *)
+23: void MacroManager::loadSettings()
+23: 2026-10-12 12:44:36.719 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:36.719 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:36.721 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:36.721 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MacroManager::saveSettings() const
+23: PASS   : PluginApplicationTests::macOSUtilityDialogs()
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: [19635:259:1012/124437.470008:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+23: [19635:259:1012/124437.476908:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: PASS   : PluginApplicationTests::productionPythonAdapter()
+23: PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+23: js: Uncaught ReferenceError: acquireVsCodeApi is not defined
+23: PASS   : PluginApplicationTests::productionVSCodeWebview()
+23: SKIP   : PluginApplicationTests::realGitHubMarkdownLifecycle() Live GitHub validation is opt-in.
+23:    Loc: [/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/PluginApplicationTests.cpp(344)]
+23: 2026-10-12 12:44:40.745 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:40.745 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:40.825 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: Local registration reviewed
+23: Opening local package picker
+23: 2026-10-12 12:44:40.917 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:40.917 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:40.917 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:40.917 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:41.993 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:41.993 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:41.993 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: 2026-10-12 12:44:41.994 PluginApplicationTests[19635:20398202] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+23: Local package review completed
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+23: void MainWindow::saveSettings() const
+23: void SessionManager::saveSession(MainWindow *)
+23: void MacroManager::saveSettings() const
+23: QWidget::paintEngine: Should no longer be called
+23: QWidget::paintEngine: Should no longer be called
+23: PASS   : PluginApplicationTests::productionManagerAndExit()
+23: PASS   : PluginApplicationTests::cleanupTestCase()
+23: Totals: 12 passed, 0 failed, 1 skipped, 0 blacklisted, 7811ms
+23: ********* Finished testing of PluginApplicationTests *********
+2/3 Test #23: PluginApplicationTests ...........   Passed    8.50 sec
+test 24
+    Start 24: PluginApplicationExitTests
+
+24: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationExitTests
+24: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-application
+24: Test timeout computed to be: 90
+24: ********* Start testing of ApplicationExitTests *********
+24: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+24: PASS   : ApplicationExitTests::initTestCase()
+24: PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+24: PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+24: PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+24: PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+24: PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+24: PASS   : ApplicationExitTests::lastWindowClose(update-preparation-pending)
+24: PASS   : ApplicationExitTests::cleanupTestCase()
+24: Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 18326ms
+24: ********* Finished testing of ApplicationExitTests *********
+3/3 Test #24: PluginApplicationExitTests .......   Passed   18.37 sec
+
+The following tests passed:
+	PluginSourceTests
+	PluginApplicationTests
+	PluginApplicationExitTests
+
+100% tests passed out of 3
+
+Total Test time (real) =  28.10 sec

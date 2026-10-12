@@ -31,6 +31,10 @@
 #include "ScintillaNext.h"
 #include "MainWindow.h"
 #include "BookMarkDecorator.h"
+#include "NativeAppearance.h"
+#include <QScrollArea>
+#include <QToolButton>
+#include <QAccessible>
 
 
 static void convertToExtended(QString &str)
@@ -170,8 +174,62 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Enter), this, this, findPrevious, Qt::WidgetWithChildrenShortcut);
 
     loadSettings();
+    setupMacLayout();
 
     changeTab(tabBar->currentIndex());
+}
+
+void FindReplaceDialog::setupMacLayout()
+{
+#ifdef Q_OS_MACOS
+    auto *holding=new QWidget(this);
+    const QList<QWidget*> controls{tabBar,statusBar,ui->label,ui->comboFind,ui->labelReplaceWith,ui->comboReplace,
+        ui->searchMode,ui->transparency,ui->checkBoxBackwardsDirection,ui->checkBoxMatchWholeWord,ui->checkBoxMatchCase,
+        ui->checkBoxWrapAround,ui->checkBoxBookmarkLine,ui->checkBoxPurgeForEachSearch,
+        ui->buttonFind,ui->buttonReplace,ui->buttonMarkAll,ui->buttonCount,ui->buttonReplaceAll,
+        ui->buttonReplaceAllInDocuments,ui->buttonFindAllInCurrent,ui->buttonFindAllInDocuments,
+        ui->buttonClearAllMarks,ui->buttonCopyMarkedText,ui->buttonClose};
+    for(auto *control:controls)control->setParent(holding);
+    delete layout();
+    auto *root=new QVBoxLayout(this);
+    tabBar->setObjectName("dialogModeTabs");tabBar->setAccessibleName(tr("Search mode tabs"));tabBar->setExpanding(true);
+    tabBar->setDrawBase(false);tabBar->setFocusPolicy(Qt::StrongFocus);root->addWidget(tabBar);
+    auto *scroll=new QScrollArea(this);scroll->setObjectName("searchOptionsScroll");scroll->setWidgetResizable(true);
+    scroll->setFrameShape(QFrame::NoFrame);scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);root->addWidget(scroll,1);
+    auto *content=new QWidget(scroll);auto *body=new QVBoxLayout(content);body->setContentsMargins(0,0,8,0);body->setSpacing(16);body->setAlignment(Qt::AlignTop);
+    auto *fields=new QGridLayout();fields->setHorizontalSpacing(12);fields->setVerticalSpacing(12);fields->setColumnStretch(1,1);body->addLayout(fields);
+    ui->label->setBuddy(ui->comboFind);ui->labelReplaceWith->setBuddy(ui->comboReplace);
+    fields->addWidget(ui->label,0,0);fields->addWidget(ui->comboFind,0,1);
+    auto *findActions=new QHBoxLayout();findActions->setContentsMargins(0,0,0,0);findActions->addWidget(ui->buttonFind);findActions->addWidget(ui->buttonMarkAll);fields->addLayout(findActions,0,2);
+    fields->addWidget(ui->labelReplaceWith,1,0);fields->addWidget(ui->comboReplace,1,1);fields->addWidget(ui->buttonReplace,1,2);
+    for(auto *combo:{ui->comboFind,ui->comboReplace}){combo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);combo->setMinimumContentsLength(16);combo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);}
+    auto *groups=new QHBoxLayout();groups->setSpacing(16);body->addLayout(groups);
+    auto *matching=new QGroupBox(tr("Matching"),content);auto *matchingLayout=new QVBoxLayout(matching);
+    for(auto *option:{ui->checkBoxMatchCase,ui->checkBoxMatchWholeWord,ui->checkBoxWrapAround,ui->checkBoxBackwardsDirection,ui->checkBoxBookmarkLine,ui->checkBoxPurgeForEachSearch})matchingLayout->addWidget(option);
+    groups->addWidget(matching,1);groups->addWidget(ui->searchMode,1);
+    ui->checkBoxRegexMatchesNewline->setParent(ui->searchMode);qobject_cast<QVBoxLayout*>(ui->searchMode->layout())->addWidget(ui->checkBoxRegexMatchesNewline);
+    auto *advanced=new QToolButton(content);advanced->setObjectName("advancedSearchOptions");advanced->setText(tr("More Options"));advanced->setCheckable(true);advanced->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);advanced->setProperty("nativeSymbol","chevron.right");advanced->setIconSize(QSize(12,12));body->addWidget(advanced,0,Qt::AlignLeading);
+    body->addWidget(ui->transparency);ui->transparency->hide();
+    connect(advanced,&QToolButton::toggled,this,[this,advanced](bool expanded){ui->transparency->setVisible(expanded);const auto symbol=expanded?"chevron.down":"chevron.right";advanced->setProperty("nativeSymbol",symbol);advanced->setIcon(NativeAppearance::symbolIcon(symbol,{},palette()));});
+    scroll->setWidget(content);
+    statusBar->setObjectName("searchFeedback");statusBar->setAccessibleName(tr("Search status"));root->addWidget(statusBar);
+    auto *actions=new QHBoxLayout();actions->setSpacing(8);root->addLayout(actions);
+    for(auto *button:{ui->buttonCount,ui->buttonFindAllInCurrent,ui->buttonFindAllInDocuments,ui->buttonReplaceAll,ui->buttonReplaceAllInDocuments,ui->buttonClearAllMarks,ui->buttonCopyMarkedText})actions->addWidget(button);
+    actions->addStretch();actions->addWidget(ui->buttonClose);
+    ui->buttonFind->setText(tr("Find Next"));ui->buttonFindAllInCurrent->setText(tr("Find All in This Document"));
+    ui->buttonFindAllInDocuments->setText(tr("Find All in Open Documents"));ui->buttonReplaceAllInDocuments->setText(tr("Replace All in Open Documents"));
+    ui->buttonClearAllMarks->setText(tr("Clear Marks"));
+    delete holding;
+    NativeAppearance::polishDialog(this);root->setSpacing(12);
+    setMinimumSize(660,460);resize(size().expandedTo(QSize(740,540)));
+    const QList<QWidget*> order{tabBar,ui->comboFind,ui->comboReplace,ui->buttonFind,ui->buttonReplace,ui->buttonMarkAll,
+        ui->checkBoxMatchCase,ui->checkBoxMatchWholeWord,ui->checkBoxWrapAround,ui->checkBoxBackwardsDirection,
+        ui->checkBoxBookmarkLine,ui->checkBoxPurgeForEachSearch,ui->radioNormalSearch,ui->radioExtendedSearch,ui->radioRegexSearch,
+        ui->checkBoxRegexMatchesNewline,advanced,ui->transparency,ui->radioOnLosingFocus,ui->radioAlways,ui->horizontalSlider,
+        ui->buttonCount,ui->buttonFindAllInCurrent,ui->buttonFindAllInDocuments,ui->buttonReplaceAll,ui->buttonReplaceAllInDocuments,
+        ui->buttonClearAllMarks,ui->buttonCopyMarkedText,ui->buttonClose};
+    for(int i=1;i<order.size();++i)QWidget::setTabOrder(order[i-1],order[i]);
+#endif
 }
 
 FindReplaceDialog::~FindReplaceDialog()
@@ -532,6 +590,11 @@ void FindReplaceDialog::changeTab(int index)
         ui->checkBoxWrapAround->setEnabled(true);
     }
 
+#ifdef Q_OS_MACOS
+    const bool replacing=index==REPLACE_TAB;
+    ui->labelReplaceWith->setVisible(replacing);ui->comboReplace->setVisible(replacing);
+    NativeAppearance::setDialogPrimary(this,index==MARK_TAB?ui->buttonMarkAll:replacing?ui->buttonReplace:ui->buttonFind);
+#endif
     ui->comboFind->setFocus();
     ui->comboFind->lineEdit()->selectAll();
 }
@@ -825,6 +888,10 @@ void FindReplaceDialog::copyMarkedText()
 
 void FindReplaceDialog::showMessage(const QString &message, const QString &color)
 {
-    statusBar->setStyleSheet(QStringLiteral("color: %1").arg(color));
+    NativeAppearance::dialogFeedback(statusBar,color);
     statusBar->showMessage(message);
+#ifdef Q_OS_MACOS
+    statusBar->setAccessibleName(message);
+    QAccessibleEvent announcement(statusBar,QAccessible::Alert);QAccessible::updateAccessibility(&announcement);
+#endif
 }

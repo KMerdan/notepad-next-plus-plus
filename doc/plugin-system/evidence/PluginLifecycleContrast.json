@@ -1,0 +1,19 @@
+{
+  "formula": "WCAG sRGB relative luminance",
+  "pairs": [
+    {
+      "mode": "Light",
+      "foreground": "#ffffff",
+      "background": "#b3261e",
+      "contrast": 6.536,
+      "minimum": 4.5
+    },
+    {
+      "mode": "Dark",
+      "foreground": "#202023",
+      "background": "#ffb4b0",
+      "contrast": 9.601,
+      "minimum": 4.5
+    }
+  ]
+}

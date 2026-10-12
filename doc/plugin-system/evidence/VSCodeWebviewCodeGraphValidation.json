@@ -1,0 +1,126 @@
+{
+  "results": [
+    {
+      "status": "ok",
+      "summary": "Graph statistics for NotepadNext:\n  Files: 1010\n  Total nodes: 21945\n  Total edges: 113222\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T14:22:56\n\nNodes by kind:\n  Class: 2162\n  File: 1010\n  Function: 18594\n  Signal: 7\n  Test: 172\n\nEdges by kind:\n  CALLS: 81148\n  CONTAINS: 22989\n  IMPORTS_FROM: 7006\n  INHERITS: 445\n  REFERENCES: 601\n  TESTED_BY: 1033\n\nCALLS by target resolution: 11305 direct, 69843 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+      "total_nodes": 21945,
+      "total_edges": 113222,
+      "nodes_by_kind": {
+        "Class": 2162,
+        "File": 1010,
+        "Function": 18594,
+        "Signal": 7,
+        "Test": 172
+      },
+      "edges_by_kind": {
+        "CALLS": 81148,
+        "CONTAINS": 22989,
+        "IMPORTS_FROM": 7006,
+        "INHERITS": 445,
+        "REFERENCES": 601,
+        "TESTED_BY": 1033
+      },
+      "calls_by_resolution": {
+        "direct": 11305,
+        "unresolved": 69843
+      },
+      "languages": [
+        "bash",
+        "c",
+        "cpp",
+        "dart",
+        "gdscript",
+        "javascript",
+        "julia",
+        "lua",
+        "nix",
+        "objc",
+        "perl",
+        "php",
+        "powershell",
+        "python",
+        "r",
+        "ruby",
+        "rust",
+        "sql",
+        "typescript",
+        "vbnet",
+        "verilog",
+        "zig"
+      ],
+      "files_count": 1010,
+      "last_updated": "2026-10-11T14:22:56",
+      "embeddings_count": 0,
+      "_graph": {
+        "updated_at": "2026-10-11T14:22:56",
+        "age_seconds": 279,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "packages/plugin-host/vscode/webviews.cjs",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 21 result(s) for file_summary('packages/plugin-host/vscode/webviews.cjs') — showing 2, 19 omitted",
+      "result_count": 21,
+      "results_omitted": 19,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/webviews.cjs",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/webviews.cjs"
+        },
+        {
+          "name": "createWebviews",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host/vscode/webviews.cjs"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T14:22:56",
+        "age_seconds": 277,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "src/plugins/webviews/compat-bootstrap.js",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 7 result(s) for file_summary('src/plugins/webviews/compat-bootstrap.js') — showing 2, 5 omitted",
+      "result_count": 7,
+      "results_omitted": 5,
+      "results": [
+        {
+          "name": "/Users/merdankiji/localGit/NotepadNext/src/plugins/webviews/compat-bootstrap.js",
+          "kind": "File",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/src/plugins/webviews/compat-bootstrap.js"
+        },
+        {
+          "name": "clone",
+          "kind": "Function",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/src/plugins/webviews/compat-bootstrap.js"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-10-11T14:22:56",
+        "age_seconds": 281,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ],
+  "scope": "Working-tree index includes non-ignored untracked files and CommonJS. Source hashes separately pin package metadata/resources.",
+  "cliNote": "CLI collector counts are pre-dedup; MCP persisted counts here are authoritative.",
+  "refreshEntry": "scripts/update-codegraph.py",
+  "unmodifiedGitIndexAndHistory": true
+}

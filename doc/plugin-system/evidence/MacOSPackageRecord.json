@@ -1,0 +1,45 @@
+{
+  "bundle": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/payload/NotepadNext.app",
+  "architecture": "arm64",
+  "runtime": {
+    "archiveSha256": "6239d4cf92d864487ec8cd3615038f7b67e7f58b77b21cd2f09ea9fbd68065fe",
+    "originalBinarySha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+    "version": "v24.21.0"
+  },
+  "signedNodeSha256": "9f9adf8060a8b4fb4382ead94bb4369aea8f0d825267a791cdf31a6b82bdeb2c",
+  "signing": "ad-hoc-development",
+  "notarized": false,
+  "applicationNotarization": null,
+  "cleanMachineValidated": false,
+  "attributions": {
+    "sdk": "/private/tmp/notepadnext-qt/6.10.0/macos",
+    "sbomDocuments": 11,
+    "files": {
+      "qtwebengine-chromium-pdf-6.10.0.spdx.json": "13d776d95358dbef20ae5d59d2b8d648dcd2f4118f50cac062a8a4147f3c6c06",
+      "LEXILLA-LICENSE": "ac32743bd464c837e481beae20df65a9207f84d3ff1912f6003000343e9c753d",
+      "LUA-LICENSE": "053b811acc25fb439349a770670f0243c2d4e392a066a8ea7fb87987460259af",
+      "qtwebengine-6.10.0.spdx.json": "6246ff74c9e5eaba5306cfd7b5e3c72645f83c998caca9659e2fb18bcddc4822",
+      "qtbase-6.10.0.spdx.json": "c62e7e0fe163fb91057182014975f37411068f3baf94c6b81aa1b95a3de9435d",
+      "qtwebengine-chromium-webengine-6.10.0.spdx.json": "af5b768c8d195cf3e6b5272a1bc4337df3573653dc0b0b6e278073e84c980426",
+      "qttools-6.10.0.spdx.json": "fea84e14f560a26e597a8837f9a0d37d3d3095d7cf42d03af3b70f91977d7f66",
+      "qtserialport-6.10.0.spdx.json": "ee54d44a346a094ce875852c79002836c102df3d9212937cce27db90d0c7e35f",
+      "qt5compat-6.10.0.spdx.json": "4e120cf8fa1721ae42f7f6ad3dfcd5a513f6bc55273226a064906eb7463de89a",
+      "NOTEPADNEXT-LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "qtpositioning-6.10.0.spdx.json": "e0fc3f2a1280e4fcba6f493eeceff0af5b1f55fcd68bef85a031f0e4ac3aeaa9",
+      "qtsvg-6.10.0.spdx.json": "0783598c751ad5ffd962fc2d728e888ef5ad70f3a41d4d63ee94650690ff2571",
+      "SCINTILLA-LICENSE": "ac32743bd464c837e481beae20df65a9207f84d3ff1912f6003000343e9c753d",
+      "QT-ATTRIBUTIONS.txt": "deaa8d424a7c02b36b1b9f570143daa965d5f5018d5da1bd748a8766af025825",
+      "qtdeclarative-6.10.0.spdx.json": "7532508cf14fda790dc149bb87cde52fc9bd0425e415f39479d7476969b21923",
+      "UCHARDET-COPYING": "107a29ccdd2d778aa2df5462f85dddfa099059abd22e064e07ec2cc9bafc37cd",
+      "qtwebchannel-6.10.0.spdx.json": "4be17db7119bdd7767ae30dc3c6ee50d23d007f9a1f91cf9a7099846a5683c4f"
+    },
+    "fullLicenseAndSourceGateComplete": false
+  },
+  "bundleValidation": "bundle-validation.json",
+  "appBytes": 758299258,
+  "dmg": {
+    "path": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/NotepadNext-0.15.0-arm64.dmg",
+    "bytes": 308452366,
+    "sha256": "0fac53350e6e46ff5a7b365cf9afd9b61392c81c0329e14f5235eb4ecbb3280e"
+  }
+}

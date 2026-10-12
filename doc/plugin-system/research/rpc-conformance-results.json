@@ -1,0 +1,595 @@
+{
+  "date": "2026-10-10",
+  "node": "v23.11.1",
+  "scope": "15 envelope, dispatch and batch vectors; vscode-jsonrpc observed for 100 ms per case; no Qt integration, throughput or security certification",
+  "results": [
+    {
+      "packageName": "json-rpc-2.0",
+      "packageVersion": "1.8.1",
+      "adapter": "unmodified",
+      "passed": 13,
+      "total": 15,
+      "cases": [
+        {
+          "name": "named-parameters",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "named",
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "positional-parameters",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "pos",
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "numeric-zero-id",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": 0,
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "null-id-request",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "notification-no-response",
+          "pass": true,
+          "responses": [],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "unknown-method",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "unknown",
+              "error": {
+                "code": -32601,
+                "message": "Method not found"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "unknown-notification-no-response",
+          "pass": true,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "malformed-json",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32700,
+                "message": "Parse error"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "invalid-scalar",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "invalid-method-type",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-two-requests",
+          "pass": true,
+          "responses": [
+            [
+              {
+                "jsonrpc": "2.0",
+                "id": "b1",
+                "result": 3
+              },
+              {
+                "jsonrpc": "2.0",
+                "id": "b2",
+                "result": 3
+              }
+            ]
+          ],
+          "calls": 2,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-request-and-notification",
+          "pass": false,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "b1",
+              "result": 3
+            }
+          ],
+          "calls": 2,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-only-notifications",
+          "pass": true,
+          "responses": [],
+          "calls": 2,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-empty-array",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-invalid-member",
+          "pass": true,
+          "responses": [
+            [
+              {
+                "jsonrpc": "2.0",
+                "id": "b1",
+                "result": 3
+              },
+              {
+                "jsonrpc": "2.0",
+                "id": null,
+                "error": {
+                  "code": -32600,
+                  "message": "Invalid Request"
+                }
+              }
+            ]
+          ],
+          "calls": 1,
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "packageName": "vscode-jsonrpc",
+      "packageVersion": "9.0.3",
+      "adapter": "unmodified",
+      "passed": 6,
+      "total": 15,
+      "cases": [
+        {
+          "name": "named-parameters",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "named",
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "positional-parameters",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "pos",
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "numeric-zero-id",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": 0,
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "null-id-request",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n{\n    \"jsonrpc\": \"2.0\",\n    \"id\": null,\n    \"method\": \"sum\",\n    \"params\": {\n        \"a\": 1,\n        \"b\": 2\n    }\n}"
+          ]
+        },
+        {
+          "name": "notification-no-response",
+          "pass": true,
+          "responses": [],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "unknown-method",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "unknown",
+              "error": {
+                "code": -32601,
+                "message": "Unhandled method missing"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "unknown-notification-no-response",
+          "pass": true,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "malformed-json",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)"
+          ]
+        },
+        {
+          "name": "invalid-scalar",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n1"
+          ]
+        },
+        {
+          "name": "invalid-method-type",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n{\n    \"jsonrpc\": \"2.0\",\n    \"method\": 7\n}"
+          ]
+        },
+        {
+          "name": "batch-two-requests",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n[\n    {\n        \"jsonrpc\": \"2.0\",\n        \"id\": \"b1\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    },\n    {\n        \"jsonrpc\": \"2.0\",\n        \"id\": \"b2\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    }\n]"
+          ]
+        },
+        {
+          "name": "batch-request-and-notification",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n[\n    {\n        \"jsonrpc\": \"2.0\",\n        \"id\": \"b1\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    },\n    {\n        \"jsonrpc\": \"2.0\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    }\n]"
+          ]
+        },
+        {
+          "name": "batch-only-notifications",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n[\n    {\n        \"jsonrpc\": \"2.0\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    },\n    {\n        \"jsonrpc\": \"2.0\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    }\n]"
+          ]
+        },
+        {
+          "name": "batch-empty-array",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n[]"
+          ]
+        },
+        {
+          "name": "batch-invalid-member",
+          "pass": false,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": [
+            "Received message which is neither a response nor a notification message:\n[\n    {\n        \"jsonrpc\": \"2.0\",\n        \"id\": \"b1\",\n        \"method\": \"sum\",\n        \"params\": {\n            \"a\": 1,\n            \"b\": 2\n        }\n    },\n    1\n]"
+          ]
+        }
+      ]
+    },
+    {
+      "packageName": "json-rpc-2.0",
+      "packageVersion": "1.8.1",
+      "adapter": "research-request-adapter",
+      "passed": 15,
+      "total": 15,
+      "cases": [
+        {
+          "name": "named-parameters",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "named",
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "positional-parameters",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "pos",
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "numeric-zero-id",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": 0,
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "null-id-request",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "result": 3
+            }
+          ],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "notification-no-response",
+          "pass": true,
+          "responses": [],
+          "calls": 1,
+          "diagnostics": []
+        },
+        {
+          "name": "unknown-method",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": "unknown",
+              "error": {
+                "code": -32601,
+                "message": "Method not found"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "unknown-notification-no-response",
+          "pass": true,
+          "responses": [],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "malformed-json",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32700,
+                "message": "Parse error"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "invalid-scalar",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "invalid-method-type",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-two-requests",
+          "pass": true,
+          "responses": [
+            [
+              {
+                "jsonrpc": "2.0",
+                "id": "b1",
+                "result": 3
+              },
+              {
+                "jsonrpc": "2.0",
+                "id": "b2",
+                "result": 3
+              }
+            ]
+          ],
+          "calls": 2,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-request-and-notification",
+          "pass": true,
+          "responses": [
+            [
+              {
+                "jsonrpc": "2.0",
+                "id": "b1",
+                "result": 3
+              }
+            ]
+          ],
+          "calls": 2,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-only-notifications",
+          "pass": true,
+          "responses": [],
+          "calls": 2,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-empty-array",
+          "pass": true,
+          "responses": [
+            {
+              "jsonrpc": "2.0",
+              "id": null,
+              "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+              }
+            }
+          ],
+          "calls": 0,
+          "diagnostics": []
+        },
+        {
+          "name": "batch-invalid-member",
+          "pass": true,
+          "responses": [
+            [
+              {
+                "jsonrpc": "2.0",
+                "id": "b1",
+                "result": 3
+              },
+              {
+                "jsonrpc": "2.0",
+                "id": null,
+                "error": {
+                  "code": -32600,
+                  "message": "Invalid Request"
+                }
+              }
+            ]
+          ],
+          "calls": 1,
+          "diagnostics": []
+        }
+      ]
+    }
+  ]
+}

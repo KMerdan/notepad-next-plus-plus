@@ -1,0 +1,145 @@
+{
+    "rows": [
+        {
+            "applicationExecExitCode": 0,
+            "beforeExit": {
+                "installedVersion": "1.0.0",
+                "resources": 4,
+                "state": "active",
+                "updatePending": false
+            },
+            "enabledAtExit": true,
+            "idleAtExecReturn": true,
+            "installedVersionAtExit": "1.0.0",
+            "parentConfirmedAllIdentitiesExited": true,
+            "pendingAtExit": false,
+            "processes": [
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 126,
+                    "platform": "macos",
+                    "start": "1791706810:695267"
+                },
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 128,
+                    "platform": "macos",
+                    "start": "1791706810:876028"
+                }
+            ],
+            "quitElapsedMs": 25,
+            "recoveredVersion": "1.0.0",
+            "resourcesAtExecReturn": 0,
+            "retainedDataVerified": true,
+            "scenario": "normal-close",
+            "sessionsAtExecReturn": 0,
+            "status": "passed"
+        },
+        {
+            "applicationExecExitCode": 0,
+            "beforeExit": {
+                "installedVersion": "1.0.0",
+                "resources": 4,
+                "state": "active",
+                "updatePending": false
+            },
+            "enabledAtExit": true,
+            "idleAtExecReturn": true,
+            "installedVersionAtExit": "1.0.0",
+            "parentConfirmedAllIdentitiesExited": true,
+            "pendingAtExit": false,
+            "processes": [
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 155,
+                    "platform": "macos",
+                    "start": "1791706811:419990"
+                },
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 178,
+                    "platform": "macos",
+                    "start": "1791706811:573242"
+                }
+            ],
+            "quitElapsedMs": 2621,
+            "recoveredVersion": "1.0.0",
+            "resourcesAtExecReturn": 0,
+            "retainedDataVerified": true,
+            "scenario": "unresponsive-deactivate",
+            "sessionsAtExecReturn": 0,
+            "status": "passed"
+        },
+        {
+            "applicationExecExitCode": 0,
+            "beforeExit": {
+                "installedVersion": "1.0.0",
+                "resources": 0,
+                "state": "stopping",
+                "updatePending": false
+            },
+            "enabledAtExit": true,
+            "idleAtExecReturn": true,
+            "installedVersionAtExit": "1.0.0",
+            "parentConfirmedAllIdentitiesExited": true,
+            "pendingAtExit": false,
+            "processes": [
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 208,
+                    "platform": "macos",
+                    "start": "1791706814:686634"
+                },
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 209,
+                    "platform": "macos",
+                    "start": "1791706814:848350"
+                }
+            ],
+            "quitElapsedMs": 2375,
+            "recoveredVersion": "1.0.0",
+            "resourcesAtExecReturn": 0,
+            "retainedDataVerified": true,
+            "scenario": "reload-pending",
+            "sessionsAtExecReturn": 0,
+            "status": "passed"
+        },
+        {
+            "applicationExecExitCode": 0,
+            "beforeExit": {
+                "installedVersion": "1.0.0",
+                "resources": 0,
+                "state": "stopping",
+                "updatePending": false
+            },
+            "enabledAtExit": true,
+            "idleAtExecReturn": true,
+            "installedVersionAtExit": "1.0.0",
+            "parentConfirmedAllIdentitiesExited": true,
+            "pendingAtExit": false,
+            "processes": [
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 311,
+                    "platform": "macos",
+                    "start": "1791706817:752628"
+                },
+                {
+                    "exitedAtExecReturn": true,
+                    "pid": 414,
+                    "platform": "macos",
+                    "start": "1791706817:914237"
+                }
+            ],
+            "quitElapsedMs": 2376,
+            "recoveredVersion": "1.0.0",
+            "resourcesAtExecReturn": 0,
+            "retainedDataVerified": true,
+            "scenario": "uninstall-pending",
+            "sessionsAtExecReturn": 0,
+            "status": "passed"
+        }
+    ],
+    "scope": "Production Application/MainWindow last-window close with owned Node/descendant processes; not a blocked-file-system or outer 5s/8s deadline fault injection."
+}

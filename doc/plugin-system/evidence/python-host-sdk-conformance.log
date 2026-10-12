@@ -1,0 +1,21 @@
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (13.39825ms)
+✔ rejects escaping entry and clears failed staging (5.261416ms)
+✔ rejects links and native addons (6.0815ms)
+✔ rejects missing production dependency and source-contained output (5.59225ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (21.262333ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (18.286625ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (9.982958ms)
+✔ Python release vendors built modules without imports, bytecode or npm hooks (15.434375ms)
+✔ Python packages reject npm runtime dependencies and remove failed staging (4.580792ms)
+✔ Python lifecycle, early watch events, Unicode snapshot and stdout isolation (105.692459ms)
+✔ Python initialize rejects incompatible contracts without importing the module (81.979083ms)
+✔ Python partial activation preserves diagnostics and releases resources (81.4785ms)
+✔ Python command exceptions retain stacks outside stdout and keep the session usable (97.825292ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 407.898667

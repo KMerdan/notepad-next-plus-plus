@@ -1,0 +1,1 @@
+# Hello plugin debug fixture

@@ -1,0 +1,11 @@
+Test project /private/tmp/notepadnext-macos-release-build
+    Start 2: PluginPackageTests
+1/3 Test #2: PluginPackageTests ...............   Passed    1.26 sec
+    Start 3: PluginTransactionCrashTests
+2/3 Test #3: PluginTransactionCrashTests ......   Passed    2.73 sec
+    Start 4: PluginGitHubReleaseTests
+3/3 Test #4: PluginGitHubReleaseTests .........   Passed    2.03 sec
+
+100% tests passed out of 3
+
+Total Test time (real) =   6.02 sec

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-11",
+  "platform": "macOS arm64",
+  "node": "24.21.0",
+  "releaseChecksumSchema": "Draft 2020-12 actual generated checksums and strict field end boundaries validated",
+  "workflowValidation": "YAML parsed; run steps passed bash -n; action commits verified against upstream release pages",
+  "remoteWorkflowExecuted": false,
+  "actualArchive": {
+    "name": "notepadnext-plugin.zip",
+    "size": 831962,
+    "sha256": "4781584c74d86d3c81dc90e38d95a10eefb2aedb2ed4107346e84c6785b56f13"
+  },
+  "logs": [
+    "author-release-package.log",
+    "author-assets-conformance.log",
+    "sdk-release-conformance.log"
+  ],
+  "standaloneAuthorRehearsal": {
+    "lockfile": "author-template.package-lock.json",
+    "installedWithoutHooks": true,
+    "buildPassed": true,
+    "testPassed": true,
+    "releasePassed": true,
+    "metadataSchemaPassed": true,
+    "checksumSchemaPassed": true,
+    "archive": {
+      "name": "notepadnext-plugin.zip",
+      "size": 831962,
+      "sha256": "4781584c74d86d3c81dc90e38d95a10eefb2aedb2ed4107346e84c6785b56f13"
+    },
+    "logs": [
+      "author-template-lock.log",
+      "author-template-ci.log",
+      "author-template-build.log",
+      "author-template-test.log",
+      "author-template-release.log"
+    ],
+    "limits": [
+      "Local macOS rehearsal; remote Linux GitHub Actions remains unexecuted.",
+      "Initial offline install had metadata but no cached tarballs; a lockfile-verified online install passed."
+    ]
+  },
+  "sdkFinalConformance": "sdk-release-final-conformance.log"
+}

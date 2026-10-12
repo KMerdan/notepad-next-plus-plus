@@ -1,0 +1,13 @@
+{
+  "validator": "jsonschema 4.26.0",
+  "dialect": "Draft 2020-12",
+  "methods": 33,
+  "fixtures": 174,
+  "allExpectedResultsMatched": true,
+  "customUtf8ByteBudgets": "Checked separately by Qt/Node/Python contract tests; annotation is not asserted by the independent validator.",
+  "sha256": {
+    "packages/plugin-host/wire.schema.json": "d993bdc3d383601ddfd445cb842003f392ce037d825e2d21344c652e16a08d81",
+    "packages/plugin-host/wire-contract.json": "aa6934c46f44cf38fd2ea5c7c4d37eae120d63e6e3bc8e91cebec324c3a656ca",
+    "tests/plugin-rpc/wire-fixtures.json": "8e7c675dbbefea3a67e54395b1bafd941d8c23d786f89b6cff2b259ff47f4d43"
+  }
+}

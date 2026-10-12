@@ -1,0 +1,186 @@
+Start testing: Oct 11 09:07 JST
+----------------------------------------------------------
+2/6 Testing: PluginRpcTests
+2/6 Test: PluginRpcTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-rpc/PluginRpcTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginRpcTests" start time: Oct 11 09:07 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginRpcTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginRpcTests::initTestCase()
+PASS   : PluginRpcTests::profileAgreement()
+PASS   : PluginRpcTests::conformance(named params)
+PASS   : PluginRpcTests::conformance(positional params)
+PASS   : PluginRpcTests::conformance(omitted params)
+PASS   : PluginRpcTests::conformance(null request id)
+PASS   : PluginRpcTests::conformance(numeric id token)
+PASS   : PluginRpcTests::conformance(exponent id token)
+PASS   : PluginRpcTests::conformance(fractional id token)
+PASS   : PluginRpcTests::conformance(escaped id key)
+PASS   : PluginRpcTests::conformance(notification)
+PASS   : PluginRpcTests::conformance(unknown notification)
+PASS   : PluginRpcTests::conformance(failing notification)
+PASS   : PluginRpcTests::conformance(unknown method)
+PASS   : PluginRpcTests::conformance(invalid method params)
+PASS   : PluginRpcTests::conformance(handler failure)
+PASS   : PluginRpcTests::conformance(parse error)
+PASS   : PluginRpcTests::conformance(invalid number grammar)
+PASS   : PluginRpcTests::conformance(multiple roots)
+PASS   : PluginRpcTests::conformance(scalar)
+PASS   : PluginRpcTests::conformance(null scalar)
+PASS   : PluginRpcTests::conformance(invalid id)
+PASS   : PluginRpcTests::conformance(invalid version)
+PASS   : PluginRpcTests::conformance(scalar params)
+PASS   : PluginRpcTests::conformance(empty batch)
+PASS   : PluginRpcTests::conformance(invalid batch items)
+PASS   : PluginRpcTests::conformance(mixed batch)
+PASS   : PluginRpcTests::conformance(all notifications)
+PASS   : PluginRpcTests::conformance(unknown response)
+PASS   : PluginRpcTests::conformance(invalid response)
+PASS   : PluginRpcTests::framing()
+PASS   : PluginRpcTests::invalidFraming(duplicate)
+PASS   : PluginRpcTests::invalidFraming(negative)
+PASS   : PluginRpcTests::invalidFraming(oversize)
+PASS   : PluginRpcTests::invalidFraming(overflow)
+PASS   : PluginRpcTests::invalidFraming(missing)
+PASS   : PluginRpcTests::invalidFraming(bare LF)
+PASS   : PluginRpcTests::invalidFraming(charset)
+PASS   : PluginRpcTests::invalidFraming(malformed charset)
+PASS   : PluginRpcTests::invalidFraming(header budget)
+PASS   : PluginRpcTests::invalidFraming(non ASCII)
+PASS   : PluginRpcTests::truncatedFrame()
+PASS   : PluginRpcTests::invalidUtf8()
+PASS   : PluginRpcTests::budgets()
+PASS   : PluginRpcTests::responseTimeoutCancelAndClose()
+PASS   : PluginRpcTests::asyncBatchAndIncomingCancel()
+PASS   : PluginRpcTests::realNodeProcess()
+PASS   : PluginRpcTests::repeatedProcesses()
+QINFO  : PluginRpcTests::processBenchmarks(1 process) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"30256 125392  30.0","processes":1,"roundtrips":[{"bytes":10240,"meanMs":2.690875,"p95Ms":3.866167,"samples":10},{"bytes":102400,"meanMs":5.207258500000001,"p95Ms":6.4675,"samples":10},{"bytes":1048576,"meanMs":41.8179667,"p95Ms":43.21375,"samples":10}]}
+PASS   : PluginRpcTests::processBenchmarks(1 process)
+QINFO  : PluginRpcTests::processBenchmarks(5 processes) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"30258 131680   4.3\n30259 137392   4.8\n30260 131728   7.0\n30261 132752   7.1\n30262 149664   8.5","processes":5,"roundtrips":[{"bytes":10240,"meanMs":2.6754926000000006,"p95Ms":3.836834,"samples":50},{"bytes":102400,"meanMs":5.16861586,"p95Ms":6.197167,"samples":50},{"bytes":1048576,"meanMs":42.9011074,"p95Ms":44.554666,"samples":50}]}
+PASS   : PluginRpcTests::processBenchmarks(5 processes)
+QINFO  : PluginRpcTests::processBenchmarks(10 processes) PLUGIN_BENCHMARK  {"ownedProcessStatsKiB":"30273 119648   1.6\n30274 125936   1.9\n30275 138464   1.9\n30276 134880   2.5\n30277 135232   2.9\n30278 136576   2.9\n30279 139024   4.0\n30280 134064   4.8\n30281 133536   5.0\n30282 134160   3.1","processes":10,"roundtrips":[{"bytes":10240,"meanMs":2.7229116600000007,"p95Ms":3.892292,"samples":100},{"bytes":102400,"meanMs":5.4786395400000005,"p95Ms":7.593458,"samples":100},{"bytes":1048576,"meanMs":41.687774139999995,"p95Ms":44.020583,"samples":100}]}
+PASS   : PluginRpcTests::processBenchmarks(10 processes)
+PASS   : PluginRpcTests::cleanupTestCase()
+Totals: 52 passed, 0 failed, 0 skipped, 0 blacklisted, 11629ms
+********* Finished testing of PluginRpcTests *********
+<end of output>
+Test time =  11.79 sec
+----------------------------------------------------------
+Test Passed.
+"PluginRpcTests" end time: Oct 11 09:07 JST
+"PluginRpcTests" time elapsed: 00:00:11
+----------------------------------------------------------
+
+3/6 Testing: PluginNodeRpcTests
+3/6 Test: PluginNodeRpcTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/rpc.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeRpcTests" start time: Oct 11 09:07 JST
+Output:
+----------------------------------------------------------
+✔ named params (1.218208ms)
+✔ positional params (0.151041ms)
+✔ omitted params (0.071708ms)
+✔ null request id (0.063917ms)
+✔ numeric id token (0.083834ms)
+✔ exponent id token (0.057083ms)
+✔ fractional id token (0.057416ms)
+✔ escaped id key (0.05725ms)
+✔ notification (0.078292ms)
+✔ unknown notification (0.0875ms)
+✔ failing notification (0.066625ms)
+✔ unknown method (0.09875ms)
+✔ invalid method params (0.059625ms)
+✔ handler failure (0.05575ms)
+✔ parse error (0.043584ms)
+✔ invalid number grammar (0.038834ms)
+✔ multiple roots (0.035625ms)
+✔ scalar (0.033709ms)
+✔ null scalar (0.050542ms)
+✔ invalid id (0.043875ms)
+✔ invalid version (0.047291ms)
+✔ scalar params (0.0455ms)
+✔ empty batch (0.034875ms)
+✔ invalid batch items (4.595459ms)
+✔ mixed batch (0.109916ms)
+✔ all notifications (0.034458ms)
+✔ unknown response (0.039333ms)
+✔ invalid response (0.03175ms)
+✔ framing at every split and byte (1.031292ms)
+✔ invalid framing and truncation (0.407917ms)
+✔ invalid UTF8 and profile budgets (0.144834ms)
+✔ bidirectional requests, cancellation, timeout, invalid response and close (12.255791ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65.471958
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeRpcTests" end time: Oct 11 09:07 JST
+"PluginNodeRpcTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/6 Testing: PluginNodeHostTests
+4/6 Test: PluginNodeHostTests
+Command: "/private/tmp/notepadnext-node24/node-v24.21.0-darwin-arm64/bin/node" "--test" "/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/host.test.cjs"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-rpc
+"PluginNodeHostTests" start time: Oct 11 09:07 JST
+Output:
+----------------------------------------------------------
+✔ native package lifecycle and bidirectional document read (36.198416ms)
+✔ failed activation releases already registered resources (30.602458ms)
+✔ watch buffers events that arrive before its reply (0.490833ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104.872708
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"PluginNodeHostTests" end time: Oct 11 09:07 JST
+"PluginNodeHostTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/6 Testing: PluginWebviewTests
+6/6 Test: PluginWebviewTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-webviews/PluginWebviewTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-webviews
+"PluginWebviewTests" start time: Oct 11 09:07 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+PASS   : PluginWebviewTests::htmlPolicy()
+PASS   : PluginWebviewTests::imageContainment()
+[30315:259:1011/090716.015320:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[30315:259:1011/090716.015555:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-11 09:07:16.708 PluginWebviewTests[30315:14169861] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::realPageAndCleanup()
+PASS   : PluginWebviewTests::realMarkdownSession()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 6 passed, 0 failed, 0 skipped, 0 blacklisted, 1511ms
+********* Finished testing of PluginWebviewTests *********
+<end of output>
+Test time =   2.14 sec
+----------------------------------------------------------
+Test Passed.
+"PluginWebviewTests" end time: Oct 11 09:07 JST
+"PluginWebviewTests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Oct 11 09:07 JST

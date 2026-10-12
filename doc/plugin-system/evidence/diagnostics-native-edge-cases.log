@@ -1,0 +1,10 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+PASS   : PluginWebviewTests::largeCommandFailureIsBounded()
+PASS   : PluginWebviewTests::retryWhileFailedProcessDrains()
+2026-10-11 12:05:47.297 PluginWebviewTests[33211:15182597] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 2713ms
+********* Finished testing of PluginWebviewTests *********

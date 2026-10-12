@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/merdankiji/localGit/NotepadNext/scripts/verify-macos-bundle.py", line 95, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/merdankiji/localGit/NotepadNext/scripts/verify-macos-bundle.py", line 91, in main
+    record=inspect(args.app,args.arch,not args.skip_signatures)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/merdankiji/localGit/NotepadNext/scripts/verify-macos-bundle.py", line 66, in inspect
+    if not any(candidate.is_file() and contained(candidate,app) for candidate in candidates):raise ValueError('Unresolved/external dependency: '+dependency+' in '+str(file))
+                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Unresolved/external dependency: @rpath/QtSerialPort.framework/Versions/A/QtSerialPort in /private/tmp/nnp-macos-deploy-probe-s6qutlnn/NotepadNext.app/Contents/PlugIns/position/libqtposition_nmea.dylib

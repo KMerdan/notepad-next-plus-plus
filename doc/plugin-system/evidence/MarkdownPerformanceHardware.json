@@ -1,0 +1,6 @@
+{
+  "hw.memsize": "68719476736",
+  "hw.physicalcpu": "16",
+  "hw.logicalcpu": "16",
+  "machdep.cpu.brand_string": "Apple M4 Max"
+}

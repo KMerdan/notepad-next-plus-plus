@@ -1,0 +1,15 @@
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginSources_autogen
+[ 25%] Built target NotepadNextPluginSources
+[ 25%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 25%] Built target NotepadNextPluginPackages_autogen
+[ 75%] Built target NotepadNextPluginPackages
+[ 75%] Built target PackageTransactionProbe_autogen_timestamp_deps
+[ 75%] Built target PackageTransactionProbe_autogen
+[ 75%] Built target PackageTransactionProbe
+[ 75%] Built target PluginTransactionCrashTests_autogen_timestamp_deps
+[100%] Automatic MOC and UIC for target PluginTransactionCrashTests
+[100%] Built target PluginTransactionCrashTests_autogen
+[100%] Building CXX object tests/plugin-packages/CMakeFiles/PluginTransactionCrashTests.dir/TransactionCrashTests.cpp.o
+[100%] Linking CXX executable PluginTransactionCrashTests
+[100%] Built target PluginTransactionCrashTests

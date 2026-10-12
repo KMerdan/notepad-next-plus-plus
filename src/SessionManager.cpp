@@ -66,7 +66,7 @@ void SessionManager::setSessionFileTypes(SessionFileTypes types)
 
 QDir SessionManager::sessionDirectory() const
 {
-    QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    QDir d(app->applicationDataDirectory());
 
     d.mkpath("session");
     d.cd("session");

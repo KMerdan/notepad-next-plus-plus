@@ -1,0 +1,1095 @@
+-- ADS: Solution configured to use Qt version 6
+-- CPM: Adding package ads@5.1.1 (v5.1.1 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/ads/fb9d)
+-- CPM: Adding package QSimpleUpdater@0 (c5c136c0f79ca6423b0914a2676ae3d0e3811c5b at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/qsimpleupdater/531e)
+-- CPM: Adding package SingleApplication@3.5.6 (v3.5.6 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/singleapplication/d282)
+-- CPM: Adding package editorconfig_core_qt@0 (ab62f0554abf2bbe4d45427b36a8b2f81ca7b4ab at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/editorconfig_core_qt/87f1)
+-- Configuring macOS packaging
+-- Configuring done (1.0s)
+-- Generating done (0.6s)
+-- Build files have been written to: /private/tmp/notepadnext-macos-release-build
+[  0%] Built target SingleApplication_autogen_timestamp_deps
+[  0%] Built target QSimpleUpdater_autogen_timestamp_deps
+[  0%] Built target lua_autogen_timestamp_deps
+[  0%] Generating src/NotepadNext_ar.qm
+[  0%] Built target qtadvanceddocking-qt6_autogen_timestamp_deps
+[  0%] Built target editorconfig-core-qt_autogen_timestamp_deps
+[  0%] Generating src/NotepadNext_cs.qm
+[  0%] Built target scintilla_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginDiagnostics_autogen_timestamp_deps
+[  0%] Built target uchardet_autogen_timestamp_deps
+[  0%] Built target NotepadNextPluginSources_autogen_timestamp_deps
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_ar.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 419 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_cs.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+[  0%] Generating src/NotepadNext_de.qm
+[  0%] Generating src/NotepadNext_en.qm
+[  0%] Built target NotepadNextPluginRpc_autogen_timestamp_deps
+[  0%] Running qmlimportscanner for NotepadNext
+[  0%] Built target NotepadNextPluginData_autogen_timestamp_deps
+[  0%] Generating src/NotepadNext_de.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_de.qm'...
+    Generated 382 translation(s) (382 finished and 0 unfinished)
+    Ignored 37 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_en.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 419 untranslated source text(s)
+[  0%] Generating src/NotepadNext_es.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_de.qm'...
+    Generated 382 translation(s) (382 finished and 0 unfinished)
+    Ignored 37 untranslated source text(s)
+[  0%] Generating src/NotepadNext_fr.qm
+[  1%] Generating src/NotepadNext_en.qm
+[  1%] Running qmlimportscanner for PluginApplicationTests
+[  1%] Built target DiagnosticCrashProbe_autogen_timestamp_deps
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_es.qm'...
+    Generated 403 translation(s) (403 finished and 0 unfinished)
+    Ignored 16 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_fr.qm'...
+    Generated 412 translation(s) (412 finished and 0 unfinished)
+    Ignored 7 untranslated source text(s)
+[  2%] Generating src/NotepadNext_hu.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_en.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 419 untranslated source text(s)
+[  2%] Generating src/NotepadNext_es.qm
+[  2%] Generating src/NotepadNext_id.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_hu.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 412 translation(s) (412 finished and 0 unfinished)
+    Ignored 7 untranslated source text(s)
+[  2%] Built target PluginApplicationTests_qmlimportscan
+[  2%] Automatic MOC and UIC for target qtadvanceddocking-qt6
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_es.qm'...
+    Generated 403 translation(s) (403 finished and 0 unfinished)
+    Ignored 16 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_id.qm'...
+    Generated 412 translation(s) (412 finished and 0 unfinished)
+    Ignored 7 untranslated source text(s)
+[  2%] Generating src/NotepadNext_hu.qm
+[  2%] Generating src/NotepadNext_it.qm
+[  2%] Automatic MOC and UIC for target QSimpleUpdater
+[  2%] Automatic MOC and UIC for target SingleApplication
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_hu.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 412 translation(s) (412 finished and 0 unfinished)
+    Ignored 7 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_it.qm'...
+    Generated 417 translation(s) (417 finished and 0 unfinished)
+    Ignored 2 untranslated source text(s)
+[  2%] Generating src/NotepadNext_id.qm
+[  2%] Generating src/NotepadNext_ja.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_id.qm'...
+    Generated 412 translation(s) (412 finished and 0 unfinished)
+    Ignored 7 untranslated source text(s)
+[  2%] Built target NotepadNext_qmlimportscan
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_ja.qm'...
+    Generated 387 translation(s) (387 finished and 0 unfinished)
+    Ignored 32 untranslated source text(s)
+[  2%] Generating src/NotepadNext_ko.qm
+[  2%] Generating src/NotepadNext_it.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_ko.qm'...
+    Generated 25 translation(s) (25 finished and 0 unfinished)
+    Ignored 394 untranslated source text(s)
+[  2%] Automatic MOC and UIC for target editorconfig-core-qt
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_it.qm'...
+    Generated 417 translation(s) (417 finished and 0 unfinished)
+    Ignored 2 untranslated source text(s)
+[  2%] Generating src/NotepadNext_nl.qm
+[  2%] Generating src/NotepadNext_ja.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_ja.qm'...
+    Generated 387 translation(s) (387 finished and 0 unfinished)
+    Ignored 32 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_nl.qm'...
+    Generated 385 translation(s) (385 finished and 0 unfinished)
+    Ignored 34 untranslated source text(s)
+[  2%] Generating src/NotepadNext_nl.qm
+[  3%] Generating src/NotepadNext_pl.qm
+[  3%] Built target editorconfig-core-qt_autogen
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_nl.qm'...
+    Generated 385 translation(s) (385 finished and 0 unfinished)
+    Ignored 34 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_pl.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+[  3%] Generating src/NotepadNext_pl.qm
+[  3%] Generating src/NotepadNext_pt_BR.qm
+[  3%] Automatic MOC and UIC for target lua
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_pl.qm'...
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_pt_BR.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+    Generated 353 translation(s) (353 finished and 0 unfinished)
+    Ignored 66 untranslated source text(s)
+[  3%] Generating src/NotepadNext_pt_BR.qm
+[  3%] Generating src/NotepadNext_pt_PT.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_pt_BR.qm'...
+    Generated 353 translation(s) (353 finished and 0 unfinished)
+    Ignored 66 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_pt_PT.qm'...
+    Generated 410 translation(s) (410 finished and 0 unfinished)
+    Ignored 9 untranslated source text(s)
+[  3%] Built target lua_autogen
+[  3%] Generating src/NotepadNext_pt_PT.qm
+[  3%] Generating src/NotepadNext_ru.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_ru.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 419 translation(s) (419 finished and 0 unfinished)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_pt_PT.qm'...
+    Generated 410 translation(s) (410 finished and 0 unfinished)
+    Ignored 9 untranslated source text(s)
+[  3%] Generating src/NotepadNext_sv.qm
+[  4%] Generating src/NotepadNext_ru.qm
+[  4%] Automatic MOC and UIC for target scintilla
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_sv.qm'...
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_ru.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 419 translation(s) (419 finished and 0 unfinished)
+[  4%] Generating src/NotepadNext_tr.qm
+[  5%] Generating src/NotepadNext_sv.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_tr.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_sv.qm'...
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+[  5%] Generating src/NotepadNext_uk.qm
+[  5%] Generating src/NotepadNext_tr.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_uk.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_tr.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+[  6%] Generating src/NotepadNext_vi.qm
+[  6%] Generating src/NotepadNext_uk.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_vi.qm'...
+    Generated 229 translation(s) (229 finished and 0 unfinished)
+    Ignored 190 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_uk.qm'...
+Removed plural forms as the target language has less forms.
+If this sounds wrong, possibly the target language is not set or recognized.
+    Generated 379 translation(s) (379 finished and 0 unfinished)
+    Ignored 40 untranslated source text(s)
+[  6%] Generating src/NotepadNext_zh.qm
+[  6%] Generating src/NotepadNext_vi.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_zh.qm'...
+    Generated 443 translation(s) (279 finished and 164 unfinished)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_vi.qm'...
+    Generated 229 translation(s) (229 finished and 0 unfinished)
+    Ignored 190 untranslated source text(s)
+[  6%] Built target SingleApplication_autogen
+[  6%] Generating src/NotepadNext_zh_CN.qm
+[  6%] Generating src/NotepadNext_zh.qm
+[  6%] Built target QSimpleUpdater_autogen
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_zh_CN.qm'...
+    Generated 278 translation(s) (278 finished and 0 unfinished)
+    Ignored 141 untranslated source text(s)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_zh.qm'...
+    Generated 443 translation(s) (279 finished and 164 unfinished)
+[  7%] Automatic MOC and UIC for target uchardet
+[  7%] Generating src/NotepadNext_zh_TW.qm
+[  7%] Automatic MOC and UIC for target NotepadNextPluginDiagnostics
+[  7%] Generating src/NotepadNext_zh_CN.qm
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_zh_TW.qm'...
+    Generated 419 translation(s) (419 finished and 0 unfinished)
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_zh_CN.qm'...
+    Generated 278 translation(s) (278 finished and 0 unfinished)
+    Ignored 141 untranslated source text(s)
+[  7%] Generating src/NotepadNext_zh_TW.qm
+[  7%] Built target NotepadNext_lrelease
+Updating '/private/tmp/notepadnext-macos-release-build/src/NotepadNext_zh_TW.qm'...
+    Generated 419 translation(s) (419 finished and 0 unfinished)
+[  7%] Built target uchardet_autogen
+[  7%] Automatic MOC and UIC for target NotepadNextPluginSources
+[  7%] Running rcc for resource NotepadNext_translations
+[  7%] Automatic MOC and UIC for target NotepadNextPluginRpc
+[  8%] Built target NotepadNext_NotepadNext_translations
+[  8%] Automatic MOC and UIC for target NotepadNextPluginData
+[  8%] Built target scintilla_autogen
+[  8%] Built target qtadvanceddocking-qt6_autogen
+[  8%] Automatic RCC for ads.qrc
+[  8%] Automatic MOC and UIC for target DiagnosticCrashProbe
+[  8%] Built target DiagnosticCrashProbe_autogen
+[  9%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/qtadvanceddocking-qt6_autogen/mocs_compilation.cpp.o
+[ 10%] Generating qrc_qsimpleupdater.cpp
+[ 10%] Built target NotepadNextPluginDiagnostics_autogen
+[ 10%] Building CXX object _deps/qsimpleupdater-build/CMakeFiles/QSimpleUpdater.dir/QSimpleUpdater_autogen/mocs_compilation.cpp.o
+[ 10%] Building CXX object _deps/singleapplication-build/CMakeFiles/SingleApplication.dir/SingleApplication_autogen/mocs_compilation.cpp.o
+[ 10%] Building CXX object _deps/qsimpleupdater-build/CMakeFiles/QSimpleUpdater.dir/src/AuthenticateDialog.cpp.o
+[ 10%] Built target NotepadNextPluginSources_autogen
+[ 10%] Building CXX object _deps/editorconfig_core_qt-build/CMakeFiles/editorconfig-core-qt.dir/editorconfig-core-qt_autogen/mocs_compilation.cpp.o
+[ 10%] Built target NotepadNextPluginData_autogen
+[ 10%] Built target NotepadNextPluginRpc_autogen
+[ 10%] Building CXX object thirdparty/lua/CMakeFiles/lua.dir/lua_autogen/mocs_compilation.cpp.o
+[ 10%] Building CXX object _deps/editorconfig_core_qt-build/CMakeFiles/editorconfig-core-qt.dir/EditorConfig.cpp.o
+[ 10%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/scintilla_autogen/mocs_compilation.cpp.o
+[ 10%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lapi.c.o
+[ 10%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lauxlib.c.o
+[ 10%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lbaselib.c.o
+[ 10%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lbitlib.c.o
+[ 11%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lcode.c.o
+[ 11%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lcorolib.c.o
+[ 11%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lctype.c.o
+[ 11%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ldblib.c.o
+/Users/merdankiji/localGit/NotepadNext/.cpm-cache/editorconfig_core_qt/87f1/EditorConfig.cpp:285:5: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+  285 |     inputFile.open(QIODevice::ReadOnly | QIODevice::Text);
+      |     ^~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 11%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ldebug.c.o
+[ 11%] Building CXX object _deps/qsimpleupdater-build/CMakeFiles/QSimpleUpdater.dir/src/Downloader.cpp.o
+[ 11%] Building CXX object _deps/singleapplication-build/CMakeFiles/SingleApplication.dir/singleapplication.cpp.o
+[ 11%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ldo.c.o
+[ 12%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ldump.c.o
+[ 12%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lfunc.c.o
+[ 12%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lgc.c.o
+1 warning generated.
+[ 12%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/ads_globals.cpp.o
+[ 12%] Linking CXX static library libeditorconfig-core-qt.a
+[ 12%] Built target editorconfig-core-qt
+[ 13%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/qt/ScintillaEdit/ScintillaEdit.cpp.o
+[ 13%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/linit.c.o
+[ 13%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/liolib.c.o
+[ 13%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/qt/ScintillaEdit/ScintillaDocument.cpp.o
+[ 13%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/llex.c.o
+[ 13%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lmathlib.c.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lmem.c.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/loadlib.c.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lobject.c.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lopcodes.c.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/loslib.c.o
+[ 14%] Building CXX object _deps/singleapplication-build/CMakeFiles/SingleApplication.dir/singleapplication_p.cpp.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lparser.c.o
+[ 14%] Building CXX object _deps/qsimpleupdater-build/CMakeFiles/QSimpleUpdater.dir/src/QSimpleUpdater.cpp.o
+[ 14%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lstate.c.o
+[ 14%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockAreaTabBar.cpp.o
+[ 15%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lstring.c.o
+[ 15%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lstrlib.c.o
+[ 15%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/uchardet_autogen/mocs_compilation.cpp.o
+[ 15%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/CharDistribution.cpp.o
+[ 15%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/JpCntx.cpp.o
+[ 15%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ltable.c.o
+[ 15%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangArabicModel.cpp.o
+[ 15%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/qt/ScintillaEditBase/PlatQt.cpp.o
+[ 15%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangBulgarianModel.cpp.o
+[ 15%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ltablib.c.o
+[ 15%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangCroatianModel.cpp.o
+[ 16%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangCzechModel.cpp.o
+[ 16%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/ltm.c.o
+[ 16%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangDanishModel.cpp.o
+[ 16%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lundump.c.o
+[ 16%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangEsperantoModel.cpp.o
+/Users/merdankiji/localGit/NotepadNext/thirdparty/lua/src/lundump.c:237:33: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+  237 |   checkliteral(S, LUA_SIGNATURE + 1, "not a");  /* 1st char already checked */
+      |                   ~~~~~~~~~~~~~~^~~
+/Users/merdankiji/localGit/NotepadNext/thirdparty/lua/src/lundump.c:237:33: note: use array indexing to silence this warning
+  237 |   checkliteral(S, LUA_SIGNATURE + 1, "not a");  /* 1st char already checked */
+      |                                 ^  
+      |                   &             [  ]
+[ 16%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangEstonianModel.cpp.o
+1 warning generated.
+[ 17%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lutf8lib.c.o
+[ 17%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangFinnishModel.cpp.o
+[ 17%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangFrenchModel.cpp.o
+[ 17%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lvm.c.o
+[ 17%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangGermanModel.cpp.o
+[ 18%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangGreekModel.cpp.o
+[ 18%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangHebrewModel.cpp.o
+[ 18%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangHungarianModel.cpp.o
+[ 18%] Building CXX object _deps/qsimpleupdater-build/CMakeFiles/QSimpleUpdater.dir/src/Updater.cpp.o
+[ 18%] Building C object thirdparty/lua/CMakeFiles/lua.dir/src/lzio.c.o
+[ 18%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangIrishModel.cpp.o
+[ 18%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangItalianModel.cpp.o
+[ 18%] Linking CXX static library liblua.a
+[ 18%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangLatvianModel.cpp.o
+[ 18%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockAreaTitleBar.cpp.o
+[ 18%] Built target lua
+[ 19%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangLithuanianModel.cpp.o
+[ 19%] Building CXX object src/plugins/runtime/plugin-diagnostics/CMakeFiles/NotepadNextPluginDiagnostics.dir/NotepadNextPluginDiagnostics_autogen/mocs_compilation.cpp.o
+[ 19%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangMalteseModel.cpp.o
+[ 19%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangNorwegianModel.cpp.o
+[ 20%] Linking CXX static library libSingleApplication.a
+[ 20%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangPolishModel.cpp.o
+[ 20%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangPortugueseModel.cpp.o
+[ 20%] Built target SingleApplication
+[ 20%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/qt/ScintillaEditBase/ScintillaQt.cpp.o
+[ 20%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangRomanianModel.cpp.o
+[ 20%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangRussianModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangSlovakModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangSloveneModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangSpanishModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangSwedishModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangThaiModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangTurkishModel.cpp.o
+[ 21%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/LangModels/LangVietnameseModel.cpp.o
+[ 22%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsBig5Prober.cpp.o
+[ 22%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsCharSetProber.cpp.o
+[ 22%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsEUCJPProber.cpp.o
+[ 22%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsEUCKRProber.cpp.o
+[ 22%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsEUCTWProber.cpp.o
+[ 22%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsEscCharsetProber.cpp.o
+[ 23%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsEscSM.cpp.o
+[ 23%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsGB2312Prober.cpp.o
+[ 23%] Building CXX object src/plugins/runtime/plugin-diagnostics/CMakeFiles/NotepadNextPluginDiagnostics.dir/PluginDiagnostics.cpp.o
+[ 23%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/qt/ScintillaEditBase/ScintillaEditBase.cpp.o
+[ 23%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockAreaWidget.cpp.o
+[ 23%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsHebrewProber.cpp.o
+[ 24%] Building CXX object _deps/qsimpleupdater-build/CMakeFiles/QSimpleUpdater.dir/qrc_qsimpleupdater.cpp.o
+[ 24%] Linking CXX static library libQSimpleUpdater.a
+[ 24%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsLatin1Prober.cpp.o
+[ 24%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsMBCSGroupProber.cpp.o
+[ 24%] Built target QSimpleUpdater
+[ 24%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/XPM.cxx.o
+[ 24%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsMBCSSM.cpp.o
+[ 24%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsSBCSGroupProber.cpp.o
+[ 25%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsSBCharSetProber.cpp.o
+[ 25%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsSJISProber.cpp.o
+[ 25%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsUTF8Prober.cpp.o
+[ 25%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/nsUniversalDetector.cpp.o
+[ 25%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockContainerWidget.cpp.o
+[ 25%] Building CXX object thirdparty/uchardet/CMakeFiles/uchardet.dir/src/uchardet.cpp.o
+[ 25%] Linking CXX static library libuchardet.a
+[ 25%] Built target uchardet
+[ 25%] Automatic RCC for plugin_sources.qrc
+[ 26%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/ViewStyle.cxx.o
+[ 26%] Building CXX object src/plugins/sources/CMakeFiles/NotepadNextPluginSources.dir/NotepadNextPluginSources_autogen/mocs_compilation.cpp.o
+[ 26%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/UniqueString.cxx.o
+[ 26%] Automatic RCC for wire_contract.qrc
+[ 27%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/NotepadNextPluginRpc_autogen/mocs_compilation.cpp.o
+[ 28%] Linking CXX static library libNotepadNextPluginDiagnostics.a
+[ 28%] Built target NotepadNextPluginDiagnostics
+[ 28%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockManager.cpp.o
+[ 29%] Building CXX object src/plugins/runtime/plugin-data/CMakeFiles/NotepadNextPluginData.dir/NotepadNextPluginData_autogen/mocs_compilation.cpp.o
+[ 29%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/UniConversion.cxx.o
+[ 29%] Building CXX object src/plugins/sources/CMakeFiles/NotepadNextPluginSources.dir/PluginMetadata.cpp.o
+[ 29%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Style.cxx.o
+[ 30%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockOverlay.cpp.o
+[ 30%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/RpcFramer.cpp.o
+[ 30%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Selection.cxx.o
+/Users/merdankiji/localGit/NotepadNext/.cpm-cache/ads/fb9d/src/DockManager.cpp:230:2: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+  230 |         StyleSheetFile.open(QIODevice::ReadOnly);
+      |         ^~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~
+[ 30%] Building CXX object src/plugins/runtime/plugin-data/CMakeFiles/NotepadNextPluginData.dir/PluginDataStore.cpp.o
+[ 30%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/ScintillaBase.cxx.o
+[ 30%] Building CXX object src/plugins/sources/CMakeFiles/NotepadNextPluginSources.dir/RegisteredResourceRegistry.cpp.o
+1 warning generated.
+[ 30%] Building CXX object tests/plugin-diagnostics/CMakeFiles/DiagnosticCrashProbe.dir/DiagnosticCrashProbe_autogen/mocs_compilation.cpp.o
+[ 30%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/RpcEndpoint.cpp.o
+[ 30%] Building CXX object tests/plugin-diagnostics/CMakeFiles/DiagnosticCrashProbe.dir/DiagnosticCrashProbe.cpp.o
+[ 30%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockSplitter.cpp.o
+[ 30%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/RunStyles.cxx.o
+[ 30%] Building CXX object src/plugins/runtime/plugin-data/CMakeFiles/NotepadNextPluginData.dir/PluginDataService.cpp.o
+[ 30%] Linking CXX executable DiagnosticCrashProbe
+[ 30%] Built target DiagnosticCrashProbe
+[ 30%] Building CXX object src/plugins/sources/CMakeFiles/NotepadNextPluginSources.dir/SourceEntryResolver.cpp.o
+[ 30%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockWidget.cpp.o
+[ 31%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/RESearch.cxx.o
+[ 31%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/RpcProcess.cpp.o
+[ 31%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/PositionCache.cxx.o
+[ 31%] Building CXX object src/plugins/sources/CMakeFiles/NotepadNextPluginSources.dir/NotepadNextPluginSources_autogen/EWIEGA46WW/qrc_plugin_sources.cpp.o
+[ 31%] Built target PluginDiagnosticTests_autogen_timestamp_deps
+[ 31%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/JsonIdMask.cpp.o
+[ 31%] Linking CXX static library libNotepadNextPluginData.a
+[ 31%] Built target NotepadNextPluginData
+[ 31%] Automatic MOC and UIC for target PluginDiagnosticTests
+[ 31%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockWidgetTab.cpp.o
+[ 32%] Linking CXX static library libNotepadNextPluginSources.a
+[ 32%] Built target NotepadNextPluginSources
+[ 32%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/WireContract.cpp.o
+[ 32%] Built target PluginDiagnosticTests_autogen
+[ 32%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/PerLine.cxx.o
+[ 32%] Built target NotepadNextPluginPackages_autogen_timestamp_deps
+[ 32%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/MarginView.cxx.o
+[ 32%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockingStateReader.cpp.o
+[ 32%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/LineMarker.cxx.o
+[ 32%] Building CXX object src/plugins/rpc/CMakeFiles/NotepadNextPluginRpc.dir/NotepadNextPluginRpc_autogen/EWIEGA46WW/qrc_wire_contract.cpp.o
+[ 32%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/KeyMap.cxx.o
+[ 33%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Indicator.cxx.o
+[ 33%] Built target PluginDataTests_autogen_timestamp_deps
+[ 34%] Building CXX object tests/plugin-diagnostics/CMakeFiles/PluginDiagnosticTests.dir/PluginDiagnosticTests_autogen/mocs_compilation.cpp.o
+[ 35%] Linking CXX static library libNotepadNextPluginRpc.a
+[ 35%] Building CXX object tests/plugin-diagnostics/CMakeFiles/PluginDiagnosticTests.dir/PluginDiagnosticTests.cpp.o
+[ 35%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockFocusController.cpp.o
+[ 35%] Built target NotepadNextPluginRpc
+[ 35%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Geometry.cxx.o
+[ 35%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/EditView.cxx.o
+[ 36%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/ElidingLabel.cpp.o
+[ 36%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Editor.cxx.o
+[ 36%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/EditModel.cxx.o
+[ 36%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/FloatingDockContainer.cpp.o
+/Users/merdankiji/localGit/NotepadNext/thirdparty/scintilla/src/Editor.cxx:1588:29: warning: implicit capture of 'this' with a capture default of '=' is deprecated [-Wdeprecated-this-capture]
+ 1588 |                                 const Range rangeLine = pdoc->LineRange(lineNumber);
+      |                                                         ^
+/Users/merdankiji/localGit/NotepadNext/thirdparty/scintilla/src/Editor.cxx:1579:4: note: add an explicit capture of 'this' to capture '*this' by reference
+ 1579 |                 [=, &surface, &nextIndex, &linesAfterWrap, &mutexRetrieve]() {
+      |                  ^
+      |                   , this
+[ 36%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/FloatingDragPreview.cpp.o
+[ 36%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Document.cxx.o
+[ 36%] Automatic MOC and UIC for target NotepadNextPluginPackages
+[ 36%] Linking CXX executable PluginDiagnosticTests
+[ 36%] Built target PluginDiagnosticTests
+[ 36%] Built target PluginRpcTests_autogen_timestamp_deps
+[ 36%] Automatic MOC and UIC for target PluginDataTests
+[ 36%] Built target NotepadNextPluginPackages_autogen
+[ 36%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/IconProvider.cpp.o
+[ 36%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/DockComponentsFactory.cpp.o
+[ 36%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/AutoHideSideBar.cpp.o
+1 warning generated.
+[ 36%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/NotepadNextPluginPackages_autogen/mocs_compilation.cpp.o
+[ 36%] Built target PluginDataTests_autogen
+[ 36%] Automatic MOC and UIC for target PluginRpcTests
+[ 36%] Built target PluginRpcTests_autogen
+[ 36%] Building CXX object tests/plugin-data/CMakeFiles/PluginDataTests.dir/PluginDataTests_autogen/mocs_compilation.cpp.o
+[ 37%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/SemVer.cpp.o
+[ 37%] Building CXX object tests/plugin-data/CMakeFiles/PluginDataTests.dir/PluginDataTests.cpp.o
+[ 37%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/PackageStore.cpp.o
+[ 37%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/AutoHideTab.cpp.o
+[ 37%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/Decoration.cxx.o
+[ 37%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/PackageLease.cpp.o
+[ 38%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/DBCS.cxx.o
+[ 39%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/AutoHideDockContainer.cpp.o
+[ 39%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/ContractionState.cxx.o
+[ 39%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/PushButton.cpp.o
+[ 39%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CharClassify.cxx.o
+[ 39%] Linking CXX executable PluginDataTests
+[ 39%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CharacterType.cxx.o
+[ 39%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/ResizeHandle.cpp.o
+[ 39%] Built target PluginDataTests
+[ 39%] Building CXX object tests/plugin-rpc/CMakeFiles/PluginRpcTests.dir/PluginRpcTests_autogen/mocs_compilation.cpp.o
+[ 39%] Building CXX object tests/plugin-rpc/CMakeFiles/PluginRpcTests.dir/PluginRpcTests.cpp.o
+[ 39%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CharacterCategoryMap.cxx.o
+[ 39%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/ProcessIdentity.cpp.o
+[ 39%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/PackageCollection.cpp.o
+[ 39%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CellBuffer.cxx.o
+[ 39%] Building CXX object _deps/ads-build/src/CMakeFiles/qtadvanceddocking-qt6.dir/qtadvanceddocking-qt6_autogen/EWIEGA46WW/qrc_ads.cpp.o
+[ 39%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/PackageCollectionService.cpp.o
+[ 39%] Linking CXX static library ../../../x64/lib/libqtadvanceddocking-qt6_static.a
+[ 39%] Built target qtadvanceddocking-qt6
+[ 39%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CaseFolder.cxx.o
+[ 40%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CaseConvert.cxx.o
+[ 40%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/CallTip.cxx.o
+[ 40%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/AutoComplete.cxx.o
+[ 41%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/ZipExtractor.cpp.o
+[ 41%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/GitHubReleaseService.cpp.o
+[ 41%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/InstalledPluginRegistry.cpp.o
+[ 41%] Building CXX object src/plugins/packages/CMakeFiles/NotepadNextPluginPackages.dir/InstallationService.cpp.o
+[ 41%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/ChangeHistory.cxx.o
+[ 41%] Linking CXX executable PluginRpcTests
+[ 41%] Built target PluginRpcTests
+[ 41%] Building CXX object thirdparty/scintilla/CMakeFiles/scintilla.dir/src/UndoHistory.cxx.o
+[ 41%] Linking CXX static library libscintilla.a
+[ 41%] Built target scintilla
+[ 41%] Built target NotepadNextPluginDocuments_autogen_timestamp_deps
+[ 41%] Built target lexilla_autogen_timestamp_deps
+[ 41%] Automatic MOC and UIC for target lexilla
+[ 41%] Automatic MOC and UIC for target NotepadNextPluginDocuments
+[ 41%] Built target lexilla_autogen
+[ 41%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexilla_autogen/mocs_compilation.cpp.o
+[ 42%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/src/Lexilla.cxx.o
+[ 42%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/access/LexillaAccess.cxx.o
+[ 42%] Built target NotepadNextPluginDocuments_autogen
+[ 42%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexA68k.cxx.o
+[ 42%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAPDL.cxx.o
+[ 42%] Building CXX object src/plugins/documents/CMakeFiles/NotepadNextPluginDocuments.dir/NotepadNextPluginDocuments_autogen/mocs_compilation.cpp.o
+[ 42%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexASY.cxx.o
+[ 42%] Linking CXX static library libNotepadNextPluginPackages.a
+[ 42%] Built target NotepadNextPluginPackages
+[ 42%] Building CXX object src/plugins/documents/CMakeFiles/NotepadNextPluginDocuments.dir/DocumentBridge.cpp.o
+[ 42%] Built target PluginSourceTests_autogen_timestamp_deps
+[ 42%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAU3.cxx.o
+[ 42%] Built target PluginManagerPreview_autogen_timestamp_deps
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAVE.cxx.o
+[ 43%] Built target PackageLeaseProbe_autogen_timestamp_deps
+[ 43%] Built target PluginGitHubReleaseTests_autogen_timestamp_deps
+[ 43%] Built target ParentCrashProbe_autogen_timestamp_deps
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAVS.cxx.o
+[ 43%] Automatic MOC and UIC for target PluginSourceTests
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAbaqus.cxx.o
+[ 43%] Automatic MOC and UIC for target PluginManagerPreview
+[ 43%] Automatic MOC and UIC for target PackageLeaseProbe
+[ 43%] Built target PackageLeaseProbe_autogen
+[ 43%] Automatic MOC and UIC for target PluginGitHubReleaseTests
+[ 43%] Built target PluginSourceTests_autogen
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAda.cxx.o
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAsciidoc.cxx.o
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAsm.cxx.o
+[ 43%] Built target PluginManagerPreview_autogen
+[ 43%] Automatic MOC and UIC for target ParentCrashProbe
+[ 43%] Built target ParentCrashProbe_autogen
+[ 43%] Automatic RCC for ../../src/resources.qrc
+[ 43%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexAsn1.cxx.o
+[ 44%] Building CXX object tests/plugin-sources/CMakeFiles/PluginSourceTests.dir/PluginSourceTests_autogen/mocs_compilation.cpp.o
+[ 45%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexBaan.cxx.o
+[ 45%] Built target PluginGitHubReleaseTests_autogen
+[ 45%] Building CXX object tests/plugin-sources/CMakeFiles/PluginSourceTests.dir/PluginSourceTests.cpp.o
+[ 45%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexBash.cxx.o
+[ 45%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexBasic.cxx.o
+[ 45%] Linking CXX static library libNotepadNextPluginDocuments.a
+[ 45%] Built target NotepadNextPluginDocuments
+[ 45%] Automatic RCC for ../../src/resources.qrc
+[ 46%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/PluginManagerPreview_autogen/mocs_compilation.cpp.o
+[ 46%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexBatch.cxx.o
+[ 46%] Building CXX object tests/plugin-sources/CMakeFiles/PluginSourceTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 46%] Building CXX object tests/plugin-sources/CMakeFiles/PluginSourceTests.dir/PluginSourceTests_autogen/VNU7RW3YIC/qrc_resources.cpp.o
+[ 46%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexBibTeX.cxx.o
+[ 46%] Building CXX object tests/plugin-packages/CMakeFiles/PackageLeaseProbe.dir/PackageLeaseProbe_autogen/mocs_compilation.cpp.o
+[ 46%] Building CXX object tests/plugin-packages/CMakeFiles/PackageLeaseProbe.dir/PackageLeaseProbe.cpp.o
+[ 46%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/PluginManagerPreview.cpp.o
+[ 46%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexBullant.cxx.o
+[ 46%] Building CXX object tests/plugin-packages/CMakeFiles/PluginGitHubReleaseTests.dir/PluginGitHubReleaseTests_autogen/mocs_compilation.cpp.o
+[ 46%] Building CXX object tests/plugin-packages/CMakeFiles/PluginGitHubReleaseTests.dir/GitHubReleaseTests.cpp.o
+[ 46%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCIL.cxx.o
+[ 47%] Linking CXX executable PackageLeaseProbe
+[ 47%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 47%] Built target PackageLeaseProbe
+[ 48%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCLW.cxx.o
+[ 48%] Building CXX object tests/plugin-packages/CMakeFiles/ParentCrashProbe.dir/ParentCrashProbe_autogen/mocs_compilation.cpp.o
+[ 48%] Building CXX object tests/plugin-packages/CMakeFiles/ParentCrashProbe.dir/ParentCrashProbe.cpp.o
+[ 48%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCOBOL.cxx.o
+[ 48%] Built target PluginDocumentTests_autogen_timestamp_deps
+[ 48%] Building CXX object tests/plugin-sources/CMakeFiles/PluginManagerPreview.dir/PluginManagerPreview_autogen/VNU7RW3YIC/qrc_resources.cpp.o
+[ 48%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCPP.cxx.o
+[ 48%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCSS.cxx.o
+[ 48%] Linking CXX executable PluginSourceTests
+[ 48%] Built target PluginSourceTests
+[ 48%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCaml.cxx.o
+[ 48%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCmake.cxx.o
+[ 49%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCoffeeScript.cxx.o
+[ 49%] Linking CXX executable ParentCrashProbe
+[ 49%] Built target ParentCrashProbe
+[ 49%] Built target NotepadNextPluginWebviews_autogen_timestamp_deps
+[ 49%] Built target PluginPackageTests_autogen_timestamp_deps
+[ 49%] Built target PluginParentCrashTests_autogen_timestamp_deps
+[ 49%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexConf.cxx.o
+[ 49%] Automatic MOC and UIC for target PluginDocumentTests
+[ 49%] Automatic MOC and UIC for target NotepadNextPluginWebviews
+[ 49%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCrontab.cxx.o
+[ 49%] Linking CXX executable PluginGitHubReleaseTests
+[ 49%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexCsound.cxx.o
+[ 49%] Linking CXX executable PluginManagerPreview
+[ 49%] Built target PluginGitHubReleaseTests
+[ 49%] Built target PluginDocumentTests_autogen
+[ 49%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexD.cxx.o
+[ 49%] Automatic MOC and UIC for target PluginPackageTests
+[ 49%] Built target PluginManagerPreview
+[ 50%] Automatic MOC and UIC for target PluginParentCrashTests
+[ 50%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexDMAP.cxx.o
+[ 50%] Building CXX object tests/plugin-documents/CMakeFiles/PluginDocumentTests.dir/PluginDocumentTests_autogen/mocs_compilation.cpp.o
+[ 50%] Built target NotepadNextPluginWebviews_autogen
+[ 50%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexDMIS.cxx.o
+[ 50%] Building CXX object tests/plugin-documents/CMakeFiles/PluginDocumentTests.dir/PluginDocumentTests.cpp.o
+[ 50%] Automatic RCC for compat-bridge.qrc
+[ 50%] Building CXX object src/plugins/webviews/CMakeFiles/NotepadNextPluginWebviews.dir/NotepadNextPluginWebviews_autogen/mocs_compilation.cpp.o
+[ 51%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexDart.cxx.o
+[ 51%] Built target PluginPackageTests_autogen
+[ 51%] Building CXX object tests/plugin-documents/CMakeFiles/PluginDocumentTests.dir/__/__/src/QRegexSearch.cpp.o
+[ 51%] Built target PluginParentCrashTests_autogen
+[ 52%] Building CXX object tests/plugin-packages/CMakeFiles/PluginPackageTests.dir/PluginPackageTests_autogen/mocs_compilation.cpp.o
+[ 52%] Building CXX object src/plugins/webviews/CMakeFiles/NotepadNextPluginWebviews.dir/HtmlPolicy.cpp.o
+[ 52%] Building CXX object tests/plugin-packages/CMakeFiles/PluginPackageTests.dir/PluginPackageTests.cpp.o
+[ 52%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexDataflex.cxx.o
+[ 52%] Building CXX object tests/plugin-packages/CMakeFiles/PluginParentCrashTests.dir/PluginParentCrashTests_autogen/mocs_compilation.cpp.o
+[ 52%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexDiff.cxx.o
+[ 52%] Building CXX object tests/plugin-packages/CMakeFiles/PluginParentCrashTests.dir/ParentCrashTests.cpp.o
+[ 52%] Building CXX object src/plugins/webviews/CMakeFiles/NotepadNextPluginWebviews.dir/WebviewService.cpp.o
+[ 52%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexECL.cxx.o
+[ 53%] Linking CXX executable PluginDocumentTests
+[ 53%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexEDIFACT.cxx.o
+[ 53%] Built target PluginDocumentTests
+[ 53%] Building CXX object src/plugins/webviews/CMakeFiles/NotepadNextPluginWebviews.dir/NotepadNextPluginWebviews_autogen/EWIEGA46WW/qrc_compat-bridge.cpp.o
+[ 53%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexEScript.cxx.o
+[ 53%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexEiffel.cxx.o
+[ 54%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexErlang.cxx.o
+[ 54%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexErrorList.cxx.o
+[ 54%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexEscSeq.cxx.o
+[ 54%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexFSharp.cxx.o
+[ 54%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexFlagship.cxx.o
+[ 54%] Linking CXX executable PluginParentCrashTests
+[ 54%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexForth.cxx.o
+[ 54%] Built target PluginParentCrashTests
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexFortran.cxx.o
+[ 55%] Linking CXX executable PluginPackageTests
+[ 55%] Built target PluginPackageTests
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexGAP.cxx.o
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexGDScript.cxx.o
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexGui4Cli.cxx.o
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexHTML.cxx.o
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexHaskell.cxx.o
+[ 55%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexHex.cxx.o
+[ 56%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexHollywood.cxx.o
+[ 57%] Linking CXX static library libNotepadNextPluginWebviews.a
+[ 57%] Built target NotepadNextPluginWebviews
+[ 57%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexIndent.cxx.o
+[ 57%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexInno.cxx.o
+[ 57%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexJSON.cxx.o
+[ 57%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexJulia.cxx.o
+[ 57%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexKVIrc.cxx.o
+[ 57%] Built target NotepadNextPluginRuntime_autogen_timestamp_deps
+[ 58%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexKix.cxx.o
+[ 58%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexLaTeX.cxx.o
+[ 58%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexLisp.cxx.o
+[ 59%] Automatic MOC and UIC for target NotepadNextPluginRuntime
+[ 59%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexLout.cxx.o
+[ 59%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexLua.cxx.o
+[ 59%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMMIXAL.cxx.o
+[ 59%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMPT.cxx.o
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMSSQL.cxx.o
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMagik.cxx.o
+[ 60%] Built target NotepadNextPluginRuntime_autogen
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMake.cxx.o
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMarkdown.cxx.o
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMatlab.cxx.o
+[ 60%] Building CXX object src/plugins/runtime/CMakeFiles/NotepadNextPluginRuntime.dir/NotepadNextPluginRuntime_autogen/mocs_compilation.cpp.o
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMaxima.cxx.o
+[ 60%] Building CXX object src/plugins/runtime/CMakeFiles/NotepadNextPluginRuntime.dir/PluginSession.cpp.o
+[ 60%] Building CXX object src/plugins/runtime/CMakeFiles/NotepadNextPluginRuntime.dir/PluginEngine.cpp.o
+[ 60%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMetapost.cxx.o
+[ 61%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexModula.cxx.o
+[ 61%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexMySQL.cxx.o
+[ 61%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexNim.cxx.o
+[ 61%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexNimrod.cxx.o
+[ 61%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexNix.cxx.o
+[ 61%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexNsis.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexNull.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexOScript.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexOpal.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPB.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPLM.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPO.cxx.o
+[ 62%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPOV.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPS.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPascal.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPerl.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPowerPro.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPowerShell.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexProgress.cxx.o
+[ 63%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexProps.cxx.o
+[ 64%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexPython.cxx.o
+[ 64%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexR.cxx.o
+[ 64%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexRaku.cxx.o
+[ 64%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexRebol.cxx.o
+[ 64%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexRegistry.cxx.o
+[ 64%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexRuby.cxx.o
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexRust.cxx.o
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSAS.cxx.o
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSINEX.cxx.o
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSML.cxx.o
+[ 65%] Linking CXX static library libNotepadNextPluginRuntime.a
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSQL.cxx.o
+[ 65%] Built target NotepadNextPluginRuntime
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSTTXT.cxx.o
+[ 65%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexScriptol.cxx.o
+[ 65%] Built target PluginWebviewTests_autogen_timestamp_deps
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSmalltalk.cxx.o
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSorcus.cxx.o
+[ 66%] Automatic MOC and UIC for target PluginWebviewTests
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSpecman.cxx.o
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexSpice.cxx.o
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexStata.cxx.o
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTACL.cxx.o
+[ 66%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTADS3.cxx.o
+[ 67%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTAL.cxx.o
+[ 67%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTCL.cxx.o
+[ 67%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTCMD.cxx.o
+[ 67%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTOML.cxx.o
+[ 67%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTeX.cxx.o
+[ 67%] Built target PluginWebviewTests_autogen
+[ 67%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTroff.cxx.o
+[ 68%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexTxt2tags.cxx.o
+[ 68%] Automatic RCC for ../../src/resources.qrc
+[ 69%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/PluginWebviewTests_autogen/mocs_compilation.cpp.o
+[ 69%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/PluginWebviewTests.cpp.o
+[ 69%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/__/__/src/QRegexSearch.cpp.o
+[ 69%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexVB.cxx.o
+[ 69%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[ 69%] Building CXX object tests/plugin-webviews/CMakeFiles/PluginWebviewTests.dir/PluginWebviewTests_autogen/VNU7RW3YIC/qrc_resources.cpp.o
+[ 69%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexVHDL.cxx.o
+[ 69%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexVerilog.cxx.o
+[ 69%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexVisualProlog.cxx.o
+[ 69%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexX12.cxx.o
+[ 69%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexYAML.cxx.o
+[ 70%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexers/LexZig.cxx.o
+[ 70%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/Accessor.cxx.o
+[ 70%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/CharacterCategory.cxx.o
+[ 70%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/CharacterSet.cxx.o
+[ 70%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/DefaultLexer.cxx.o
+[ 70%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/InList.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/LexAccessor.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/LexerBase.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/LexerModule.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/LexerSimple.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/PropSetSimple.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/StyleContext.cxx.o
+[ 71%] Building CXX object thirdparty/lexilla/CMakeFiles/lexilla.dir/lexlib/WordList.cxx.o
+[ 72%] Linking CXX static library liblexilla.a
+[ 72%] Built target lexilla
+[ 72%] Built target NotepadNext_autogen_timestamp_deps
+[ 73%] Automatic MOC and UIC for target NotepadNext
+[ 73%] Built target NotepadNext_autogen
+[ 73%] Automatic RCC for scripts.qrc
+[ 73%] Automatic RCC for resources.qrc
+[ 73%] Building CXX object src/CMakeFiles/NotepadNext.dir/Converter.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/NotepadNext.dir/ComboBoxDelegate.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/NotepadNext.dir/ColorPickerDelegate.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/NotepadNext.dir/ApplicationSettings.cpp.o
+[ 74%] Building CXX object src/CMakeFiles/NotepadNext.dir/NotepadNext_autogen/mocs_compilation.cpp.o
+[ 74%] Linking CXX executable PluginWebviewTests
+[ 74%] Built target PluginWebviewTests
+[ 74%] Building CXX object src/CMakeFiles/NotepadNext.dir/DebugManager.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/ComboBoxDelegate.cpp:73:29: warning: 'fontMetrics' is deprecated: Use QFontMetricsF(qApp->font()) instead. [-Wdeprecated-declarations]
+   73 |     QFontMetrics fm = qApp->fontMetrics();
+      |                             ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWidgets.framework/Headers/qapplication.h:69:5: note: 'fontMetrics' has been explicitly marked deprecated here
+   69 |     QT_DEPRECATED_VERSION_X_6_0("Use QFontMetricsF(qApp->font()) instead.")
+      |     ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:141:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_0'
+  141 | # define QT_DEPRECATED_VERSION_X_6_0(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 74%] Building CXX object src/CMakeFiles/NotepadNext.dir/DefaultDirectoryManager.cpp.o
+1 warning generated.
+[ 75%] Building CXX object src/CMakeFiles/NotepadNext.dir/DockedEditor.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/NotepadNext.dir/EditorManager.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/NotepadNext.dir/EditorPrintPreviewRenderer.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/NotepadNext.dir/FileDialogHelpers.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/EditorManager.cpp:171:34: warning: 'qAsConst<QList<QPointer<ScintillaNext>>>' is deprecated: Use std::as_const() instead. [-Wdeprecated-declarations]
+  171 |     for (ScintillaNext *editor : qAsConst(editors)) {
+      |                                  ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qttypetraits.h:39:1: note: 'qAsConst<QList<QPointer<ScintillaNext>>>' has been explicitly marked deprecated here
+   39 | QT_DEPRECATED_VERSION_X_6_6("Use std::as_const() instead.")
+      | ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:189:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_6'
+  189 | # define QT_DEPRECATED_VERSION_X_6_6(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 75%] Building CXX object src/CMakeFiles/NotepadNext.dir/Finder.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/NotepadNext.dir/HtmlConverter.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/IFaceTable.cpp.o
+1 warning generated.
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/IFaceTableMixer.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/LanguageStylesModel.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/LuaExtension.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/LuaState.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/Macro.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/NotepadNext.dir/MacroListModel.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/MacroManager.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/LuaState.cpp:64:9: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+   64 |         f.open(QFile::ReadOnly);
+      |         ^~~~~~ ~~~~~~~~~~~~~~~
+1 warning generated.
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/MacroRecorder.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/MacroStepTableModel.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/MacroStep.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/main.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/NotepadNextApplication.cpp.o
+[ 77%] Building CXX object src/CMakeFiles/NotepadNext.dir/NppImporter.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/NotepadNext.dir/QRegexSearch.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/NotepadNext.dir/RangeAllocator.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/NotepadNext.dir/RecentFilesListManager.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/NotepadNext.dir/RecentFilesListMenuBuilder.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/NotepadNext.dir/RtfConverter.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/NotepadNext.dir/SciIFaceTable.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/ScintillaCommenter.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/ScintillaNext.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/SearchResultHighlighterDelegate.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/SearchResultsCollector.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/SelectionTracker.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/SessionManager.cpp.o
+[ 79%] Building CXX object src/CMakeFiles/NotepadNext.dir/SpinBoxDelegate.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/ScintillaNext.cpp:139:9: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+  139 |         f.open(QIODevice::WriteOnly);
+      |         ^~~~~~ ~~~~~~~~~~~~~~~~~~~~
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/TranslationManager.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/UndoAction.cpp.o
+1 warning generated.
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/ZoomEventWatcher.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/ApplicationDecorator.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/AutoCompletion.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/AutoIndentation.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/BetterMultiSelection.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/BookMarkDecorator.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/BraceMatch.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/EditorConfigAppDecorator.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/EditorDecorator.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/HighlightedScrollBar.cpp.o
+[ 81%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/HTMLAutoCompleteDecorator.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/LineNumbers.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/MarkerAppDecorator.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/SmartHighlighter.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/SurroundSelection.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/decorators/URLFinder.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/ColumnEditorDialog.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/FindReplaceDialog.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/MacroEditorDialog.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/MacroRunDialog.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/MacroSaveDialog.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/MainWindow.cpp.o
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/PreferencesDialog.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MacroEditorDialog.cpp:152:38: warning: 'qAsConst<QList<MacroStep>>' is deprecated: Use std::as_const() instead. [-Wdeprecated-declarations]
+  152 |         for (const MacroStep &step : qAsConst(originalMacro->getSteps())) {
+      |                                      ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qttypetraits.h:39:1: note: 'qAsConst<QList<MacroStep>>' has been explicitly marked deprecated here
+   39 | QT_DEPRECATED_VERSION_X_6_6("Use std::as_const() instead.")
+      | ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:189:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_6'
+  189 | # define QT_DEPRECATED_VERSION_X_6_6(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/DebugLogDock.cpp.o
+1 warning generated.
+[ 83%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/EditorInspectorDock.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/FileListDock.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/FolderAsWorkspaceDock.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp:1556:5: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+ 1556 |     f.open(QIODevice::WriteOnly);
+      |     ^~~~~~ ~~~~~~~~~~~~~~~~~~~~
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp:1900:5: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+ 1900 |     f.open(QFile::ReadOnly);
+      |     ^~~~~~ ~~~~~~~~~~~~~~~
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp:1911:9: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+ 1911 |         custom.open(QFile::ReadOnly);
+      |         ^~~~~~~~~~~ ~~~~~~~~~~~~~~~
+[ 84%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/LanguageInspectorDock.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/LuaConsoleDock.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/docks/EditorInspectorDock.cpp:156:65: warning: 'qAsConst<QList<std::pair<QTreeWidgetItem *, std::function<QString (ScintillaNext *)>>>>' is deprecated: Use std::as_const() instead. [-Wdeprecated-declarations]
+  156 |     for (const QPair<QTreeWidgetItem *, EditorFunction> &pair : qAsConst(items)) {
+      |                                                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qttypetraits.h:39:1: note: 'qAsConst<QList<std::pair<QTreeWidgetItem *, std::function<QString (ScintillaNext *)>>>>' has been explicitly marked deprecated here
+   39 | QT_DEPRECATED_VERSION_X_6_6("Use std::as_const() instead.")
+      | ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:189:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_6'
+  189 | # define QT_DEPRECATED_VERSION_X_6_6(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 84%] Building CXX object src/CMakeFiles/NotepadNext.dir/docks/SearchResultsDock.cpp.o
+1 warning generated.
+[ 84%] Building CXX object src/CMakeFiles/NotepadNext.dir/widgets/EditorInfoStatusBar.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/widgets/FadingIndicator.cpp.o
+3 warnings generated.
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/widgets/QuickFindWidget.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/widgets/StatusLabel.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/Sorter.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/ScintillaSorter.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/widgets/TabsQuickActionsBar.cpp.o
+[ 85%] Building CXX object src/CMakeFiles/NotepadNext.dir/ShiftMiddleClickBlocker.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/NotepadNext.dir/ShiftWheelToHorizontalScrollFilter.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/NotepadNext.dir/dialogs/PluginManagerDialog.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/NotepadNext.dir/__/.qt/rcc/qrc_NotepadNext_translations.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/NotepadNext.dir/NotepadNext_autogen/EWIEGA46WW/qrc_resources.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/NotepadNext.dir/NotepadNext_autogen/EWIEGA46WW/qrc_scripts.cpp.o
+[ 86%] Linking CXX executable NotepadNext.app/Contents/MacOS/NotepadNext
+ld: warning: -undefined suppress is deprecated
+[ 86%] Built target NotepadNext
+[ 86%] Built target PluginApplicationTests_autogen_timestamp_deps
+[ 87%] Automatic MOC and UIC for target PluginApplicationTests
+[ 87%] Built target PluginApplicationTests_autogen
+[ 87%] Automatic RCC for ../../src/scripts.qrc
+[ 88%] Automatic RCC for ../../src/resources.qrc
+[ 88%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ApplicationSettings.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/PluginApplicationTests.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/PluginApplicationTests_autogen/mocs_compilation.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ColorPickerDelegate.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ComboBoxDelegate.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/Converter.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/ComboBoxDelegate.cpp:73:29: warning: 'fontMetrics' is deprecated: Use QFontMetricsF(qApp->font()) instead. [-Wdeprecated-declarations]
+   73 |     QFontMetrics fm = qApp->fontMetrics();
+      |                             ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtWidgets.framework/Headers/qapplication.h:69:5: note: 'fontMetrics' has been explicitly marked deprecated here
+   69 |     QT_DEPRECATED_VERSION_X_6_0("Use QFontMetricsF(qApp->font()) instead.")
+      |     ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:141:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_0'
+  141 | # define QT_DEPRECATED_VERSION_X_6_0(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/DebugManager.cpp.o
+1 warning generated.
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/DefaultDirectoryManager.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/DockedEditor.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/EditorManager.cpp.o
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/EditorPrintPreviewRenderer.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/EditorManager.cpp:171:34: warning: 'qAsConst<QList<QPointer<ScintillaNext>>>' is deprecated: Use std::as_const() instead. [-Wdeprecated-declarations]
+  171 |     for (ScintillaNext *editor : qAsConst(editors)) {
+      |                                  ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qttypetraits.h:39:1: note: 'qAsConst<QList<QPointer<ScintillaNext>>>' has been explicitly marked deprecated here
+   39 | QT_DEPRECATED_VERSION_X_6_6("Use std::as_const() instead.")
+      | ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:189:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_6'
+  189 | # define QT_DEPRECATED_VERSION_X_6_6(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 89%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/FileDialogHelpers.cpp.o
+[ 90%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/Finder.cpp.o
+1 warning generated.
+[ 90%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/HtmlConverter.cpp.o
+[ 90%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/IFaceTable.cpp.o
+[ 90%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/IFaceTableMixer.cpp.o
+[ 90%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/LanguageStylesModel.cpp.o
+[ 90%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/LuaExtension.cpp.o
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/LuaState.cpp.o
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/Macro.cpp.o
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/MacroListModel.cpp.o
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/MacroManager.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/LuaState.cpp:64:9: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+   64 |         f.open(QFile::ReadOnly);
+      |         ^~~~~~ ~~~~~~~~~~~~~~~
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/MacroRecorder.cpp.o
+1 warning generated.
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/MacroStep.cpp.o
+[ 91%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/MacroStepTableModel.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/NotepadNextApplication.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/NppImporter.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/QRegexSearch.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/RangeAllocator.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/RecentFilesListManager.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/RecentFilesListMenuBuilder.cpp.o
+[ 92%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/RtfConverter.cpp.o
+[ 93%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/SciIFaceTable.cpp.o
+[ 93%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ScintillaCommenter.cpp.o
+[ 93%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ScintillaNext.cpp.o
+[ 93%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/SearchResultHighlighterDelegate.cpp.o
+[ 93%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/SearchResultsCollector.cpp.o
+[ 93%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/SelectionTracker.cpp.o
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/SessionManager.cpp.o
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/SpinBoxDelegate.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/ScintillaNext.cpp:139:9: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+  139 |         f.open(QIODevice::WriteOnly);
+      |         ^~~~~~ ~~~~~~~~~~~~~~~~~~~~
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/TranslationManager.cpp.o
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/UndoAction.cpp.o
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ZoomEventWatcher.cpp.o
+1 warning generated.
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/ApplicationDecorator.cpp.o
+[ 94%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/AutoCompletion.cpp.o
+[ 95%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/AutoIndentation.cpp.o
+[ 95%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/BetterMultiSelection.cpp.o
+[ 95%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/BookMarkDecorator.cpp.o
+[ 95%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/BraceMatch.cpp.o
+[ 95%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/EditorConfigAppDecorator.cpp.o
+[ 95%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/EditorDecorator.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/HighlightedScrollBar.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/HTMLAutoCompleteDecorator.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/LineNumbers.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/MarkerAppDecorator.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/SmartHighlighter.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/SurroundSelection.cpp.o
+[ 96%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/decorators/URLFinder.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/ColumnEditorDialog.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/FindReplaceDialog.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/MacroEditorDialog.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/MacroRunDialog.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/MacroSaveDialog.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/MainWindow.cpp.o
+[ 97%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/PreferencesDialog.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MacroEditorDialog.cpp:152:38: warning: 'qAsConst<QList<MacroStep>>' is deprecated: Use std::as_const() instead. [-Wdeprecated-declarations]
+  152 |         for (const MacroStep &step : qAsConst(originalMacro->getSteps())) {
+      |                                      ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qttypetraits.h:39:1: note: 'qAsConst<QList<MacroStep>>' has been explicitly marked deprecated here
+   39 | QT_DEPRECATED_VERSION_X_6_6("Use std::as_const() instead.")
+      | ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:189:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_6'
+  189 | # define QT_DEPRECATED_VERSION_X_6_6(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 98%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/DebugLogDock.cpp.o
+1 warning generated.
+[ 98%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/EditorInspectorDock.cpp.o
+[ 98%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/FileListDock.cpp.o
+[ 98%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/FolderAsWorkspaceDock.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp:1556:5: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+ 1556 |     f.open(QIODevice::WriteOnly);
+      |     ^~~~~~ ~~~~~~~~~~~~~~~~~~~~
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp:1900:5: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+ 1900 |     f.open(QFile::ReadOnly);
+      |     ^~~~~~ ~~~~~~~~~~~~~~~
+/Users/merdankiji/localGit/NotepadNext/src/dialogs/MainWindow.cpp:1911:9: warning: ignoring return value of function declared with 'nodiscard' attribute [-Wunused-result]
+ 1911 |         custom.open(QFile::ReadOnly);
+      |         ^~~~~~~~~~~ ~~~~~~~~~~~~~~~
+[ 98%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/LanguageInspectorDock.cpp.o
+[ 98%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/LuaConsoleDock.cpp.o
+/Users/merdankiji/localGit/NotepadNext/src/docks/EditorInspectorDock.cpp:156:65: warning: 'qAsConst<QList<std::pair<QTreeWidgetItem *, std::function<QString (ScintillaNext *)>>>>' is deprecated: Use std::as_const() instead. [-Wdeprecated-declarations]
+  156 |     for (const QPair<QTreeWidgetItem *, EditorFunction> &pair : qAsConst(items)) {
+      |                                                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qttypetraits.h:39:1: note: 'qAsConst<QList<std::pair<QTreeWidgetItem *, std::function<QString (ScintillaNext *)>>>>' has been explicitly marked deprecated here
+   39 | QT_DEPRECATED_VERSION_X_6_6("Use std::as_const() instead.")
+      | ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:189:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_6'
+  189 | # define QT_DEPRECATED_VERSION_X_6_6(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/private/tmp/notepadnext-qt/6.10.0/macos/lib/QtCore.framework/Headers/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/docks/SearchResultsDock.cpp.o
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/widgets/EditorInfoStatusBar.cpp.o
+1 warning generated.
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/widgets/FadingIndicator.cpp.o
+3 warnings generated.
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/widgets/QuickFindWidget.cpp.o
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/widgets/StatusLabel.cpp.o
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/Sorter.cpp.o
+[ 99%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ScintillaSorter.cpp.o
+[100%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/widgets/TabsQuickActionsBar.cpp.o
+[100%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ShiftMiddleClickBlocker.cpp.o
+[100%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/ShiftWheelToHorizontalScrollFilter.cpp.o
+[100%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/__/__/src/dialogs/PluginManagerDialog.cpp.o
+[100%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/PluginApplicationTests_autogen/VNU7RW3YIC/qrc_resources.cpp.o
+[100%] Building CXX object tests/plugin-application/CMakeFiles/PluginApplicationTests.dir/PluginApplicationTests_autogen/VNU7RW3YIC/qrc_scripts.cpp.o
+[100%] Linking CXX executable PluginApplicationTests.app/Contents/MacOS/PluginApplicationTests
+[100%] Built target PluginApplicationTests

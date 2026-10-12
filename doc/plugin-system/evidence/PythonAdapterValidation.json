@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-11",
+  "platform": "macOS 27.0.1 arm64",
+  "qt": "6.10.0",
+  "node": "24.21.0",
+  "python": "3.12.13",
+  "interpreterBundled": false,
+  "sharedRpcFixtures": 28,
+  "sharedWireFixtures": 118,
+  "pythonContractAndBoundaryTests": 152,
+  "actualPythonHostTests": 4,
+  "sdkPackageAndReleaseTests": 9,
+  "nativeAcceptance": {
+    "sameUnsavedUnicodeSnapshotWithJS": true,
+    "hungPythonReloadOldProcessExited": true,
+    "companionJSSessionPreserved": true,
+    "pythonExampleWebviewAndDisabledInstall": true,
+    "productionBundledHostAndUninstall": true,
+    "sigkillParentRelayPythonAndDescendantExited": true,
+    "liveProcessLeaseRetainsPackageUntilExit": true
+  },
+  "fullSuite": {
+    "passedTargets": 16,
+    "totalTargets": 16,
+    "seconds": 147.99,
+    "webviewQtTestCases": 19,
+    "productionAppQtTestCases": 5,
+    "markdownLifecycleCycles": 100,
+    "markdownLifecycleMilliseconds": 79341,
+    "isolatedPerformanceAcceptance": false,
+    "sourceSnapshot": "PythonSourceSha256.json"
+  },
+  "disabledEditor": {
+    "passedTargets": 1,
+    "seconds": 0.53,
+    "scope": "Production editor open/save/reload/close/exit; Python slot compiled out, not Python activation proof"
+  },
+  "actualReleaseAsset": {
+    "name": "notepadnext-plugin.zip",
+    "size": 13867,
+    "sha256": "84a5a9fe6543a263d3e6b0a38cb43a32dfef6e21b1366b0ba095f56c9a2d3588"
+  },
+  "bundledAdapterSha256": {
+    "python-host.cjs": "c4e2702124e2470c4bdac6f9ce38921d74a0914a522c2f3d1106d9a41a0d1b00",
+    "python/host.py": "59b3eb2b8a19afe2207dd98d4c0a1a789b2aa3e68ada8316792a88eaafc6afc6",
+    "python/nnp_rpc.py": "787d094dcb70cf014fa77e7f1387462f8b5ca9c7aeaf70fb2597d10a5fe789d0",
+    "python/nnp_wire.py": "05ce1b0b5cb645cff230713fda1923ee0aefa15d16057fa1c1b732045e2154b2",
+    "python/nnp_client.py": "b0f4d41749a19fc974088474f2a65945b63e78d1cdb3e394774e33e532a8a4f2"
+  },
+  "logs": [
+    "python-contract-conformance.log",
+    "python-host-sdk-conformance.log",
+    "python-initial-native-failures.log",
+    "python-native-conformance.log",
+    "python-parent-conformance.log",
+    "python-focused-app-argument-interruption.log",
+    "python-production-conformance.log",
+    "python-production-ctest-summary.log",
+    "python-full-conformance.log",
+    "python-disabled-conformance.log",
+    "python-author-assets.log",
+    "python-ctest-summary.log",
+    "python-disabled-editor-summary.log"
+  ],
+  "correctedFindings": [
+    "Python example originally sent an unsupported html/body wrapper; changed to an allowed XHTML fragment.",
+    "Reload assertion read an old process ID before the asynchronous storage update; now waits for the new ID.",
+    "Focused production test-name argument was delivered by macOS as a file-open event; stopped that run and validated through CTest with no positional test name."
+  ],
+  "limits": [
+    "Explicit developer Python path; interpreter not packaged, pinned or relocatable for distribution.",
+    "Only macOS arm64 execution proof; Intel/Windows/Linux/minimum-OS matrices pending.",
+    "No public example repository, GitHub release or remote workflow execution.",
+    "Complete resource/performance, native Python extension deployment and signed/notarized distribution remain.",
+    "VS Code compatibility remains a separate incomplete I3 requirement."
+  ],
+  "codeGraphEvidence": "PythonCodeGraphValidation.json"
+}

@@ -19,6 +19,8 @@
 
 #include "MacroSaveDialog.h"
 #include "ui_MacroSaveDialog.h"
+#include "NativeAppearance.h"
+#include <QDialogButtonBox>
 
 MacroSaveDialog::MacroSaveDialog(QWidget *parent) :
     QDialog(parent),
@@ -31,6 +33,14 @@ MacroSaveDialog::MacroSaveDialog(QWidget *parent) :
     connect(ui->editName, &QLineEdit::textChanged, [=, this](const QString &text) {
         ui->buttonOk->setEnabled(text.trimmed().size() > 0);
     });
+#ifdef Q_OS_MACOS
+    ui->verticalLayout->removeItem(ui->horizontalLayout);delete ui->horizontalLayout;
+    auto *buttons=new QDialogButtonBox(this);buttons->addButton(ui->buttonCancel,QDialogButtonBox::RejectRole);buttons->addButton(ui->buttonOk,QDialogButtonBox::AcceptRole);ui->verticalLayout->addWidget(buttons);
+    ui->label->setBuddy(ui->editName);ui->label_2->setBuddy(ui->keySequenceEdit);
+    NativeAppearance::polishDialog(this,tr("Save Macro"),tr("Choose a name and an optional keyboard shortcut."));
+    ui->buttonOk->setText(tr("Save"));NativeAppearance::setDialogPrimary(this,ui->buttonOk);
+    setMinimumSize(440,250);resize(480,280);ui->editName->setFocus();
+#endif
 }
 
 MacroSaveDialog::~MacroSaveDialog()

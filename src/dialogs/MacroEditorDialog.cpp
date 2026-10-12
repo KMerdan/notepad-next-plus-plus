@@ -25,6 +25,7 @@
 #include "ComboBoxDelegate.h"
 
 #include "ui_MacroEditorDialog.h"
+#include "NativeAppearance.h"
 
 
 MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
@@ -58,6 +59,21 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     ui->tblMacroSteps->setItemDelegateForColumn(0, new ComboBoxDelegate(recordableMacroMessages, this));
 
     ui->listMacros->setCurrentIndex(model->index(0));
+#ifdef Q_OS_MACOS
+    struct Control {QPushButton *button;const char *symbol;QString name;};
+    const QList<Control> controls{
+        {ui->btnInsertMacroStep,"plus",tr("Insert macro step")},{ui->btnDeleteMacroStep,"minus",tr("Delete macro step")},
+        {ui->btnMoveMacroStepUp,"chevron.up",tr("Move step up")},{ui->btnMoveMacroStepDown,"chevron.down",tr("Move step down")},
+        {ui->btnCopyMacro,"doc.on.doc",tr("Duplicate macro")},{ui->btnDeleteMacro,"trash",tr("Delete macro")}
+    };
+    for(const auto &control:controls){control.button->setProperty("nativeSymbol",control.symbol);control.button->setProperty("dialogIconButton",true);control.button->setIconSize(QSize(18,18));control.button->setAccessibleName(control.name);control.button->setToolTip(control.name);}
+    ui->label->setBuddy(ui->editMacroName);ui->label_2->setBuddy(ui->keyMacroShortcut);
+    ui->listMacros->setAccessibleName(tr("Saved macros"));ui->tblMacroSteps->setAccessibleName(tr("Macro steps"));
+    NativeAppearance::polishDialog(this,tr("Macro Editor"));
+    auto *close=ui->buttonBox->button(QDialogButtonBox::Ok);close->setText(tr("Done"));NativeAppearance::setDialogPrimary(this,close);
+    setMinimumSize(680,460);resize(780,540);
+    rowChanged(ui->listMacros->currentIndex(),{});
+#endif
 }
 
 MacroEditorDialog::~MacroEditorDialog()
@@ -68,6 +84,10 @@ MacroEditorDialog::~MacroEditorDialog()
 void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
+#ifdef Q_OS_MACOS
+    for(auto *button:{ui->btnCopyMacro,ui->btnDeleteMacro,ui->btnInsertMacroStep,ui->btnDeleteMacroStep,ui->btnMoveMacroStepUp,ui->btnMoveMacroStepDown})button->setEnabled(current.isValid());
+    ui->keyMacroShortcut->setEnabled(current.isValid());
+#endif
 
     if (!current.isValid()){
         ui->editMacroName->setReadOnly(true);

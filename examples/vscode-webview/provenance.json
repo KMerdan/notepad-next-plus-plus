@@ -1,0 +1,93 @@
+{
+  "sampleRepository": "https://github.com/microsoft/vscode-extension-samples",
+  "sampleCommit": "65c1c44800eeac6fb065a54823ee5ae62c79540a",
+  "apiDeclaration": "https://raw.githubusercontent.com/microsoft/vscode/1.100.0/src/vscode-dts/vscode.d.ts",
+  "sourceModifications": true,
+  "adaptations": [
+    "Remove panel serializer registration and onWebviewPanel activation; app restart serialization is unsupported.",
+    "Replace remote Giphy GIF URLs with one generated local PNG fixture and map its URI through asWebviewUri."
+  ],
+  "unchangedBrowserFiles": [
+    "media/main.js",
+    "media/reset.css",
+    "media/vscode.css"
+  ],
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "20535828272932407c2f5172aeb714ac7b374a34e5ecb1825af509f2902cde54",
+      "bytes": 1087
+    },
+    {
+      "path": "package.json",
+      "sha256": "def0ae38e023ed419f620bb874cc3a193323cec2355a72cec4ae55196c7c37e1",
+      "bytes": 1186
+    },
+    {
+      "path": "src/extension.ts",
+      "sha256": "7f5419b85b4d4751d6a05ab5969b723b02460c15297ad636f8c56650fed933f2",
+      "bytes": 6175
+    },
+    {
+      "path": "media/fixture.png",
+      "sha256": "e6a9cd0c24470c290c7e30f71c676ed4aaecce30356abf6c36ace9b46aead442",
+      "bytes": 123
+    },
+    {
+      "path": "upstream/src/extension.ts",
+      "sha256": "7089544c78d71c1a33b5e28297f8acf97b614a068b76ad593ebaf02d1a358dc5",
+      "bytes": 6778
+    },
+    {
+      "path": "upstream/package.json",
+      "sha256": "18312bfbad63b1f33cbe2079dece8b778ff029ee7596e5520d7bd8f65d049032",
+      "bytes": 1101
+    },
+    {
+      "path": "upstream/media/main.js",
+      "sha256": "aba59e2e11836f6db2fdb60662a4fc1f97336dd3fd362addcf9aa0dcc0dd314b",
+      "bytes": 1409
+    },
+    {
+      "path": "upstream/media/reset.css",
+      "sha256": "4a568c4acaa1230291b4d46e5436620495dd94b3c30c3ed9b4983718adabbac6",
+      "bytes": 234
+    },
+    {
+      "path": "upstream/media/vscode.css",
+      "sha256": "3375c0993531bb9a9ff1ca7432d4fbc3ef376aca7a4283b934ed14594b941d93",
+      "bytes": 1975
+    },
+    {
+      "path": "media/main.js",
+      "sha256": "aba59e2e11836f6db2fdb60662a4fc1f97336dd3fd362addcf9aa0dcc0dd314b",
+      "bytes": 1409
+    },
+    {
+      "path": "media/reset.css",
+      "sha256": "4a568c4acaa1230291b4d46e5436620495dd94b3c30c3ed9b4983718adabbac6",
+      "bytes": 234
+    },
+    {
+      "path": "media/vscode.css",
+      "sha256": "3375c0993531bb9a9ff1ca7432d4fbc3ef376aca7a4283b934ed14594b941d93",
+      "bytes": 1975
+    },
+    {
+      "path": "../vscode-hello-world/types/vscode.d.ts",
+      "sha256": "78ff43fccce4600f6f266a4d237342ddbdcbda75bf29d732ba1533a83318a7be",
+      "bytes": 716407
+    },
+    {
+      "path": "../vscode-hello-world/types/LICENSE",
+      "sha256": "9480271317925265e806a9a196aaa33410a962fa9d4d1e248a4a5187bc8c9df9",
+      "bytes": 1088
+    },
+    {
+      "path": "media/FIXTURE-LICENSE",
+      "sha256": "db33499ddbdba340279a5aaeb06d2404934f83863f56fc5036c9ac010a5572c7",
+      "bytes": 35320
+    }
+  ],
+  "fixtureLicense": "GPL-3.0-or-later; full notice is copied with media/FIXTURE-LICENSE"
+}

@@ -1,0 +1,62 @@
+{
+  "hostFiles": 20,
+  "sourceRoot": "/Users/merdankiji/localGit/NotepadNext/packages/plugin-host",
+  "bundles": {
+    "application": {
+      "hostRoot": "/private/tmp/notepadnext-app-build-610/src/NotepadNext.app/Contents/Resources/plugin-host",
+      "allSourceHashesMatch": true,
+      "sha256": {
+        "host.cjs": "d71e420814094c1d563646fd960add0875004ce2759d493528e3c02bbc66bad0",
+        "python-host.cjs": "c4e2702124e2470c4bdac6f9ce38921d74a0914a522c2f3d1106d9a41a0d1b00",
+        "client.cjs": "89c999db4b0c2ed3a26cdf0eafeaa149ed887c08eed8b07162a76d80af33542e",
+        "parent-watch.cjs": "1861d1a86863b7a5b1eeb7896f2de73933ceee5bc48a4471c731e81f9329cc24",
+        "rpc.cjs": "b9f5eb1b7e84b27b6edcd8a7a700f7517a8128d2f2bfb4b1e68c2551ea6849e5",
+        "protocol-profile.json": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f",
+        "wire.cjs": "230110b9127d9820991d753453cce3b25beda8c4e30741ed2150fc62d5f90e40",
+        "wire.schema.json": "65b50813ff9d611b5bc978771865986f1078ca60da0deb7f7a9400a470665f6f",
+        "wire-contract.json": "71eeb946c87e3d01a208410b219416721f907909fcad3e3bb64cf1d458b19d42",
+        "runtime-lock.json": "1da63efd009fc0389da06bf96003f104f0a5a70a1f655ff9893093bdc3b28c75",
+        "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "python/host.py": "59b3eb2b8a19afe2207dd98d4c0a1a789b2aa3e68ada8316792a88eaafc6afc6",
+        "python/nnp_rpc.py": "8f3c7f488ebb59510241edb8a9345e34571017dcb979a2b790561f151e1f5132",
+        "python/nnp_wire.py": "432575042523f1f83069ef8131e19013e36b72e62189de84cd31a82988cefe45",
+        "python/nnp_client.py": "fe4e67b15f1e9bdfef87c4e0af9ebe1d782999a95b8d003de2eddf968dddcfa7",
+        "vscode/documents.cjs": "76e2511d05ccaa8a1158339d77c8d3c6920490cf3266104ab64e9fc4452abf4b",
+        "vscode/types.cjs": "96dffea3a9ce3087a5c32a22bb0a6ae50b152c740fe0a272b1d989aa06197a60",
+        "vscode/adapter.cjs": "6bb9d9c633a25a66d3ea69eb7c768095727ade582fd28c5e191897a59abf6c5d",
+        "vscode/webviews.cjs": "53e9a8bee05293def8aae89de6ec7ebc5562e2cf04030af4e3810f46dfc1f8e6",
+        "vscode/persistence.cjs": "c160c208391f4f99a33de50e18d89bcf81d7cf9b26d806656ee588ef08aa6c73"
+      },
+      "nodeVersion": "v24.21.0",
+      "nodeBinarySha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b"
+    },
+    "productionTest": {
+      "hostRoot": "/private/tmp/notepadnext-app-build-610/tests/plugin-application/PluginApplicationTests.app/Contents/Resources/plugin-host",
+      "allSourceHashesMatch": true,
+      "sha256": {
+        "host.cjs": "d71e420814094c1d563646fd960add0875004ce2759d493528e3c02bbc66bad0",
+        "python-host.cjs": "c4e2702124e2470c4bdac6f9ce38921d74a0914a522c2f3d1106d9a41a0d1b00",
+        "client.cjs": "89c999db4b0c2ed3a26cdf0eafeaa149ed887c08eed8b07162a76d80af33542e",
+        "parent-watch.cjs": "1861d1a86863b7a5b1eeb7896f2de73933ceee5bc48a4471c731e81f9329cc24",
+        "rpc.cjs": "b9f5eb1b7e84b27b6edcd8a7a700f7517a8128d2f2bfb4b1e68c2551ea6849e5",
+        "protocol-profile.json": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f",
+        "wire.cjs": "230110b9127d9820991d753453cce3b25beda8c4e30741ed2150fc62d5f90e40",
+        "wire.schema.json": "65b50813ff9d611b5bc978771865986f1078ca60da0deb7f7a9400a470665f6f",
+        "wire-contract.json": "71eeb946c87e3d01a208410b219416721f907909fcad3e3bb64cf1d458b19d42",
+        "runtime-lock.json": "1da63efd009fc0389da06bf96003f104f0a5a70a1f655ff9893093bdc3b28c75",
+        "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "python/host.py": "59b3eb2b8a19afe2207dd98d4c0a1a789b2aa3e68ada8316792a88eaafc6afc6",
+        "python/nnp_rpc.py": "8f3c7f488ebb59510241edb8a9345e34571017dcb979a2b790561f151e1f5132",
+        "python/nnp_wire.py": "432575042523f1f83069ef8131e19013e36b72e62189de84cd31a82988cefe45",
+        "python/nnp_client.py": "fe4e67b15f1e9bdfef87c4e0af9ebe1d782999a95b8d003de2eddf968dddcfa7",
+        "vscode/documents.cjs": "76e2511d05ccaa8a1158339d77c8d3c6920490cf3266104ab64e9fc4452abf4b",
+        "vscode/types.cjs": "96dffea3a9ce3087a5c32a22bb0a6ae50b152c740fe0a272b1d989aa06197a60",
+        "vscode/adapter.cjs": "6bb9d9c633a25a66d3ea69eb7c768095727ade582fd28c5e191897a59abf6c5d",
+        "vscode/webviews.cjs": "53e9a8bee05293def8aae89de6ec7ebc5562e2cf04030af4e3810f46dfc1f8e6",
+        "vscode/persistence.cjs": "c160c208391f4f99a33de50e18d89bcf81d7cf9b26d806656ee588ef08aa6c73"
+      },
+      "nodeVersion": "v24.21.0",
+      "nodeBinarySha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b"
+    }
+  }
+}

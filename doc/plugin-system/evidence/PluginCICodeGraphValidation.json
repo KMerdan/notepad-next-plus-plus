@@ -1,0 +1,298 @@
+{
+  "recordedUtc": "2026-10-11T08:57:40.108Z",
+  "scope": "Working-tree structural graph includes two new Python CI/runtime preparation files; counts are not runtime test counts, platform execution or committed-change evidence.",
+  "stats": {
+    "status": "ok",
+    "summary": "Graph statistics for NotepadNext:\n  Files: 1022\n  Total nodes: 22163\n  Total edges: 116791\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T17:56:19\n\nNodes by kind:\n  Class: 2177\n  File: 1022\n  Function: 18754\n  Signal: 7\n  Test: 203\n\nEdges by kind:\n  CALLS: 84014\n  CONTAINS: 23222\n  IMPORTS_FROM: 7186\n  INHERITS: 453\n  REFERENCES: 615\n  TESTED_BY: 1301\n\nCALLS by target resolution: 11554 direct, 72460 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+    "total_nodes": 22163,
+    "total_edges": 116791,
+    "nodes_by_kind": {
+      "Class": 2177,
+      "File": 1022,
+      "Function": 18754,
+      "Signal": 7,
+      "Test": 203
+    },
+    "edges_by_kind": {
+      "CALLS": 84014,
+      "CONTAINS": 23222,
+      "IMPORTS_FROM": 7186,
+      "INHERITS": 453,
+      "REFERENCES": 615,
+      "TESTED_BY": 1301
+    },
+    "calls_by_resolution": {
+      "direct": 11554,
+      "unresolved": 72460
+    },
+    "languages": [
+      "bash",
+      "c",
+      "cpp",
+      "dart",
+      "gdscript",
+      "javascript",
+      "julia",
+      "lua",
+      "nix",
+      "objc",
+      "perl",
+      "php",
+      "powershell",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "sql",
+      "typescript",
+      "vbnet",
+      "verilog",
+      "zig"
+    ],
+    "files_count": 1022,
+    "last_updated": "2026-10-11T17:56:19",
+    "embeddings_count": 0,
+    "_graph": {
+      "updated_at": "2026-10-11T17:56:19",
+      "age_seconds": 32,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "queries": [
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "scripts/fetch-plugin-node.py",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 7 result(s) for file_summary('scripts/fetch-plugin-node.py')",
+      "result_count": 7,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 679787,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 1,
+          "line_end": 122,
+          "language": "python",
+          "parent_name": null,
+          "is_test": false
+        },
+        {
+          "id": 679788,
+          "kind": "Function",
+          "name": "digest",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py::digest",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 23,
+          "line_end": 25,
+          "language": "python",
+          "parent_name": null,
+          "is_test": false
+        },
+        {
+          "id": 679789,
+          "kind": "Class",
+          "name": "NodeRedirects",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py::NodeRedirects",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 28,
+          "line_end": 32,
+          "language": "python",
+          "parent_name": null,
+          "is_test": false
+        },
+        {
+          "id": 679790,
+          "kind": "Function",
+          "name": "redirect_request",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py::NodeRedirects.redirect_request",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 29,
+          "line_end": 32,
+          "language": "python",
+          "parent_name": "NodeRedirects",
+          "is_test": false
+        },
+        {
+          "id": 679791,
+          "kind": "Function",
+          "name": "download",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py::download",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 35,
+          "line_end": 43,
+          "language": "python",
+          "parent_name": null,
+          "is_test": false
+        },
+        {
+          "id": 679792,
+          "kind": "Function",
+          "name": "stage",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py::stage",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 46,
+          "line_end": 104,
+          "language": "python",
+          "parent_name": null,
+          "is_test": false
+        },
+        {
+          "id": 679793,
+          "kind": "Function",
+          "name": "main",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py::main",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/scripts/fetch-plugin-node.py",
+          "line_start": 107,
+          "line_end": 117,
+          "language": "python",
+          "parent_name": null,
+          "is_test": false
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:56:19",
+        "age_seconds": 34,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/plugin-ci/test_runtime.py",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 9 result(s) for file_summary('tests/plugin-ci/test_runtime.py')",
+      "result_count": 9,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 682719,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 1,
+          "line_end": 92,
+          "language": "python",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 682720,
+          "kind": "Class",
+          "name": "RuntimeTests",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 18,
+          "line_end": 87,
+          "language": "python",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 682721,
+          "kind": "Function",
+          "name": "setUp",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.setUp",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 19,
+          "line_end": 22,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        },
+        {
+          "id": 682722,
+          "kind": "Function",
+          "name": "archive",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.archive",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 24,
+          "line_end": 46,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        },
+        {
+          "id": 682723,
+          "kind": "Test",
+          "name": "test_posix_and_windows_offline_layouts",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.test_posix_and_windows_offline_layouts",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 48,
+          "line_end": 57,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        },
+        {
+          "id": 682724,
+          "kind": "Test",
+          "name": "test_digest_failure_does_not_publish_output",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.test_digest_failure_does_not_publish_output",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 59,
+          "line_end": 65,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        },
+        {
+          "id": 682725,
+          "kind": "Test",
+          "name": "test_duplicate_and_symbolic_runtime_members_are_rejected",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.test_duplicate_and_symbolic_runtime_members_are_rejected",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 67,
+          "line_end": 73,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        },
+        {
+          "id": 682726,
+          "kind": "Test",
+          "name": "test_existing_output_is_preserved",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.test_existing_output_is_preserved",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 75,
+          "line_end": 82,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        },
+        {
+          "id": 682727,
+          "kind": "Test",
+          "name": "test_unpinned_architecture_is_rejected",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py::RuntimeTests.test_unpinned_architecture_is_rejected",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-ci/test_runtime.py",
+          "line_start": 84,
+          "line_end": 87,
+          "language": "python",
+          "parent_name": "RuntimeTests",
+          "is_test": true
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:56:19",
+        "age_seconds": 36,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ]
+}

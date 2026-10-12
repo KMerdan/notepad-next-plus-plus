@@ -1,0 +1,108 @@
+01-sdk-pack
+02-install-sdk-tarball
+03-create-markdown
+04-markdown-install
+05-markdown-locked-install
+05a-sdk-typecheck
+06-markdown-build
+07-markdown-test
+08-markdown-debug
+09-markdown-edited-debug
+10-local-package
+11-plugin-bundle
+12-create-hello
+13-hello-install
+14-hello-build
+15-hello-test
+16-hello-debug
+{
+  "sdk": {
+    "version": "0.1.0",
+    "path": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-macos-final/sdk/notepadnext-plugin-sdk-0.1.0.tgz",
+    "sha256": "b016c6c9ac7489837249c4c59b16e3cb760cb5e68515187b6a926a0a1728bf35",
+    "files": 39
+  },
+  "markdownProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-macos-final/markdown-demo",
+  "helloProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-macos-final/hello-demo",
+  "localPackage": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-macos-final/artifacts/markdown-preview-0.1.0",
+  "zip": {
+    "name": "notepadnext-plugin.zip",
+    "size": 835636,
+    "sha256": "63eaf4d26557819d871076d0cafa828b5250caa79e350d3605416dfa3f2e2c7b"
+  },
+  "steps": [
+    {
+      "name": "01-sdk-pack",
+      "result": "passed"
+    },
+    {
+      "name": "02-install-sdk-tarball",
+      "result": "passed"
+    },
+    {
+      "name": "03-create-markdown",
+      "result": "passed"
+    },
+    {
+      "name": "04-markdown-install",
+      "result": "passed"
+    },
+    {
+      "name": "05-markdown-locked-install",
+      "result": "passed"
+    },
+    {
+      "name": "05a-sdk-typecheck",
+      "result": "passed"
+    },
+    {
+      "name": "06-markdown-build",
+      "result": "passed"
+    },
+    {
+      "name": "07-markdown-test",
+      "result": "passed"
+    },
+    {
+      "name": "08-markdown-debug",
+      "result": "passed"
+    },
+    {
+      "name": "09-markdown-edited-debug",
+      "result": "passed"
+    },
+    {
+      "name": "10-local-package",
+      "result": "passed"
+    },
+    {
+      "name": "11-plugin-bundle",
+      "result": "passed"
+    },
+    {
+      "name": "12-create-hello",
+      "result": "passed"
+    },
+    {
+      "name": "13-hello-install",
+      "result": "passed"
+    },
+    {
+      "name": "14-hello-build",
+      "result": "passed"
+    },
+    {
+      "name": "15-hello-test",
+      "result": "passed"
+    },
+    {
+      "name": "16-hello-debug",
+      "result": "passed"
+    }
+  ],
+  "notes": [
+    "SDK installed from its actual npm tarball; template moved before dependency installation.",
+    "Locked install, build, tests, local debug and packaging use only the standalone project.",
+    "Editor integration is a separate native check; no publication or signing performed."
+  ]
+}

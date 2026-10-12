@@ -36,6 +36,11 @@ class RecentFilesListManager;
 class ScintillaNext;
 class SessionManager;
 class TranslationManager;
+class QNetworkAccessManager;
+namespace PluginSources { class RegisteredResourceRegistry; }
+namespace PluginDocuments { class DocumentBridge; }
+namespace PluginPackages {class InstalledPluginRegistry;class InstallationService;}
+namespace PluginRuntime {class PluginEngine;}
 
 
 class NotepadNextApplication : public SingleApplication
@@ -43,9 +48,11 @@ class NotepadNextApplication : public SingleApplication
     Q_OBJECT
 
 public:
-    NotepadNextApplication(int &argc, char **argv);
+    NotepadNextApplication(int &argc, char **argv,const QString &dataDirectory=QString());
 
-    bool init();
+    bool init(QNetworkAccessManager *pluginNetwork=nullptr);
+    QNetworkAccessManager *pluginNetworkAccessManager() const {return pluginNetwork;}
+    QString applicationDataDirectory() const {return dataDirectory;}
 
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
@@ -56,6 +63,11 @@ public:
     QString getFileDialogFilter() const;
     QString getFileDialogFilterForLanguage(const QString &language) const;
     ApplicationSettings *getSettings() const { return settings; }
+    PluginSources::RegisteredResourceRegistry *getRegisteredResourceRegistry() const { return registeredResourceRegistry; }
+    PluginDocuments::DocumentBridge *getPluginDocumentBridge() const { return pluginDocumentBridge; }
+    PluginPackages::InstalledPluginRegistry *getInstalledPluginRegistry() const {return installedPluginRegistry;}
+    PluginPackages::InstallationService *getPluginInstaller() const {return pluginInstaller;}
+    PluginRuntime::PluginEngine *getPluginEngine() const {return pluginEngine;}
 
     QStringList getLanguages() const;
     void setEditorLanguage(ScintillaNext *editor, const QString &languageName) const;
@@ -80,6 +92,7 @@ private slots:
     void saveSession();
 
 private:
+    QString dataDirectory;
     void openFiles(const QStringList &files);
 
     void loadSettings();
@@ -89,10 +102,16 @@ private:
     ApplicationSettings *settings;
     SessionManager *sessionManager;
     TranslationManager *translationManager;
+    PluginSources::RegisteredResourceRegistry *registeredResourceRegistry = nullptr;
+    PluginDocuments::DocumentBridge *pluginDocumentBridge = nullptr;
+    PluginPackages::InstalledPluginRegistry *installedPluginRegistry=nullptr;
+    PluginPackages::InstallationService *pluginInstaller=nullptr;
+    PluginRuntime::PluginEngine *pluginEngine=nullptr;
 
     LuaState *luaState = Q_NULLPTR;
 
-    MainWindow *window = Q_NULLPTR;
+    QPointer<MainWindow> window;
+    QNetworkAccessManager *pluginNetwork=nullptr;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     MainWindow *createNewWindow();

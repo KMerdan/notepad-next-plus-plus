@@ -1,0 +1,98 @@
+Start testing: Oct 11 18:11 JST
+----------------------------------------------------------
+21/24 Testing: PluginWebviewTests
+21/24 Test: PluginWebviewTests
+Command: "/private/tmp/notepadnext-app-build-610/tests/plugin-webviews/PluginWebviewTests"
+Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-webviews
+"PluginWebviewTests" start time: Oct 11 18:11 JST
+Output:
+----------------------------------------------------------
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[30819:259:1011/181143.070851:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[30819:259:1011/181143.071221:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+2026-10-11 18:11:43.963 PluginWebviewTests[30819:17496392] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::compatibleFullPagePolicyAndStateBridge()
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to load the script 'nnp-plugin://580de021c81445efbc5b47e1b4d75275/cccccccccccccccccccccccccccccccc/asset/dist/media/own.js' because it violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'none'". Either the 'unsafe-inline' keyword, a hash ('sha256-FUFLEu5vjA/VQJw34usTCC7o69Ot9eK/DwKQVszYQAg='), or a nonce ('nonce-...') is required to enable inline execution.
+
+PASS   : PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy()
+PASS   : PluginWebviewTests::focusNotificationsAfterDeferredDockCleanup()
+PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleNativeCapabilityPair()
+PASS   : PluginWebviewTests::nativeMessagesEnforceCapabilitiesPublicationAndOwnership()
+PASS   : PluginWebviewTests::originalVSCodeHelloWorldInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleEditorTransactionAndHumanMessageWait()
+PASS   : PluginWebviewTests::nativeDeltaCapabilitiesAndCensusLimit()
+PASS   : PluginWebviewTests::nativeDocumentMirrorLifecycle()
+PASS   : PluginWebviewTests::pythonInspectorExample()
+PASS   : PluginWebviewTests::pythonPluginLifecycle()
+PASS   : PluginWebviewTests::collectionPreservesRunningSession()
+PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+PASS   : PluginWebviewTests::largeCommandFailureIsBounded()
+PASS   : PluginWebviewTests::retryWhileFailedProcessDrains()
+PASS   : PluginWebviewTests::compatiblePersistenceLifecycle()
+PASS   : PluginWebviewTests::pluginDataLifecycle()
+PASS   : PluginWebviewTests::activationResourceStaging()
+PASS   : PluginWebviewTests::healthTimeout()
+PASS   : PluginWebviewTests::boundedCrashRecovery()
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 1 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 11 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 21 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 31 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 41 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 51 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 61 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 71 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 81 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 91 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() 100 lifecycle cycles elapsed ms 81633
+PASS   : PluginWebviewTests::lifecycleStress100Cycles()
+PASS   : PluginWebviewTests::updateValidationAndRollback()
+PASS   : PluginWebviewTests::installedManagerLifecycle()
+PASS   : PluginWebviewTests::htmlPolicy()
+PASS   : PluginWebviewTests::imageContainment()
+PASS   : PluginWebviewTests::realPageAndCleanup()
+PASS   : PluginWebviewTests::nativeLongPageScrollsToOffscreenText()
+QWARN  : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload() QWidget::paintEngine: Should no longer be called
+QWARN  : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload() QWidget::paintEngine: Should no longer be called
+PASS   : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload()
+QWARN  : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data) qt.qpa.fonts: Populating font family aliases took 61 ms. Replace uses of missing font family "Host\"</style><script>window.fontInjected=true</script>&\\\n😀\";}body{color:red}/*" with one that exists to avoid this cost. 
+PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data)
+PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(theme-during-preparation)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(publish-and-bounded-overlap)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(document-edited-before-publication)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(active-document-changed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(document-closed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(panel-disposed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(synchronous-publication-wins)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(service-destroyed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(unsafe-html-rejected)
+PASS   : PluginWebviewTests::realMarkdownImagesAndDocumentStates()
+PASS   : PluginWebviewTests::realMarkdownSession()
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 43 passed, 0 failed, 0 skipped, 0 blacklisted, 150315ms
+********* Finished testing of PluginWebviewTests *********
+<end of output>
+Test time = 150.48 sec
+----------------------------------------------------------
+Test Passed.
+"PluginWebviewTests" end time: Oct 11 18:14 JST
+"PluginWebviewTests" time elapsed: 00:02:30
+----------------------------------------------------------
+
+End testing: Oct 11 18:14 JST

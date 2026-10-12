@@ -1,0 +1,15 @@
+{
+  "sourceMatchesBundle": true,
+  "files": {
+    "host.cjs": "5193c0499691684e57730d280b4cd7386636ddc738e585072ce04598856d7491",
+    "client.cjs": "c8ff0769c33b9cb0e80b1aa29aa59d7166f7521a799b3044806fffb29041cf55",
+    "rpc.cjs": "0280164905e07c86e2269fb2dec201a57eb1aa7089f495cb801263434499bad9",
+    "wire.cjs": "0de80be6dbfedea38a993458fe96c669150325a3cd41cacafe86928b67d4f00f",
+    "wire.schema.json": "441d087eb5501f44c777de0bfef02a671a602d4c9cdea1ee22c099f8a1bb8bd2",
+    "wire-contract.json": "cdde19e6daafd730d4d65e1cc357f14a924f95d1bfd97be946d14b3895013fb1",
+    "protocol-profile.json": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f",
+    "runtime-lock.json": "1da63efd009fc0389da06bf96003f104f0a5a70a1f655ff9893093bdc3b28c75",
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+  },
+  "note": "Local arm64 build contents only; this does not establish relocation, signing or notarization."
+}

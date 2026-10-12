@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="24"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="155"
+	timestamp="2026-10-11T18:08:45"
+	>
+	<testcase name="PluginSourceTests" classname="PluginSourceTests" time="0.83107" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginSourceTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginSourceTests::initTestCase()
+PASS   : PluginSourceTests::repositoryNormalization()
+PASS   : PluginSourceTests::metadataDiscriminator()
+PASS   : PluginSourceTests::invalidMetadataIsRejected()
+PASS   : PluginSourceTests::vscodeCompatibilityMetadata()
+PASS   : PluginSourceTests::registrationPersistenceAndMerging()
+PASS   : PluginSourceTests::conflictsAndFailedWritesAreAtomic()
+PASS   : PluginSourceTests::refreshReplacesOnlyItsOwnAssociations()
+PASS   : PluginSourceTests::corruptCacheIsPreserved()
+PASS   : PluginSourceTests::resolverPinsMetadataAndDoesNotInstall()
+PASS   : PluginSourceTests::resolverFailureAndCancellation()
+QWARN  : PluginSourceTests::managerListsSearchesAndSharesRegistry() qt.qpa.fonts: Populating font family aliases took 73 ms. Replace uses of missing font family "Sans...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginPackageTests" classname="PluginPackageTests" time="1.50844" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginPackageTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginPackageTests::initTestCase()
+PASS   : PluginPackageTests::versionsAndRanges()
+PASS   : PluginPackageTests::immutableInstallationAndPersistence()
+PASS   : PluginPackageTests::updateTransactionsAndRecovery()
+PASS   : PluginPackageTests::registrationAndInstallationStaySeparate()
+PASS   : PluginPackageTests::metadataAndCompatibilityChecks()
+PASS   : PluginPackageTests::unsafePathsAndLinks()
+PASS   : PluginPackageTests::budgetsCancellationAndIntegrity()
+libpng error: Read Error
+PASS   : PluginPackageTests::icons()
+PASS   : PluginPackageTests::failedIndexWritesAndCorruptStorage()
+PASS   : PluginPackageTests::productionMarkdownPackage()
+PASS   : PluginPackageTests::zipRoundtripAndPackage()
+PASS   : PluginPackageTests::unsafeZip(../escape)
+PASS   : PluginPackageTests::unsafeZip(/absolute)
+...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginTransactionCrashTests" classname="PluginTransactionCrashTests" time="3.2424" status="run">
+		<properties/>
+		<system-out>********* Start testing of TransactionCrashTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : TransactionCrashTests::initTestCase()
+PASS   : TransactionCrashTests::processDeath(copying)
+PASS   : TransactionCrashTests::processDeath(published)
+PASS   : TransactionCrashTests::processDeath(installed)
+PASS   : TransactionCrashTests::processDeath(update-pending-disabled)
+PASS   : TransactionCrashTests::processDeath(update-pending-enabled)
+PASS   : TransactionCrashTests::processDeath(update-deferred-disabled)
+PASS   : TransactionCrashTests::processDeath(update-deferred-enabled)
+PASS   : TransactionCrashTests::processDeath(validation-started-disabled)
+PASS   : TransactionCrashTests::processDeath(validation-started-enabled)
+PASS   : TransactionCrashTests::processDeath(update-confirmed-disabled)
+PASS   : TransactionCrashTests::processDeath(update-confirmed-enabled)
+PASS   : TransactionC...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginGitHubReleaseTests" classname="PluginGitHubReleaseTests" time="2.16342" status="run">
+		<properties/>
+		<system-out>********* Start testing of GitHubReleaseTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : GitHubReleaseTests::initTestCase()
+PASS   : GitHubReleaseTests::matchingAssetsAndNoInstallation()
+PASS   : GitHubReleaseTests::paginationAndBudget()
+PASS   : GitHubReleaseTests::downloadRedirectAndProvenance()
+PASS   : GitHubReleaseTests::invalidDownload(sha mismatch)
+PASS   : GitHubReleaseTests::invalidDownload(oversize)
+PASS   : GitHubReleaseTests::invalidDownload(truncated)
+PASS   : GitHubReleaseTests::invalidDownload(redirect host)
+PASS   : GitHubReleaseTests::invalidDownload(redirect http)
+PASS   : GitHubReleaseTests::invalidDownload(too many redirects)
+PASS   : GitHubReleaseTests::invalidDownload(rate limit)
+PASS   : GitHubReleaseTests::invalidDownload(not found)
+PASS   : GitHubReleaseTests::invalidDownload(cancel)
+PASS   : GitHubReleaseTests::invalidDownload(declared size)
+PASS   ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginParentCrashTests" classname="PluginParentCrashTests" time="1.32416" status="run">
+		<properties/>
+		<system-out>********* Start testing of ParentCrashTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ParentCrashTests::initTestCase()
+PASS   : ParentCrashTests::parentDeathWhilePluginSpins(node)
+PASS   : ParentCrashTests::parentDeathWhilePluginSpins(python)
+PASS   : ParentCrashTests::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 1008ms
+********* Finished testing of ParentCrashTests *********
+</system-out>
+	</testcase>
+	<testcase name="PluginPythonContractTests" classname="PluginPythonContractTests" time="0.153524" status="run">
+		<properties/>
+		<system-out>test_bidirectional_timeout_cancel_late_response_and_close (__main__.Boundaries.test_bidirectional_timeout_cancel_late_response_and_close) ... ok
+test_closed_panels_retire_python_handles (__main__.Boundaries.test_closed_panels_retire_python_handles) ... ok
+test_data_compare_exchange_preserves_namespace_null_and_deletion (__main__.Boundaries.test_data_compare_exchange_preserves_namespace_null_and_deletion) ... ok
+test_fragmentation_and_invalid_framing (__main__.Boundaries.test_fragmentation_and_invalid_framing) ... ok
+test_integer_error_response_and_decoder_depth (__main__.Boundaries.test_integer_error_response_and_decoder_depth) ... ok
+test_reliable_notification_overload_faults_instead_of_dropping (__main__.Boundaries.test_reliable_notification_overload_faults_instead_of_dropping) ... ok
+test_request_kind_and_result_contract (__main__.Boundaries.test_request_kind_and_result_contract) ... ok
+test_utf8_and_profile_budgets (__main__.Boundaries.test_utf8_and_profile_budgets) ... ok
+test_000_named_params (__main__....
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginPythonHostTests" classname="PluginPythonHostTests" time="0.479406" status="run">
+		<properties/>
+		<system-out>✔ Python lifecycle, early watch events, Unicode snapshot and stdout isolation (117.054792ms)
+✔ Python initialize rejects incompatible contracts without importing the module (94.140083ms)
+✔ Python partial activation preserves diagnostics and releases resources (92.687541ms)
+✔ Python command exceptions retain stacks outside stdout and keep the session usable (93.141417ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 445.74825
+</system-out>
+	</testcase>
+	<testcase name="PluginRpcTests" classname="PluginRpcTests" time="17.1947" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginRpcTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginRpcTests::initTestCase()
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.initialize invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate valid params)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate extra param)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate missing identity/field)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate valid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.activate invalid result)
+PASS   : PluginRpcTests::wireFixtures(nnp.plugin.deact...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginNodeRpcTests" classname="PluginNodeRpcTests" time="0.107004" status="run">
+		<properties/>
+		<system-out>✔ named params (2.046584ms)
+✔ positional params (0.288667ms)
+✔ omitted params (0.118166ms)
+✔ null request id (0.096667ms)
+✔ numeric id token (0.123417ms)
+✔ exponent id token (0.084875ms)
+✔ fractional id token (0.142375ms)
+✔ escaped id key (0.098209ms)
+✔ notification (0.075875ms)
+✔ unknown notification (0.138583ms)
+✔ failing notification (0.150708ms)
+✔ unknown method (0.153042ms)
+✔ invalid method params (0.091ms)
+✔ handler failure (0.074541ms)
+✔ parse error (0.088708ms)
+✔ invalid number grammar (0.061792ms)
+✔ multiple roots (0.049ms)
+✔ scalar (0.050375ms)
+✔ null scalar (0.037584ms)
+✔ invalid id (0.043458ms)
+✔ invalid version (0.041708ms)
+✔ scalar params (0.048916ms)
+✔ empty batch (0.032542ms)
+✔ invalid batch items (6.9795ms)
+✔ mixed batch (0.195833ms)
+✔ all notifications (0.056042ms)
+✔ unknown response (0.039875ms)
+✔ invalid response (0.051833ms)
+✔ framing at every split and byte (1.361209ms)
+✔ invalid framing and truncation (0.487333ms)
+✔ invalid U...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginNodeHostTests" classname="PluginNodeHostTests" time="0.439931" status="run">
+		<properties/>
+		<system-out>✔ native package lifecycle and bidirectional document read (48.084542ms)
+✔ failed activation releases already registered resources (43.248792ms)
+✔ command exceptions retain stack diagnostics outside protocol stdout (43.125875ms)
+✔ watch buffers events that arrive before its reply (1.310084ms)
+✔ delta watch buffers startup events, uses owned snapshot barriers and disposes (1.207834ms)
+✔ delta startup overflow fails explicitly and releases the acquired watch (3.788292ms)
+✔ incompatible version and limits reject before module import (41.997542ms)
+✔ parent-lifetime watcher permits normal shutdown (54.143209ms)
+✔ parent pipe EOF terminates a blocked plugin main thread (89.452916ms)
+✔ invalid watcher descriptor rejects before plugin import (36.219375ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 408.360917
+</system-out>
+	</testcase>
+	<testcase name="PluginNodeWireTests" classname="PluginNodeWireTests" time="0.112367" status="run">
+		<properties/>
+		<system-out>✔ nnp.initialize valid params (1.493291ms)
+✔ nnp.initialize extra param (0.142875ms)
+✔ nnp.initialize missing identity/field (0.050916ms)
+✔ nnp.initialize valid result (0.070166ms)
+✔ nnp.initialize invalid result (0.048917ms)
+✔ nnp.plugin.activate valid params (0.348ms)
+✔ nnp.plugin.activate extra param (0.044958ms)
+✔ nnp.plugin.activate missing identity/field (0.033167ms)
+✔ nnp.plugin.activate valid result (0.046583ms)
+✔ nnp.plugin.activate invalid result (0.090458ms)
+✔ nnp.plugin.deactivate valid params (0.053667ms)
+✔ nnp.plugin.deactivate extra param (0.037292ms)
+✔ nnp.plugin.deactivate missing identity/field (0.026125ms)
+✔ nnp.plugin.deactivate valid result (0.022625ms)
+✔ nnp.plugin.deactivate invalid result (0.034209ms)
+✔ nnp.shutdown valid params (0.02725ms)
+✔ nnp.shutdown extra param (0.02225ms)
+✔ nnp.shutdown missing identity/field (0.018833ms)
+✔ nnp.shutdown valid result (0.019375ms)
+✔ nnp.shutdown invalid result (0.026458ms)
+✔ nnp.health.ping valid params (0...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginDocumentMirrorTests" classname="PluginDocumentMirrorTests" time="0.098417" status="run">
+		<properties/>
+		<system-out>✔ synchronous Unicode/CRLF text, line objects and position clamping (1.29525ms)
+✔ initial snapshot barrier applies early changes once and before listeners read (0.651834ms)
+✔ atomic old-text edits preserve UTF-16 coordinates and publish the final version (0.183458ms)
+✔ version mismatch pauses synchronous reads and explicitly closes/reopens on resync (2.712875ms)
+✔ sequence gap rebuilds the complete census including an unseen opened document (0.248375ms)
+✔ rename and reset create explicit document identities, close remains readable (0.200959ms)
+✔ aggregate budget excludes a document explicitly and recovers after space is released (12.078542ms)
+✔ invalid old range uses resync and never publishes a fabricated change (0.235875ms)
+✔ reliable queue overflow faults the mirror and releases the watch (1.315334ms)
+✔ dispose during a snapshot prevents late document resurrection (0.319667ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.56...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginVSCodeCoreTests" classname="PluginVSCodeCoreTests" time="0.192183" status="run">
+		<properties/>
+		<system-out>✔ core values preserve Unicode URI paths and immutable position/range semantics (1.6075ms)
+✔ Disposable and EventEmitter handle reentrancy, thisArg, exceptions and cleanup once (0.26825ms)
+✔ static alias validation rejects foreign, duplicate and missing contributions (0.270417ms)
+✔ registration returns synchronously, readiness waits, dispose-before-ack permits safe re-registration (5.048292ms)
+✔ unknown APIs fail explicitly and the CJS vscode alias is contained and restored (2.103541ms)
+✔ synchronous document facades expose typed ranges and ordered changed events before commands (1.980709ms)
+✔ editor edit uses one expected-version transaction and expires its builder (2.084ms)
+✔ message promises await choice without blocking activation and reject unsupported overloads (1.375958ms)
+✔ persistence permissions and activation publication barrier reject writes explicitly (3.234542ms)
+✔ Memento separates scopes, preserves null and Unicode keys, clones values and survives reload (2.66775ms)
+✔ Mem...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginVSCodeWebviewsTests" classname="PluginVSCodeWebviewsTests" time="0.114893" status="run">
+		<properties/>
+		<system-out>✔ panel is synchronous and queues deterministic URIs, title/HTML/message after create (5.6725ms)
+✔ dispose before create acknowledgement skips queued publication and closes remote once (2.260166ms)
+✔ actual state/message/close events preserve listeners and do not recreate resources (1.776375ms)
+✔ resource containment, unsupported options/columns and local queue budgets are explicit (3.261375ms)
+✔ SDK accepts close before create reply and releases the late owned handle (2.141958ms)
+✔ creation snapshots options and resource paths use encoded Unicode URIs (2.807208ms)
+✔ native close overtaking an in-flight HTML write does not fault the adapter (3.334375ms)
+✔ permission and renderer contract errors still fail queued HTML publication (1.70825ms)
+✔ unacknowledged creation bounds both operation count and queued HTML bytes (6.275792ms)
+✔ browser bootstrap ignores provisional pages, reuses transport and keeps old API revision ownership (1.303708ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginVSCodeSampleBuild" classname="PluginVSCodeSampleBuild" time="0.245709" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PluginVSCodeWebviewSampleBuild" classname="PluginVSCodeWebviewSampleBuild" time="0.260616" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PluginSdkPackageTests" classname="PluginSdkPackageTests" time="0.185811" status="run">
+		<properties/>
+		<system-out>✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (14.758375ms)
+✔ rejects escaping entry and clears failed staging (6.204417ms)
+✔ rejects links and native addons (8.387ms)
+✔ rejects missing production dependency and source-contained output (9.16975ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (20.639833ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (19.142208ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (9.306625ms)
+✔ Python release vendors built modules without imports, bytecode or npm hooks (15.070458ms)
+✔ Python packages reject npm runtime dependencies and remove failed staging (5.13625ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 152.949625
+</system-out>
+	</testcase>
+	<testcase name="PluginDocumentTests" classname="PluginDocumentTests" time="2.33836" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginDocumentTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDocumentTests::initTestCase()
+QWARN  : PluginDocumentTests::deletionDeltaUsesOldUnicodeCoordinates() qt.qpa.fonts: Populating font family aliases took 68 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS   : PluginDocumentTests::deletionDeltaUsesOldUnicodeCoordinates()
+PASS   : PluginDocumentTests::multilineDeltaAndUndoRedo()
+PASS   : PluginDocumentTests::atomicEditDeltaAndExplicitReset()
+PASS   : PluginDocumentTests::unsupportedDeltaIsAnExplicitReset()
+PASS   : PluginDocumentTests::oversizedDeltaResetsAndCanRecover()
+PASS   : PluginDocumentTests::orderedDeltaTopologyAndMetadata()
+PASS   : PluginDocumentTests::snapshotAndIdentity()
+PASS   : PluginDocumentTests::unicodePositions()
+PASS   : PluginDocumentTests::invalidEncodingAndBudg...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginDataTests" classname="PluginDataTests" time="0.982579" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginDataTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDataTests::initTestCase()
+PASS   : PluginDataTests::compareAndExchangePreservesConcurrentWriters()
+PASS   : PluginDataTests::persistenceAndIsolation()
+PASS   : PluginDataTests::boundsAndPreservation()
+PASS   : PluginDataTests::serializedWorkersAndErase()
+PASS   : PluginDataTests::totalFileBudget()
+PASS   : PluginDataTests::repositoryIdentityIsolation()
+PASS   : PluginDataTests::cleanupTestCase()
+Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 775ms
+********* Finished testing of PluginDataTests *********
+</system-out>
+	</testcase>
+	<testcase name="PluginDiagnosticTests" classname="PluginDiagnosticTests" time="2.47451" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginDiagnosticTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginDiagnosticTests::initTestCase()
+PASS   : PluginDiagnosticTests::durableOriginBoundFailures()
+PASS   : PluginDiagnosticTests::rotationAndGlobalBudgets()
+PASS   : PluginDiagnosticTests::invalidAndCorruptRecordsArePreserved()
+PASS   : PluginDiagnosticTests::interruptedAtomicWritesAreReclaimed()
+PASS   : PluginDiagnosticTests::busyAndUnsafePathsDoNotOverwrite()
+PASS   : PluginDiagnosticTests::unicodeAndClosedEventContract()
+PASS   : PluginDiagnosticTests::workerQueueFailurePriorityAndFlush()
+PASS   : PluginDiagnosticTests::boundedStorageFailureDoesNotHoldShutdown()
+PASS   : PluginDiagnosticTests::cleanupTestCase()
+Totals: 10 passed, 0 failed, 0 skipped, 0 blacklisted, 2260ms
+********* Finished testing of PluginDiagnosticTests *********
+</system-out>
+	</testcase>
+	<testcase name="PluginWebviewTests" classname="PluginWebviewTests" time="90.0304" status="fail">
+		<failure message="Timeout"/>
+		<properties/>
+		<system-out>********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[28098:259:1011/180919.948354:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[28098:259:1011/180919.948696:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+2026-10-11 18:09:20.885 PluginWebviewTests[28098:17483964] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::compatibleFullPagePolicyAndStateBridge()
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to load the script 'nnp-plugin://3d74afbdf6fd4f679a96efb593065ee4/cccccccccccccccccccccccccccccccc/asset/dist/media/own.js' because it violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'none'". Either the 'unsafe-inline' keyword, a hash ('sha256-FUFLEu5vjA/VQJw34usTCC7o69Ot9eK/DwKQVszYQAg='), or a nonce ('nonce-...') is required to enable inline execution.
+
+PASS   : PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy()
+PASS   : PluginWebviewTests::focusNotificationsAfterDeferredDockCleanup()
+PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleNativeCapabilityPair()
+PASS   : PluginWebviewTests::nativeMessagesEnforceCapabilitiesPublicationAndOwnership()
+PASS   : PluginWebviewTests::originalVSCodeHelloWorldInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleEditorTransactionAndHumanMessageWait()
+PASS   : PluginWebviewTests::nativeDeltaCapabilitiesAndCensusLimit()
+PASS   : PluginWebviewTests::nativeDocumentMirrorLifecycle()
+PASS   : PluginWebviewTests::pythonInspectorExample()
+PASS   : PluginWebviewTests::pythonPluginLifecycle()
+PASS   : PluginWebviewTests::collectionPreservesRunningSession()
+PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+PASS   : PluginWebviewTests::largeCommandFailureIsBounded()
+PASS   : PluginWebviewTests::retryWhileFailedProcessDrains()
+PASS   : PluginWebviewTests::compatiblePersistenceLifecycle()
+PASS   : PluginWebviewTests::pluginDataLifecycle()
+PASS   : PluginWebviewTests::activationResourceStaging()
+PASS   : PluginWebviewTests::healthTimeout()
+PASS   : PluginWebviewTests::boundedCrashRecovery()
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 1 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 11 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 21 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 31 owned resources 0
+</system-out>
+	</testcase>
+	<testcase name="PluginApplicationTests" classname="PluginApplicationTests" time="6.92633" status="run">
+		<properties/>
+		<system-out>********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init()
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-11 18:10:49.969 PluginApplicationTests[28848:17490107] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplica...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="PluginApplicationExitTests" classname="PluginApplicationExitTests" time="18.4753" status="run">
+		<properties/>
+		<system-out>********* Start testing of ApplicationExitTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : ApplicationExitTests::initTestCase()
+PASS   : ApplicationExitTests::lastWindowClose(normal-close)
+PASS   : ApplicationExitTests::lastWindowClose(unresponsive-deactivate)
+PASS   : ApplicationExitTests::lastWindowClose(reload-pending)
+PASS   : ApplicationExitTests::lastWindowClose(uninstall-pending)
+PASS   : ApplicationExitTests::lastWindowClose(update-activating)
+PASS   : ApplicationExitTests::lastWindowClose(update-preparation-pending)
+PASS   : ApplicationExitTests::cleanupTestCase()
+Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 18198ms
+********* Finished testing of ApplicationExitTests *********
+</system-out>
+	</testcase>
+	<testcase name="PluginMacBundleTests" classname="PluginMacBundleTests" time="5.73057" status="run">
+		<properties/>
+		<system-out>test_debug_entitlement (__main__.BundleTests.test_debug_entitlement) ... ok
+test_disk_image_signature_is_verified (__main__.BundleTests.test_disk_image_signature_is_verified) ... ok
+test_escaping_qt_config (__main__.BundleTests.test_escaping_qt_config) ... ok
+test_external_rpath (__main__.BundleTests.test_external_rpath) ... ok
+test_machine_specific_qt_config (__main__.BundleTests.test_machine_specific_qt_config) ... ok
+test_missing_dependency (__main__.BundleTests.test_missing_dependency) ... ok
+test_missing_hardened_runtime (__main__.BundleTests.test_missing_hardened_runtime) ... ok
+test_missing_webengine_resources (__main__.BundleTests.test_missing_webengine_resources) ... ok
+test_python_developer_profile_cannot_be_packaged (__main__.BundleTests.test_python_developer_profile_cannot_be_packaged) ... ok
+test_rejected_notarization_does_not_staple (__main__.BundleTests.test_rejected_notarization_does_not_staple) ... ok
+test_signed_contained_bundle (__main__.BundleTests.test_signed_contained_bundle) ... ok
+test...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+</testsuite>

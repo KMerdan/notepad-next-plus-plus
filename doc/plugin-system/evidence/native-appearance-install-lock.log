@@ -1,0 +1,9 @@
+********* Start testing of GitHubReleaseTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : GitHubReleaseTests::initTestCase()
+PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(release-lock-and-install)
+PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(cancel-while-lock-held)
+PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(bounded-lock-timeout)
+PASS   : GitHubReleaseTests::cleanupTestCase()
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 1395ms
+********* Finished testing of GitHubReleaseTests *********

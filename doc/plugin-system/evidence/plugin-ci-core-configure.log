@@ -1,0 +1,47 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework
+-- Found WrapOpenGL: TRUE
+-- Found Cups: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libcups.tbd (found version "2.3.4")
+-- Found Git: /opt/homebrew/bin/git (found version "2.56.0")
+-- ADS: Solution configured to use Qt version 6
+-- CPM: Adding package ads@5.1.1 (v5.1.1 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/ads/fb9d)
+-- CPM: Adding package QSimpleUpdater@0 (c5c136c0f79ca6423b0914a2676ae3d0e3811c5b at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/qsimpleupdater/531e)
+-- CPM: Adding package SingleApplication@3.5.6 (v3.5.6 at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/singleapplication/d282)
+-- CPM: Adding package editorconfig_core_qt@0 (ab62f0554abf2bbe4d45427b36a8b2f81ca7b4ab at /Users/merdankiji/localGit/NotepadNext/.cpm-cache/editorconfig_core_qt/87f1)
+-- The C compiler identification is AppleClang 21.0.0.21000334
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of off64_t
+-- Check size of off64_t - failed
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Looking for stdarg.h
+-- Looking for stdarg.h - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Performing Test HAVE___ATTR__VIS_HIDDEN
+-- Performing Test HAVE___ATTR__VIS_HIDDEN - Success
+-- Configuring macOS packaging
+-- Configuring done (7.8s)
+-- Generating done (1.0s)
+-- Build files have been written to: /private/tmp/nnp-plugin-ci-core-build

@@ -23,6 +23,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QActionGroup>
+#include <QPointer>
 
 #include "DockedEditor.h"
 
@@ -45,6 +46,7 @@ class ShiftWheelToHorizontalScrollFilter;
 class Converter;
 class DefaultDirectoryManager;
 class TabsQuickActionsBar;
+class PluginManagerDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -105,6 +107,7 @@ public slots:
     void convertEOLs(int eolMode);
 
     void showFindReplaceDialog(int index);
+    void showPluginManager();
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
@@ -151,6 +154,7 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
+    QPointer<PluginManagerDialog> pluginManagerDialog;
 
     QScopedPointer<SearchResultsCollector> searchResults;
 

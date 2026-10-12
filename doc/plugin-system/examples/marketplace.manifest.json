@@ -1,0 +1,163 @@
+{
+  "manifestVersion": 1,
+  "id": "example.plugins",
+  "name": "Example Plugins",
+  "version": "0.1.0",
+  "description": "Illustrative marketplace; registration does not install plugins.",
+  "repository": "https://github.com/example/notepadnext-marketplace",
+  "list": [
+    {
+      "manifestVersion": 1,
+      "id": "notepadnext.markdown-preview",
+      "name": "Markdown Preview",
+      "version": "0.1.0",
+      "description": "Read-only preview of the current Markdown buffer.",
+      "engines": {
+        "notepadnext": ">=0.15.0 <0.16.0",
+        "api": "^0.1.0"
+      },
+      "runtime": {
+        "kind": "node",
+        "entry": "dist/index.js"
+      },
+      "capabilities": {
+        "required": [
+          "documents.read@1",
+          "documents.events@1",
+          "commands@1",
+          "webviews@1"
+        ],
+        "optional": []
+      },
+      "activationEvents": [
+        "onCommand:notepadnext.markdown-preview.open"
+      ],
+      "contributes": {
+        "commands": [
+          {
+            "id": "notepadnext.markdown-preview.open",
+            "title": "Open Markdown Preview",
+            "icon": "resources/preview.png"
+          }
+        ],
+        "menus": [
+          {
+            "location": "plugins",
+            "command": "notepadnext.markdown-preview.open",
+            "order": 100
+          }
+        ],
+        "toolbar": [
+          {
+            "command": "notepadnext.markdown-preview.open",
+            "order": 100
+          }
+        ]
+      },
+      "list": false,
+      "repository": "https://github.com/example/markdown-preview"
+    },
+    {
+      "manifestVersion": 1,
+      "id": "example.diagram-preview",
+      "name": "Diagram Preview",
+      "version": "0.1.0",
+      "description": "Illustrative read-only plugin resource.",
+      "engines": {
+        "notepadnext": ">=0.15.0 <0.16.0",
+        "api": "^0.1.0"
+      },
+      "runtime": {
+        "kind": "node",
+        "entry": "dist/index.js"
+      },
+      "capabilities": {
+        "required": [
+          "documents.read@1",
+          "documents.events@1",
+          "commands@1",
+          "webviews@1"
+        ],
+        "optional": []
+      },
+      "activationEvents": [
+        "onCommand:example.diagram-preview.open"
+      ],
+      "contributes": {
+        "commands": [
+          {
+            "id": "example.diagram-preview.open",
+            "title": "Open Diagram Preview",
+            "icon": "resources/preview.png"
+          }
+        ],
+        "menus": [
+          {
+            "location": "plugins",
+            "command": "example.diagram-preview.open",
+            "order": 100
+          }
+        ],
+        "toolbar": [
+          {
+            "command": "example.diagram-preview.open",
+            "order": 100
+          }
+        ]
+      },
+      "list": false,
+      "repository": "https://github.com/example/diagram-preview"
+    },
+    {
+      "manifestVersion": 1,
+      "id": "example.csv-viewer",
+      "name": "CSV Viewer",
+      "version": "0.1.0",
+      "description": "Illustrative read-only plugin resource.",
+      "engines": {
+        "notepadnext": ">=0.15.0 <0.16.0",
+        "api": "^0.1.0"
+      },
+      "runtime": {
+        "kind": "node",
+        "entry": "dist/index.js"
+      },
+      "capabilities": {
+        "required": [
+          "documents.read@1",
+          "documents.events@1",
+          "commands@1",
+          "webviews@1"
+        ],
+        "optional": []
+      },
+      "activationEvents": [
+        "onCommand:example.csv-viewer.open"
+      ],
+      "contributes": {
+        "commands": [
+          {
+            "id": "example.csv-viewer.open",
+            "title": "Open CSV Viewer",
+            "icon": "resources/preview.png"
+          }
+        ],
+        "menus": [
+          {
+            "location": "plugins",
+            "command": "example.csv-viewer.open",
+            "order": 100
+          }
+        ],
+        "toolbar": [
+          {
+            "command": "example.csv-viewer.open",
+            "order": 100
+          }
+        ]
+      },
+      "list": false,
+      "repository": "https://github.com/example/csv-viewer"
+    }
+  ]
+}

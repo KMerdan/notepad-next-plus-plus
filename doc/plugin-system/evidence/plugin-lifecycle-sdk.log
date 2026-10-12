@@ -1,0 +1,25 @@
+✔ generated project is self-contained with matching command identities, schema and editor source-map setup (28.921584ms)
+✔ creation refuses invalid identities, recursive destinations and existing projects without changing files (19.811ms)
+✔ test host rejects early publication, delivers document events and releases resources after deactivation throws (0.851334ms)
+SDK simulated host; Qt, JSON-RPC, CSP and host quotas require editor integration testing.
+Rendered /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/nnp-sdk-dev-EZOfcn/preview.html
+✔ debug runner loads built code from a standalone project and writes its preview (31.353708ms)
+✔ watch mode reloads changed code, survives atomic input saves and stops cleanly (849.167833ms)
+✔ packages built code, runtime dependencies, nested versions and licenses without evaluating code/hooks (14.665875ms)
+✔ rejects escaping entry and clears failed staging (5.586166ms)
+✔ rejects icon formats excluded by the registration metadata profile (6.155083ms)
+✔ rejects links and native addons (8.406375ms)
+✔ rejects missing production dependency and source-contained output (6.614375ms)
+✔ release archive has UTF-8 deflate entries, central directory, CRC and SHA-256 (23.8055ms)
+✔ release publishes the ZIP and matching author checksums without evaluating plugin code (21.585083ms)
+✔ release rejects mismatched tags, unstable versions and incomplete builds without leaving output (25.971125ms)
+✔ Python release vendors built modules without imports, bytecode or npm hooks (21.527125ms)
+✔ Python packages reject npm runtime dependencies and remove failed staging (6.754125ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 969.776417

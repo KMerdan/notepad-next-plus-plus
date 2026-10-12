@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-11",
+  "platform": "macOS arm64",
+  "qt": "6.10.0",
+  "scope": "Plugin Manager Figma layout, local install flow, first preview native window stability, lifecycle detail updates and application exit.",
+  "figma": {
+    "file": "cJPphvdJ1ztsU0tzMFIBpD",
+    "references": [
+      "28:10961",
+      "28:11271",
+      "28:10514",
+      "13:4002",
+      "13:4397"
+    ]
+  },
+  "checks": [
+    {
+      "name": "PluginSourceTests",
+      "result": "passed",
+      "rows": 18,
+      "log": "ui-window-sources.log"
+    },
+    {
+      "name": "PluginWebviewTests affected cases",
+      "result": "passed",
+      "testFunctions": 8,
+      "rows": 10,
+      "log": "ui-window-webviews.log",
+      "nativeSurfaceReplacements": 0,
+      "reopenCycles": 3
+    },
+    {
+      "name": "PluginApplicationTests",
+      "result": "passed",
+      "rows": 8,
+      "log": "ui-window-application.log",
+      "assertions": [
+        "First plugin preserves window ID, current editor object and unsaved text",
+        "Register, explicit local install, enable and Markdown rendering work",
+        "Installed manager shows 1 open panel",
+        "Active plugin shuts down on last-window close"
+      ]
+    },
+    {
+      "name": "PluginApplicationExitTests",
+      "result": "passed",
+      "rows": 8,
+      "log": "ui-window-exit.log"
+    },
+    {
+      "name": "Preview review",
+      "result": "reviewed",
+      "sizes": [
+        "1080x664",
+        "820x560"
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "screenshots": [
+        "manager-uninstalled-v2-light.png",
+        "manager-uninstalled-v2-dark.png",
+        "manager-sources-v2-light.png",
+        "manager-small-v2.png",
+        "manager-installed-v2.png"
+      ]
+    },
+    {
+      "name": "Installed local development app",
+      "result": "updated and opened",
+      "path": "/Users/merdankiji/localGit/NotepadNext/build/plugin-dev/NotepadNext.app",
+      "binarySha256": "ab086300859195cce679793c097849efa044008f54243413a01ee3c820866b80",
+      "nativeUiObservation": "Plugin Manager: Markdown Preview 0.1.0, Enabled, Running, Preview panels 1 open; footer 1 installed, 1 enabled, 1 running."
+    },
+    {
+      "name": "CodeGraph refresh",
+      "result": "passed",
+      "files": 1042,
+      "nodes": 24310,
+      "edges": 122433,
+      "log": "ui-window-codegraph.log"
+    }
+  ],
+  "intermediateFailure": {
+    "log": "ui-window-application-intermediate.log",
+    "reason": "The test selected the empty panel count label of an inactive detail pane because all three panes shared the same objectName. Scoped the name to Installed; final Application run passes. Exit tests passed in the intermediate run."
+  },
+  "notes": [
+    "Source tests rerun after the final Installed-only objectName change; final native application and UI state independently verify the updated panel count.",
+    "Webview checks are eight affected cases, not the complete suite.",
+    "The application is a local development build; no Developer ID, notarization or publishing was configured."
+  ],
+  "sourceSha256": {
+    "src/dialogs/PluginManagerDialog.cpp": "571f23839a50eb0714ae0f5f6adbe9eace1b8dcf701bc098a2141243d39f5592",
+    "src/dialogs/PluginManagerDialog.h": "080dead24bea490cf335791eb0b102b971d385fd505af514826525e7ac02e5a9",
+    "src/plugins/packages/PluginController.h": "a2085f19f5bd5d70428902f26443fc8ff72614b116d032c1f2e65b6918e77ae7",
+    "src/plugins/runtime/PluginEngine.cpp": "5a2b173d43bc55f9d9ba9a5d0c1a7a41709835b25a8f7d499af9212a3ed92947",
+    "src/plugins/runtime/PluginEngine.h": "fe77ff35ac9a8fe49d0664fe9faf54c5282add95987bd469ff87a475bd55862c",
+    "src/plugins/runtime/PluginSession.cpp": "7f8e4e39b298780769ab0823d6b49e5a3222b6691154e4440c8e9822fafce1a6",
+    "src/plugins/runtime/PluginSession.h": "faa1360931d6b691e66cefd4988043d6d49122af8a7bee61bb948e9bff7d9622",
+    "src/plugins/webviews/WebviewService.cpp": "5f951bb06ac5b0f92210fd20d1cdf2a5ac4046dee8b3fc350875fdaf34cddac9",
+    "src/plugins/webviews/WebviewService.h": "f8d569fe522694f13f31d5cb7b03764fa2512c895877c651fba890276c01ffdd",
+    "src/plugins/webviews/CMakeLists.txt": "3ab3ecf9cac4821138988fae76a4ff9f5c1b33f8c2b5d95984b55eb5daa9d524",
+    "src/resources.qrc": "96af83cbfba4ce8666a96ddeb4785e1920d9ffa8d2bb61b8ff1bad7817cf5e7f",
+    "src/icons/markdown-preview.svg": "09de1e3406a845fda032d4b3eb4ab09defcc96b4ce8d09c197a5829d0789c932",
+    "tests/plugin-webviews/PluginWebviewTests.cpp": "4d2fabc32b85a51db9eee3bacfbf57f34bcc816b7edd415ae8d36dedef13d41d",
+    "tests/plugin-application/PluginApplicationTests.cpp": "522b2e3da8fe57a83123ae5acccd2b98aed396e01b00014f20459b8ffcb7fbfb",
+    "tests/plugin-sources/PluginManagerPreview.cpp": "f14522b4e37948f36b09f2a449734e43d39e0067051430be54c37f393126a60e"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "image": "/private/tmp/notepadnext-macos-release-build/plugin-packages/NotepadNext-arm64-utx_rxje/NotepadNext-0.15.0-arm64.dmg",
+  "sha256": "0fac53350e6e46ff5a7b365cf9afd9b61392c81c0329e14f5235eb4ecbb3280e",
+  "imageVerified": true,
+  "readonlyMounted": true,
+  "applicationsLinkVerified": true,
+  "copiedBundle": "/private/tmp/NotepadNext 安装介质 vtsz5h3g/Installed Application/NotepadNext.app",
+  "detached": true,
+  "copiedBundleValidation": "nnp-dmg-copied-bundle-validation.json",
+  "productionExecutableVersionOutput": "NotepadNext 0.15",
+  "productionExecutableReturnCode": 0,
+  "scope": "Local same-machine image/copy/signature/version smoke; not clean-machine installation or full production executable UI lifecycle"
+}

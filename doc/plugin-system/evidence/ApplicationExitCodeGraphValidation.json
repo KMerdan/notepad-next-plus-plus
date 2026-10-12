@@ -1,0 +1,318 @@
+{
+  "recordedUtc": "2026-10-11T08:34:10.239Z",
+  "scope": "Current working-tree/untracked/CommonJS sources indexed by scripts/update-codegraph.py; graph queries establish structural coverage only, not runtime execution or a Git commit.",
+  "stats": {
+    "status": "ok",
+    "summary": "Graph statistics for NotepadNext:\n  Files: 1020\n  Total nodes: 22147\n  Total edges: 116560\n  Languages: bash, c, cpp, dart, gdscript, javascript, julia, lua, nix, objc, perl, php, powershell, python, r, ruby, rust, sql, typescript, vbnet, verilog, zig\n  Last updated: 2026-10-11T17:30:52\n\nNodes by kind:\n  Class: 2175\n  File: 1020\n  Function: 18747\n  Signal: 7\n  Test: 198\n\nEdges by kind:\n  CALLS: 83854\n  CONTAINS: 23208\n  IMPORTS_FROM: 7168\n  INHERITS: 451\n  REFERENCES: 613\n  TESTED_BY: 1266\n\nCALLS by target resolution: 11543 direct, 72311 unresolved\n\nEmbeddings: 0 nodes embedded\n  (install sentence-transformers for semantic search)",
+    "total_nodes": 22147,
+    "total_edges": 116560,
+    "nodes_by_kind": {
+      "Class": 2175,
+      "File": 1020,
+      "Function": 18747,
+      "Signal": 7,
+      "Test": 198
+    },
+    "edges_by_kind": {
+      "CALLS": 83854,
+      "CONTAINS": 23208,
+      "IMPORTS_FROM": 7168,
+      "INHERITS": 451,
+      "REFERENCES": 613,
+      "TESTED_BY": 1266
+    },
+    "calls_by_resolution": {
+      "direct": 11543,
+      "unresolved": 72311
+    },
+    "languages": [
+      "bash",
+      "c",
+      "cpp",
+      "dart",
+      "gdscript",
+      "javascript",
+      "julia",
+      "lua",
+      "nix",
+      "objc",
+      "perl",
+      "php",
+      "powershell",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "sql",
+      "typescript",
+      "vbnet",
+      "verilog",
+      "zig"
+    ],
+    "files_count": 1020,
+    "last_updated": "2026-10-11T17:30:52",
+    "embeddings_count": 0,
+    "_graph": {
+      "updated_at": "2026-10-11T17:30:52",
+      "age_seconds": 105,
+      "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "built_on_branch": "master",
+      "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+      "head_matches_build": true
+    }
+  },
+  "queries": [
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/plugin-application/ApplicationExitProbe.cpp",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 8 result(s) for file_summary('tests/plugin-application/ApplicationExitProbe.cpp')",
+      "result_count": 8,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 634153,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 1,
+          "line_end": 168,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 634154,
+          "kind": "Function",
+          "name": "require",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::(anonymous).require(bool,const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 31,
+          "line_end": 33,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 634155,
+          "kind": "Function",
+          "name": "waitFor",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::(anonymous).waitFor(const std::function<bool()>&,int)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 34,
+          "line_end": 41,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 634156,
+          "kind": "Function",
+          "name": "quote",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::(anonymous).quote(const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 42,
+          "line_end": 45,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 634157,
+          "kind": "Function",
+          "name": "write",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::(anonymous).write(const QString&,const QByteArray&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 46,
+          "line_end": 49,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 634158,
+          "kind": "Function",
+          "name": "read",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::(anonymous).read(const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 50,
+          "line_end": 53,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 634159,
+          "kind": "Function",
+          "name": "package",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::(anonymous).package(const QString&,const QString&,const QString&,bool,bool)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 54,
+          "line_end": 84,
+          "language": "cpp",
+          "parent_name": "(anonymous)",
+          "is_test": true
+        },
+        {
+          "id": 634160,
+          "kind": "Function",
+          "name": "runApplicationExitProbe",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp::runApplicationExitProbe(NotepadNextApplication&,const QString&,const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.cpp",
+          "line_start": 86,
+          "line_end": 167,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:30:52",
+        "age_seconds": 111,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/plugin-application/ApplicationExitTests.cpp",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 5 result(s) for file_summary('tests/plugin-application/ApplicationExitTests.cpp')",
+      "result_count": 5,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 634164,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "line_start": 1,
+          "line_end": 76,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 634165,
+          "kind": "Class",
+          "name": "ApplicationExitTests",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp::ApplicationExitTests",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "line_start": 16,
+          "line_end": 73,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 634166,
+          "kind": "Function",
+          "name": "lastWindowClose_data",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp::ApplicationExitTests.lastWindowClose_data()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "line_start": 20,
+          "line_end": 24,
+          "language": "cpp",
+          "parent_name": "ApplicationExitTests",
+          "is_test": true
+        },
+        {
+          "id": 634167,
+          "kind": "Function",
+          "name": "lastWindowClose",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp::ApplicationExitTests.lastWindowClose()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "line_start": 25,
+          "line_end": 65,
+          "language": "cpp",
+          "parent_name": "ApplicationExitTests",
+          "is_test": true
+        },
+        {
+          "id": 634168,
+          "kind": "Function",
+          "name": "cleanupTestCase",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp::ApplicationExitTests.cleanupTestCase()",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitTests.cpp",
+          "line_start": 66,
+          "line_end": 72,
+          "language": "cpp",
+          "parent_name": "ApplicationExitTests",
+          "is_test": true
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:30:52",
+        "age_seconds": 109,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    },
+    {
+      "status": "ok",
+      "pattern": "file_summary",
+      "target": "tests/plugin-application/ApplicationExitProbe.h",
+      "description": "Get a summary of all nodes in a file",
+      "summary": "Found 3 result(s) for file_summary('tests/plugin-application/ApplicationExitProbe.h')",
+      "result_count": 3,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 634161,
+          "kind": "File",
+          "name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h",
+          "line_start": 1,
+          "line_end": 6,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 634162,
+          "kind": "Class",
+          "name": "NotepadNextApplication",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h::NotepadNextApplication",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h",
+          "line_start": 4,
+          "line_end": 4,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        },
+        {
+          "id": 634163,
+          "kind": "Function",
+          "name": "runApplicationExitProbe",
+          "qualified_name": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h::runApplicationExitProbe(NotepadNextApplication&,const QString&,const QString&)",
+          "file_path": "/Users/merdankiji/localGit/NotepadNext/tests/plugin-application/ApplicationExitProbe.h",
+          "line_start": 5,
+          "line_end": 5,
+          "language": "cpp",
+          "parent_name": null,
+          "is_test": true
+        }
+      ],
+      "edges": [],
+      "_graph": {
+        "updated_at": "2026-10-11T17:30:52",
+        "age_seconds": 113,
+        "built_at_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "built_on_branch": "master",
+        "head_sha": "adfd1280146b917560e1dd98c93e5bd3a31222f2",
+        "head_matches_build": true
+      }
+    }
+  ]
+}

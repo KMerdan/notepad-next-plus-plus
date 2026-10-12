@@ -1,0 +1,44 @@
+✔ native package lifecycle and bidirectional document read (51.853208ms)
+✔ failed activation releases already registered resources (42.5685ms)
+✔ command exceptions retain stack diagnostics outside protocol stdout (42.1185ms)
+✔ watch buffers events that arrive before its reply (1.100125ms)
+✔ delta watch buffers startup events, uses owned snapshot barriers and disposes (1.435042ms)
+✖ delta startup overflow fails explicitly and releases the acquired watch (3.107417ms)
+✔ incompatible version and limits reject before module import (41.480542ms)
+✔ parent-lifetime watcher permits normal shutdown (55.583667ms)
+✔ parent pipe EOF terminates a blocked plugin main thread (82.631542ms)
+✔ invalid watcher descriptor rejects before plugin import (33.2875ms)
+✔ synchronous Unicode/CRLF text, line objects and position clamping (1.373542ms)
+✔ initial snapshot barrier applies early changes once and before listeners read (0.804166ms)
+✔ atomic old-text edits preserve UTF-16 coordinates and publish the final version (0.763125ms)
+✔ version mismatch pauses synchronous reads and explicitly closes/reopens on resync (2.101458ms)
+✔ sequence gap rebuilds the complete census including an unseen opened document (0.241458ms)
+✔ rename and reset create explicit document identities, close remains readable (0.223708ms)
+✔ aggregate budget excludes a document explicitly and recovers after space is released (12.059792ms)
+✔ invalid old range uses resync and never publishes a fabricated change (0.237792ms)
+✔ reliable queue overflow faults the mirror and releases the watch (1.318417ms)
+✔ dispose during a snapshot prevents late document resurrection (0.288458ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 400.339
+
+✖ failing tests:
+
+test at tests/plugin-rpc/host.test.cjs:86:1
+✖ delta startup overflow fails explicitly and releases the acquired watch (3.107417ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/Users/merdankiji/localGit/NotepadNext/tests/plugin-rpc/host.test.cjs:93:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 1007 },
+    operator: 'rejects',
+    diff: 'simple'
+  }

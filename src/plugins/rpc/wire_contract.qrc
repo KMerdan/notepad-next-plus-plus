@@ -1,0 +1,4 @@
+<RCC><qresource prefix="/plugins">
+<file alias="wire.schema.json">../../../packages/plugin-host/wire.schema.json</file>
+<file alias="wire-contract.json">../../../packages/plugin-host/wire-contract.json</file>
+</qresource></RCC>
