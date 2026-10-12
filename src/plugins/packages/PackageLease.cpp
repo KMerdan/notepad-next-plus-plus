@@ -31,10 +31,10 @@ bool PackageLease::lockStore(QLockFile &lock,int waitMs,const std::atomic_bool *
         const auto remaining=qint64(budget)-deadline.elapsed();
         bool retryable=lock.error()==QLockFile::LockFailedError;
 #ifdef Q_OS_WIN
-        // A deleted lock may still have open reader handles. CREATE_NEW then
-        // fails while the filename is no longer visible, which QLockFile maps
-        // to PermissionError. Keep the existing bounded worker wait; a genuine
-        // permission failure still fails, and zero-wait GUI callers never wait.
+        // Windows can report PermissionError for a temporarily inaccessible
+        // lock path as well as a persistent ACL failure. Keep the same bounded
+        // worker wait: recovered access can proceed, persistent denial still
+        // fails, and zero-wait GUI callers never wait.
         retryable=retryable||lock.error()==QLockFile::PermissionError;
 #endif
         if(!retryable||remaining<=0)return false;
