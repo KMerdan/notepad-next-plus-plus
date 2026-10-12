@@ -623,10 +623,12 @@ int main(int argc,char **argv) {
     if(!exitScenario.isEmpty())return runApplicationExitProbe(app,profilePath,exitScenario);
 #endif
     PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();
-    // Cocoa interprets positional process arguments as documents. Select live
-    // UI cases through the test harness, without sending them to LaunchServices.
     const auto selected=qEnvironmentVariable("NNP_TEST_APPLICATION_FUNCTIONS");
-    if(!selected.isEmpty())return QTest::qExec(&tests,QStringList{QString::fromLocal8Bit(argv[0])}+selected.split(',',Qt::SkipEmptyParts));
-    return QTest::qExec(&tests,argc,argv);
+    QStringList testArgs{QString::fromLocal8Bit(argv[0])};
+    if(!selected.isEmpty())testArgs+=selected.split(',',Qt::SkipEmptyParts);
+    else for(int i=1;i<argc;++i)testArgs.append(QString::fromLocal8Bit(argv[i]));
+    const auto log=qEnvironmentVariable("NNP_TEST_QT_LOG_FILE");
+    if(!log.isEmpty())testArgs<<"-o"<<"-,txt"<<"-o"<<log+",txt";
+    return QTest::qExec(&tests,testArgs);
 }
 #include "PluginApplicationTests.moc"
