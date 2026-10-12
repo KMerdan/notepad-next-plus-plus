@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-13",
+  "scope": "Native SDK phase A, three repository split, current macOS plugin manager and Marketplace consumer acceptance; no app signing/notarization/release.",
+  "validatedImplementationCommit": "83c0f8c4f2efb7bdf0d6b532d67e52c89c353735",
+  "sourceHashes": {
+    "src/dialogs/PluginReview.h": "1fe57d216743241ce9f97c2129316e504ac4f799aba32d78f5bf2244634fa372",
+    "src/dialogs/PluginManagerDialog.cpp": "f8a8b88f50b01ada6ecf30644750a9d9c5a1459c2f7e7564bd4d48f14c0878a7",
+    "src/plugins/runtime/PluginEngine.cpp": "fa23bebb8e917b45169676729f7d19ccb587f5f7cc44cf5bf9044cf564332b23",
+    "src/plugins/runtime/PluginSession.cpp": "170013b5639c5d909adae60bd04d60d620a9331b1c7d689fa152164478e4063e",
+    "src/plugins/webviews/WebviewService.cpp": "2fe83621018830adfc00c9f8f4f628daea1622db3dd4c889aa7b8b78cc4a287e",
+    "src/plugins/documents/DocumentBridge.cpp": "2dc5e2f9a022e630bd83b287cbf8696c30c7fc15af02ca90bb852173ef7c1e4f",
+    "tests/plugin-application/PluginApplicationTests.cpp": "622d015d39b0011457702cfab9ffd1e4ed69f1797c8e56b4025c5e547a2dbe9c"
+  },
+  "nativeApplication": {
+    "log": "native-sdk-final-live-acceptance.log",
+    "result": "5 passed, 0 failed, 0 skipped (3 cases plus init/cleanup)",
+    "cases": [
+      "nativeSdkSelectionAndCoreLifecycle",
+      "realGitHubMarkdownLifecycle",
+      "realGitHubMarketplaceLifecycle"
+    ],
+    "markdownUpdate": "0.1.3 -> 0.1.6",
+    "htmlUpdate": "0.1.0 -> 0.1.2",
+    "verified": [
+      "metadata registration without installation or execution",
+      "explicit package installation disabled by default",
+      "lazy enablement and native plugin commands",
+      "distinct Markdown icon",
+      "host window identity preserved",
+      "owned panel identity/geometry/content/scroll restored on update",
+      "HTML draft/counter state restored and service PID replaced",
+      "HTML update does not replace Markdown",
+      "source removal leaves installed package and data intact",
+      "installation/uninstallation cancellation",
+      "uninstall keeps data by default and returns catalog entry to Discover"
+    ]
+  },
+  "sdk": {
+    "repository": "KMerdan/notepadnext-plugin-sdk",
+    "mainCommit": "3beae5dfd87e98610a18cc909066b951d59be5e8",
+    "pinnedReleaseCommit": "2cc40cf6bbb81b97ec1b203b8c9acaf3b33a02b4",
+    "version": "0.2.1",
+    "ciRun": 38256715370,
+    "ciConclusion": "success",
+    "verifiedCICommands": [
+      "npm test",
+      "node tests/standalone.cjs \"$RUNNER_TEMP/sdk-standalone\""
+    ],
+    "standaloneScope": [
+      "actual npm-format SDK tarball installed outside SDK checkout",
+      "hello/markdown/html-service/text-tools generation, build and tests",
+      "Markdown local debug before and after edits",
+      "native text-tools local debug",
+      "package/ZIP checks and retained historical importer probe"
+    ]
+  },
+  "marketplace": {
+    "repository": "KMerdan/notepadnext-markdown-preview",
+    "commit": "3fe7987b3811e68d532314845a6f34f7d2e02d15",
+    "ciRun": 38249278606,
+    "ciConclusion": "success",
+    "plugins": {
+      "kmerdan.markdown-preview": "0.1.6",
+      "kmerdan.html-preview": "0.1.2"
+    }
+  },
+  "figma": {
+    "fileKey": "cJPphvdJ1ztsU0tzMFIBpD",
+    "lifecycleBoard": "65:12291",
+    "installView": "65:12411",
+    "updateView": "65:12444",
+    "createdPermissionRows": [
+      "74:12362",
+      "74:12363"
+    ],
+    "verified": "Existing editable text/components/token bindings preserved; new restoration permission labels; current catalog and package versions; screenshots inspected without clipping."
+  },
+  "applicationCI": {
+    "status": "pending latest pushed-head CI completion",
+    "requirements": [
+      "14 standard build variants per PR",
+      "12 host conformance profiles per PR"
+    ],
+    "consumerTestsRequiredInMainCI": false
+  }
+}

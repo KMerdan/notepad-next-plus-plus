@@ -2,7 +2,7 @@
 
 | Task | Authoritative entry |
 | --- | --- |
-| Check implemented native APIs and limits | [Native SDK status](NativeSDKStatus.zh-CN.md), [SDK native API](../../packages/plugin-sdk/docs/NativeAPI.zh-CN.md) |
+| Check implemented native APIs and limits | [Native SDK status](NativeSDKStatus.zh-CN.md), [latest acceptance evidence](evidence/NativeSDKFinalAcceptance.json), [SDK native API](../../packages/plugin-sdk/docs/NativeAPI.zh-CN.md) |
 | Design future extensions | [Native SDK architecture](NativeSDKDesign.zh-CN.md) |
 | Build the host | [Implementation](Implementation.zh-CN.md), [CI/runtime preparation](CrossPlatformCI.zh-CN.md) |
 | Register/install/update/uninstall previews | [Official Marketplace](OfficialMarketplace.zh-CN.md) |

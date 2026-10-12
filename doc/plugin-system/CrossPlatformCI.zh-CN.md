@@ -2,7 +2,7 @@
 
 用户已明确当前只做本机开发，不要求身份认证或发布。此工作流是开发质量检查入口；远端运行和发行事项不阻塞本机插件功能开发，也不使用 Developer ID 或 notarytool。
 
-[plugin-conformance.yml](../../.github/workflows/plugin-conformance.yml) 是应用仓库的插件验收入口。它在相关 PR、master 更新或手动触发时运行，保持只读仓库权限，不发布安装包、不签名或公证。原有基础编辑器发行工作流继续保留。
+[plugin-conformance.yml](../../.github/workflows/plugin-conformance.yml) 是应用仓库的插件验收入口。它在相关 PR、main／master 更新或手动触发时运行，保持只读仓库权限，不发布安装包，也不对主应用做正式签名或公证。macOS 打包契约测试只给临时 Mach-O fixture 做无证书的 ad-hoc 签名，不访问 Developer ID 或 notarytool 凭据。原有基础编辑器发行工作流继续保留。
 
 工作流定义 Qt 6.10.0 的 12 个组合：
 
