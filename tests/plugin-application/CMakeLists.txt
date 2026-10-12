@@ -27,9 +27,9 @@ target_compile_definitions(PluginApplicationTests PRIVATE ${app_definitions}
     PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
     PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_SOURCE_DIR}/examples/python-inspector"
     PLUGIN_TEST_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
-    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_SOURCE_DIR}/examples/vscode-hello-world"
-    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_SOURCE_DIR}/examples/vscode-webview"
-    PLUGIN_TEST_VSCODE_IMPORTER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/import-vscode.cjs"
+    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_SOURCE_DIR}/tests/fixtures/legacy-hello-world"
+    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_SOURCE_DIR}/tests/fixtures/legacy-webview"
+    PLUGIN_TEST_LEGACY_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_SCREENSHOT="${CMAKE_BINARY_DIR}/plugin-manager-installed.png")
 target_link_libraries(PluginApplicationTests PRIVATE ${app_libraries} Qt6::Test)
 get_target_property(app_link_dependencies NotepadNext LINK_DEPENDS)
@@ -76,7 +76,7 @@ if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_PLUGIN_WEBVIEWS AND NOTEPADNEXT_TEST_NODE
     set_tests_properties(PluginApplicationExitTests PROPERTIES RUN_SERIAL TRUE TIMEOUT 90)
 endif()
 if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_TEST_NODE)
-    set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginVSCodeSampleBuild;PluginVSCodeWebviewSampleBuild;PluginPythonSampleBuild")
+    set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginPythonSampleBuild")
 endif()
 
 set(NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE "" CACHE PATH "Prebuilt Markdown package for opt-in consumer performance measurements")

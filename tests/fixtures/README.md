@@ -9,6 +9,12 @@ restoration after reload, UI registration/installation/enabling/removal and
 shutdown. Service ownership, service restart, browser state and window geometry
 are also exercised by the inline fixtures in `PluginWebviewTests.cpp`.
 
+`legacy-hello-world` and `legacy-webview` are frozen executable probes for the
+existing experimental adapter. They retain their original Microsoft MIT
+licenses and import provenance. Their presence does not establish a VS Code
+compatibility goal. They require neither a TypeScript compiler nor the SDK
+importer during host tests.
+
 CI ownership:
 
 | Repository | Required checks |

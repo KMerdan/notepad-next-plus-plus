@@ -1,0 +1,70 @@
+{
+  "manifestVersion": 1,
+  "id": "vscode-samples.cat-coding",
+  "name": "cat-coding",
+  "description": "Cat Coding - A Webview API Sample",
+  "version": "0.0.1",
+  "list": false,
+  "engines": {
+    "notepadnext": ">=0.15.0 <0.16.0",
+    "api": "^0.1.0"
+  },
+  "runtime": {
+    "kind": "node",
+    "entry": "dist/out/extension.js"
+  },
+  "compatibility": {
+    "kind": "vscode",
+    "version": "0.1.0",
+    "api": "1.100.0",
+    "extensionRoot": "dist",
+    "commands": [
+      {
+        "id": "catCoding.start",
+        "target": "vscode-samples.cat-coding.command0"
+      },
+      {
+        "id": "catCoding.doRefactor",
+        "target": "vscode-samples.cat-coding.command1"
+      }
+    ]
+  },
+  "capabilities": {
+    "required": [
+      "commands@1",
+      "documents.read@1",
+      "documents.delta@1",
+      "messages@1",
+      "webviews@1",
+      "webviews.compat@1",
+      "webviews.restore@1"
+    ],
+    "optional": []
+  },
+  "activationEvents": [
+    "onCommand:vscode-samples.cat-coding.command0",
+    "onCommand:vscode-samples.cat-coding.command1"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "vscode-samples.cat-coding.command0",
+        "title": "Start cat coding session"
+      },
+      {
+        "id": "vscode-samples.cat-coding.command1",
+        "title": "Do some refactoring"
+      }
+    ],
+    "menus": [
+      {
+        "location": "plugins",
+        "command": "vscode-samples.cat-coding.command0"
+      },
+      {
+        "location": "plugins",
+        "command": "vscode-samples.cat-coding.command1"
+      }
+    ]
+  }
+}

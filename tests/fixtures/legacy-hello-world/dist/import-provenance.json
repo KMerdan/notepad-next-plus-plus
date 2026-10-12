@@ -1,0 +1,12 @@
+{
+  "compatVersion": "0.1.0",
+  "declarationBaseline": "1.100.0",
+  "originalManifestSha256": "a840a9953f45dc1339c5a3753693f376494c1919bbab14152dd451f027bae751",
+  "entrySha256": "2611fc4b76085e28415a65d0ecb2bae006cfd872c8599c90cd9d864c9a3c1e82",
+  "resourcePaths": [],
+  "capabilities": [
+    "messages@1"
+  ],
+  "builtCodeOnly": true,
+  "hooksExecuted": false
+}

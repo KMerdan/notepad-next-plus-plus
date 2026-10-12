@@ -1,0 +1,7 @@
+{
+  "name": "vscode-samples.cat-coding",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "license": "(MIT AND GPL-3.0-or-later)"
+}
