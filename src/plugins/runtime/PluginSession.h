@@ -28,6 +28,7 @@ public:
     void stop(const QString &reason="disable");
     void forceStop() {process->terminate();}
     QString state() const { return currentState; }
+    bool isTransportClosing() const { return process->isClosing(); }
     QString sessionId() const { return session; }
     PluginDiagnostics::Failure failureCategory() const {return failure;}
     int resourceCount() const;

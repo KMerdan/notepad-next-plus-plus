@@ -265,7 +265,7 @@ void PluginEngine::startVerified(const QString &id,const QString &command,const 
     });
     connect(session,&PluginSession::commandFinished,this,[this,id,session](const QString &,const QJsonValue &,const QJsonObject &failure){
         if(failure.isEmpty())return;
-        if(failure["code"].toInt()==1004&&(updating.contains(id)||hasPreservedPanels(id)||removing.contains(id)))return;
+        if(failure["code"].toInt()==1004&&(session->isTransportClosing()||updating.contains(id)||hasPreservedPanels(id)||removing.contains(id)))return;
         // Closed queued calls are consequences of the already reported
         // activation/process failure, or an intentional management stop.
         // Keep that primary classification and do not report a second fault.
