@@ -286,7 +286,7 @@ exports.activate=async ctx=>{
     void pythonInspectorExample() {
         if(QString(PLUGIN_TEST_PYTHON).isEmpty())QSKIP("An explicit Python interpreter was not configured for this build.");
         using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess pack;pack.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_PYTHON_EXAMPLE,temp.path()+"/release"});QVERIFY(pack.waitForFinished(10000));QVERIFY2(pack.exitCode()==0,pack.readAllStandardError().constData());
+        QTemporaryDir temp;QProcess pack;pack.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PYTHON_EXAMPLE,temp.path()+"/release"});QVERIFY(pack.waitForFinished(10000));QVERIFY2(pack.exitCode()==0,pack.readAllStandardError().constData());
         QFile metadata(QString(PLUGIN_TEST_PYTHON_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/python-inspector",{},&source,&error));const auto resource=source.resources[0];const auto id=resource.id;
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("Python sees unsaved 😀中\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
@@ -544,8 +544,8 @@ exports.activate=async ctx=>{
     }
     void lifecycleStress100Cycles() {
         using namespace PluginPackages;using namespace PluginSources;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_MARKDOWN,temp.path()+"/package"});QVERIFY(packer.waitForFinished(10000));QVERIFY(packer.exitCode()==0);
-        QFile metadata(QString(PLUGIN_TEST_MARKDOWN)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));SourceSnapshot source;QString error;QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/markdown-preview",{},&source,&error));
+        QTemporaryDir temp;QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PREVIEW,temp.path()+"/package"});QVERIFY(packer.waitForFinished(10000));QVERIFY(packer.exitCode()==0);
+        QFile metadata(QString(PLUGIN_TEST_PREVIEW)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));SourceSnapshot source;QString error;QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/tests/contract-preview",{},&source,&error));
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("# stress unsaved 😀");window.setCentralWidget(&editor);
         PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"markdown");documents.setActive(doc);
@@ -690,13 +690,13 @@ exports.activate=async ctx=>{
     void installedManagerLifecycle() {
         using namespace PluginPackages;using namespace PluginSources;using namespace PluginRuntime;
         QVERIFY(QFileInfo(PLUGIN_TEST_NODE).isExecutable());QTemporaryDir temp;
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_MARKDOWN,temp.path()+"/release"});
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PREVIEW,temp.path()+"/release"});
         QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         RegisteredResourceRegistry sources(temp.path()+"/sources.json");InstalledPluginRegistry installed(temp.path()+"/installed.json",temp.path()+"/store");QString error;
-        QVERIFY(sources.load(&error));QVERIFY(installed.load(&error));SourceSnapshot snapshot;QFile metadata(QString(PLUGIN_TEST_MARKDOWN)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));
-        QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/markdown-preview",{},&snapshot,&error));snapshot.commit=QString(40,'a');QVERIFY(sources.registerSource(snapshot,&error));
+        QVERIFY(sources.load(&error));QVERIFY(installed.load(&error));SourceSnapshot snapshot;QFile metadata(QString(PLUGIN_TEST_PREVIEW)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));
+        QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/tests/contract-preview",{},&snapshot,&error));snapshot.commit=QString(40,'a');QVERIFY(sources.registerSource(snapshot,&error));
         InstallationService installer(&installed,PluginEngine::packagePolicy());
-        QMainWindow window;window.resize(900,600);ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("# installed unsaved 😀中");window.setCentralWidget(&editor);
+        QMainWindow window;window.resize(900,600);ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("installed unsaved 😀中");window.setCentralWidget(&editor);
         PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"markdown");documents.setActive(doc);
         PluginEngine engine(&installed,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});auto *menu=window.menuBar()->addMenu("Plugins");engine.attachWindow(&window,menu);QSignalSpy errors(&engine,&PluginEngine::error);
         PluginManagerDialog manager(&sources,&window,nullptr,&installed,&installer,&engine);
@@ -896,16 +896,19 @@ exports.activate=async ctx=>{
         service->clear();QCOMPARE(service->resourceCount(),0);QCOMPARE(service->panelCount(),0);
     }
     void realMarkdownImagesAndDocumentStates() {
+        const auto consumer=qEnvironmentVariable("NNP_TEST_CONSUMER_MARKDOWN_PACKAGE");
+        if(consumer.isEmpty())QSKIP("Marketplace consumer acceptance is opt-in; provide an executable Markdown package.");
         QTemporaryDir root;QImage image(24,16,QImage::Format_RGB32);image.fill(Qt::red);QVERIFY(image.save(root.filePath(QStringLiteral("diagram中.png"))));
         QFile onDisk(root.filePath("unsaved.md"));QVERIFY(onDisk.open(QIODevice::WriteOnly));QVERIFY(onDisk.write("# saved disk content\n")>0);onDisk.close();
-        QFile metadata(QStringLiteral(PLUGIN_TEST_MARKDOWN "/notepadnext-plugin.json"));QVERIFY(metadata.open(QIODevice::ReadOnly));
+        QFile metadata(consumer+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));
         QMainWindow window;window.resize(1000,600);ScintillaEdit first,second;first.setCodePage(SC_CP_UTF8);second.setCodePage(SC_CP_UTF8);
         const QByteArray text="# unsaved rich preview 😀中\n\n## Section\n\n- one\n- two\n\n```text\ncode 😀中\n```\n\n![local](diagram%E4%B8%AD.png)\n\n![missing](absent.png)\n\n![remote](https://example.com/remote.png)\n\n<script>window.markdownInjected=true</script>\n";
         first.setText(text.constData());second.setText("# second unsaved buffer\n");
         PluginDocuments::DocumentBridge documents;const auto a=documents.attach(&first,QUrl::fromLocalFile(root.filePath("unsaved.md")),"markdown"),b=documents.attach(&second,QUrl(),"markdown");documents.setActive(a);
-        PluginRuntime::PluginSession session(QJsonDocument::fromJson(metadata.readAll()).object(),QStringLiteral(PLUGIN_TEST_MARKDOWN),QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
+        const auto manifest=QJsonDocument::fromJson(metadata.readAll()).object();
+        PluginRuntime::PluginSession session(manifest,consumer,QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
         QSignalSpy commands(&session,&PluginRuntime::PluginSession::commandFinished),stopped(&session,&PluginRuntime::PluginSession::stopped);
-        session.invoke("notepadnext.markdown-preview.open");QTRY_COMPARE_WITH_TIMEOUT(commands.size(),1,10000);QVERIFY(commands.last()[2].toJsonObject().isEmpty());
+        session.invoke(manifest["id"].toString()+".open");QTRY_COMPARE_WITH_TIMEOUT(commands.size(),1,10000);QVERIFY(commands.last()[2].toJsonObject().isEmpty());
         QPointer<WebviewService> service=session.webviews();QVERIFY(service);QCOMPARE(service->panelCount(),1);auto *view=window.findChild<QWebEngineView*>();QVERIFY(view);QPointer<QWebEnginePage> page=view->page();window.show();
         auto state=std::make_shared<QJsonObject>();
         const auto read=[page,state]{if(page)page->runJavaScript(R"JS((()=>{if(!document.body)return {};const image=document.querySelector('img');return {heading:document.querySelector('h1')?.textContent,subheading:document.querySelector('h2')?.textContent,items:document.querySelectorAll('li').length,code:document.querySelector('pre code')?.textContent,width:image?.naturalWidth,height:image?.naturalHeight,imageSource:image?.src,placeholders:Array.from(document.querySelectorAll('.image-error'),e=>e.textContent),body:document.body.innerText,error:document.querySelector('.preview-error')?.textContent,injected:window.markdownInjected===true};})())JS",[state](const QVariant &value){*state=QJsonObject::fromVariantMap(value.toMap());});};
@@ -930,14 +933,17 @@ exports.activate=async ctx=>{
         session.stop();QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000);QCOMPARE(session.resourceCount(),0);QVERIFY(!service);QTRY_VERIFY(!page);QTRY_VERIFY(window.findChildren<QDockWidget*>().isEmpty());QCOMPARE(first.textRange(0,first.length()),QByteArray("# obsolete document A\n"));QCOMPARE(second.textRange(0,second.length()),QByteArray("# recovered preview\n"));
     }
     void realMarkdownSession() {
-        QFile metadata(QStringLiteral(PLUGIN_TEST_MARKDOWN "/notepadnext-plugin.json")); QVERIFY(metadata.open(QIODevice::ReadOnly));
-        QVERIFY2(QFile::exists(QStringLiteral(PLUGIN_TEST_MARKDOWN "/dist/index.js")),"Build the Markdown example before running integration tests.");
+        const auto consumer=qEnvironmentVariable("NNP_TEST_CONSUMER_MARKDOWN_PACKAGE");
+        if(consumer.isEmpty())QSKIP("Marketplace consumer acceptance is opt-in; provide an executable Markdown package.");
+        QFile metadata(consumer+"/notepadnext-plugin.json"); QVERIFY(metadata.open(QIODevice::ReadOnly));
+        QVERIFY2(QFile::exists(consumer+"/dist/index.js"),"Provide the prebuilt Marketplace Markdown package.");
         QMainWindow window; window.resize(1000,600); ScintillaEdit editor; editor.setCodePage(SC_CP_UTF8); editor.setText("# unsaved preview\n\n- item\n"); window.setCentralWidget(&editor); window.show();
         PluginDocuments::DocumentBridge documents; const auto document=documents.attach(&editor,{},"markdown"); documents.setActive(document);
-        PluginRuntime::PluginSession session(QJsonDocument::fromJson(metadata.readAll()).object(),QStringLiteral(PLUGIN_TEST_MARKDOWN),QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
+        const auto manifest=QJsonDocument::fromJson(metadata.readAll()).object();
+        PluginRuntime::PluginSession session(manifest,consumer,QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
         connect(&session,&PluginRuntime::PluginSession::stderrOutput,this,[](const QByteArray &bytes) { qWarning().noquote()<<QString::fromUtf8(bytes); });
         QSignalSpy commands(&session,&PluginRuntime::PluginSession::commandFinished),stopped(&session,&PluginRuntime::PluginSession::stopped),failures(&session,&PluginRuntime::PluginSession::failed);
-        session.invoke("notepadnext.markdown-preview.open"); session.invoke("notepadnext.markdown-preview.open");
+        session.invoke(manifest["id"].toString()+".open"); session.invoke(manifest["id"].toString()+".open");
         QTRY_COMPARE_WITH_TIMEOUT(commands.size(),1,15000); QVERIFY2(failures.isEmpty(),qPrintable(failures.isEmpty() ? QString() : failures.first()[0].toString())); QVERIFY(commands[0][2].toJsonObject().isEmpty()); QCOMPARE(session.state(),QString("active"));
         auto *service=session.webviews(); QVERIFY(service); QCOMPARE(service->panelCount(),1); auto docks=window.findChildren<QDockWidget*>(); QCOMPARE(docks.size(),1);
         auto *view=docks.first()->findChild<QWebEngineView*>(); QVERIFY(view); auto *page=view->page();
@@ -946,7 +952,7 @@ exports.activate=async ctx=>{
         QTRY_VERIFY_WITH_TIMEOUT(([&]{readHeading();return heading=="unsaved preview";})(),10000);
         editor.setText("# changed buffer\n"); QTRY_VERIFY_WITH_TIMEOUT(([&]{readHeading();return heading=="changed buffer";})(),10000);
         // Closing reclaims the panel and watch, then the command recreates both.
-        docks.first()->close(); QTRY_COMPARE(service->panelCount(),0); const auto before=commands.size(); session.invoke("notepadnext.markdown-preview.open"); QTRY_COMPARE(commands.size(),before+1);
+        docks.first()->close(); QTRY_COMPARE(service->panelCount(),0); const auto before=commands.size(); session.invoke(manifest["id"].toString()+".open"); QTRY_COMPARE(commands.size(),before+1);
         QVERIFY2(commands.last()[2].toJsonObject().isEmpty(),qPrintable(QString::fromUtf8(QJsonDocument(commands.last()[2].toJsonObject()).toJson(QJsonDocument::Compact))));
         QCOMPARE(service->panelCount(),1);
         session.stop(); QCOMPARE(session.resourceCount(),0); QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000); QCOMPARE(session.state(),QString("stopped")); QVERIFY(failures.isEmpty());

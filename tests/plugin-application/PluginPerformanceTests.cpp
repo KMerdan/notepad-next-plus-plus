@@ -144,7 +144,7 @@ private slots:
         for(auto *widget:QApplication::topLevelWidgets())if((window=qobject_cast<MainWindow*>(widget)))break;QVERIFY(window);
         window->resize(1400,1000);window->show();window->raise();window->activateWindow();engine=app->getPluginEngine();QVERIFY(engine);
         QFile source(directory+"/benchmark.md");QVERIFY(source.open(QIODevice::WriteOnly));source.write("# initial\n");source.close();window->openFile(source.fileName());QTRY_VERIFY(window->currentEditor()->isFile());editor=window->currentEditor();
-        QProcess packer;packer.start(PERF_NODE,{PERF_PACKER,PERF_MARKDOWN,directory+"/packed"});QVERIFY(packer.waitForFinished(20000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        QProcess packer;packer.start(PERF_NODE,{PERF_STAGER,PERF_MARKDOWN,directory+"/packed"});QVERIFY(packer.waitForFinished(20000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         mach_timebase_info_data_t timebase{};mach_timebase_info(&timebase);
         report={{"scope","Release production Application/MainWindow services; 1/5/10 independent Markdown instances, differentiated only by manifest/command ID."},{"qtVersion",qVersion()},{"machTimebaseNumerator",int(timebase.numer)},{"machTimebaseDenominator",int(timebase.denom)},
             {"previewEndpoint","Input heading replacement to verified matching DOM after two requestAnimationFrame callbacks and native message reception; includes 150ms debounce."},{"cpuUnits","PROC_PIDTASKINFO Mach CPU ticks converted using mach_timebase_info; interval percent uses one core as 100%."},{"guiEndpoint","QApplication::notify dispatch wall duration plus direct heading edit duration; includes scheduling delays, not isolated added plugin CPU."}};
