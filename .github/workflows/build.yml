@@ -173,7 +173,7 @@ jobs:
 
       - name: Build Windows Targets
         if: matrix.platform == 'windows'
-        run: cmake --build build --target package zip installer --parallel
+        run: cmake --build build --target package-windows zip installer --parallel
 
       - name: Build MacOS Targets
         if: matrix.platform == 'mac'
