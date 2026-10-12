@@ -8,7 +8,7 @@
 
 本次核对了核心头文件、实现、现有插件桥及增量代码图。内部 C++ 的 public 方法不是对外插件 API：例如 `MainWindow::saveFile` 会切换编辑器并弹出 Save As，菜单 lambda 依赖 `currentEditor()`；它们需要增加明确目标、返回值和生命周期约束后才能开放。
 
-| 能力域 | 已有实现入口 | SDK 设计入口 | 当前状态 |
+| 能力域 | 已有实现入口 | SDK 设计入口 | 实施前基线 |
 | --- | --- | --- | --- |
 | 当前/打开文档、未保存正文、修改事件 | `DocumentBridge`、`EditorManager` | `documents.getActive/list/getInfo/getSnapshot/watch` | 当前正文/事件已开放；直接列表和丰富元数据待桥接 |
 | 文本编辑与撤销 | `DocumentBridge::applyEdits`、Scintilla undo action | `documents.applyEdits` | 版本检查与一组 edits 一个 undo 已开放；选区 guard 待新增 |
@@ -177,4 +177,4 @@ Active → 更新候选包 → 新 activation 恢复资源 → 成功切换 / �
 
 VS Code 实验性 importer/adapter 独立于核心 SDK，并非 schema/配置或运行时的必需依赖。SDK 的公开命名和 browser bridge 回归 Notepad Next ++ 自身。历史兼容实验保留在独立 experimental 区域；原生 SDK、主应用和 Marketplace 的版本固定与发布顺序见 [三仓边界](../../packages/plugin-sdk/docs/RepositoryLayout.zh-CN.md)。
 
-本次来源包括 [ScintillaNext](../../src/ScintillaNext.h)、[MainWindow](../../src/dialogs/MainWindow.h)、[Finder](../../src/Finder.h)、[DockedEditor](../../src/DockedEditor.h)、[DocumentBridge](../../src/plugins/documents/DocumentBridge.h)、[PluginEngine](../../src/plugins/runtime/PluginEngine.h) 和 [WebviewService](../../src/plugins/webviews/WebviewService.h)。这是当前工作树的设计盘点，非正式发布版本的能力保证。
+本次来源包括 [ScintillaNext](../../src/ScintillaNext.h)、[MainWindow](../../src/dialogs/MainWindow.h)、[Finder](../../src/Finder.h)、[DockedEditor](../../src/DockedEditor.h)、[DocumentBridge](../../src/plugins/documents/DocumentBridge.h)、[PluginEngine](../../src/plugins/runtime/PluginEngine.h) 和 [WebviewService](../../src/plugins/webviews/WebviewService.h)。这是实施前工作树的设计盘点，实际阶段 A、版本与验证由 NativeSDKStatus 和正式 SDK 类型定义记录。
