@@ -8,5 +8,6 @@
     "messages@1"
   ],
   "builtCodeOnly": true,
-  "hooksExecuted": false
+  "hooksExecuted": false,
+  "normalizedNewlines": true
 }
