@@ -9,6 +9,10 @@ on:
       - '*'
   pull_request:
 
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   QT_RELEASE_VER: 6.5
 
