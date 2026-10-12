@@ -16,6 +16,13 @@
 #include <QtEndian>
 #include <zlib.h>
 #include <cstring>
+#include <memory>
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 using namespace PluginPackages;
 namespace {
 struct Response {QByteArray bytes;int status=200;QUrl redirect;int delay=0;qint64 declaredLength=-1;};
@@ -95,6 +102,9 @@ private slots:
 void GitHubReleaseTests::localInstallationWaitsForMaintenance_data() {
     QTest::addColumn<int>("operation");QTest::newRow("release-lock-and-install")<<0;
     QTest::newRow("cancel-while-lock-held")<<1;QTest::newRow("bounded-lock-timeout")<<2;
+#ifdef Q_OS_WIN
+    QTest::newRow("release-delete-pending-lock")<<3;
+#endif
 }
 void GitHubReleaseTests::localInstallationWaitsForMaintenance() {
     QFETCH(int,operation);QTemporaryDir temp;const auto selected=resource();const auto input=temp.path()+"/input",store=temp.path()+"/store";
@@ -103,13 +113,32 @@ void GitHubReleaseTests::localInstallationWaitsForMaintenance() {
     QVERIFY(write("notepadnext-plugin.json",QJsonDocument(selected.metadata).toJson()));QVERIFY(write("dist/index.js","throw new Error('installation must not execute code');"));QVERIFY(write("LICENSE","test license"));
     QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",store);QVERIFY(index.load(&error));InstallationService installer(&index,PackagePolicy{});
     QSignalSpy finished(&installer,&InstallationService::finished);QLockFile maintenance(store+"/.store.lock");maintenance.setStaleLockTime(0);QVERIFY(maintenance.tryLock(0));
+    // Timer callbacks must not outlive this row when an assertion fails.
+    QTimer release;release.setSingleShot(true);
+#ifdef Q_OS_WIN
+    auto reader=std::shared_ptr<void>();
+    if(operation==3) {
+        const auto name=QDir::toNativeSeparators(store+"/.store.lock");
+        const auto handle=CreateFileW(reinterpret_cast<LPCWSTR>(name.utf16()),GENERIC_READ,
+            FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+        QVERIFY(handle!=INVALID_HANDLE_VALUE);
+        reader=std::shared_ptr<void>(handle,[](void *value){CloseHandle(value);});
+        maintenance.unlock();
+        // The old reader keeps deletion pending: the name is gone but cannot
+        // yet be reused. Exercise the real Qt classification on Windows.
+        QLockFile probe(store+"/.store.lock");probe.setStaleLockTime(0);
+        QVERIFY(!probe.tryLock(0));QCOMPARE(probe.error(),QLockFile::PermissionError);
+        connect(&release,&QTimer::timeout,this,[&]{reader.reset();});
+    } else
+#endif
+        connect(&release,&QTimer::timeout,this,[&]{maintenance.unlock();});
     int ticks=0;QTimer responsive;connect(&responsive,&QTimer::timeout,this,[&]{++ticks;});responsive.start(20);QElapsedTimer elapsed;elapsed.start();
     QVERIFY(installer.installDirectory(input,selected));QVERIFY(installer.isBusy());QCOMPARE(index.plugins().size(),0);
-    if(operation==0)QTimer::singleShot(180,this,[&]{maintenance.unlock();});
+    if(operation==0||operation==3)release.start(180);
     if(operation==1)QTimer::singleShot(40,&installer,&InstallationService::cancel);
     QTRY_COMPARE_WITH_TIMEOUT(finished.size(),1,2500);QVERIFY(!installer.isBusy());
     const auto message=finished[0][1].toString();
-    if(operation==0){QVERIFY2(message.isEmpty(),qPrintable(message));QCOMPARE(index.plugins().size(),1);QVERIFY(ticks>=3);}
+    if(operation==0||operation==3){QVERIFY2(message.isEmpty(),qPrintable(message));QCOMPARE(index.plugins().size(),1);QVERIFY(ticks>=3);}
     else {QCOMPARE(index.plugins().size(),0);QVERIFY(maintenance.isLocked());QVERIFY(!message.isEmpty());
         if(operation==1){QVERIFY(message.contains("cancelled",Qt::CaseInsensitive));QVERIFY(elapsed.elapsed()<500);}
         else {QVERIFY(message.contains("transaction"));QVERIFY(elapsed.elapsed()>=900);QVERIFY(elapsed.elapsed()<2500);QVERIFY(ticks>=3);}
