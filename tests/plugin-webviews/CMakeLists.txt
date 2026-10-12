@@ -24,13 +24,12 @@ target_compile_definitions(PluginWebviewTests PRIVATE
     PLUGIN_TEST_NODE="${NOTEPADNEXT_TEST_NODE}"
     PLUGIN_TEST_HOST="${CMAKE_CURRENT_SOURCE_DIR}/../../packages/plugin-host/host.cjs"
     PLUGIN_TEST_MIRROR="${CMAKE_CURRENT_SOURCE_DIR}/../../packages/plugin-host/vscode/documents.cjs"
-    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/vscode-hello-world"
-    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/vscode-webview"
-    PLUGIN_TEST_VSCODE_IMPORTER="${CMAKE_CURRENT_SOURCE_DIR}/../../packages/plugin-sdk/import-vscode.cjs"
+    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/fixtures/legacy-hello-world"
+    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/fixtures/legacy-webview"
+    PLUGIN_TEST_LEGACY_STAGER="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_PREVIEW="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/fixtures/contract-preview"
     PLUGIN_TEST_STAGER="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
     PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/python-inspector"
 )
 add_test(NAME PluginWebviewTests COMMAND PluginWebviewTests)
-set_tests_properties(PluginWebviewTests PROPERTIES DEPENDS "PluginVSCodeSampleBuild;PluginVSCodeWebviewSampleBuild")
