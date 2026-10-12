@@ -24,5 +24,16 @@ inline bool link(const QString &source,const QString &destination) {
     return QFile::link(source,destination);
 #endif
 }
+inline bool removeLink(const QString &name) {
+    if(!QFileInfo(name).isSymLink())return false;
+#ifdef Q_OS_WIN
+    const auto path=QDir::toNativeSeparators(QFileInfo(name).absoluteFilePath()).toStdWString();
+    const auto attributes=GetFileAttributesW(path.c_str());
+    if(attributes==INVALID_FILE_ATTRIBUTES||!(attributes&FILE_ATTRIBUTE_REPARSE_POINT))return false;
+    return attributes&FILE_ATTRIBUTE_DIRECTORY?RemoveDirectoryW(path.c_str()):DeleteFileW(path.c_str());
+#else
+    return QFile::remove(name);
+#endif
+}
 }
 #endif

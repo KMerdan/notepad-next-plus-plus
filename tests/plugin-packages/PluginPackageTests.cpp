@@ -137,7 +137,7 @@ void PluginPackageTests::collectionPreservesUnsafeAndCorruptStorage() {
     QLockFile storeLock(root+"/.store.lock");storeLock.setStaleLockTime(0);QVERIFY(storeLock.tryLock(0));QVERIFY(store.collect(path).deferred);storeLock.unlock();
     result=store.collect(path);QVERIFY2(result.error.isEmpty(),qPrintable(result.error));QCOMPARE(result.temporaryDirectories,4);QCOMPARE(result.packages,0);QCOMPARE(result.preserved.size(),3);
     QVERIFY(QFileInfo::exists(root+"/unknown/keep"));QVERIFY(QFileInfo::exists(root+'/'+QString(64,'f')+"/keep"));QVERIFY(QFileInfo::exists(t.path()+"/outside/keep"));QVERIFY(QFileInfo::exists(p.root));
-    QVERIFY(QFile::remove(p.root+"/unexpected-link"));QCOMPARE(store.collect(path).packages,1);
+    QVERIFY(PluginTest::removeLink(p.root+"/unexpected-link"));QCOMPARE(store.collect(path).packages,1);
 }
 void PluginPackageTests::collectionCrossProcessAndCrashRecovery() {
     QTemporaryDir t;const auto root=t.path()+"/store",path=t.path()+"/installed.json";PackageStore store(root);QString error;PreparedPackage p;
