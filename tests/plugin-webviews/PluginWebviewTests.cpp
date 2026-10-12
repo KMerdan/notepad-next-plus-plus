@@ -476,13 +476,25 @@ exports.activate=async ctx=>{
         QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy done(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error),operations(&engine,&PluginController::operationFinished);
         const PluginData::Store data(temp.path()+"/data",resource.repository);
-        const auto install=[&](int count){QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(done.size(),count,10000);QVERIFY(done.last()[1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");};
-        install(1);QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(1),5000);QVERIFY(data.access(id,"storage","activation").value.isNull());
-        engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(2),5000);
+        QList<QJsonObject> replies;QSet<QString> observedSessions;QObject commandObserver;
+        connect(&engine,&PluginController::statusChanged,&commandObserver,[&](const QString &){
+            for(auto *session:engine.findChildren<PluginSession*>()) {
+                if(observedSessions.contains(session->sessionId()))continue;
+                observedSessions.insert(session->sessionId());
+                connect(session,&PluginSession::commandFinished,&commandObserver,[&](const QString &command,const QJsonValue &,const QJsonObject &failure){if(command==id+".open")replies.append(failure);});
+            }
+        });
+        // A visible write can precede its command acknowledgement. Polling the
+        // file while another RPC write commits also blocks Windows replacement.
+        // Await the public command/lifecycle signals before inspecting storage.
+        const auto install=[&](int count){const auto before=replies.size();QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(done.size(),count,10000);QVERIFY(done.last()[1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.size(),before+1,10000);QVERIFY2(replies.last().isEmpty(),qPrintable(engine.pluginLog(id)));};
+        install(1);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(1));QVERIFY(data.access(id,"storage","activation").value.isNull());
+        const auto beforeReload=operations.size();engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(operations.size(),beforeReload+1,10000);QVERIFY2(operations.last()[1].toString().isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(engine.pluginState(id),QString("active"));
+        const auto beforeCommand=replies.size();engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.size(),beforeCommand+1,10000);QVERIFY2(replies.last().isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
         engine.uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
-        install(2);QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(3),5000);
+        install(2);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(3));
         engine.uninstall(id,false);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);QVERIFY(!QFileInfo::exists(data.filePath(id)));QVERIFY(data.access(id,"configuration","theme").value.isNull());
-        install(3);QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(1),5000);
+        install(3);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(1));
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY(errors.isEmpty());for(const auto &row:operations)QVERIFY(row[1].toString().isEmpty());
         documents.detach(doc);window.takeCentralWidget();
     }
