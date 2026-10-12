@@ -131,6 +131,11 @@ private slots:
 #ifdef NOTEPADNEXT_PLUGINS
         auto *engine=app->getPluginEngine();auto *documents=app->getPluginDocumentBridge();auto *installer=app->getPluginInstaller();
         const auto id=QStringLiteral("test.native-tools"),package=directory+"/native-package";QVERIFY(QDir().mkpath(package+"/dist"));
+        const auto cleanup=qScopeGuard([&]{
+            engine->uninstall(id,true);
+            QElapsedTimer deadline;deadline.start();
+            while((!app->getInstalledPluginRegistry()->plugin(id).id().isEmpty()||!engine->isIdle())&&deadline.elapsed()<5000)QTest::qWait(10);
+        });
         const auto write=[&](const QString &name,const QByteArray &bytes){QFile file(name);if(!file.open(QIODevice::WriteOnly))return false;return file.write(bytes)==bytes.size();};
         const auto ready=directory+"/native-ready",gate=directory+"/native-gate";
         const auto literal=[](const QString &value){return QJsonDocument(QJsonArray{value}).toJson(QJsonDocument::Compact).mid(1).chopped(1);};
@@ -165,9 +170,11 @@ private slots:
         QVERIFY(engine->setEnabled(id,true,&error));
         auto *first=window->currentEditor();first->setCodePage(SC_CP_UTF8);first->setText(QStringLiteral("ab😀中\r\ncd\r\n").toUtf8().constData());first->setMultipleSelection(true);first->setSelection(9,0);first->addSelection(13,11);first->emptyUndoBuffer();
         QJsonObject rpcFailure;const auto documentId=documents->idFor(first);documents->setActive(documentId);const auto nativeWindow=window->winId();
+        QSignalSpy commandErrors(engine,&PluginRuntime::PluginEngine::error);
         engine->invoke(id,"test.native-tools.upper");
         window->findChild<QAction*>("actionNew")->trigger();QTRY_VERIFY(window->currentEditor()!=first);auto *second=window->currentEditor();second->setText("keep me");
-        QTRY_VERIFY_WITH_TIMEOUT(QFileInfo::exists(ready),5000);
+        QTRY_VERIFY2_WITH_TIMEOUT(QFileInfo::exists(ready)||!commandErrors.isEmpty(),qPrintable(engine->pluginLog(id)),10000);
+        QVERIFY2(QFileInfo::exists(ready),qPrintable(engine->pluginLog(id)));
         auto *session=engine->findChild<PluginRuntime::PluginSession*>();QVERIFY(session);QSignalSpy finished(session,&PluginRuntime::PluginSession::commandFinished);
         QVERIFY(write(gate,"continue"));QTRY_VERIFY_WITH_TIMEOUT(!finished.isEmpty(),5000);QVERIFY2(finished.last()[2].toJsonObject().isEmpty(),qPrintable(finished.last()[2].toJsonObject()["message"].toString()));
         QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),QStringLiteral("AB😀中\r\nCD\r\n"));QCOMPARE(documents->snapshot(documents->idFor(second),&rpcFailure)["text"].toString(),"keep me");
