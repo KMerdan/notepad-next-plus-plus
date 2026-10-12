@@ -12,6 +12,7 @@
 #include <QTemporaryDir>
 #include <QLockFile>
 #include <QElapsedTimer>
+#include <QScopeGuard>
 #include <QTest>
 #include <QtEndian>
 #include <zlib.h>
@@ -22,6 +23,7 @@
 #define NOMINMAX
 #endif
 #include <windows.h>
+#include <aclapi.h>
 #endif
 using namespace PluginPackages;
 namespace {
@@ -117,7 +119,9 @@ void GitHubReleaseTests::localInstallationWaitsForMaintenance_data() {
     QTest::addColumn<int>("operation");QTest::newRow("release-lock-and-install")<<0;
     QTest::newRow("cancel-while-lock-held")<<1;QTest::newRow("bounded-lock-timeout")<<2;
 #ifdef Q_OS_WIN
-    QTest::newRow("release-delete-pending-lock")<<3;
+    QTest::newRow("recover-temporary-permission-error")<<3;
+    QTest::newRow("cancel-permission-retry")<<4;
+    QTest::newRow("bounded-permission-timeout")<<5;
 #endif
 }
 void GitHubReleaseTests::localInstallationWaitsForMaintenance() {
@@ -130,31 +134,53 @@ void GitHubReleaseTests::localInstallationWaitsForMaintenance() {
     // Timer callbacks must not outlive this row when an assertion fails.
     QTimer release;release.setSingleShot(true);
 #ifdef Q_OS_WIN
-    auto reader=std::shared_ptr<void>();
-    if(operation==3) {
-        const auto name=QDir::toNativeSeparators(store+"/.store.lock");
-        const auto handle=CreateFileW(reinterpret_cast<LPCWSTR>(name.utf16()),GENERIC_READ,
-            FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
-        QVERIFY(handle!=INVALID_HANDLE_VALUE);
-        reader=std::shared_ptr<void>(handle,[](void *value){CloseHandle(value);});
+    auto name=QDir::toNativeSeparators(store);
+    PSECURITY_DESCRIPTOR originalDescriptor=nullptr;PACL originalAcl=nullptr;
+    const auto freeDescriptor=qScopeGuard([&]{if(originalDescriptor)LocalFree(originalDescriptor);});
+    bool permissionsChanged=false;
+    const auto restorePermissions=[&]{
+        if(!permissionsChanged)return true;
+        const auto status=SetNamedSecurityInfoW(reinterpret_cast<LPWSTR>(name.data()),SE_FILE_OBJECT,
+            DACL_SECURITY_INFORMATION,nullptr,nullptr,originalAcl,nullptr);
+        if(status==ERROR_SUCCESS)permissionsChanged=false;
+        return status==ERROR_SUCCESS;
+    };
+    const auto restoreOnExit=qScopeGuard([&]{restorePermissions();});
+    if(operation>=3) {
         maintenance.unlock();
-        // The old reader keeps deletion pending: the name is gone but cannot
-        // yet be reused. Exercise the real Qt classification on Windows.
+        QCOMPARE(GetNamedSecurityInfoW(reinterpret_cast<LPWSTR>(name.data()),SE_FILE_OBJECT,
+            DACL_SECURITY_INFORMATION,nullptr,nullptr,&originalAcl,nullptr,&originalDescriptor),DWORD(ERROR_SUCCESS));
+        HANDLE token=nullptr;QVERIFY(OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&token));
+        const auto closeToken=qScopeGuard([&]{CloseHandle(token);});
+        DWORD size=0;GetTokenInformation(token,TokenUser,nullptr,0,&size);QVERIFY(size>0&&size<65536);
+        QByteArray principal(int(size),'\0');
+        QVERIFY(GetTokenInformation(token,TokenUser,principal.data(),size,&size));
+        EXPLICIT_ACCESSW denied{};denied.grfAccessPermissions=FILE_ADD_FILE|FILE_ADD_SUBDIRECTORY;
+        denied.grfAccessMode=DENY_ACCESS;denied.grfInheritance=NO_INHERITANCE;
+        denied.Trustee.TrusteeForm=TRUSTEE_IS_SID;denied.Trustee.TrusteeType=TRUSTEE_IS_USER;
+        denied.Trustee.ptstrName=static_cast<LPWSTR>(reinterpret_cast<TOKEN_USER*>(principal.data())->User.Sid);
+        PACL deniedAcl=nullptr;const auto freeAcl=qScopeGuard([&]{if(deniedAcl)LocalFree(deniedAcl);});
+        QCOMPARE(SetEntriesInAclW(1,&denied,originalAcl,&deniedAcl),DWORD(ERROR_SUCCESS));
+        QCOMPARE(SetNamedSecurityInfoW(reinterpret_cast<LPWSTR>(name.data()),SE_FILE_OBJECT,
+            DACL_SECURITY_INFORMATION,nullptr,nullptr,deniedAcl,nullptr),DWORD(ERROR_SUCCESS));
+        permissionsChanged=true;
+        // The namespace is free, but the real directory ACL denies creation.
+        // Prove the exact native Qt error before exercising the worker retry.
         QLockFile probe(store+"/.store.lock");probe.setStaleLockTime(0);
         QVERIFY(!probe.tryLock(0));QCOMPARE(probe.error(),QLockFile::PermissionError);
-        connect(&release,&QTimer::timeout,this,[&]{reader.reset();});
+        connect(&release,&QTimer::timeout,this,[&]{QVERIFY(restorePermissions());});
     } else
 #endif
         connect(&release,&QTimer::timeout,this,[&]{maintenance.unlock();});
     int ticks=0;QTimer responsive;connect(&responsive,&QTimer::timeout,this,[&]{++ticks;});responsive.start(20);QElapsedTimer elapsed;elapsed.start();
     QVERIFY(installer.installDirectory(input,selected));QVERIFY(installer.isBusy());QCOMPARE(index.plugins().size(),0);
     if(operation==0||operation==3)release.start(180);
-    if(operation==1)QTimer::singleShot(40,&installer,&InstallationService::cancel);
+    if(operation==1||operation==4)QTimer::singleShot(40,&installer,&InstallationService::cancel);
     QTRY_COMPARE_WITH_TIMEOUT(finished.size(),1,2500);QVERIFY(!installer.isBusy());
     const auto message=finished[0][1].toString();
     if(operation==0||operation==3){QVERIFY2(message.isEmpty(),qPrintable(message));QCOMPARE(index.plugins().size(),1);QVERIFY(ticks>=3);}
-    else {QCOMPARE(index.plugins().size(),0);QVERIFY(maintenance.isLocked());QVERIFY(!message.isEmpty());
-        if(operation==1){QVERIFY(message.contains("cancelled",Qt::CaseInsensitive));QVERIFY(elapsed.elapsed()<500);}
+    else {QCOMPARE(index.plugins().size(),0);QCOMPARE(maintenance.isLocked(),operation<3);QVERIFY(!message.isEmpty());
+        if(operation==1||operation==4){QVERIFY(message.contains("cancelled",Qt::CaseInsensitive));QVERIFY(elapsed.elapsed()<500);}
         else {QVERIFY(message.contains("transaction"));QVERIFY(elapsed.elapsed()>=900);QVERIFY(elapsed.elapsed()<2500);QVERIFY(ticks>=3);}
     }
     QCOMPARE(QDir(store).entryList({".stage-*"},QDir::Dirs|QDir::Hidden|QDir::NoDotAndDotDot).size(),0);
