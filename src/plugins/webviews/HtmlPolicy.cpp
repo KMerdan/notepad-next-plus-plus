@@ -52,7 +52,7 @@ bool HtmlPolicy::readImage(const QString &root, const QString &relative, QByteAr
     if(relative.isEmpty() || relative.size()>1024 || QDir::isAbsolutePath(relative) || relative.contains('\\') || relative.contains(':') || relative.contains(QChar::Null)) return reject("Image path must be relative.");
     for(const auto &part:relative.split('/')) if(part.isEmpty() || part=="." || part=="..") return reject("Image path contains traversal.");
     const auto base=QFileInfo(root).canonicalFilePath(), file=QFileInfo(QDir(root).filePath(relative)).canonicalFilePath();
-    const auto prefix=base.endsWith(QDir::separator()) ? base : base+QDir::separator();
+    const auto prefix=base.endsWith('/') ? base : base+'/';
     if(base.isEmpty() || file.isEmpty() || !file.startsWith(prefix) || !QFileInfo(file).isFile()) return reject("Image is missing or escapes its resource root.");
     QFile input(file); if(input.size()>8*1024*1024 || !input.open(QIODevice::ReadOnly)) return reject("Image cannot be read or exceeds 8 MiB.");
     const auto content=input.read(8*1024*1024+1); if(content.size()>8*1024*1024) return reject("Image exceeds 8 MiB.");

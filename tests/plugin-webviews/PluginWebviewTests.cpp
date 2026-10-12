@@ -1,3 +1,4 @@
+#include "../PluginTestFilesystem.h"
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "WebviewService.h"
 #include "HtmlPolicy.h"
@@ -138,7 +139,7 @@ private slots:
     void compatibleAssetBoundariesCrossPanelAndScriptPolicy() {
         if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
         QTemporaryDir temp;QDir().mkpath(temp.path()+"/dist/media");const auto write=[&](const QString &name,const QByteArray &data){QFile file(temp.path()+name);if(!file.open(QIODevice::WriteOnly)||file.write(data)!=data.size())qFatal("Cannot write compatible boundary fixture");};
-        write("/dist/media/own.js","window.ownRan=true;");write("/dist/media/foreign.js","window.foreignRan=true;");write("/dist/media/中文 space.js","window.unicodeRan=true;");write("/private.js","window.privateRan=true;");write("/dist/media/bad.js",QByteArray::fromHex("c080"));write("/dist/media/large.js",QByteArray(2*1024*1024+1,' '));QVERIFY(QFile::link(temp.path()+"/private.js",temp.path()+"/dist/media/escape.js"));
+        write("/dist/media/own.js","window.ownRan=true;");write("/dist/media/foreign.js","window.foreignRan=true;");write("/dist/media/中文 space.js","window.unicodeRan=true;");write("/private.js","window.privateRan=true;");write("/dist/media/bad.js",QByteArray::fromHex("c080"));write("/dist/media/large.js",QByteArray(2*1024*1024+1,' '));QVERIFY(PluginTest::link(temp.path()+"/private.js",temp.path()+"/dist/media/escape.js"));
         QMainWindow window;PluginDocuments::DocumentBridge documents;WebviewService service("tests.boundaries",temp.path(),&window,&documents);QJsonObject error;const auto a=QString(32,'a'),b=QString(32,'b'),c=QString(32,'c'),d=QString(32,'d');
         QVERIFY(!service.createCompatible(a,"first","First",true,{"dist/media"},&error).isEmpty());QVERIFY(!service.createCompatible(b,"second","Second",true,{"dist/media"},&error).isEmpty());QVERIFY(!service.createCompatible(c,"disabled","Disabled",false,{"dist/media"},&error).isEmpty());QVERIFY(!service.createCompatible(d,"noRoots","No roots",true,{},&error).isEmpty());
         const auto own=service.mapAsset(a,"dist/media/own.js",&error),foreign=service.mapAsset(b,"dist/media/foreign.js",&error),disabled=service.mapAsset(c,"dist/media/own.js",&error),unicode=service.mapAsset(a,"dist/media/中文 space.js",&error);QVERIFY(error.isEmpty());QVERIFY(unicode.endsWith("/%E4%B8%AD%E6%96%87%20space.js"));
@@ -743,7 +744,7 @@ exports.activate=async ctx=>{
     void imageContainment() {
         QTemporaryDir root,outside; QVERIFY(root.isValid()); QVERIFY(outside.isValid()); QImage image(10,10,QImage::Format_ARGB32); image.fill(Qt::green);
         QVERIFY(image.save(root.filePath("inside.png"))); QVERIFY(image.save(outside.filePath("outside.png")));
-        QVERIFY(QFile::link(outside.filePath("outside.png"),root.filePath("escape.png")));
+        QVERIFY(PluginTest::link(outside.filePath("outside.png"),root.filePath("escape.png")));
         QByteArray bytes,mime; QString error; QVERIFY(HtmlPolicy::readImage(root.path(),"inside.png",&bytes,&mime,&error)); QCOMPARE(mime,QByteArray("image/png"));
         for(const auto &path:{"../outside.png","/etc/passwd","escape.png","file:///tmp/x.png","sub\\x.png","missing.png"}) QVERIFY(!HtmlPolicy::readImage(root.path(),path,&bytes,&mime,&error));
         QFile fake(root.filePath("fake.png")); QVERIFY(fake.open(QIODevice::WriteOnly)); fake.write("<svg/>"); fake.close(); QVERIFY(!HtmlPolicy::readImage(root.path(),"fake.png",&bytes,&mime,&error));

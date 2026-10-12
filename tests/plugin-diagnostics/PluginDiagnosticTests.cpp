@@ -1,3 +1,4 @@
+#include "../PluginTestFilesystem.h"
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "PluginDiagnostics.h"
 #include <QDir>
@@ -28,8 +29,12 @@ private slots:
         QVERIFY(Store::format(result.events[1].toObject()).contains("nnp.commands.invoke (42 ms)"));
         result=store.append({record("different publisher",Failure::ProtocolFault,"https://github.com/other/diagnostics"),record("same publisher latest",Failure::ProcessCrash)});
         QVERIFY(result.error.isEmpty());QCOMPARE(result.failures.size(),2);QCOMPARE(result.failures.last().toObject()["message"].toString(),QString("same publisher latest"));
+#ifdef Q_OS_UNIX
+        // POSIX mode bits are meaningful here; Windows QFile permissions do
+        // not expose the DACL inherited from the user data directory.
         QVERIFY((QFileInfo(root+"/current.json").permissions()&QFile::ReadOther)==0);
         QVERIFY((QFileInfo(root+"/current.json").permissions()&QFile::WriteOther)==0);
+#endif
     }
     void rotationAndGlobalBudgets() {
         QTemporaryDir temp;Store store(temp.path());QByteArray message(7900,'"');Snapshot result;
@@ -63,9 +68,9 @@ private slots:
     void busyAndUnsafePathsDoNotOverwrite() {
         QTemporaryDir temp,outside;Store store(temp.path());QVERIFY(store.append({record()}).error.isEmpty());const auto original=bytes(temp.path()+"/current.json");
         QLockFile lock(temp.path()+"/store.lock");lock.setStaleLockTime(0);QVERIFY(lock.tryLock(0));QVERIFY(!store.append({record("busy")}).error.isEmpty());QCOMPARE(bytes(temp.path()+"/current.json"),original);lock.unlock();
-        QVERIFY(write(outside.path()+"/foreign.json","foreign"));QVERIFY(QFile::remove(temp.path()+"/current.json"));QVERIFY(QFile::link(outside.path()+"/foreign.json",temp.path()+"/current.json"));
+        QVERIFY(write(outside.path()+"/foreign.json","foreign"));QVERIFY(QFile::remove(temp.path()+"/current.json"));QVERIFY(PluginTest::link(outside.path()+"/foreign.json",temp.path()+"/current.json"));
         QVERIFY(!store.append({record()}).error.isEmpty());QCOMPARE(bytes(outside.path()+"/foreign.json"),QByteArray("foreign"));
-        const auto alias=outside.path()+"/alias";QVERIFY(QFile::link(temp.path(),alias));QVERIFY(!Store(alias).read().error.isEmpty());
+        const auto alias=outside.path()+"/alias";QVERIFY(PluginTest::link(temp.path(),alias));QVERIFY(!Store(alias).read().error.isEmpty());
     }
     void unicodeAndClosedEventContract() {
         const auto value=record(QString("😀中").repeated(3000).toUtf8());QVERIFY(Store::validEvent(value));const auto message=value["message"].toString();QVERIFY(message.endsWith("[truncated]"));QVERIFY(!message.contains(QChar(0xfffd)));

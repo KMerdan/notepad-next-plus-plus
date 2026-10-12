@@ -97,6 +97,7 @@ CollectionResult PackageStore::collect(const QString &index,const std::atomic_bo
             result.error="Cannot read a package lifetime lease. Collection has been skipped.";return result;
         }
         QJsonParseError error;const auto document=QJsonDocument::fromJson(metadata.read(1025),&error);const auto object=document.object();
+        metadata.close(); // Release the Windows handle before retiring its directory.
         ProcessIdentity process;
         if(error.error!=QJsonParseError::NoError||!document.isObject()||object.size()!=(object.contains("process")?3:2)||object["schemaVersion"]!=QJsonValue(1)
             ||!object["digest"].isString()||(!object["digest"].toString().isEmpty()&&!digest.match(object["digest"].toString()).hasMatch())) {

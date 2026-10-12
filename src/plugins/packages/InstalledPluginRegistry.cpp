@@ -161,6 +161,7 @@ bool InstalledPluginRegistry::commit(const QVector<InstalledPlugin> &candidate,Q
     if(current.exists()) {
         if(!current.open(QIODevice::ReadOnly)||current.size()>MaxIndexBytes) return reject(error,"Cannot check installed plugin storage.");
         currentDigest=hash(current.read(MaxIndexBytes+1));
+        current.close(); // Windows cannot atomically replace an open target.
     }
     if(currentDigest!=diskDigest) return reject(error,"Installed plugin storage changed in another process. Reload it before continuing.");
     QJsonArray items;QSet<QString> ids;
