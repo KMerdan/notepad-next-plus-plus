@@ -94,7 +94,7 @@ jobs:
           version: '6.10.0'
           host: ${{ matrix.qt-host }}
           arch: ${{ matrix.qt-arch }}
-          modules: ${{ matrix.profile == 'webviews' && 'qt5compat qtwebengine qtwebchannel qtserialport' || 'qt5compat' }}
+          modules: ${{ matrix.profile == 'webviews' && 'qt5compat qtwebengine qtwebchannel qtpositioning qtserialport' || 'qt5compat' }}
           setup-python: false
           cache: true
       - name: Linux display and WebEngine dependencies

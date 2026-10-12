@@ -9,6 +9,10 @@
 #include <sys/proc.h>
 #include <cerrno>
 #elif defined(Q_OS_WIN)
+// Keep Windows macros from shadowing std::numeric_limits::max.
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
 #endif
 namespace PluginPackages {
