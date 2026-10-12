@@ -1,0 +1,112 @@
+{
+  "recordedAt": "2026-10-12T10:31:58.688668+00:00",
+  "repository": "https://github.com/KMerdan/notepadnext-markdown-preview",
+  "marketplaceId": "kmerdan.official-plugins",
+  "catalogVersion": "0.1.1",
+  "initialCatalogRef": "marketplace/v0.1.0",
+  "initialCommit": "6802aabf62d5cc5b8698b751ecbb9f53582b6d8e",
+  "currentCommit": "2f0c47ce89d7a2f4388dbe2ab44fbca1e9139ec3",
+  "repositorySlugRetained": "Existing Markdown installations keep their trusted origin and origin-scoped data; README and GitHub description identify this fork’s first-party marketplace.",
+  "releases": [
+    {
+      "pluginId": "kmerdan.markdown-preview",
+      "version": "0.1.5",
+      "tag": "kmerdan.markdown-preview/v0.1.5",
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.markdown-preview/v0.1.5",
+      "archive": {
+        "name": "notepadnext-plugin.zip",
+        "size": 838702,
+        "sha256": "b5ec1f77ae9c891a28523772f8f744a7355da3e1a2f653eebb35e2cbcc00457d"
+      },
+      "verification": "CI asset downloaded; manifest identity, repository, list=false, entry, license, size and SHA-256 checked before publication"
+    },
+    {
+      "pluginId": "kmerdan.html-preview",
+      "version": "0.1.0",
+      "tag": "kmerdan.html-preview/v0.1.0",
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.html-preview/v0.1.0",
+      "archive": {
+        "name": "notepadnext-plugin.zip",
+        "size": 17310,
+        "sha256": "1402b4ad0436ffbfa004336ad509972482c041aae0ff700e9a8842f8ce7f7ba9"
+      },
+      "verification": "CI asset downloaded; manifest identity, repository, list=false, entry, license, size and SHA-256 checked before publication"
+    },
+    {
+      "pluginId": "kmerdan.html-preview",
+      "version": "0.1.1",
+      "tag": "kmerdan.html-preview/v0.1.1",
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.html-preview/v0.1.1",
+      "archive": {
+        "name": "notepadnext-plugin.zip",
+        "size": 17423,
+        "sha256": "80b85daa03a273cdb752681f8c37d403c67545d7d902e03475f2f46781101f98"
+      },
+      "verification": "CI asset downloaded; manifest identity, repository, list=false, entry, license, size and SHA-256 checked before publication"
+    }
+  ],
+  "remoteChecks": [
+    {
+      "run": 38235721392,
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/actions/runs/38235721392",
+      "result": "passed"
+    },
+    {
+      "run": 38235721722,
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/actions/runs/38235721722",
+      "result": "passed"
+    },
+    {
+      "run": 38235721734,
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/actions/runs/38235721734",
+      "result": "passed"
+    },
+    {
+      "run": 38235892477,
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/actions/runs/38235892477",
+      "result": "passed"
+    },
+    {
+      "run": 38235892653,
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/actions/runs/38235892653",
+      "result": "passed"
+    },
+    {
+      "run": 38236835790,
+      "url": "https://github.com/KMerdan/notepadnext-markdown-preview/actions/runs/38236835790",
+      "result": "passed"
+    }
+  ],
+  "localChecks": {
+    "nativeReleaseSuite": "PluginGitHubReleaseTests passed; namespaced ID isolation, cross-page legacy preference and existing download/install/checksum cases",
+    "sdkTests": {
+      "passed": 16,
+      "failed": 0
+    },
+    "standaloneSdk": {
+      "version": "0.1.2",
+      "sha256": "e975ba0b6cf56718b92e204a6eabcaea207d7d0f937a36cb86b81c0a9e42f89b",
+      "stepsPassed": 22
+    },
+    "macNativeApplication": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "actualLifecycles": [
+        "Legacy public Markdown 0.1.3 install, enable and update to 0.1.5 through the upgraded marketplace; existing dock and scroll retained.",
+        "One repository URL registers two resources without installing or activating them. Both namespaced releases install disabled and activate independently.",
+        "HTML 0.1.0 -> 0.1.1 downloads from GitHub. Dock identity, floating geometry, source draft, rendered preview, counter and scroll retained. New backend PID; Markdown digest and activation unchanged.",
+        "Uninstall both plugins through the manager; both remain discoverable and the native main window stays intact."
+      ]
+    },
+    "developmentBundle": "build/plugin-dev/NotepadNextPlusPlus.app executable matches the validated build"
+  },
+  "evidenceFiles": [
+    "marketplace-app.log",
+    "marketplace-release.log",
+    "marketplace-sdk-tests.log",
+    "MarketplaceSdkValidation.json"
+  ],
+  "screenshots": "build/plugin-marketplace-review/",
+  "scope": "macOS arm64 native UI and Linux GitHub release CI; no host application release, signing or notarization performed."
+}

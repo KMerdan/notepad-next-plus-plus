@@ -125,10 +125,14 @@ void GitHubReleaseService::finishReply() {
         const auto release=value.toObject();
         if(!release["draft"].isBool()||!release["prerelease"].isBool()||!release["tag_name"].isString()||!release["assets"].isArray()){fail(tr("Invalid release record fields."));return;}
         if(release["draft"].toBool()||release["prerelease"].toBool())continue;
-        auto tag=release["tag_name"].toString();auto version=tag;if(version.startsWith('v'))version.remove(0,1);SemVer semver;
+        const auto tag=release["tag_name"].toString();auto version=tag;
+        const auto prefix=resource.id+QStringLiteral("/v");
+        if(tag.startsWith(prefix))version=tag.mid(prefix.size());
+        else if(version.startsWith('v'))version.remove(0,1);
+        SemVer semver;
         // Catalog permissions/version remain the review authority; installing
         // a different release requires first refreshing that resource metadata.
-        if(tag.size()>128||!SemVer::parse(version,&semver)||!semver.prerelease.isEmpty()||version!=resource.metadata["version"].toString())continue;
+        if(tag.size()>258||!SemVer::parse(version,&semver)||!semver.prerelease.isEmpty()||version!=resource.metadata["version"].toString())continue;
         qint64 releaseId=0;if(!integer(release["id"],&releaseId)||release["assets"].toArray().size()>128){fail(tr("Invalid release ID or asset count."));return;}
         QJsonObject checksumAsset;bool duplicateChecksum=false;
         for(const auto &item:release["assets"].toArray())if(item.toObject()["name"]==ChecksumName){if(!checksumAsset.isEmpty())duplicateChecksum=true;checksumAsset=item.toObject();}
@@ -155,6 +159,12 @@ void GitHubReleaseService::finishReply() {
         if(page>=5){fail(tr("Release lookup reached its 500-release limit. Use a smaller release history or a catalog version in that history."));return;}
         request(listingUrl(resource.repository,++page));return;
     }
+    // Multiple plugins may publish the same version in one marketplace repo.
+    // Prefer this plugin's namespace; keep v<version> for existing single-plugin
+    // releases. Package validation still verifies the actual ID and metadata.
+    const auto namespacedTag=resource.id+QStringLiteral("/v")+resource.metadata["version"].toString();
+    if(std::any_of(assets.begin(),assets.end(),[&](const ReleaseAsset &asset){return asset.tag==namespacedTag;}))
+        assets.erase(std::remove_if(assets.begin(),assets.end(),[&](const ReleaseAsset &asset){return asset.tag!=namespacedTag;}),assets.end());
     std::stable_sort(assets.begin(),assets.end(),[](const ReleaseAsset &a,const ReleaseAsset &b){return a.publishedAt>b.publishedAt;});
     reset();listingReady=true;emit releasesFound(assets);
 }

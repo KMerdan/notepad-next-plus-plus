@@ -388,6 +388,7 @@ private slots:
         const auto repository=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_REPOSITORY");
         if(repository.isEmpty())QSKIP("Live GitHub validation is opt-in.");
         const QString id="kmerdan.markdown-preview";
+        const auto expectedVersion=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_VERSION", "0.1.4");
         auto *sources=app->getRegisteredResourceRegistry();auto *installed=app->getInstalledPluginRegistry();auto *engine=app->getPluginEngine();
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);
         auto *catalog=manager->findChild<QListWidget*>("discoverPlugins"),*local=manager->findChild<QListWidget*>("installedPlugins"),*sourceList=manager->findChild<QListWidget*>("registeredSources");auto *tabs=manager->findChild<QTabWidget*>("pluginManagerTabs");
@@ -429,7 +430,7 @@ private slots:
         const auto dataRepository=installed->plugin(id).package.repository;
         const auto verifyData=[&]{bool read=false;QString value;data->access(id,"storage","lifecycle",false,QJsonValue::Undefined,[&](const PluginData::Result &result){read=true;value=result.value.toString();},dataRepository);QTRY_VERIFY(read);QCOMPARE(value,QString("survives-update-and-uninstall"));};
         const auto digest=installed->plugin(id).package.digest;window->showPluginManager();
-        const auto before=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>before,35000);QTRY_VERIFY_WITH_TIMEOUT(([&]{for(const auto &source:sources->sources())if(source.repository==dataRepository&&source.ref.isEmpty())return true;return false;})(),35000);QVERIFY(select(local,id));tabs->setCurrentIndex(0);auto *update=manager->findChild<QPushButton*>("updatePlugin");QTRY_VERIFY(update->isEnabled());qInfo()<<"Updating Markdown:"<<update->text()<<engine->pluginState(id);update->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).package.metadata["version"].toString()=="0.1.4"&&!installed->plugin(id).updatePending,120000);QVERIFY(installed->plugin(id).enabled);QVERIFY(installed->plugin(id).package.digest!=digest);QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"lifecycle-installed-updated"));
+        const auto before=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>before,35000);QTRY_VERIFY_WITH_TIMEOUT(([&]{for(const auto &source:sources->sources())if(source.repository==dataRepository&&source.ref.isEmpty())return true;return false;})(),35000);QVERIFY(select(local,id));tabs->setCurrentIndex(0);auto *update=manager->findChild<QPushButton*>("updatePlugin");QTRY_VERIFY(update->isEnabled());qInfo()<<"Updating Markdown:"<<update->text()<<engine->pluginState(id);update->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).package.metadata["version"].toString()==expectedVersion&&!installed->plugin(id).updatePending,120000);QVERIFY(installed->plugin(id).enabled);QVERIFY(installed->plugin(id).package.digest!=digest);QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"lifecycle-installed-updated"));
         QVERIFY(previewDock);QVERIFY(previewDock->isFloating());QCOMPARE(previewDock->geometry(),previewGeometry);QVERIFY(!beforePage);QTRY_VERIFY_WITH_TIMEOUT(window->findChild<QWebEngineView*>(),10000);
         auto heading=std::make_shared<QString>();QPointer<QWebEnginePage> page=window->findChild<QWebEngineView*>()->page();QTRY_VERIFY_WITH_TIMEOUT(([&]{if(!page)return false;page->runJavaScript("document.querySelector('h1')?.textContent",[heading](const QVariant &v){*heading=v.toString();});return *heading==QStringLiteral("GitHub-installed unsaved 😀中");})(),10000);
         *browserState=-1;QTRY_VERIFY_WITH_TIMEOUT(([&]{page->runJavaScript("scrollY",[browserState](const QVariant &v){*browserState=v.toInt();});return *browserState==420;})(),10000);
@@ -444,7 +445,66 @@ private slots:
         const auto registrations=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>registrations,35000);tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);
         window->showPluginManager();cancelUninstall=true;manager->findChild<QPushButton*>("uninstallPlugin")->click();QVERIFY(!installed->plugin(id).id().isEmpty());QVERIFY(keptData);cancelUninstall=false;manager->findChild<QPushButton*>("uninstallPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),10000);QVERIFY(installed->plugin(id).id().isEmpty());QVERIFY(!window->findChild<QWebEngineView*>());QVERIFY(select(catalog,id));tabs->setCurrentIndex(1);QVERIFY(manager->findChild<QPushButton*>("installPlugin")->isVisible());verifyData();QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"lifecycle-discover-after-uninstall"));
         cancelInstall=true;const auto installs=dialogs.count("releaseInstallReview");manager->findChild<QPushButton*>("installPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("releaseInstallReview")>installs,35000);QVERIFY(installed->plugin(id).id().isEmpty());QCOMPARE(engine->sessionCount(),0);
-        qInfo()<<"UI lifecycle: repo registration, real v0.1.3 install, lazy enable, preview, real v0.1.4 update with automatic dock and scroll restoration, disable/re-enable, source removal with package preserved, independent update check, cancellation and uninstall passed";
+        qInfo()<<"UI lifecycle: repo registration, real v0.1.3 install, lazy enable, preview, current catalog update with automatic dock and scroll restoration, disable/re-enable, source removal with package preserved, independent update check, cancellation and uninstall passed";
+        editor->setText("");editor->setSavePoint();manager->close();
+#endif
+    }
+    void realGitHubMarketplaceLifecycle() {
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        const auto repository=qEnvironmentVariable("NNP_TEST_LIVE_MARKETPLACE_REPOSITORY");
+        if(repository.isEmpty())QSKIP("Live marketplace validation is opt-in.");
+        const QString md="kmerdan.markdown-preview",html="kmerdan.html-preview";
+        auto *sources=app->getRegisteredResourceRegistry();auto *installed=app->getInstalledPluginRegistry();auto *engine=app->getPluginEngine();
+        QString sourceError;for(const auto &source:sources->sources())QVERIFY(sources->removeSource(source.key(),&sourceError));
+        window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);
+        auto *catalog=manager->findChild<QListWidget*>("discoverPlugins"),*local=manager->findChild<QListWidget*>("installedPlugins");auto *tabs=manager->findChild<QTabWidget*>("pluginManagerTabs");
+        bool inside=false;QStringList dialogs;QTimer driver;
+        connect(&driver,&QTimer::timeout,manager,[&]{
+            if(inside)return;auto *dialog=qobject_cast<QDialog*>(QApplication::activeModalWidget());if(!dialog)return;
+            const auto name=dialog->objectName();
+            if(name!="registerSourceReview"&&name!="releaseInstallReview"&&name!="releaseUpdateReview"&&name!="uninstallPluginReview")return;
+            inside=true;const auto guard=qScopeGuard([&]{inside=false;});dialogs.append(name);saveDialogPreview(dialog,"marketplace-"+name);
+            dialog->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();
+        });driver.start(15);const auto guard=qScopeGuard([&]{driver.stop();});
+        const auto registerRepo=[&](QString ref){
+            QTimer::singleShot(0,manager,[&,ref]{auto *entry=qobject_cast<QDialog*>(QApplication::activeModalWidget());QVERIFY(entry);QCOMPARE(entry->objectName(),QString("registerSourceEntry"));entry->findChild<QLineEdit*>("repositoryInput")->setText(repository);entry->findChild<QLineEdit*>("sourceRefInput")->setText(ref);entry->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();});
+            manager->findChild<QPushButton*>("registerResources")->click();
+        };
+        const auto select=[&](QListWidget *list,const QString &id){for(int row=0;row<list->count();++row)if(list->item(row)->data(Qt::UserRole).toString()==id){list->setCurrentRow(row);return true;}return false;};
+        registerRepo("marketplace/v0.1.0");QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);
+        QTRY_COMPARE(catalog->count(),2);QCOMPARE(sources->sources().size(),1);QVERIFY(sources->sources()[0].isMarketplace());QCOMPARE(installed->plugins().size(),0);QCOMPARE(engine->sessionCount(),0);
+        QVERIFY(select(catalog,html));QVERIFY(saveDialogPreview(manager,"marketplace-discover-two-plugins"));
+        for(const auto &id:{md,html}){
+            tabs->setCurrentIndex(1);QVERIFY(select(catalog,id));manager->findChild<QPushButton*>("installPlugin")->click();
+            QTRY_VERIFY2_WITH_TIMEOUT(!installed->plugin(id).id().isEmpty(),qPrintable(engine->pluginLog(id)),120000);
+            QVERIFY(!installed->plugin(id).enabled);QCOMPARE(installed->plugin(id).package.repository,repository);
+            QCOMPARE(installed->plugin(id).origin["tag"].toString(),id+"/v"+installed->plugin(id).package.metadata["version"].toString());
+        }
+        QCOMPARE(installed->plugin(md).package.metadata["version"].toString(),QString("0.1.5"));QCOMPARE(installed->plugin(html).package.metadata["version"].toString(),QString("0.1.0"));QCOMPARE(engine->sessionCount(),0);
+        auto *editor=window->currentEditor();const auto nativeWindow=window->winId();
+        editor->setText("# Marketplace Markdown 😀中");app->setEditorLanguage(editor,"Markdown");
+        tabs->setCurrentIndex(0);QVERIFY(select(local,md));manager->findChild<QPushButton*>("togglePluginEnabled")->click();manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(md),QString("active"),15000);
+        QPointer<QDockWidget> mdDock;QTRY_VERIFY(([&]{for(auto *dock:window->findChildren<QDockWidget*>())if(dock->windowTitle()=="Markdown Preview")mdDock=dock;return !mdDock.isNull();})());
+        editor->setText("<h1>Marketplace HTML 😀中</h1><script>window.previewExecuted=42;</script>");app->setEditorLanguage(editor,"HTML");
+        window->showPluginManager();QVERIFY(select(local,html));manager->findChild<QPushButton*>("togglePluginEnabled")->click();manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(html),QString("active"),15000);
+        QPointer<QDockWidget> dock;QTRY_VERIFY(([&]{for(auto *candidate:window->findChildren<QDockWidget*>())if(candidate->windowTitle()=="HTML Preview")dock=candidate;return !dock.isNull();})());
+        dock->setFloating(true);dock->resize(700,680);dock->move(160,140);QTest::qWait(100);const auto geometry=dock->geometry();
+        const auto read=[&](const QString &script){auto value=std::make_shared<QVariant>();auto ready=std::make_shared<bool>(false);dock->findChild<QWebEngineView*>()->page()->runJavaScript(script,[value,ready](const QVariant &result){*value=result;*ready=true;});QElapsedTimer timer;timer.start();while(!*ready&&timer.elapsed()<5000)QTest::qWait(10);return *value;};
+        QTRY_VERIFY_WITH_TIMEOUT(read("document.getElementById('source')?.value.includes('Marketplace HTML')").toBool(),10000);QTRY_COMPARE(read("window.previewExecuted").toInt(),42);
+        QVERIFY(read("document.getElementById('counter').click();document.getElementById('counter').click();document.getElementById('source').value='<h2>Draft survives GitHub update</h2>'+('<p>Long preview paragraph</p>'.repeat(100));document.getElementById('source').dispatchEvent(new Event('input'));document.getElementById('run').click();fetch('api/document').then(r=>r.json()).then(v=>window.backendPid=v.pid);true").toBool());
+        QTRY_VERIFY(read("window.backendPid>0").toBool());const auto oldPid=read("window.backendPid").toInt();QTRY_COMPARE(read("scrollTo(0,350);scrollY").toInt(),350);
+        QVERIFY(saveDialogPreview(dock,"marketplace-html-before-update"));const auto mdDigest=installed->plugin(md).package.digest;
+        window->showPluginManager();const auto registrations=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>registrations,35000);QTRY_COMPARE(catalog->count(),2);
+        tabs->setCurrentIndex(0);QVERIFY(select(local,html));manager->findChild<QPushButton*>("updatePlugin")->click();
+        QTRY_VERIFY2_WITH_TIMEOUT(installed->plugin(html).package.metadata["version"]=="0.1.1"&&!installed->plugin(html).updatePending,qPrintable(engine->pluginLog(html)),120000);
+        QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(html),QString("active"),15000);QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);
+        QCOMPARE(read("document.getElementById('counter').textContent").toString(),QString("Counter: 2"));QCOMPARE(read("document.querySelector('#preview h2').textContent").toString(),QString("Draft survives GitHub update"));QTRY_COMPARE(read("scrollY").toInt(),350);
+        QVERIFY(read("fetch('api/document').then(r=>r.json()).then(v=>window.backendPid=v.pid);true").toBool());QTRY_VERIFY(read("window.backendPid>0").toBool());QVERIFY(read("window.backendPid").toInt()!=oldPid);
+        QCOMPARE(installed->plugin(md).package.digest,mdDigest);QCOMPARE(engine->pluginState(md),QString("active"));QVERIFY(mdDock);QVERIFY(saveDialogPreview(dock,"marketplace-html-after-update"));
+        QVERIFY(saveDialogPreview(manager,"marketplace-installed-two-plugins"));
+        for(const auto &id:{html,md}){window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("uninstallPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).id().isEmpty(),10000);}
+        QTRY_COMPARE(engine->sessionCount(),0);QVERIFY(!dock);QVERIFY(!mdDock);QCOMPARE(catalog->count(),2);QCOMPARE(window->winId(),nativeWindow);
+        qInfo()<<"Live marketplace: one URL, two plugins, namespaced installs, HTML 0.1.0 -> 0.1.1 hot update with dock/source/counter/scroll restored and new backend PID; Markdown unaffected; uninstall returns both to Discover";
         editor->setText("");editor->setSavePoint();manager->close();
 #endif
     }
@@ -563,6 +623,11 @@ int main(int argc,char **argv) {
 #ifdef PLUGIN_APPLICATION_EXIT_PROBE
     if(!exitScenario.isEmpty())return runApplicationExitProbe(app,profilePath,exitScenario);
 #endif
-    PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();return QTest::qExec(&tests,argc,argv);
+    PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();
+    // Cocoa interprets positional process arguments as documents. Select live
+    // UI cases through the test harness, without sending them to LaunchServices.
+    const auto selected=qEnvironmentVariable("NNP_TEST_APPLICATION_FUNCTIONS");
+    if(!selected.isEmpty())return QTest::qExec(&tests,QStringList{QString::fromLocal8Bit(argv[0])}+selected.split(',',Qt::SkipEmptyParts));
+    return QTest::qExec(&tests,argc,argv);
 }
 #include "PluginApplicationTests.moc"

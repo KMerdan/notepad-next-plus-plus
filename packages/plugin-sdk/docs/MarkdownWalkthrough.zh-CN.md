@@ -90,7 +90,7 @@ npm run package -- ../artifacts/markdown-preview-0.1.1
 npm run bundle -- ../artifacts/markdown-preview-0.1.1-zip v0.1.1
 ```
 
-结果为 `notepadnext-plugin.zip` 和 `notepadnext-plugin-checksums.json`。tag 必须匹配插件版本，包工具不会执行插件入口或安装 hooks。ZIP 可用于实际 GitHub Release 的插件分发；主仓库源码 ZIP 与 SDK tgz 都不是插件安装包。
+结果为 `notepadnext-plugin.zip` 和 `notepadnext-plugin-checksums.json`。tag 必须匹配插件版本：`v<version>` 或 `<plugin-id>/v<version>`，包工具不会执行插件入口或安装 hooks。ZIP 可用于实际 GitHub Release 的插件分发；主仓库源码 ZIP 与 SDK tgz 都不是插件安装包。
 
 | 文件 | 消费者 |
 | --- | --- |

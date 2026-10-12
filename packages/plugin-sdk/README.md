@@ -1,6 +1,6 @@
 # @notepadnext/plugin-sdk
 
-NotepadNext 插件开发包 **0.1.1**。包含 TypeScript API、插件模板、内存测试宿主、本地调试、metadata Schema 和打包工具。开发者使用 **Node 24**，无需在插件项目里编译 Qt/C++。宿主通过 `activate(context)` 注入运行时 API；SDK 根入口用于 `import type`，不需要插件自己实现 JSON-RPC。
+NotepadNext 插件开发包 **0.1.2**。包含 TypeScript API、插件模板、内存测试宿主、本地调试、metadata Schema 和打包工具。开发者使用 **Node 24**，无需在插件项目里编译 Qt/C++。宿主通过 `activate(context)` 注入运行时 API；SDK 根入口用于 `import type`，不需要插件自己实现 JSON-RPC。
 
 SDK 可打成独立 npm 格式的 `.tgz`，在主仓库之外使用。当前采用本地开发包分发。
 
@@ -9,7 +9,7 @@ SDK 可打成独立 npm 格式的 `.tgz`，在主仓库之外使用。当前采�
 将 SDK tgz 放到一个开发目录，解包并创建 Markdown 项目：
 
 ```sh
-tar -xzf notepadnext-plugin-sdk-0.1.1.tgz
+tar -xzf notepadnext-plugin-sdk-0.1.2.tgz
 node ./package/create.cjs ./markdown-demo --template markdown --id demo.markdown-preview --name "Markdown Preview Demo"
 cd markdown-demo
 npm install --ignore-scripts
@@ -30,7 +30,7 @@ npm run debug
 | `nnp-debug <项目> --input demo.md --output preview.html [--watch]` | 用模拟宿主执行编译后的 CommonJS 插件 |
 | `nnp-package <项目> <新输出目录>` | 从构建结果生成本地可安装目录 |
 | `nnp-archive <安装目录> <新 ZIP 文件>` | 生成安装器使用的 ZIP 格式 |
-| `nnp-release <项目> <新输出目录> [v0.1.0]` | 生成插件 ZIP 和 SHA-256 校验文件 |
+| `nnp-release <项目> <新输出目录> [v0.1.0 或 publisher.name/v0.1.0]` | 生成插件 ZIP 和 SHA-256 校验文件 |
 | `nnp-import-vscode` | 迁移已有适配范围内的 VS Code 插件；不表示完整兼容 |
 
 在生成项目里通过 npm scripts 使用这些工具，或用 `node tools/plugin-sdk/<工具>.cjs`。SDK `.tgz` 用于开发依赖；插件 `.zip` 用于分发；本地 Plugin Manager 当前选择 `nnp-package` 生成的目录。
@@ -58,8 +58,10 @@ npm test
 npm pack --ignore-scripts --pack-destination ../../build/plugin-sdk
 ```
 
-生成 `build/plugin-sdk/notepadnext-plugin-sdk-0.1.1.tgz`。`files` 白名单携带模板、Schema 和文档，排除仓库、测试、构建物及 node_modules。SDK 本身没有运行时 npm 依赖和安装 hooks。
+生成 `build/plugin-sdk/notepadnext-plugin-sdk-0.1.2.tgz`。`files` 白名单携带模板、Schema 和文档，排除仓库、测试、构建物及 node_modules。SDK 本身没有运行时 npm 依赖和安装 hooks。
 
 ### Visual identity
 
 Set `"displayIcon": "markdown"` for the host-owned Markdown mark, or `"displayIcon": "plugin"` for the generic plugin mark. This optional metadata field works in Discover before installation and activation. Existing SDK Markdown packages are recognized by their `markdown-preview.png` command marker for compatibility. Other package-relative PNG command icons are still validated before use.
+
+同一仓库分发多个插件，使用各自的 `<plugin-id>/v<version>` tag；SDK 0.1.2 的 release 工具支持该格式。见 [Marketplace 发布](docs/Marketplace.zh-CN.md)。

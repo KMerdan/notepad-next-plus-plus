@@ -77,6 +77,7 @@ class GitHubReleaseTests:public QObject {
 private slots:
     void initTestCase(){qRegisterMetaType<QVector<ReleaseAsset>>();qRegisterMetaType<PreparedPackage>();}
     void matchingAssetsAndNoInstallation();
+    void marketplaceReleaseIsolation();
     void paginationAndBudget();
     void downloadRedirectAndProvenance();
     void invalidDownload_data();
@@ -92,6 +93,19 @@ private slots:
     void localInstallationWaitsForMaintenance_data();
     void localInstallationWaitsForMaintenance();
 };
+void GitHubReleaseTests::marketplaceReleaseIsolation() {
+    FakeNetwork network;GitHubReleaseService service(nullptr,&network);
+    QSignalSpy found(&service,&GitHubReleaseService::releasesFound),failed(&service,&GitHubReleaseService::failed);
+    // Foreign plugin, legacy release, correct namespace and wrong version share
+    // one repo. A namespaced release on the next page must win over legacy.
+    QJsonArray page{release({asset()},"tests.other/v1.2.3",11),release()};
+    while(page.size()<100)page.append(release({},"v0.0.1",page.size()+20));
+    network.responses={{listing(page)},{listing({release({asset("own", "notepadnext-plugin.zip",30)},"tests.release/v1.2.3",12),release({asset()},"tests.release/v1.2.4",13)})}};
+    service.discover(resource());QTRY_COMPARE(found.size(),1);QVERIFY(failed.isEmpty());
+    QCOMPARE(offered(found).size(),1);QCOMPARE(offered(found)[0].tag,QString("tests.release/v1.2.3"));QCOMPARE(offered(found)[0].assetId,30);
+    network.responses={{listing({release({asset()},"tests.other/v1.2.3",11)})}};
+    service.discover(resource());QTRY_COMPARE(found.size(),2);QVERIFY(qvariant_cast<QVector<ReleaseAsset>>(found[1][0]).isEmpty());
+}
 void GitHubReleaseTests::localInstallationWaitsForMaintenance_data() {
     QTest::addColumn<int>("operation");QTest::newRow("release-lock-and-install")<<0;
     QTest::newRow("cancel-while-lock-held")<<1;QTest::newRow("bounded-lock-timeout")<<2;

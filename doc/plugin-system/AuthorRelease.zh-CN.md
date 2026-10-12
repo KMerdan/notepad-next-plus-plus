@@ -50,3 +50,7 @@ Qt 模拟网络测试覆盖优先 GitHub digest、作者校验重定向、插件
 实际公开仓库注册／下载、远程 CI 和干净系统部署仍在完整审计的未完成项中。不能用模拟请求或本地 ZIP 通过替代这些证明。
 
 已在独立临时目录复制上述仓库布局，并通过实际的 lockfile 生成、`npm ci --ignore-scripts`、TS build/test 和 release 工具；metadata 与生成的校验文件另经 Draft 2020-12 validator 检查。首次尝试 offline 安装时缓存只有包信息、缺少 tarball，随后按 lockfile integrity 下载完成。记录与锁文件见 `evidence/AuthorReleaseValidation.json`。这证明当前本机目录／依赖／工具路径可复现，远程 Linux runner 执行仍待验收。
+
+## 同仓库多个插件
+
+SDK 0.1.2 与本次宿主支持 `<plugin-id>/v<version>` 的独立 Release。根目录仍为统一 `list` metadata；两个插件可使用同一 repository URL，每个 Release 保持自己的 ZIP 和校验资产。旧单插件 tag 继续兼容。完整实现与实际公开仓库见 [官方 Marketplace](OfficialMarketplace.zh-CN.md)。
