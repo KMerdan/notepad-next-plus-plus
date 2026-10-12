@@ -17,7 +17,25 @@ inline void fact(PluginLifecycleDialog &dialog,const QString &name,const QString
 }
 inline void access(PluginLifecycleDialog &dialog,const QJsonObject &metadata) {
     auto *group=new QGroupBox(QObject::tr("Host access"),&dialog);auto *layout=new QVBoxLayout(group);
-    const QHash<QString,QString> labels{{"documents.read",QObject::tr("Read open documents")},{"documents.events",QObject::tr("Follow document changes")},{"documents.write",QObject::tr("Edit documents")},{"commands",QObject::tr("Add plugin commands")},{"webviews",QObject::tr("Open preview panels")},{"storage",QObject::tr("Store plugin data")},{"configuration",QObject::tr("Save plugin settings")}};
+    const QHash<QString,QString> labels{
+        {"documents.read",QObject::tr("Read open documents")},
+        {"documents.events",QObject::tr("Follow document changes")},
+        {"documents.delta",QObject::tr("Read document changes")},
+        {"documents.write",QObject::tr("Edit documents")},
+        {"editors.selection.read",QObject::tr("Read editor selections")},
+        {"editors.selection.write",QObject::tr("Change editor selections")},
+        {"editors.view.write",QObject::tr("Change the editor view")},
+        {"core.commands",QObject::tr("Run editor commands")},
+        {"commands",QObject::tr("Add plugin commands")},
+        {"messages",QObject::tr("Show messages")},
+        {"webviews",QObject::tr("Open preview panels")},
+        {"webviews.restore",QObject::tr("Restore open panels after updates")},
+        {"webviews.service",QObject::tr("Display local HTML/JavaScript services")},
+        {"webviews.compat",QObject::tr("Display full HTML pages")},
+        {"webviews.html",QObject::tr("Display plugin HTML pages")},
+        {"storage",QObject::tr("Store plugin data")},
+        {"configuration",QObject::tr("Save plugin settings")}
+    };
     for(const auto &v:metadata["capabilities"].toObject()["required"].toArray()){
         const auto key=v.toString().section('@',0,0);auto *label=new QLabel(labels.value(key,key),group);label->setTextFormat(Qt::PlainText);label->setWordWrap(true);layout->addWidget(label);
     }
