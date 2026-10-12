@@ -10,6 +10,7 @@ async function fixture(t,code,guarded=false,caps=initialize.grantedCapabilities)
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'nnp-python-host-'));
   await fs.writeFile(path.join(root,'notepadnext-plugin.json'),JSON.stringify({manifestVersion:1,id:'tests.python',version:'0.1.0',list:false,runtime:{kind:'python',entry:'plugin.py'},capabilities:{required:caps,optional:[]},contributes:{commands:[{id:'tests.python.read',title:'Read'}]}}));
   await fs.writeFile(path.join(root,'plugin.py'),code);
+  guarded=guarded&&process.platform!=='win32'; // Windows lifetime supervision uses a native job, not POSIX FD 3.
   const env={...process.env};delete env.NNP_PARENT_WATCH_FD;delete env.NNP_PARENT_WATCH_GROUP;
   if(guarded){env.NNP_PARENT_WATCH_FD='3';env.NNP_PARENT_WATCH_GROUP='0';}
   const child=spawn(process.execPath,[path.resolve(__dirname,'../../packages/plugin-host/python-host.cjs'),root,process.env.NNP_TEST_PYTHON],{env,stdio:guarded?['pipe','pipe','pipe','pipe']:['pipe','pipe','pipe']});

@@ -74,7 +74,12 @@ QString DocumentBridge::attach(ScintillaEdit *editor, const QUrl &uri, const QSt
         if (buffers[id].applying) buffers[id].metadataPending=true;
         else emitEvent("metadataChanged", info(id));
     }));
-    buffers[id].connections.append(connect(editor, &QObject::destroyed, this, [this, id] { detach(id); }));
+    buffers[id].connections.append(connect(editor, &QObject::destroyed, this, [this, id] {
+        // QWidget destruction can emit before QPointer is cleared; its
+        // Scintilla backend is already gone. Never query it from this signal.
+        if(buffers.contains(id))buffers[id].editor.clear();
+        detach(id);
+    }));
     emitEvent("opened", info(id)); return id;
 }
 QString DocumentBridge::idFor(ScintillaEdit *editor) const {
@@ -83,8 +88,10 @@ QString DocumentBridge::idFor(ScintillaEdit *editor) const {
 }
 QJsonObject DocumentBridge::info(const QString &id) const {
     const auto it = buffers.constFind(id); if (it == buffers.cend()) return {};
-    return {{"documentId", id}, {"uri", it->uri.toString(QUrl::FullyEncoded)}, {"languageId", it->language}, {"version", it->version},
+    if(!it->editor && !it->lastInfo.isEmpty())return it->lastInfo;
+    const QJsonObject result{{"documentId", id}, {"uri", it->uri.toString(QUrl::FullyEncoded)}, {"languageId", it->language}, {"version", it->version},
         {"isDirty", it->editor && it->editor->modify()}, {"isReadonly", !it->editor || it->editor->readOnly()}};
+    it->lastInfo=result;return result;
 }
 QJsonValue DocumentBridge::active() const { return buffers.contains(activeId) && buffers[activeId].editor ? QJsonValue(info(activeId)) : QJsonValue(QJsonValue::Null); }
 QFont DocumentBridge::activeEditorFont() const {
