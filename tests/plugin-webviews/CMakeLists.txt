@@ -27,8 +27,8 @@ target_compile_definitions(PluginWebviewTests PRIVATE
     PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/vscode-hello-world"
     PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/vscode-webview"
     PLUGIN_TEST_VSCODE_IMPORTER="${CMAKE_CURRENT_SOURCE_DIR}/../../packages/plugin-sdk/import-vscode.cjs"
-    PLUGIN_TEST_MARKDOWN="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/markdown-preview"
-    PLUGIN_TEST_PACKER="${CMAKE_CURRENT_SOURCE_DIR}/../../packages/plugin-sdk/pack.cjs"
+    PLUGIN_TEST_PREVIEW="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/fixtures/contract-preview"
+    PLUGIN_TEST_STAGER="${CMAKE_CURRENT_SOURCE_DIR}/../../tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
     PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/python-inspector"
 )
