@@ -128,7 +128,7 @@ public:
         process->start();
     }
     void call(const QString &id, const QString &method, const QJsonValue &params, int timeout) {
-        if (!endpoint || stopping || process->state() != QProcess::Running) { emit responseReceived(id, {}, rpcError(1004, QStringLiteral("Plugin is stopping or unavailable."))); return; }
+        if (!endpoint || stopping || process->state() != QProcess::Running) { emit connectionClosing(); emit responseReceived(id, {}, rpcError(1004, QStringLiteral("Plugin is stopping or unavailable."))); return; }
         if (process->bytesToWrite() >= HighWater && method != QStringLiteral("nnp.shutdown") && method != QStringLiteral("nnp.plugin.deactivate")) {
             emit responseReceived(id, {}, rpcError(1007, QStringLiteral("RPC send queue is overloaded."))); return;
         }
