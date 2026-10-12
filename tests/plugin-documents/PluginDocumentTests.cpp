@@ -88,6 +88,17 @@ private slots:
         QCOMPARE(bridge.snapshot(id,&error)["text"].toString(),QStringLiteral("B😀中\r\n中文")); QVERIFY(editor.canUndo()); editor.undo();
         QCOMPARE(bridge.snapshot(id,&error)["text"].toString(),original); QVERIFY(!editor.canUndo());
     }
+    void destroyingAttachedEditorUsesLastMetadata() {
+        DocumentBridge bridge;auto *editor=new ScintillaEdit;editor->setText("unsaved");
+        const auto id=bridge.attach(editor,{},"text");bridge.setActive(id);
+        const auto before=bridge.info(id);QSignalSpy events(&bridge,&DocumentBridge::event);
+        bool invalidated=false;
+        connect(&bridge,&DocumentBridge::event,&bridge,[&](const auto &type,const auto &,qint64){
+            if(type=="closed"){QJsonObject error;bridge.snapshot(id,&error);invalidated=error["code"].toInt()==1002;}
+        });
+        delete editor;QVERIFY(invalidated);QVERIFY(bridge.active().isNull());
+        QCOMPARE(events[0][0].toString(),QString("closed"));QCOMPARE(events[0][1].toJsonValue().toObject(),before);
+    }
     void sequenceAndSwitching() {
         DocumentBridge bridge; ScintillaEdit a,b; QSignalSpy events(&bridge,&DocumentBridge::event);
         const auto first=bridge.attach(&a,{},"text"), second=bridge.attach(&b,{},"markdown"); bridge.setActive(first); a.setText("changed"); bridge.setActive(second); bridge.detach(first);

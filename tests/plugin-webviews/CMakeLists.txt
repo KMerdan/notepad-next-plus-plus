@@ -32,4 +32,4 @@ target_compile_definitions(PluginWebviewTests PRIVATE
     PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
     PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_CURRENT_SOURCE_DIR}/../../examples/python-inspector"
 )
-add_test(NAME PluginWebviewTests COMMAND PluginWebviewTests)
+add_test(NAME PluginWebviewTests COMMAND PluginWebviewTests -o -,txt -o "${CMAKE_BINARY_DIR}/PluginWebviewTests.qt.txt,txt")

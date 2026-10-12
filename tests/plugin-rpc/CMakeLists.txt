@@ -22,7 +22,7 @@ target_compile_definitions(PluginRpcTests PRIVATE
     RPC_FIXTURES_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
     RPC_TEST_NODE="${NOTEPADNEXT_TEST_NODE}"
 )
-add_test(NAME PluginRpcTests COMMAND PluginRpcTests)
+add_test(NAME PluginRpcTests COMMAND PluginRpcTests -o -,txt -o "${CMAKE_BINARY_DIR}/PluginRpcTests.qt.txt,txt")
 if(NOTEPADNEXT_TEST_NODE)
     add_test(NAME PluginNodeRpcTests COMMAND "${NOTEPADNEXT_TEST_NODE}" --test "${CMAKE_CURRENT_SOURCE_DIR}/rpc.test.cjs")
     add_test(NAME PluginNodeHostTests COMMAND "${NOTEPADNEXT_TEST_NODE}" --test "${CMAKE_CURRENT_SOURCE_DIR}/host.test.cjs")

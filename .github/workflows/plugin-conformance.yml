@@ -146,6 +146,21 @@ jobs:
           else
             ctest --test-dir build-plugin-ci --output-on-failure --output-junit plugin-tests.xml --parallel 1 --timeout 600
           fi
+      - name: Native test diagnostics
+        if: always()
+        run: |
+          python - <<'PYLOG'
+          from pathlib import Path
+          for file in sorted(Path('build-plugin-ci').glob('*.qt.txt')):
+              lines = file.read_text(encoding='utf-8', errors='replace').splitlines()
+              failures = [i for i, line in enumerate(lines) if line.startswith(('FAIL!', 'QFATAL'))]
+              if failures:
+                  print(file.name)
+                  indexes = set()
+                  for i in failures:
+                      indexes.update(range(max(0, i-1), min(len(lines), i+7)))
+                  print('\n'.join(lines[i] for i in sorted(indexes)))
+          PYLOG
       - name: Preserve evidence
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
@@ -158,4 +173,5 @@ jobs:
             build-plugin-ci/plugin-tests.xml
             build-plugin-ci/application-exit-results.json
             build-plugin-ci/CMakeCache.txt
+            build-plugin-ci/*.qt.txt
             ci-runtime/runtime.json

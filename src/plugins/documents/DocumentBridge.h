@@ -42,7 +42,7 @@ signals:
     void deltaEvent(const QJsonObject &event, qint64 eventSeq);
 private:
     struct PendingDelta {QJsonObject range;sptr_t position=-1,length=0; qint64 offset=0,units=0;};
-    struct Buffer { QPointer<ScintillaEdit> editor; QUrl uri; QString language; qint64 version = 1; bool applying = false; QList<QMetaObject::Connection> connections;PendingDelta pending; bool metadataPending=false; };
+    struct Buffer { QPointer<ScintillaEdit> editor; QUrl uri; QString language; qint64 version = 1; bool applying = false; QList<QMetaObject::Connection> connections;PendingDelta pending; bool metadataPending=false; mutable QJsonObject lastInfo; };
     void emitEvent(const QString &type, const QJsonValue &document);
     void emitDelta(const QJsonObject &event);
     bool deltaPosition(ScintillaEdit *editor,sptr_t byte,QJsonObject *position) const;
