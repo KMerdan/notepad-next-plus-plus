@@ -33,7 +33,11 @@ class BundleTests(unittest.TestCase):
         shutil.copyfile(contents/'Frameworks/libfixture.dylib',contents/'PlugIns/platforms/libqcocoa.dylib')
         (contents/'Info.plist').write_bytes(plistlib.dumps({'CFBundleExecutable':'Fixture','CFBundleIdentifier':'org.notepadnext.bundle-fixture','CFBundlePackageType':'APPL','CFBundleVersion':'1.0','CFBundleShortVersionString':'1.0','LSMinimumSystemVersion':'13.5'}))
         (contents/'Resources/qt.conf').write_text('[Paths]\nPlugins=PlugIns\n')
-        for binary in verifier.machos(cls.base):cls.run_command(['/usr/bin/codesign','--force','--sign','-','--options','runtime',str(binary)])
+        # Signing the main executable also seals the app. Seal nested code first;
+        # Intel linkers do not provide the initial ad-hoc seals present on arm64.
+        for binary in verifier.machos(cls.base):
+            if binary!=contents/'MacOS/Fixture':
+                cls.run_command(['/usr/bin/codesign','--force','--sign','-','--options','runtime',str(binary)])
         profile=cls.root/'development.entitlements';profile.write_bytes(plistlib.dumps({'com.apple.security.cs.disable-library-validation':True}))
         cls.run_command(['/usr/bin/codesign','--force','--sign','-','--options','runtime','--entitlements',str(profile),str(cls.base)])
     @classmethod
