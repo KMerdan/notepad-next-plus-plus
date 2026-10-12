@@ -1,5 +1,5 @@
-file(MAKE_DIRECTORY "${PACKAGE_DIR}")
 set(PACKAGE_DIR "${CMAKE_BINARY_DIR}/package")
+file(MAKE_DIRECTORY "${PACKAGE_DIR}")
 
 # Determine configuration for multi- or single-config generators
 if(CMAKE_CONFIGURATION_TYPES) # multi-config generator (VS, Xcode)
@@ -46,8 +46,8 @@ if(TARGET_ARCH STREQUAL "x64")
 	)
 endif()
 
-# Define the package target
-add_custom_target(package
+# CPack (including the bundled zlib's configuration) reserves "package".
+add_custom_target(package-windows
 	COMMENT "Packaging NotepadNext for distribution"
 	VERBATIM
 
@@ -70,7 +70,7 @@ add_custom_target(package
 
 set(ZIP_FILE "${CMAKE_BINARY_DIR}/NotepadNextPlusPlus-v${PROJECT_VERSION}.zip")
 add_custom_target(zip
-	DEPENDS package
+	DEPENDS package-windows
 	COMMENT "Creating zip archive of NotepadNext package"
 	VERBATIM
 	COMMAND 7z a -tzip
@@ -82,7 +82,7 @@ add_custom_target(zip
 
 set(NSIS_SCRIPT "${CMAKE_SOURCE_DIR}/installer/installer.nsi")
 add_custom_target(installer
-	DEPENDS package
+	DEPENDS package-windows
 	COMMENT "Building NSIS installer for NotepadNext"
 	VERBATIM
 	COMMAND makensis /V4 "${NSIS_SCRIPT}"
