@@ -45,7 +45,7 @@ bool PackageStore::isSafeRelativePath(const QString &name) {
 namespace {
 bool unnamedStreamOnly(const QString &path) {
 #ifdef Q_OS_WIN
-    WIN32_FIND_STREAM_DATA stream{};const auto name=path.toStdWString();
+    WIN32_FIND_STREAM_DATA stream{};const auto name=QDir::toNativeSeparators(path).toStdWString();
     const auto handle=FindFirstStreamW(name.c_str(),FindStreamInfoStandard,&stream,0);
     if(handle==INVALID_HANDLE_VALUE){const auto error=GetLastError();return error==ERROR_HANDLE_EOF||error==ERROR_INVALID_PARAMETER;}
     bool safe=true;
