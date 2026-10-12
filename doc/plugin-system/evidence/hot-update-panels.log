@@ -1,0 +1,14 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+PASS   : PluginWebviewTests::initTestCase()
+[29996:259:1012/185008.474455:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[29996:259:1012/185008.474765:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-12 18:50:08.506 PluginWebviewTests[29996:21407336] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+PASS   : PluginWebviewTests::updateDuringInitialActivationDoesNotPreserveHiddenStagedPanels()
+PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(compatible-html)
+PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(node-http-service)
+PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(shared-node-service)
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 7 passed, 0 failed, 0 skipped, 0 blacklisted, 21912ms
+********* Finished testing of PluginWebviewTests *********

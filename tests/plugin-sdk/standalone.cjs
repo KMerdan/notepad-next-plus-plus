@@ -67,7 +67,14 @@ async function main() {
   await run('15-hello-test',[npm,'test'],hello);
   await run('16-hello-debug',[npm,'run','debug'],hello);
   assert.match(await fs.readFile(path.join(hello,'.debug/preview.html'),'utf8'),/Hello from NotepadNext!/);
-  const record={sdk:{version:packed.version,path:path.join(sdkOutput,packed.filename),sha256:crypto.createHash('sha256').update(await fs.readFile(path.join(sdkOutput,packed.filename))).digest('hex'),files:files.size},markdownProject:markdown,helloProject:hello,localPackage:path.join(artifacts,'markdown-preview-0.1.0'),zip:checksum.assets[0],steps,notes:['SDK installed from its actual npm tarball; template moved before dependency installation.','Locked install, build, tests, local debug and packaging use only the standalone project.','Editor integration is a separate native check; no publication or signing performed.']};
+  const html=path.join(root,'html-service-demo');
+  await run('17-create-html',[create,html,'--template','html-service','--id','demo.html-preview'],tooling);
+  await run('18-html-install',[npm,'install',...npmOptions],html);
+  await run('19-html-build',[npm,'run','build'],html);
+  await run('20-html-test',[npm,'test'],html);
+  await run('21-html-package',[npm,'run','package','--',path.join(artifacts,'html-preview-0.1.0')],html);
+  assert.ok((await fs.stat(path.join(artifacts,'html-preview-0.1.0/dist/local-service.cjs'))).isFile());
+  const record={sdk:{version:packed.version,path:path.join(sdkOutput,packed.filename),sha256:crypto.createHash('sha256').update(await fs.readFile(path.join(sdkOutput,packed.filename))).digest('hex'),files:files.size},markdownProject:markdown,helloProject:hello,htmlProject:html,localPackage:path.join(artifacts,'markdown-preview-0.1.0'),zip:checksum.assets[0],steps,notes:['SDK installed from its actual npm tarball; template moved before dependency installation.','Locked install, build, tests, local debug and packaging use only the standalone project.','Editor integration is a separate native check; no publication or signing performed.']};
   await fs.writeFile(path.join(root,'validation.json'),JSON.stringify(record,null,2)+'\n');
   console.log(JSON.stringify(record,null,2));
 }

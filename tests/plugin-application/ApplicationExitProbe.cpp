@@ -130,7 +130,7 @@ int runApplicationExitProbe(NotepadNextApplication &app,const QString &profile,c
         if(scenario=="reload-pending"||scenario=="uninstall-pending") {
             if(scenario=="reload-pending")engine->reload(Id);else engine->uninstall(Id,false);
             require(waitFor([&]{return QFileInfo::exists(markers+"/1.0.0-deactivate");},1500),"Management stop did not reach deactivate.");
-            require(engine->pluginState(Id)=="stopping","Expected a queued management operation.");
+            require(engine->pluginState(Id)==(scenario=="reload-pending"?"updating":"stopping"),"Expected a queued management operation.");
             require(index->plugin(Id).package.metadata["version"]=="1.0.0","Uncommitted management operation changed the index.");
         } else if(scenario=="update-preparation-pending") {
             const auto candidate=package(profile+"/v2",markers,"1.0.1",false,false);

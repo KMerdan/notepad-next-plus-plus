@@ -2,7 +2,7 @@
 
 This adapted Cat Coding example exercises the real full HTML Webview compatibility profile. Microsoft source, browser JS and CSS come from the fixed MIT commit recorded in `provenance.json`. Exact original files are retained in `upstream/`. Browser JS/CSS are unchanged. TypeScript declarations are shared with the pinned HelloWorld sample.
 
-Two adaptations are explicit: panel restoration across application restart is removed, and remote GIFs are replaced by an owned local PNG fixture mapped through `asWebviewUri`. This sample is not evidence of unmodified extension compatibility or full Marketplace support. The generated fixture is part of this repository under GPL-3.0-or-later; Microsoft files remain MIT.
+Two adaptations are explicit: application restart activation is unsupported while the upstream panel serializer restores hot updates, and remote GIFs are replaced by an owned local PNG fixture mapped through `asWebviewUri`. This sample is not evidence of unmodified extension compatibility or full Marketplace support. The generated fixture is part of this repository under GPL-3.0-or-later; Microsoft files remain MIT.
 
 Build and import using the controlled Node runtime:
 

@@ -73,7 +73,7 @@ if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_PLUGIN_WEBVIEWS AND NOTEPADNEXT_TEST_NODE
     set_tests_properties(PluginApplicationExitTests PROPERTIES RUN_SERIAL TRUE TIMEOUT 90)
 endif()
 if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_TEST_NODE)
-    set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginVSCodeSampleBuild;PluginVSCodeWebviewSampleBuild")
+    set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginVSCodeSampleBuild;PluginVSCodeWebviewSampleBuild;PluginPythonSampleBuild")
 endif()
 
 option(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE "Build opt-in production-application plugin performance measurements" OFF)

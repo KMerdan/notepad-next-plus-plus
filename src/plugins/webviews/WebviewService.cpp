@@ -4,6 +4,11 @@
 #include "DocumentBridge.h"
 #include "RpcEndpoint.h"
 #include <QBuffer>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkProxy>
+#include <QMutex>
+#include <QMutexLocker>
 #include <QCloseEvent>
 #include <QApplication>
 #include <QDir>
@@ -41,6 +46,8 @@
 #include <QWebEngineScript>
 #include <QWebEngineScriptCollection>
 #include <functional>
+#include <algorithm>
+#include <limits>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
 #include <QWebEnginePermission>
 #endif
@@ -110,11 +117,15 @@ class Page : public QWebEnginePage {
 public:
     using QWebEnginePage::QWebEnginePage;
     QUrl allowed;
+    QString servicePrefix;
+    bool owns(const QUrl &url) const {
+        auto target=url;target.setFragment({});
+        return servicePrefix.isEmpty()?target==allowed:target.toString(QUrl::FullyEncoded).startsWith(servicePrefix);
+    }
     std::function<void(const QUrl &)> external;
 protected:
     bool acceptNavigationRequest(const QUrl &url,NavigationType type,bool main) override {
-        auto target=url; target.setFragment({});
-        if(main && target==allowed) return true;
+        if(main && owns(url)) return true;
         if(main && type==NavigationTypeLinkClicked && (url.scheme()=="https" || url.scheme()=="http") && external) external(url);
         return false;
     }
@@ -143,8 +154,20 @@ public:
 class Interceptor : public QWebEngineUrlRequestInterceptor {
 public:
     Interceptor(const QString &owner,QObject *parent) : QWebEngineUrlRequestInterceptor(parent),owner(owner) {}
+    QMutex mutex;
+    QHash<QString,int> services;
+    bool suspended=false;
     void interceptRequest(QWebEngineUrlRequestInfo &request) override {
+        const QMutexLocker lock(&mutex);
+        if(suspended){request.block(true);return;}
         const auto url=request.requestUrl(),first=request.firstPartyUrl();
+        if(url.scheme()=="http") {
+            const auto target=url.toString(QUrl::FullyEncoded),source=first.toString(QUrl::FullyEncoded);
+            bool permitted=false;
+            for(auto it=services.cbegin();it!=services.cend();++it)if(target.startsWith(it.key())&&(first.isEmpty()||source.startsWith(it.key())))permitted=true;
+            request.block(!permitted);return;
+        }
+        if(first.scheme()=="http"){request.block(true);return;}
         const bool foreignPanel=first.scheme()=="nnp-plugin"&&first.host()==owner&&first.path().section('/',1,1)!=url.path().section('/',1,1);
         request.block(url.scheme()!="nnp-plugin" || url.host()!=owner || url.port()!=-1 || !url.userInfo().isEmpty() || foreignPanel);
     }
@@ -154,21 +177,30 @@ private:
 }
 struct WebviewService::Private {
     struct Panel {
+        quint64 order=0;
+        QString restoreId,title;
+        QJsonObject browserState;
+        QPointer<QWidget> container;
+        bool claimed=false,uiRestored=false,preservedPlacement=false;
         QPointer<QWidget> contextBar;
         QPointer<QLabel> documentLabel,contextStatus,footer;
         QJsonObject renderContext;
         QPointer<QFutureWatcher<PreparedHtml>> pendingHtml;
         quint64 htmlSequence=0;
-        QPointer<Dock> dock; QPointer<Page> page; QMetaObject::Connection focusConnection; QString viewType,revision; QHash<QString,QUrl> images; QUrl url; bool loaded=false; QHash<QByteArray,QString> imageCache; bool requestedVisible=false,preserveFocus=true; bool compatible=false,enableScripts=false; QStringList roots; QSet<QString> assets; QJsonValue state=QJsonValue(QJsonValue::Undefined); bool visible=false,active=false; QList<QJsonValue> outgoing; qsizetype outgoingBytes=0; };
+        QPointer<Dock> dock; QPointer<Page> page; QMetaObject::Connection focusConnection; QString viewType,revision; QHash<QString,QUrl> images; QUrl url; bool loaded=false; QHash<QByteArray,QString> imageCache; bool requestedVisible=false,preserveFocus=true; bool compatible=false,enableScripts=false,service=false; QStringList roots; QSet<QString> assets; QJsonValue state=QJsonValue(QJsonValue::Undefined); bool visible=false,active=false; QList<QJsonValue> outgoing; qsizetype outgoingBytes=0; };
     QString pluginId,root,owner;
     QPointer<QMainWindow> window;
     QPointer<PluginDocuments::DocumentBridge> documents;
     QWebEngineProfile *profile;
     Handler *handler;
+    Interceptor *interceptor;
     QHash<QString,Panel> panels;
     qint64 imageBytes=0;
     bool published=true;
     bool appearancePending=false;
+    bool suspended=false;
+    quint64 nextPanel=0;
+    QPointer<WebviewService> restoreSource;
 };
 void registerScheme() {
     QWebEngineUrlScheme scheme("nnp-plugin"); scheme.setSyntax(QWebEngineUrlScheme::Syntax::Host);
@@ -191,7 +223,7 @@ WebviewService::WebviewService(const QString &id,const QString &root,QMainWindow
     d->profile=new QWebEngineProfile(this); d->profile->setHttpCacheType(QWebEngineProfile::NoCache); d->profile->setPersistentCookiesPolicy(QWebEngineProfile::NoPersistentCookies);
     d->handler=new Handler(d->profile); d->handler->owner=d->owner;
     d->handler->resolve=[this](const QString &path){const auto id=path.section('/',1,1),prefix="/"+id+"/asset/";if(!path.startsWith(prefix))return;QJsonObject error;mapAsset(id,path.mid(prefix.size()),&error);};
-    d->profile->installUrlSchemeHandler("nnp-plugin",d->handler); d->profile->setUrlRequestInterceptor(new Interceptor(d->owner,d->profile));
+    d->profile->installUrlSchemeHandler("nnp-plugin",d->handler); d->interceptor=new Interceptor(d->owner,d->profile);d->profile->setUrlRequestInterceptor(d->interceptor);
     connect(d->profile,&QWebEngineProfile::downloadRequested,this,[](auto *request) { request->cancel(); });
     if(window)window->installEventFilter(this);
     if(documents) {
@@ -220,7 +252,7 @@ bool WebviewService::eventFilter(QObject *watched,QEvent *event) {
     return QObject::eventFilter(watched,event);
 }
 void WebviewService::refreshAppearance() {
-    if(d->appearancePending)return;
+    if(d->suspended||d->appearancePending)return;
     d->appearancePending=true;
     QTimer::singleShot(0,this,[this]{
         d->appearancePending=false;
@@ -228,7 +260,7 @@ void WebviewService::refreshAppearance() {
     });
 }
 void WebviewService::refreshPanelContext(const QString &id) {
-    if(!d->panels.contains(id))return;auto &panel=d->panels[id];
+    if(d->suspended||!d->panels.contains(id))return;auto &panel=d->panels[id];
     if(!panel.contextBar)return;
     const auto documentId=panel.renderContext["documentId"].toString();
     const auto document=d->documents?d->documents->info(documentId):QJsonObject{};
@@ -256,7 +288,7 @@ void WebviewService::applyAppearance(const QString &id) {
         .arg(literal(appearanceCss()),literal(it->revision));
     it->page->runJavaScript(code,QWebEngineScript::ApplicationWorld);
 }
-QJsonObject WebviewService::createCompatible(const QString &id,const QString &viewType,const QString &title,bool enableScripts,const QStringList &roots,QJsonObject *error) {
+QJsonObject WebviewService::createCompatible(const QString &id,const QString &viewType,const QString &title,bool enableScripts,const QStringList &roots,QJsonObject *error,const QString &restorationKey) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 6, 0)
     *error=rpcError(1005,"Compatible Webviews require Qt 6.6 response-header support");return {};
 #else
@@ -269,7 +301,7 @@ QJsonObject WebviewService::createCompatible(const QString &id,const QString &vi
         if(directory.isEmpty()||!directory.startsWith(base+'/')||!QFileInfo(directory).isDir()){*error=rpcError(1003,"Resource root escapes package or is not a directory");return {};}
         if(!canonical.contains(directory))canonical.append(directory);
     }
-    auto result=createPanel(id,viewType,title,"right",true,error);if(!error->isEmpty())return {};
+    auto result=createPanel(id,viewType,title,"right",true,error,restorationKey);if(!error->isEmpty())return {};
     d->panels[id].enableScripts=enableScripts;d->panels[id].roots=canonical;return result;
 #endif
 }
@@ -295,33 +327,79 @@ QString WebviewService::mapAsset(const QString &id,const QString &relative,QJson
 }
 bool WebviewService::setTitle(const QString &id,const QString &title,QJsonObject *error) {
     *error={};if(!d->panels.contains(id)||!d->panels[id].compatible||!d->panels[id].dock){*error=rpcError(1004,"Compatible panel closed");return false;}
-    if(title.isEmpty()||title.toUcs4().size()>128){*error=rpcError(-32602,"Invalid panel title");return false;}d->panels[id].dock->setWindowTitle(title);return true;
+    if(title.isEmpty()||title.toUcs4().size()>128){*error=rpcError(-32602,"Invalid panel title");return false;}auto &panel=d->panels[id];panel.title=title;if(panel.restoreId.isEmpty())panel.dock->setWindowTitle(title);return true;
 }
 bool WebviewService::setDocument(const QString &id,const QString &html,QJsonObject *error) {
     *error={};if(!d->panels.contains(id)||!d->panels[id].compatible||!d->panels[id].page){*error=rpcError(1004,"Compatible panel closed");return false;}
+    if(d->suspended||d->panels[id].service){*error=rpcError(1004,"Service pages cannot be replaced with setDocument");return false;}
     const auto bytes=html.toUtf8();if(bytes.size()>HtmlPolicy::MaxHtmlBytes){*error=rpcError(1008,"HTML exceeds 6 MiB");return false;}
     auto &panel=d->panels[id];QStringList nonces;auto matches=QRegularExpression("\\bnonce\\s*=\\s*['\"]([A-Za-z0-9+/_=-]{1,128})['\"]",QRegularExpression::CaseInsensitiveOption).globalMatch(html);
     while(matches.hasNext()){const auto nonce=matches.next().captured(1);if(!nonces.contains(nonce))nonces.append(nonce);if(nonces.size()>32){*error=rpcError(1008,"Too many CSP nonces");return false;}}
     QString script=panel.enableScripts?QStringLiteral("'self'"):QStringLiteral("'none'"),style=QStringLiteral("'self'");
     for(const auto &nonce:nonces){style+=" 'nonce-"+nonce+"'";if(panel.enableScripts)script+=" 'nonce-"+nonce+"'";}
     const auto csp="default-src 'none'; img-src 'self'; style-src "+style+"; script-src "+script+"; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none';";
-    QFile library(":/qtwebchannel/qwebchannel.js"),bootstrap(":/plugin-webviews/compat-bootstrap.js");if(!library.open(QIODevice::ReadOnly)||!bootstrap.open(QIODevice::ReadOnly)){*error=rpcError(-32603,"Compatible bridge unavailable");return false;}
+    if(!panel.url.isEmpty())d->handler->resources.remove(panel.url.path());panel.outgoing.clear();panel.outgoingBytes=0;panel.revision=token();panel.loaded=false;panel.url=QUrl("nnp-plugin://"+d->owner+"/"+id+"/page-"+panel.revision+".html");panel.page->allowed=panel.url;
+    if(!installCompatibleBridge(id,error))return false;
+    d->handler->resources.insert(panel.url.path(),{bytes,"text/html",id,csp.toUtf8()});if(d->published||!panel.restoreId.isEmpty())panel.page->load(panel.url);return true;
+}
+bool WebviewService::installCompatibleBridge(const QString &id,QJsonObject *error) {
+    auto &panel=d->panels[id];
+    QFile library(":/qtwebchannel/qwebchannel.js"),bootstrap(":/plugin-webviews/compat-bootstrap.js");
+    if(!library.open(QIODevice::ReadOnly)||!bootstrap.open(QIODevice::ReadOnly)){*error=rpcError(-32603,"Compatible bridge unavailable");return false;}
     const auto literal=[](const QJsonValue &value){const auto json=QJsonDocument(QJsonArray{value}).toJson(QJsonDocument::Compact);return QString::fromUtf8(json.mid(1,json.size()-2));};
-    const auto revision=token();auto code=QString::fromUtf8(bootstrap.readAll());code.replace("__NNP_REVISION__",literal(revision));code.replace("__NNP_STATE__",panel.state.isUndefined()?"undefined":QString("JSON.parse(")+literal(QString::fromUtf8(QJsonDocument(QJsonArray{panel.state}).toJson(QJsonDocument::Compact)))+")[0]");
-    QWebEngineScript injected;injected.setName("nnp-compatible-bridge");injected.setInjectionPoint(QWebEngineScript::DocumentCreation);injected.setWorldId(QWebEngineScript::MainWorld);injected.setRunsOnSubFrames(false);injected.setSourceCode(QString::fromUtf8(library.readAll())+'\n'+code);panel.page->scripts().clear();panel.page->scripts().insert(injected);
-    if(!panel.url.isEmpty())d->handler->resources.remove(panel.url.path());panel.outgoing.clear();panel.outgoingBytes=0;panel.revision=revision;panel.loaded=false;panel.url=QUrl("nnp-plugin://"+d->owner+"/"+id+"/page-"+revision+".html");panel.page->allowed=panel.url;
-    d->handler->resources.insert(panel.url.path(),{bytes,"text/html",id,csp.toUtf8()});if(d->published)panel.page->load(panel.url);return true;
+    auto code=QString::fromUtf8(bootstrap.readAll());code.replace("__NNP_REVISION__",literal(panel.revision));
+    code.replace("__NNP_PREFIX__",literal(panel.service?panel.page->servicePrefix:panel.url.toString(QUrl::FullyEncoded)));
+    code.replace("__NNP_STATE__",panel.state.isUndefined()?"undefined":QString("JSON.parse(")+literal(QString::fromUtf8(QJsonDocument(QJsonArray{panel.state}).toJson(QJsonDocument::Compact)))+")[0]");
+    QWebEngineScript injected;injected.setName("nnp-compatible-bridge");injected.setInjectionPoint(QWebEngineScript::DocumentCreation);injected.setWorldId(QWebEngineScript::MainWorld);injected.setRunsOnSubFrames(false);injected.setSourceCode(QString::fromUtf8(library.readAll())+'\n'+code);
+    panel.page->scripts().clear();panel.page->scripts().insert(injected);return true;
 }
-QJsonObject WebviewService::create(const QString &viewType,const QString &title,const QString &position,QJsonObject *error) {
+void WebviewService::createService(const QString &viewType,const QString &title,const QUrl &endpoint,const QString &nonce,const QString &sessionId,const QString &restorationKey,std::function<void(const QJsonObject &,const QJsonObject &)> completed) {
+    const auto address=endpoint.toString(QUrl::FullyEncoded);
+    if(!QRegularExpression("^http://127\\.0\\.0\\.1:[0-9]{4,5}/nnp/[a-f0-9]{32}/index\\.html$").match(address).hasMatch()||endpoint.port()<1024||endpoint.port()>65535||!QRegularExpression("^[a-f0-9]{32}$").match(nonce).hasMatch()) {
+        completed({},rpcError(-32602,"Service URL must be an SDK-owned IPv4 loopback endpoint"));return;
+    }
+    const auto prefix=address.left(address.size()-10);
+    auto *network=new QNetworkAccessManager(this);network->setProxy(QNetworkProxy::NoProxy);
+    QNetworkRequest request(QUrl(prefix+"__nnp_probe"));request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,QNetworkRequest::ManualRedirectPolicy);request.setTransferTimeout(2000);
+    auto *reply=network->get(request);reply->setReadBufferSize(4097);auto *timeout=new QTimer(reply);timeout->setSingleShot(true);timeout->start(2000);
+    connect(timeout,&QTimer::timeout,reply,&QNetworkReply::abort);
+    connect(reply,&QNetworkReply::readyRead,reply,[reply]{if(reply->bytesAvailable()>4096)reply->abort();});
+    connect(reply,&QNetworkReply::finished,this,[this,reply,network,viewType,title,endpoint,nonce,sessionId,restorationKey,prefix,completed]{
+        const auto bytes=reply->readAll();const auto proof=QJsonDocument::fromJson(bytes).object();
+        const bool valid=reply->error()==QNetworkReply::NoError&&reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt()==200&&bytes.size()<=4096&&proof["sessionId"]==sessionId&&proof["nonce"]==nonce;
+        network->deleteLater();
+        if(d->suspended||!valid){completed({},rpcError(1003,"Local service ownership verification failed"));return;}
+        QJsonObject error;const auto result=createCompatible(token(),viewType,title,true,{},&error,restorationKey);
+        if(!error.isEmpty()){completed({},error);return;}
+        const auto id=result["panelId"].toString();auto &panel=d->panels[id];panel.service=true;panel.revision=token();panel.url=endpoint;panel.page->allowed=endpoint;panel.page->servicePrefix=prefix;
+        {const QMutexLocker lock(&d->interceptor->mutex);++d->interceptor->services[prefix];}
+        if(!installCompatibleBridge(id,&error)){dispose(id);completed({},error);return;}
+        if(d->published||!panel.restoreId.isEmpty())panel.page->load(endpoint);completed(result,{});
+    });
+}
+QJsonObject WebviewService::create(const QString &viewType,const QString &title,const QString &position,QJsonObject *error,const QString &restorationKey) {
     for(auto it=d->panels.cbegin();it!=d->panels.cend();++it) if(!it->compatible&&it->viewType==viewType) { *error={};return {{"panelId",it.key()}}; }
-    return createPanel(token(),viewType,title,position,false,error);
+    return createPanel(token(),viewType,title,position,false,error,restorationKey);
 }
-QJsonObject WebviewService::createPanel(const QString &id,const QString &viewType,const QString &title,const QString &position,bool compatible,QJsonObject *error) {
+QJsonObject WebviewService::createPanel(const QString &id,const QString &viewType,const QString &title,const QString &position,bool compatible,QJsonObject *error,const QString &restorationKey) {
     *error={};
     if(!d->window || viewType.isEmpty() || viewType.size()>128 || title.isEmpty() || title.toUcs4().size()>128 || (position!="right" && position!="bottom")) { *error=rpcError(-32602,"Invalid panel declaration"); return {}; }
     if(d->panels.contains(id)) { *error=rpcError(-32602,"Duplicate panel ID");return {}; }
     if(d->panels.size()>=8) { *error=rpcError(1007,"Panel limit reached"); return {}; }
-    auto *dock=new Dock(title,d->window); dock->setObjectName("plugin:"+d->pluginId+":"+viewType+ (compatible?":"+id:QString()));
+    QString restoreId;
+    if(!restorationKey.isEmpty()){
+        if(!d->restoreSource||!d->restoreSource->d->panels.contains(restorationKey)){*error=rpcError(1004,"Unknown restoration key");return {};}
+        const auto &old=d->restoreSource->d->panels[restorationKey];
+        if(old.claimed||!old.dock||old.viewType!=viewType||old.compatible!=compatible){*error=rpcError(1004,"Restoration key was closed or belongs to another view type");return {};}
+        restoreId=restorationKey;
+    }
+    if(restoreId.isEmpty()&&d->restoreSource){
+        quint64 first=std::numeric_limits<quint64>::max();
+        for(auto it=d->restoreSource->d->panels.cbegin();it!=d->restoreSource->d->panels.cend();++it)
+            if(!it->claimed&&it->dock&&it->viewType==viewType&&it->compatible==compatible&&it->order<first){restoreId=it.key();first=it->order;}
+    }
+    auto *dock=restoreId.isEmpty()?new Dock(title,d->window):d->restoreSource->d->panels[restoreId].dock.data();
+    if(restoreId.isEmpty())dock->setObjectName("plugin:"+d->pluginId+":"+viewType+ (compatible?":"+id:QString()));
     auto *container=new QWidget(dock);auto *layout=new QVBoxLayout(container);layout->setContentsMargins(0,0,0,0);layout->setSpacing(0);
     auto *contextBar=new QWidget(container);contextBar->setObjectName("pluginDocumentContext");contextBar->setFixedHeight(40);
     auto *contextLayout=new QHBoxLayout(contextBar);contextLayout->setContentsMargins(24,0,24,0);
@@ -329,7 +407,8 @@ QJsonObject WebviewService::createPanel(const QString &id,const QString &viewTyp
     contextLayout->addWidget(documentLabel,1);contextLayout->addWidget(contextStatus);layout->addWidget(contextBar);contextBar->hide();
     auto *view=new QWebEngineView(container);auto *page=new Page(d->profile,view);view->setPage(page);layout->addWidget(view,1);
     auto *footer=new QLabel(container);footer->setTextFormat(Qt::PlainText);footer->setFixedHeight(28);footer->hide();layout->addWidget(footer);
-    container->setFocusProxy(view);container->setFocusPolicy(Qt::StrongFocus);dock->setWidget(container);dock->hide();
+    container->setFocusProxy(view);container->setFocusPolicy(Qt::StrongFocus);
+    if(restoreId.isEmpty()){dock->setWidget(container);dock->hide();}else {container->resize(dock->widget()->size());layout->activate();container->hide();}
     page->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls,false); page->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls,false);
     page->settings()->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows,false); page->settings()->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard,false);
     page->settings()->setAttribute(QWebEngineSettings::JavascriptCanPaste,false); page->settings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled,false);
@@ -337,12 +416,13 @@ QJsonObject WebviewService::createPanel(const QString &id,const QString &viewTyp
     page->external=[this](const QUrl &url) { emit externalLinkRequested(url); };
     auto *channel=new QWebChannel(page); auto *bridge=new BridgeObject(channel); channel->registerObject("panelBridge",bridge); page->setWebChannel(channel);
     bridge->receive=[this,id](const QString &revision,const QJsonValue &message) {
+        if(d->suspended)return;
         if(!d->panels.contains(id)) return;
         const auto &panel=d->panels[id];
         const auto bytes=QJsonDocument(QJsonArray{message}).toJson(QJsonDocument::Compact);
-        if((panel.loaded||panel.compatible) && panel.page && panel.page->url()==panel.url && revision==panel.revision && bytes.size()<=64*1024) emit event(id,"message",message);
+        if((panel.loaded||panel.compatible) && panel.page && panel.page->owns(panel.page->url()) && revision==panel.revision && bytes.size()<=64*1024) emit event(id,"message",message);
     };
-    bridge->state=[this,id](const QString &revision,bool hasState,const QJsonValue &state){if(!d->panels.contains(id))return;auto &panel=d->panels[id];const auto bytes=QJsonDocument(QJsonArray{state}).toJson(QJsonDocument::Compact);if(panel.compatible&&panel.page&&panel.page->url()==panel.url&&revision==panel.revision&&bytes.size()<=64*1024)panel.state=hasState?state:QJsonValue(QJsonValue::Undefined);};
+    bridge->state=[this,id](const QString &revision,bool hasState,const QJsonValue &state){if(d->suspended||!d->panels.contains(id))return;auto &panel=d->panels[id];const auto bytes=QJsonDocument(QJsonArray{state}).toJson(QJsonDocument::Compact);if(panel.compatible&&panel.page&&panel.page->owns(panel.page->url())&&revision==panel.revision&&bytes.size()<=64*1024)panel.state=hasState?state:QJsonValue(QJsonValue::Undefined);};
 #if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
     connect(page,&QWebEnginePage::permissionRequested,page,[](QWebEnginePermission permission) { permission.deny(); });
 #else
@@ -350,15 +430,25 @@ QJsonObject WebviewService::createPanel(const QString &id,const QString &viewTyp
 #endif
     connect(page,&QWebEnginePage::loadFinished,this,[this,id](bool ok) {
         if(!d->panels.contains(id)) return;
-        auto &panel=d->panels[id]; panel.loaded=ok && panel.page && panel.page->url()==panel.url;
+        auto &panel=d->panels[id]; panel.loaded=ok && panel.page && panel.page->owns(panel.page->url());
         if(panel.loaded&&!panel.compatible)applyAppearance(id);
         if(panel.loaded&&panel.compatible){const auto outgoing=panel.outgoing;panel.outgoing.clear();panel.outgoingBytes=0;for(const auto &message:outgoing){QJsonObject error;postMessage(id,message,&error);}}
+        if(panel.loaded&&!panel.restoreId.isEmpty())restoreBrowserState(id);
         if(!ok) emit event(id,"loadFailed",QStringLiteral("Panel page could not load."));
         refreshPanelContext(id);
     });
     connect(page,&QWebEnginePage::renderProcessTerminated,this,[this,id] { if(d->panels.contains(id)) { d->panels[id].loaded=false; emit event(id,"loadFailed",QStringLiteral("Panel renderer stopped.")); } });
-    dock->closing=[this,id] { dispose(id); };
-    Private::Panel panel;panel.dock=dock;panel.page=page;panel.viewType=viewType;panel.compatible=compatible;
+    dock->closing=[this,id] {
+        if(d->panels.contains(id)&&d->restoreSource&&!d->panels[id].restoreId.isEmpty())d->restoreSource->dispose(d->panels[id].restoreId);
+        dispose(id);
+    };
+    Private::Panel panel;panel.dock=dock;panel.page=page;panel.container=container;panel.viewType=viewType;panel.compatible=compatible;panel.order=++d->nextPanel;panel.title=title;
+    panel.restoreId=restoreId;
+    panel.preservedPlacement=!restoreId.isEmpty();
+    if(!restoreId.isEmpty()){
+        auto &old=d->restoreSource->d->panels[restoreId];old.claimed=true;
+        panel.state=old.state;panel.browserState=old.browserState;panel.requestedVisible=old.requestedVisible;panel.preserveFocus=true;
+    }
     panel.contextBar=contextBar;panel.documentLabel=documentLabel;panel.contextStatus=contextStatus;panel.footer=footer;
     d->panels.insert(id,panel);
     connect(dock,&QDockWidget::visibilityChanged,this,[this,id]{viewState(id);});
@@ -366,8 +456,11 @@ QJsonObject WebviewService::createPanel(const QString &id,const QString &viewTyp
     // Bind the capture to the service lifetime, and remove it on panel close.
     d->panels[id].focusConnection=connect(qApp,&QApplication::focusChanged,this,[this,id]{viewState(id);});
     // A dock created after restoreState can restore its saved placement.
-    if(!d->window->restoreDockWidget(dock)) d->window->addDockWidget(position=="bottom" ? Qt::BottomDockWidgetArea : Qt::RightDockWidgetArea,dock);
-    dock->hide();emit panelsChanged();return {{"panelId",id}};
+    if(restoreId.isEmpty()){
+        if(!d->window->restoreDockWidget(dock)) d->window->addDockWidget(position=="bottom" ? Qt::BottomDockWidgetArea : Qt::RightDockWidgetArea,dock);
+        dock->hide();
+    }
+    emit panelsChanged();return {{"panelId",id}};
 }
 void WebviewService::viewState(const QString &id) {
     if(!d->panels.contains(id))return;auto &panel=d->panels[id];if(!panel.compatible||!panel.dock)return;
@@ -377,18 +470,21 @@ void WebviewService::viewState(const QString &id) {
 bool WebviewService::reveal(const QString &id,bool preserveFocus,QJsonObject *error) {
     *error={}; if(!d->panels.contains(id) || !d->panels[id].dock) { *error=rpcError(1004,"Panel closed"); return false; }
     d->panels[id].requestedVisible=true;d->panels[id].preserveFocus=preserveFocus;
-    if(!d->published)return true;
+    if(!d->published||(!d->panels[id].restoreId.isEmpty()&&d->restoreSource))return true;
     auto *dock=d->panels[id].dock.data(); dock->show(); dock->raise(); if(!preserveFocus) dock->widget()->setFocus(); return true;
 }
 void WebviewService::setPublished(bool published) {
     d->published=published;
-    for(auto &panel:d->panels)if(panel.dock) {
-        if(published&&panel.compatible&&panel.page&&!panel.url.isEmpty()&&panel.page->url()!=panel.url)panel.page->load(panel.url);
+    for(auto it=d->panels.begin();it!=d->panels.end();++it)if(it->dock) {
+        auto &panel=it.value();
+        if(published&&panel.preservedPlacement){viewState(it.key());continue;}
+        if(published&&panel.compatible&&panel.page&&!panel.url.isEmpty()&&!panel.page->owns(panel.page->url()))panel.page->load(panel.url);
         if(!published)panel.dock->hide();
         else if(panel.requestedVisible){panel.dock->show();panel.dock->raise();if(!panel.preserveFocus)panel.dock->widget()->setFocus();}
     }
 }
 QJsonObject WebviewService::renderContextError(const QString &id,const QJsonObject &context) const {
+    if(d->suspended)return rpcError(1004,"Plugin panels are suspended for hot update");
     if(!d->panels.contains(id)||!d->panels[id].page||!d->documents)return rpcError(1004,"Panel closed");
     if(d->panels[id].compatible)return rpcError(1005,"Compatible panels require setDocument");
     if(context.size()!=2||!context.contains("documentId")||!context.contains("version"))return rpcError(-32602,"Invalid render context");
@@ -480,7 +576,7 @@ bool WebviewService::postMessage(const QString &id,const QJsonValue &message,QJs
         if(panel.outgoing.size()>=128||panel.outgoingBytes+json.size()>8*1024*1024){*error=rpcError(1007,"Outgoing Webview queue overflow");return false;}
         panel.outgoing.append(message);panel.outgoingBytes+=json.size();return true;
     }
-    if(!panel.loaded || panel.page->url()!=panel.url) return false;
+    if(!panel.loaded || !panel.page->owns(panel.page->url())) return false;
     const auto encoded=QJsonDocument(QJsonArray{QString::fromUtf8(json)}).toJson(QJsonDocument::Compact);
     const auto literal=QString::fromUtf8(encoded.mid(1,encoded.size()-2));
     panel.page->runJavaScript(panel.compatible?"window.dispatchEvent(new MessageEvent('message',{data:JSON.parse("+literal+")[0]}));":"window.dispatchEvent(new CustomEvent('nnp-message',{detail:JSON.parse("+literal+")[0]}));"); return true;
@@ -488,18 +584,86 @@ bool WebviewService::postMessage(const QString &id,const QJsonValue &message,QJs
 void WebviewService::dispose(const QString &id) {
     if(!d->panels.contains(id)) return;
     auto panel=d->panels.take(id);disconnect(panel.focusConnection);
+    if(panel.service&&panel.page){const QMutexLocker lock(&d->interceptor->mutex);const auto prefix=panel.page->servicePrefix;if(d->interceptor->services.value(prefix)>1)--d->interceptor->services[prefix];else d->interceptor->services.remove(prefix);}
     if(panel.pendingHtml)panel.pendingHtml->cancel();
     for(auto it=d->handler->resources.begin();it!=d->handler->resources.end();) {
         if(it->panelId==id) { if(it->mime!="text/html") d->imageBytes-=it->bytes.size(); it=d->handler->resources.erase(it); } else ++it;
     }
-    if(panel.dock) {
+    if(!panel.restoreId.isEmpty()&&d->restoreSource&&d->restoreSource->d->panels.contains(panel.restoreId)){
+        auto *source=d->restoreSource.data();auto &old=source->d->panels[panel.restoreId];old.claimed=false;
+        if(panel.dock)panel.dock->closing=[source,key=panel.restoreId]{source->dispose(key);};
+        delete panel.container;
+    }else if(panel.dock) {
         panel.dock->closing={}; panel.dock->hide();
         // A user-close callback runs inside QWidget's close event. Reclaim the
         // page now, but leave the empty dock alive until that event unwinds.
-        delete panel.dock->widget(); panel.dock->deleteLater();
+        auto *current=panel.dock->widget();if(current!=panel.container)delete panel.container;
+        delete current; panel.dock->deleteLater();
     }
-    emit event(id,"closed",QJsonValue(QJsonValue::Null));
+    if(!d->suspended)emit event(id,"closed",QJsonValue(QJsonValue::Null));
     emit panelsChanged();
+}
+void WebviewService::setRestoreSource(WebviewService *source){d->restoreSource=source;}
+void WebviewService::suspendForRestart(std::function<void()> completed){
+    d->suspended=true;
+    {const QMutexLocker lock(&d->interceptor->mutex);d->interceptor->suspended=true;}
+    auto remaining=std::make_shared<int>(d->panels.size());auto done=std::make_shared<bool>(false);
+    const auto finish=[done,completed]{if(!*done){*done=true;completed();}};
+    if(!*remaining){finish();return;}
+    const QPointer<WebviewService> safe=this;
+    const QString script=QStringLiteral(R"JS((()=>{const snapshot=window[Symbol.for('NotepadNext.compatWebviewBootstrap')]?.snapshot?.();const result={scrollX,scrollY,snapshot,fields:[]};let bytes=new TextEncoder().encode(JSON.stringify(result)).length;const nodes=Array.from(document.querySelectorAll('input:not([type=password]):not([type=file]),textarea,select')).slice(0,128);for(let i=0;i<nodes.length;++i){const n=nodes[i];if(n.value.length>4096)continue;const field={i,id:n.id,tag:n.tagName,type:n.type,value:n.value,checked:n.checked,selected:n.selectedIndex};const size=new TextEncoder().encode(JSON.stringify(field)).length;if(bytes+size>120*1024)break;result.fields.push(field);bytes+=size;}return JSON.stringify(result);})())JS");
+    for(auto it=d->panels.begin();it!=d->panels.end();++it){
+        if(it->pendingHtml)it->pendingHtml->cancel();++it->htmlSequence;
+        if(it->container)it->container->setEnabled(false);
+        if(!it->page){if(--*remaining==0)finish();continue;}
+        it->page->runJavaScript(script,[safe,id=it.key(),remaining,finish](const QVariant &value){
+            if(safe&&safe->d->panels.contains(id)){
+                const auto bytes=value.toString().toUtf8();const auto state=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
+                auto &panel=safe->d->panels[id];panel.browserState=state;
+                const auto snapshot=state["snapshot"].toObject();if(snapshot.contains("hasState"))panel.state=snapshot["hasState"].toBool()?snapshot["state"]:QJsonValue(QJsonValue::Undefined);
+            }
+            if(--*remaining==0)finish();
+        });
+    }
+    QTimer::singleShot(1000,this,finish);
+}
+QJsonArray WebviewService::restorationDescriptors() const{
+    QVector<const Private::Panel*> ordered;for(const auto &panel:d->panels)if(panel.dock&&!panel.claimed)ordered.append(&panel);
+    std::sort(ordered.begin(),ordered.end(),[](auto a,auto b){return a->order<b->order;});QJsonArray result;
+    for(const auto *panel:ordered){
+        QString id;for(auto it=d->panels.cbegin();it!=d->panels.cend();++it)if(&it.value()==panel){id=it.key();break;}
+        QJsonObject descriptor{{"panelId",id},{"viewType",panel->viewType},{"title",panel->dock->windowTitle()},
+            {"visible",panel->dock->isVisible()},{"active",false},{"kind",panel->service?"service":panel->compatible?"html":"fragment"},{"hasState",!panel->state.isUndefined()},{"state",panel->state.isUndefined()?QJsonValue(QJsonValue::Null):panel->state}};
+        if(panel->compatible&&!panel->service){QStringList roots;for(const auto &root:panel->roots)roots.append(QDir(d->root).relativeFilePath(root));descriptor["options"]=QJsonObject{{"enableScripts",panel->enableScripts},{"localResourceRoots",QJsonArray::fromStringList(roots)}};}
+        result.append(descriptor);
+    }
+    return result;
+}
+void WebviewService::restoreBrowserState(const QString &id){
+    if(!d->panels.contains(id))return;auto &panel=d->panels[id];if(!panel.page||!panel.loaded)return;
+    const auto json=QString::fromUtf8(QJsonDocument(panel.browserState).toJson(QJsonDocument::Compact));const QPointer<WebviewService> safe=this;const auto revision=panel.revision;
+    panel.page->runJavaScript("(()=>{const s="+json+";const nodes=document.querySelectorAll('input:not([type=password]):not([type=file]),textarea,select');for(const f of s.fields||[]){const n=f.id?document.getElementById(f.id):nodes[f.i];if(n&&n.tagName===f.tag&&n.type===f.type){n.value=f.value;if(typeof f.checked==='boolean')n.checked=f.checked;if(typeof f.selected==='number')n.selectedIndex=f.selected;}}scrollTo(s.scrollX||0,s.scrollY||0);return true;})()",[safe,id,revision](const QVariant &value){if(safe&&safe->d->panels.contains(id)&&safe->d->panels[id].revision==revision)safe->d->panels[id].uiRestored=value.toBool();});
+}
+void WebviewService::finishRestoration(std::function<void(const QJsonObject &)> completed){
+    const QPointer<WebviewService> safe=this;auto *poll=new QTimer(this);poll->setInterval(20);auto *deadline=new QTimer(poll);deadline->setSingleShot(true);
+    auto done=std::make_shared<bool>(false);const auto finish=[poll,done,completed](const QJsonObject &error){if(*done)return;*done=true;poll->stop();poll->deleteLater();completed(error);};
+    connect(deadline,&QTimer::timeout,poll,[finish]{finish(rpcError(1005,"Plugin panels could not be restored; the previous version will be kept."));});
+    connect(poll,&QTimer::timeout,poll,[safe,finish]{
+        if(!safe){finish(rpcError(1004,"Plugin session closed during restoration"));return;}
+        if(!safe->d->restoreSource){finish({});return;}
+        for(const auto &old:safe->d->restoreSource->d->panels)if(old.dock&&!old.claimed)return;
+        for(const auto &panel:safe->d->panels)if(!panel.restoreId.isEmpty()&&panel.dock&&(!panel.loaded||!panel.uiRestored))return;
+        finish({});
+    });deadline->start(10000);poll->start();
+}
+void WebviewService::commitRestoration(){
+    if(!d->restoreSource)return;auto *source=d->restoreSource.data();
+    for(auto it=d->panels.begin();it!=d->panels.end();++it)if(!it->restoreId.isEmpty()&&it->dock&&source->d->panels.contains(it->restoreId)){
+        auto old=source->d->panels.take(it->restoreId);disconnect(old.focusConnection);
+        it->dock->setWidget(it->container);it->dock->setWindowTitle(it->title);it->container->setEnabled(true);it->container->show();delete old.container;
+        const auto id=it.key();QTimer::singleShot(0,this,[this,id]{restoreBrowserState(id);});it->restoreId.clear();
+    }
+    d->restoreSource=nullptr;
 }
 void WebviewService::clear() { const auto ids=d->panels.keys(); for(const auto &id:ids) dispose(id); }
 int WebviewService::panelCount() const { return d->panels.size(); }

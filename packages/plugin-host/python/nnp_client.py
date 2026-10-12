@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import inspect
+import contextvars
 from types import SimpleNamespace
 import traceback
 import uuid
@@ -33,11 +34,13 @@ class Client:
         self.endpoint, self.identity, self.manifest, self.can_call = endpoint, identity, manifest, can_call
         self.resources, self.commands, self.watches, self.panels = [], {}, {}, {}
         self.panel_handles = {}
+        self.restorers = {}
+        self.restoration = contextvars.ContextVar("nnp_restoration", default=None)
         self.closed, self.awaiting_watch, self.early_events = False, 0, []
         self.api = SimpleNamespace(plugin_id=identity["pluginId"], session_id=identity["sessionId"], generation=identity["generation"], capabilities=tuple(identity["grantedCapabilities"]), subscriptions=[])
         self.api.commands = SimpleNamespace(register=self.register_command)
         self.api.documents = SimpleNamespace(get_active=lambda: self.call("nnp.documents.getActive"), get_snapshot=lambda document_id: self.call("nnp.documents.getSnapshot", {"documentId": document_id}), apply_edits=lambda document_id, version, edits: self.call("nnp.documents.applyEdits", {"documentId": document_id, "expectedVersion": version, "edits": edits}), watch=self.watch)
-        self.api.webviews = SimpleNamespace(create=self.create_panel)
+        self.api.webviews = SimpleNamespace(create=self.create_panel, register_restorer=self.register_restorer)
         for namespace in ("storage", "configuration"):
             setattr(self.api, namespace, SimpleNamespace(
                 get=lambda key, namespace=namespace: self.call(f"nnp.{namespace}.get", {"key": key}),
@@ -123,8 +126,33 @@ class Client:
             if not self.awaiting_watch:
                 self.early_events.clear()
 
+    def register_restorer(self, view_type, callback):
+        if not isinstance(view_type, str) or not view_type or not callable(callback) or view_type in self.restorers:
+            raise RpcError(-32602, "Invalid or duplicate panel restorer")
+        self.restorers[view_type] = callback
+        return SimpleNamespace(dispose=lambda: self.restorers.pop(view_type, None))
+
+    async def restore_panels(self, descriptors):
+        for descriptor in descriptors:
+            callback = self.restorers.get(descriptor["viewType"])
+            if not callback:
+                raise RpcError(1005, "No panel restorer for " + descriptor["viewType"])
+            scope = {"panel": descriptor, "active": True}
+            token = self.restoration.set(scope)
+            try:
+                await awaited(callback(dict(descriptor)))
+            finally:
+                scope["active"] = False
+                self.restoration.reset(token)
+        return None
+
     async def create_panel(self, view_type, title, position="right"):
-        result = await self.call("nnp.webviews.create", {"viewType": view_type, "title": title, "position": position})
+        params = {"viewType": view_type, "title": title, "position": position}
+        scope = self.restoration.get()
+        descriptor = scope["panel"] if scope and scope["active"] else None
+        if descriptor and descriptor["viewType"] == view_type:
+            params["restorationKey"] = descriptor["panelId"]
+        result = await self.call("nnp.webviews.create", params)
         identifier, listeners = result["panelId"], []
         handle = Resource(self, identifier, lambda: (self.panels.pop(identifier, None), self.panel_handles.pop(identifier, None), listeners.clear()))
         self.panels[identifier] = listeners
@@ -176,4 +204,4 @@ class Client:
             except Exception:
                 pass
         self.api.subscriptions.clear()
-        self.resources.clear(); self.commands.clear(); self.watches.clear(); self.panels.clear(); self.panel_handles.clear(); self.early_events.clear()
+        self.restorers.clear(); self.resources.clear(); self.commands.clear(); self.watches.clear(); self.panels.clear(); self.panel_handles.clear(); self.early_events.clear()

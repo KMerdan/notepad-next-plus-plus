@@ -16,9 +16,9 @@ async function copyTree(from,to,transform=value=>value) {
   }else throw new Error('Unsupported SDK file: '+from);
 }
 async function createPlugin(directory,{template='hello',id,name}={}) {
-  if(!['hello','markdown'].includes(template))throw new Error('Template must be hello or markdown.');
-  id??=template==='markdown'?'demo.markdown-preview':'demo.hello';
-  name??=template==='markdown'?'Markdown Preview':'Hello Plugin';
+  if(!['hello','markdown','html-service'].includes(template))throw new Error('Template must be hello, markdown or html-service.');
+  id??=template==='html-service'?'demo.html-preview':template==='markdown'?'demo.markdown-preview':'demo.hello';
+  name??=template==='html-service'?'HTML Preview':template==='markdown'?'Markdown Preview':'Hello Plugin';
   if(typeof id!=='string'||id.length>128||!/^[a-z0-9][a-z0-9-]*\.[a-z0-9][a-z0-9-]*$/.test(id))throw new Error('Plugin ID must be publisher.name using lowercase letters, digits and hyphens.');
   if(typeof name!=='string'||!name.trim()||name.length>128||/[\x00-\x1f]/.test(name))throw new Error('Plugin name must be 1–128 printable characters.');
   const output=await canonicalOutput(directory),sdk=await fs.realpath(__dirname);
@@ -52,7 +52,7 @@ async function createPlugin(directory,{template='hello',id,name}={}) {
 }
 function parseArguments(args) {
   const directory=args.shift(),options={};
-  if(!directory||directory.startsWith('--'))throw new Error('Usage: nnp-create <new-directory> [--template hello|markdown] [--id publisher.name] [--name "Plugin name"]');
+  if(!directory||directory.startsWith('--'))throw new Error('Usage: nnp-create <new-directory> [--template hello|markdown|html-service] [--id publisher.name] [--name "Plugin name"]');
   while(args.length) {
     const flag=args.shift(),key={'--template':'template','--id':'id','--name':'name'}[flag];
     if(!key||Object.hasOwn(options,key)||!args.length||args[0].startsWith('--'))throw new Error('Invalid or repeated option: '+flag);
@@ -62,7 +62,7 @@ function parseArguments(args) {
 }
 module.exports={createPlugin,parseArguments};
 if(require.main===module) {
-  if(process.argv.includes('--help'))console.log('Usage: nnp-create <new-directory> [--template hello|markdown] [--id publisher.name] [--name "Plugin name"]\nCreates a standalone project with a vendored SDK. Does not install dependencies or run code.');
+  if(process.argv.includes('--help'))console.log('Usage: nnp-create <new-directory> [--template hello|markdown|html-service] [--id publisher.name] [--name "Plugin name"]\nCreates a standalone project with a vendored SDK. Does not install dependencies or run code.');
   else {
     try {
       if(Number(process.versions.node.split('.')[0])!==24)throw new Error('Use Node 24 for this SDK.');

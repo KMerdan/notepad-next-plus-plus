@@ -111,9 +111,12 @@ jobs:
           python scripts/fetch-plugin-node.py --platform "$NODE_PLATFORM" --arch "$NODE_ARCH" --output ci-runtime
       - name: Build author fixtures without install hooks
         run: |
-          npm ci --ignore-scripts --prefix examples/markdown-preview
+          npm ci --ignore-scripts --install-links --prefix examples/markdown-preview
           npm run build --prefix examples/markdown-preview
           npm test --prefix examples/markdown-preview
+          npm ci --ignore-scripts --install-links --prefix examples/html-preview
+          npm run build --prefix examples/html-preview
+          npm test --prefix examples/html-preview
           node packages/plugin-sdk/pack.cjs examples/markdown-preview ci-fixtures/markdown-package
           node packages/plugin-sdk/release.cjs examples/markdown-preview ci-fixtures/markdown-assets v0.1.0
       - name: Configure

@@ -4,7 +4,7 @@ const {randomUUID}=require('node:crypto'),{isDeepStrictEqual}=require('node:util
 function createTestHost({pluginId='tests.plugin',capabilities=[],text='',document={},onRender=()=>{}}={}) {
   let active=false,closed=false,plugin,sequence=0,buffer=text;
   let info={documentId:'test-document',uri:'file:///test/example.md',languageId:'markdown',version:1,isDirty:true,isReadonly:false,...document};
-  const commands=new Map(),watches=new Set(),resources=new Set(),panels=new Map(),messages=[];
+  const commands=new Map(),watches=new Set(),resources=new Set(),panels=new Map(),messages=[],restorers=new Map();
   const snapshot=()=>({...info,text:buffer,positionEncoding:'utf-16'});
   const assertOpen=()=>{if(closed)throw new Error('Test host is disposed.');};
   function own(dispose) {
@@ -32,6 +32,7 @@ function createTestHost({pluginId='tests.plugin',capabilities=[],text='',documen
       async applyEdits(){return unsupported('documents.applyEdits');}
     },
     webviews:{
+      registerRestorer(type,callback){restorers.set(type,callback);return {dispose:()=>restorers.delete(type)};},
       owner:'test-host',
       async create(viewType,title) {
         assertOpen();if(!active)throw new Error('Open panels from a command after activation.');

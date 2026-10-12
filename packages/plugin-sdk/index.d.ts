@@ -21,6 +21,7 @@ export interface DeltaWatch extends Disposable {
 export interface RenderContext { documentId: string | null; version: number | null; }
 export interface WebviewEvent { panelId: string; type: 'closed' | 'message' | 'loadFailed' | 'viewState'; payload?: unknown; }
 export interface CompatibleWebviewOptions {panelId:string;viewType:string;title:string;enableScripts:boolean;localResourceRoots:string[];}
+export interface RestoredPanel {readonly panelId:string;readonly viewType:string;readonly title:string;readonly kind:'fragment'|'html'|'service';readonly visible?:boolean;readonly active?:boolean;readonly hasState:boolean;readonly state:unknown;}
 export interface CompatibleWebviewPanel extends Disposable {
   readonly panelId:string;
   reveal(preserveFocus?:boolean):Promise<void>;
@@ -59,6 +60,13 @@ export interface PluginContext {
     applyEdits(documentId: string, expectedVersion: number, edits: TextEdit[]): Promise<{version:number}>;
   };
   readonly webviews: {
+    /** Register during activate. Rebuild this view without replaying a user command.
+     * The host preserves its dock, browser state, scroll and form values.
+     * Requires webviews.restore@1 in the update's manifest.
+     */
+    registerRestorer(viewType:string,restore:(panel:RestoredPanel)=>void|Promise<void>):Disposable;
+    /** Requires webviews@1 + webviews.service@1. Use startLocalService from ./local-service. */
+    createService(options:{viewType:string;title:string;endpoint:string;nonce:string}):Promise<ServiceWebviewPanel>;
     create(viewType: string, title: string, position?: 'right' | 'bottom'): Promise<WebviewPanel>;
     /** Requires webviews@1 + webviews.compat@1 and Qt >=6.6. Full trusted HTML,
      * package-local JS/CSS/images, host CSP and owned state/message bridge.
@@ -80,3 +88,5 @@ export interface PluginModule {
   activate(context: PluginContext): void | Promise<void>;
   deactivate?(): void | Promise<void>;
 }
+
+export interface ServiceWebviewPanel extends Disposable {readonly panelId:string;reveal(preserveFocus?:boolean):Promise<void>;postMessage(message:unknown):Promise<boolean>;onEvent(listener:(event:WebviewEvent)=>void):Disposable;}

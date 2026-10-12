@@ -1,0 +1,1 @@
+{"name":"__PLUGIN_ID__","version":"0.1.0","private":true,"license":"GPL-3.0-or-later","scripts":{"build":"node build.cjs","test":"node --test test.cjs","package":"nnp-package .","bundle":"nnp-release ."},"devDependencies":{"@notepadnext/plugin-sdk":"file:./tools/plugin-sdk"},"engines":{"node":">=24 <25"}}

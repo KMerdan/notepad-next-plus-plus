@@ -1,0 +1,109 @@
+UpdateCTestConfiguration  from :/private/tmp/notepadnext-app-build-610/DartConfiguration.tcl
+Test project /private/tmp/notepadnext-app-build-610
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 22
+    Start 22: PluginWebviewTests
+
+22: Test command: /private/tmp/notepadnext-app-build-610/tests/plugin-webviews/PluginWebviewTests
+22: Working Directory: /private/tmp/notepadnext-app-build-610/tests/plugin-webviews
+22: Test timeout computed to be: 600
+22: ********* Start testing of PluginWebviewTests *********
+22: Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+22: PASS   : PluginWebviewTests::initTestCase()
+22: [55384:259:1012/180034.556492:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+22: [55384:259:1012/180034.556760:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+22: QINFO  : PluginWebviewTests::firstPanelKeepsEditorWindow() Native surface replacements: 0
+22: 2026-10-12 18:00:34.820 PluginWebviewTests[55384:21195951] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+22: PASS   : PluginWebviewTests::firstPanelKeepsEditorWindow()
+22: QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+22: 
+22: QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+22: 
+22: QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+22: 
+22: QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+22: 
+22: QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+22: 
+22: QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+22: 
+22: PASS   : PluginWebviewTests::compatibleFullPagePolicyAndStateBridge()
+22: QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to load the script 'nnp-plugin://e9a2bdc09c97453e929e115f733ee391/cccccccccccccccccccccccccccccccc/asset/dist/media/own.js' because it violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+22: 
+22: QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'none'". Either the 'unsafe-inline' keyword, a hash ('sha256-FUFLEu5vjA/VQJw34usTCC7o69Ot9eK/DwKQVszYQAg='), or a nonce ('nonce-...') is required to enable inline execution.
+22: 
+22: PASS   : PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy()
+22: PASS   : PluginWebviewTests::focusNotificationsAfterDeferredDockCleanup()
+22: PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+22: PASS   : PluginWebviewTests::compatibleNativeCapabilityPair()
+22: PASS   : PluginWebviewTests::nativeMessagesEnforceCapabilitiesPublicationAndOwnership()
+22: PASS   : PluginWebviewTests::originalVSCodeHelloWorldInstalledLifecycle()
+22: PASS   : PluginWebviewTests::compatibleEditorTransactionAndHumanMessageWait()
+22: PASS   : PluginWebviewTests::nativeDeltaCapabilitiesAndCensusLimit()
+22: PASS   : PluginWebviewTests::nativeDocumentMirrorLifecycle()
+22: PASS   : PluginWebviewTests::pythonInspectorExample()
+22: PASS   : PluginWebviewTests::pythonPluginLifecycle()
+22: PASS   : PluginWebviewTests::collectionPreservesRunningSession()
+22: PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+22: PASS   : PluginWebviewTests::largeCommandFailureIsBounded()
+22: PASS   : PluginWebviewTests::retryWhileFailedProcessDrains()
+22: PASS   : PluginWebviewTests::compatiblePersistenceLifecycle()
+22: PASS   : PluginWebviewTests::pluginDataLifecycle()
+22: PASS   : PluginWebviewTests::activationResourceStaging()
+22: PASS   : PluginWebviewTests::healthTimeout()
+22: PASS   : PluginWebviewTests::boundedCrashRecovery()
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 1 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 11 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 21 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 31 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 41 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 51 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 61 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 71 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 81 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 91 owned resources 0
+22: QINFO  : PluginWebviewTests::lifecycleStress100Cycles() 100 lifecycle cycles elapsed ms 95317
+22: PASS   : PluginWebviewTests::lifecycleStress100Cycles()
+22: PASS   : PluginWebviewTests::serviceEndpointsRequireOwnedLoopbackPaths()
+22: PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(compatible-html)
+22: PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(node-http-service)
+22: PASS   : PluginWebviewTests::updateValidationAndRollback()
+22: 2026-10-12 18:03:19.916 PluginWebviewTests[55384:21195951] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+22: 2026-10-12 18:03:19.919 PluginWebviewTests[55384:21195951] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+22: PASS   : PluginWebviewTests::installedManagerLifecycle()
+22: PASS   : PluginWebviewTests::htmlPolicy()
+22: PASS   : PluginWebviewTests::imageContainment()
+22: PASS   : PluginWebviewTests::realPageAndCleanup()
+22: PASS   : PluginWebviewTests::nativeLongPageScrollsToOffscreenText()
+22: QWARN  : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload() QWidget::paintEngine: Should no longer be called
+22: QWARN  : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload() QWidget::paintEngine: Should no longer be called
+22: PASS   : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload()
+22: QWARN  : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data) qt.qpa.fonts: Populating font family aliases took 64 ms. Replace uses of missing font family "Host\"</style><script>window.fontInjected=true</script>&\\\n😀\";}body{color:red}/*" with one that exists to avoid this cost. 
+22: PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data)
+22: PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(theme-during-preparation)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(publish-and-bounded-overlap)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(document-edited-before-publication)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(active-document-changed)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(document-closed)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(panel-disposed)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(synchronous-publication-wins)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(service-destroyed)
+22: PASS   : PluginWebviewTests::asyncHtmlOwnership(unsafe-html-rejected)
+22: PASS   : PluginWebviewTests::realMarkdownImagesAndDocumentStates()
+22: PASS   : PluginWebviewTests::realMarkdownSession()
+22: PASS   : PluginWebviewTests::cleanupTestCase()
+22: Totals: 47 passed, 0 failed, 0 skipped, 0 blacklisted, 172142ms
+22: ********* Finished testing of PluginWebviewTests *********
+1/1 Test #22: PluginWebviewTests ...............   Passed  172.30 sec
+
+The following tests passed:
+	PluginWebviewTests
+
+100% tests passed out of 1
+
+Total Test time (real) = 172.30 sec

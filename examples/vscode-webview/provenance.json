@@ -4,8 +4,9 @@
   "apiDeclaration": "https://raw.githubusercontent.com/microsoft/vscode/1.100.0/src/vscode-dts/vscode.d.ts",
   "sourceModifications": true,
   "adaptations": [
-    "Remove panel serializer registration and onWebviewPanel activation; app restart serialization is unsupported.",
-    "Replace remote Giphy GIF URLs with one generated local PNG fixture and map its URI through asWebviewUri."
+    "Retain the upstream panel serializer for hot updates; onWebviewPanel activation across application restarts remains unsupported.",
+    "Replace remote Giphy GIF URLs with one generated local PNG fixture and map its URI through asWebviewUri.",
+    "Normalize the adapted extension source to LF line endings."
   ],
   "unchangedBrowserFiles": [
     "media/main.js",
@@ -25,8 +26,8 @@
     },
     {
       "path": "src/extension.ts",
-      "sha256": "7f5419b85b4d4751d6a05ab5969b723b02460c15297ad636f8c56650fed933f2",
-      "bytes": 6175
+      "sha256": "d734f91a456d7b3f8f2ff9b94fa9bd1dc4bc0c715fc8fd7c1da193e22d67bc69",
+      "bytes": 6508
     },
     {
       "path": "media/fixture.png",

@@ -5,12 +5,40 @@
   "version": "0.1.0",
   "list": false,
   "description": "Inspect the active unsaved editor buffer through the Python adapter.",
-  "engines": {"notepadnext": ">=0.15.0 <0.16.0", "api": "^0.1.0"},
-  "runtime": {"kind": "python", "entry": "dist/index.py"},
-  "capabilities": {"required": ["commands@1", "documents.read@1", "webviews@1", "storage@1"], "optional": []},
-  "activationEvents": ["onCommand:notepadnext.python-inspector.open"],
+  "engines": {
+    "notepadnext": ">=0.15.0 <0.16.0",
+    "api": "^0.1.0"
+  },
+  "runtime": {
+    "kind": "python",
+    "entry": "dist/index.py"
+  },
+  "capabilities": {
+    "required": [
+      "commands@1",
+      "documents.read@1",
+      "webviews@1",
+      "storage@1",
+      "webviews.restore@1"
+    ],
+    "optional": []
+  },
+  "activationEvents": [
+    "onCommand:notepadnext.python-inspector.open"
+  ],
   "contributes": {
-    "commands": [{"id": "notepadnext.python-inspector.open", "title": "Inspect Buffer with Python"}],
-    "menus": [{"location": "plugins", "command": "notepadnext.python-inspector.open", "order": 110}]
+    "commands": [
+      {
+        "id": "notepadnext.python-inspector.open",
+        "title": "Inspect Buffer with Python"
+      }
+    ],
+    "menus": [
+      {
+        "location": "plugins",
+        "command": "notepadnext.python-inspector.open",
+        "order": 110
+      }
+    ]
   }
 }

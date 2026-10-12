@@ -24,3 +24,5 @@ The packer reads the existing Python files without importing them or running hoo
 Register matching metadata first, select the packed directory with **Uninstalled → Local Package…**, then enable the plugin in **Installed**. Use **Run Command** or its **Plugins** menu entry. Disable closes its panel and process; Reload starts a fresh session. The source repository URLs in the integration tests are illustrative; no public repository or Release has been published for this example.
 
 The [Python adapter contract](../../doc/plugin-system/PythonAdapter.zh-CN.md) describes the API and execution model. The interpreter is a developer configuration, not bundled in the application. A build with no configured Python interpreter can register and install the resource, but activation reports that its runtime is unavailable.
+
+源码在 src/index.py。打包前在本目录执行 npm run build，把源码复制到 dist。示例使用 register_restorer 恢复已有面板，恢复回调不重放记录快照的普通命令。

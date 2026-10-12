@@ -6,9 +6,9 @@ const {Endpoint,Framer}=require('../../packages/plugin-host/rpc.cjs');
 const profile=require('../../packages/plugin-host/protocol-profile.json');
 const initialize={pluginId:'tests.python',sessionId:'python-session',generation:1,protocolVersions:['0.1'],apiVersion:'0.1.0',hostVersion:'0.15.0',grantedCapabilities:['commands@1','documents.read@1','documents.events@1'],limits:profile};
 const identity={sessionId:initialize.sessionId,generation:1};
-async function fixture(t,code,guarded=false) {
+async function fixture(t,code,guarded=false,caps=initialize.grantedCapabilities) {
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'nnp-python-host-'));
-  await fs.writeFile(path.join(root,'notepadnext-plugin.json'),JSON.stringify({manifestVersion:1,id:'tests.python',version:'0.1.0',list:false,runtime:{kind:'python',entry:'plugin.py'},capabilities:{required:initialize.grantedCapabilities,optional:[]},contributes:{commands:[{id:'tests.python.read',title:'Read'}]}}));
+  await fs.writeFile(path.join(root,'notepadnext-plugin.json'),JSON.stringify({manifestVersion:1,id:'tests.python',version:'0.1.0',list:false,runtime:{kind:'python',entry:'plugin.py'},capabilities:{required:caps,optional:[]},contributes:{commands:[{id:'tests.python.read',title:'Read'}]}}));
   await fs.writeFile(path.join(root,'plugin.py'),code);
   const env={...process.env};delete env.NNP_PARENT_WATCH_FD;delete env.NNP_PARENT_WATCH_GROUP;
   if(guarded){env.NNP_PARENT_WATCH_FD='3';env.NNP_PARENT_WATCH_GROUP='0';}
@@ -42,4 +42,13 @@ test('Python command exceptions retain stacks outside stdout and keep the sessio
   const host=await fixture(t,"async def activate(ctx):\n    def fail():\n        raise RuntimeError('python command stack fixture')\n    await ctx.commands.register('tests.python.read',fail)\n");
   await host.peer.call('nnp.initialize',initialize);await host.peer.call('nnp.plugin.activate',{...identity,reason:'command'});await assert.rejects(host.peer.call('nnp.commands.invoke',{...identity,callbackId:host.callback(),args:[]}),{code:-32603,message:'Internal error'});
   await host.peer.call('nnp.health.ping',identity);await host.peer.call('nnp.shutdown',{...identity,reason:'exit'});assert.equal((await host.exited)[0],0);assert.match(host.stderr(),/python command stack fixture/);assert.match(host.stderr(),/plugin\.py/);assert.equal(host.fault(),undefined);
+});
+test('Python restore callback receives state and adds the original restoration key',async t=>{
+  const caps=[...initialize.grantedCapabilities,'webviews@1','webviews.restore@1'];
+  const host=await fixture(t,"async def activate(ctx):\n    async def restore(panel):\n        assert panel['state']['count'] == 37\n        await ctx.webviews.create('python-view', panel['title'])\n    ctx.webviews.register_restorer('python-view', restore)\n    await ctx.commands.register('tests.python.read', lambda:None)\n",false,caps);
+  const key='a'.repeat(32);let creates=0;host.peer.register('nnp.webviews.create',params=>{assert.equal(params.restorationKey,key);++creates;return {panelId:key};});
+  await assert.rejects(host.peer.call('nnp.webviews.restore',{...identity,panels:[]}),{code:1004});
+  await host.peer.call('nnp.initialize',{...initialize,grantedCapabilities:caps});await host.peer.call('nnp.plugin.activate',{...identity,reason:'command'});
+  await host.peer.call('nnp.webviews.restore',{...identity,panels:[{panelId:key,viewType:'python-view',title:'Python',kind:'fragment',hasState:true,state:{count:37}}]});assert.equal(creates,1);
+  await host.peer.call('nnp.shutdown',{...identity,reason:'exit'});assert.equal((await host.exited)[0],0);
 });

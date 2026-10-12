@@ -4,7 +4,7 @@
 
 规范文件放在受控宿主中：
 
-- [wire.schema.json](../../packages/plugin-host/wire.schema.json)：33 个方法的 params/result 定义及 DocumentInfo、TextSnapshot、位置、编辑、delta、消息提示、兼容 HTML/资源、图片和错误模型，采用 [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-validation)。
+- [wire.schema.json](../../packages/plugin-host/wire.schema.json)：35 个方法的 params/result 定义及 DocumentInfo、TextSnapshot、位置、编辑、delta、消息提示、兼容 HTML/资源、图片和错误模型，采用 [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-validation)。
 - [wire-contract.json](../../packages/plugin-host/wire-contract.json)：每个方法的方向、请求／通知、能力、允许状态、效果、错误、取消语义和预算。
 - [protocol-profile.json](../../packages/plugin-host/protocol-profile.json)：握手确认的运输和业务预算。
 
@@ -27,3 +27,5 @@ Qt `WireContract` 从编译进程序的资源读取相同文件。Node `wire.cjs
 messages@1 使用立即确认的创建请求和可靠选择通知；消息属于激活会话，停用清理结束 SDK 等待。命令执行计时暂停规则、预算与 VS Code 字符串动作 overload 见 [兼容配置](VSCodeCompatibility.zh-CN.md)。
 
 webviews.compat@1 新增 `createCompatible/setDocument/mapAsset/setTitle`，同时依赖 webviews@1。`nnp.webviews.event` 的 viewState 为可靠所属面板事件；Node/Python 求值器同样禁止过载时静默丢弃。更换 HTML、新旧 revision、加载期间消息排队与正常关闭竞态见 [Webview 兼容语义](VSCodeCompatibility.zh-CN.md#webview-发布资源与消息)。
+
+webviews.restore@1 增加宿主调用插件的 `nnp.webviews.restore`，描述待恢复面板并要求专用回调重新创建。webviews.service@1 增加 `nnp.webviews.createService`，仅接受带会话所有权证明的 IPv4 loopback HTTP 服务；依赖 webviews@1、Qt WebEngine 6.6+。这是 API 0.1.0 的能力协商扩展，未声明的插件不会收到恢复调用。

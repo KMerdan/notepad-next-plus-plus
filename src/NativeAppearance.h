@@ -31,6 +31,8 @@ QIcon brandIcon(const QString &resource,const QPalette &palette);
 void install(QMainWindow *window);
 void documentTab(ads::CDockWidgetTab *tab,bool dirty,bool readOnly);
 void editorColors(ScintillaNext *editor,bool remember=false);
+// Restore the original syntax colors before changing/reinitializing a lexer.
+void restoreEditorColors(ScintillaNext *editor);
 QString chromeStyle(const QPalette &palette);
 void polishDialog(QDialog *dialog,const QString &heading={},const QString &description={});
 void setDialogPrimary(QDialog *dialog,QPushButton *button);

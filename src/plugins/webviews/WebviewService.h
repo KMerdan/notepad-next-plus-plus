@@ -2,6 +2,7 @@
 #ifndef PLUGINWEBVIEWSERVICE_H
 #define PLUGINWEBVIEWSERVICE_H
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QObject>
 #include <QPointer>
 #include <QUrl>
@@ -19,7 +20,7 @@ class WebviewService : public QObject {
 public:
     WebviewService(const QString &pluginId, const QString &packageRoot, QMainWindow *window, PluginDocuments::DocumentBridge *documents, QObject *parent=nullptr, const QString &owner={});
     ~WebviewService() override;
-    QJsonObject create(const QString &viewType, const QString &title, const QString &position, QJsonObject *error);
+    QJsonObject create(const QString &viewType, const QString &title, const QString &position, QJsonObject *error,const QString &restorationKey={});
     bool reveal(const QString &panelId, bool preserveFocus, QJsonObject *error);
     bool setHtml(const QString &panelId, const QString &html, const QJsonObject &renderContext, QJsonObject *error);
     // One bounded background preparation per panel. Publication still occurs
@@ -28,13 +29,20 @@ public:
                       std::function<void(const QJsonObject &)> completed);
     QString mapResource(const QString &panelId, const QJsonObject &resource, QJsonObject *error);
     bool postMessage(const QString &panelId, const QJsonValue &message, QJsonObject *error);
-    QJsonObject createCompatible(const QString &panelId, const QString &viewType, const QString &title, bool enableScripts, const QStringList &localResourceRoots, QJsonObject *error);
+    QJsonObject createCompatible(const QString &panelId, const QString &viewType, const QString &title, bool enableScripts, const QStringList &localResourceRoots, QJsonObject *error,const QString &restorationKey={});
+    void createService(const QString &viewType,const QString &title,const QUrl &endpoint,const QString &nonce,const QString &sessionId,const QString &restorationKey,
+                       std::function<void(const QJsonObject &,const QJsonObject &)> completed);
     bool setDocument(const QString &panelId, const QString &html, QJsonObject *error);
     QString mapAsset(const QString &panelId, const QString &path, QJsonObject *error);
     bool setTitle(const QString &panelId, const QString &title, QJsonObject *error);
     void dispose(const QString &panelId);
     void clear();
     void setPublished(bool published);
+    void suspendForRestart(std::function<void()> completed);
+    void setRestoreSource(WebviewService *source);
+    QJsonArray restorationDescriptors() const;
+    void finishRestoration(std::function<void(const QJsonObject &)> completed);
+    void commitRestoration();
     int panelCount() const;
     int resourceCount() const;
     QWebEnginePage *page(const QString &panelId) const;
@@ -50,8 +58,10 @@ private:
     void applyAppearance(const QString &panelId);
     void refreshPanelContext(const QString &panelId);
     struct Private;
-    QJsonObject createPanel(const QString &panelId, const QString &viewType, const QString &title, const QString &position, bool compatible, QJsonObject *error);
+    QJsonObject createPanel(const QString &panelId, const QString &viewType, const QString &title, const QString &position, bool compatible, QJsonObject *error,const QString &restorationKey={});
+    bool installCompatibleBridge(const QString &panelId,QJsonObject *error);
     void viewState(const QString &panelId);
+    void restoreBrowserState(const QString &panelId);
     QJsonObject renderContextError(const QString &panelId, const QJsonObject &context) const;
     void publishHtml(const QString &panelId, const QByteArray &document, const QString &revision);
     std::unique_ptr<Private> d;
