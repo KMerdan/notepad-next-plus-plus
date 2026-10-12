@@ -562,6 +562,13 @@ int main(int argc,char **argv) {
 #ifdef PLUGIN_APPLICATION_EXIT_PROBE
     if(!exitScenario.isEmpty())return runApplicationExitProbe(app,profilePath,exitScenario);
 #endif
-    PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();return QTest::qExec(&tests,argc,argv);
+    PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();
+    const auto selected=qEnvironmentVariable("NNP_TEST_APPLICATION_FUNCTIONS");
+    QStringList testArgs{QString::fromLocal8Bit(argv[0])};
+    if(!selected.isEmpty())testArgs+=selected.split(',',Qt::SkipEmptyParts);
+    else for(int i=1;i<argc;++i)testArgs.append(QString::fromLocal8Bit(argv[i]));
+    const auto log=qEnvironmentVariable("NNP_TEST_QT_LOG_FILE");
+    if(!log.isEmpty())testArgs<<"-o"<<"-,txt"<<"-o"<<log+",txt";
+    return QTest::qExec(&tests,testArgs);
 }
 #include "PluginApplicationTests.moc"
