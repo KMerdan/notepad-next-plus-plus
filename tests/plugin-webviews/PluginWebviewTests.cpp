@@ -80,6 +80,25 @@ PluginSources::RegisteredResource runtimeFixture(const QString &root,const QStri
     if(!PluginSources::PluginMetadata::parse(QJsonDocument(manifest).toJson(),"https://github.com/tests/runtime",{},&source,&error))qFatal("%s",qPrintable(error));
     return source.resources[0];
 }
+class CommandReplies final:public QObject {
+public:
+    explicit CommandReplies(PluginRuntime::PluginEngine *engine) {
+        const auto observe=[this,engine]{
+            for(auto *session:engine->findChildren<PluginRuntime::PluginSession*>()) {
+                if(sessions.contains(session->sessionId()))continue;
+                sessions.insert(session->sessionId());
+                connect(session,&PluginRuntime::PluginSession::commandFinished,this,[this](const QString &command,const QJsonValue &,const QJsonObject &failure){results[command].append(failure);});
+            }
+        };
+        connect(engine,&PluginPackages::PluginController::statusChanged,this,[observe](const QString &){observe();});
+        observe();
+    }
+    qsizetype count(const QString &command) const {return results.value(command).size();}
+    QJsonObject lastError(const QString &command) const {const auto replies=results.value(command);return replies.isEmpty()?QJsonObject{}:replies.last();}
+private:
+    QSet<QString> sessions;
+    QHash<QString,QList<QJsonObject>> results;
+};
 }
 class PluginWebviewTests : public QObject {
     Q_OBJECT
@@ -291,11 +310,12 @@ exports.activate=async ctx=>{
         QFile metadata(QString(PLUGIN_TEST_PYTHON_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/python-inspector",{},&source,&error));const auto resource=source.resources[0];const auto id=resource.id;
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("Python sees unsaved 😀中\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);
+        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);CommandReplies replies(&engine);
         QVERIFY(installer.installDirectory(temp.path()+"/release",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(!index.plugin(id).enabled);QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
         QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);QTRY_VERIFY_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),5000);auto *page=window.findChild<QWebEngineView*>()->page();auto text=std::make_shared<QString>();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{page->runJavaScript("document.querySelector('pre')?.textContent",[text](const QVariant &value){*text=value.toString();});return *text==QStringLiteral("Python sees unsaved 😀中\n");})(),5000);
-        const PluginData::Store store(temp.path()+"/data",resource.repository);QTRY_COMPARE_WITH_TIMEOUT(store.access(id,"storage","lastPreview").value.toObject()["text"].toString(),QStringLiteral("Python sees unsaved 😀中\n"),5000);
+        QTRY_COMPARE_WITH_TIMEOUT(replies.count(id+".open"),1,10000);QVERIFY2(replies.lastError(id+".open").isEmpty(),qPrintable(engine.pluginLog(id)));
+        const PluginData::Store store(temp.path()+"/data",resource.repository);QCOMPARE(store.access(id,"storage","lastPreview").value.toObject()["text"].toString(),QStringLiteral("Python sees unsaved 😀中\n"));
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY(window.findChildren<QDockWidget*>().isEmpty());QVERIFY(errors.isEmpty());documents.detach(doc);window.takeCentralWidget();
     }
     void pythonPluginLifecycle() {
@@ -322,7 +342,7 @@ async def activate(ctx):
 )PY",{"commands@1","documents.read@1","storage@1"},"python");
         QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("shared unsaved 😀中\r\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);
+        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);CommandReplies replies(&engine);
         QVERIFY(installer.installDirectory(temp.path()+"/node",native));QTRY_COMPARE(installed.size(),1);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(nodeId,true,&error));engine.invoke(nodeId,nodeId+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(nodeId),QString("active"),5000);
         QPointer<PluginSession> companion=engine.findChild<PluginSession*>();QVERIFY(companion);const auto companionGeneration=companion->sessionId();
         QVERIFY(installer.installDirectory(temp.path()+"/python",python));QTRY_COMPARE(installed.size(),2);QVERIFY(installed[1][1].toString().isEmpty());
@@ -330,13 +350,15 @@ async def activate(ctx):
         auto *list=manager.findChild<QListWidget*>("installedPlugins");QVERIFY(list);for(int i=0;i<list->count();++i)if(list->item(i)->data(Qt::UserRole)==pyId)list->setCurrentRow(i);
         manager.findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(index.plugin(pyId).enabled);manager.findChild<QPushButton*>("runPluginCommand")->click();
         const PluginData::Store nodeData(temp.path()+"/data",native.repository),pyData(temp.path()+"/data",python.repository);
-        QTRY_COMPARE_WITH_TIMEOUT(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("shared unsaved 😀中\r\n"),5000);
-        QTRY_COMPARE_WITH_TIMEOUT(pyData.access(pyId,"storage","processId").value.isDouble(),true,5000);const auto oldPid=pyData.access(pyId,"storage","processId").value.toInteger();ProcessIdentity oldProcess;QVERIFY2(ProcessIdentity::capture(oldPid,&oldProcess,&error),qPrintable(error));
+        QTRY_COMPARE_WITH_TIMEOUT(replies.count(nodeId+".open"),1,10000);QVERIFY2(replies.lastError(nodeId+".open").isEmpty(),qPrintable(engine.pluginLog(nodeId)));
+        QTRY_COMPARE_WITH_TIMEOUT(replies.count(pyId+".open"),1,10000);QVERIFY2(replies.lastError(pyId+".open").isEmpty(),qPrintable(engine.pluginLog(pyId)));
+        QCOMPARE(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("shared unsaved 😀中\r\n"));
+        QCOMPARE(pyData.access(pyId,"storage","processId").value.isDouble(),true);const auto oldPid=pyData.access(pyId,"storage","processId").value.toInteger();ProcessIdentity oldProcess;QVERIFY2(ProcessIdentity::capture(oldPid,&oldProcess,&error),qPrintable(error));
         QCOMPARE(pyData.access(pyId,"storage","snapshot").value,nodeData.access(nodeId,"storage","snapshot").value);QTest::qWait(200);
         editor.setText("new unsaved 😀中\n");manager.findChild<QPushButton*>("reloadPlugin")->click();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(pyId),QString("active"),8000);
         QTRY_COMPARE_WITH_TIMEOUT(oldProcess.state(),ProcessIdentity::State::Exited,3000);QVERIFY(companion);QCOMPARE(companion->sessionId(),companionGeneration);QCOMPARE(companion->state(),QString("active"));
-        manager.findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("new unsaved 😀中\n"),5000);
-        QTRY_VERIFY_WITH_TIMEOUT(pyData.access(pyId,"storage","processId").value.toInteger()!=oldPid,5000);QCOMPARE(engine.sessionCount(),2);QCOMPARE(engine.resourceCount(),2);
+        manager.findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(replies.count(pyId+".open"),2,10000);QVERIFY2(replies.lastError(pyId+".open").isEmpty(),qPrintable(engine.pluginLog(pyId)));QCOMPARE(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("new unsaved 😀中\n"));
+        QVERIFY(pyData.access(pyId,"storage","processId").value.toInteger()!=oldPid);QCOMPARE(engine.sessionCount(),2);QCOMPARE(engine.resourceCount(),2);
         manager.findChild<QPushButton*>("togglePluginEnabled")->click();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(pyId),QString("disabled"),5000);QCOMPARE(companion->state(),QString("active"));QVERIFY(errors.isEmpty());
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);documents.detach(doc);window.takeCentralWidget();
     }
@@ -476,21 +498,14 @@ exports.activate=async ctx=>{
         QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy done(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error),operations(&engine,&PluginController::operationFinished);
         const PluginData::Store data(temp.path()+"/data",resource.repository);
-        QList<QJsonObject> replies;QSet<QString> observedSessions;QObject commandObserver;
-        connect(&engine,&PluginController::statusChanged,&commandObserver,[&](const QString &){
-            for(auto *session:engine.findChildren<PluginSession*>()) {
-                if(observedSessions.contains(session->sessionId()))continue;
-                observedSessions.insert(session->sessionId());
-                connect(session,&PluginSession::commandFinished,&commandObserver,[&](const QString &command,const QJsonValue &,const QJsonObject &failure){if(command==id+".open")replies.append(failure);});
-            }
-        });
+        CommandReplies replies(&engine);const auto command=id+".open";
         // A visible write can precede its command acknowledgement. Polling the
         // file while another RPC write commits also blocks Windows replacement.
         // Await the public command/lifecycle signals before inspecting storage.
-        const auto install=[&](int count){const auto before=replies.size();QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(done.size(),count,10000);QVERIFY(done.last()[1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.size(),before+1,10000);QVERIFY2(replies.last().isEmpty(),qPrintable(engine.pluginLog(id)));};
+        const auto install=[&](int count){const auto before=replies.count(command);QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(done.size(),count,10000);QVERIFY(done.last()[1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),before+1,10000);QVERIFY2(replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));};
         install(1);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(1));QVERIFY(data.access(id,"storage","activation").value.isNull());
         const auto beforeReload=operations.size();engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(operations.size(),beforeReload+1,10000);QVERIFY2(operations.last()[1].toString().isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(engine.pluginState(id),QString("active"));
-        const auto beforeCommand=replies.size();engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.size(),beforeCommand+1,10000);QVERIFY2(replies.last().isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
+        const auto beforeCommand=replies.count(command);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),beforeCommand+1,10000);QVERIFY2(replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
         engine.uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
         install(2);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(3));
         engine.uninstall(id,false);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);QVERIFY(!QFileInfo::exists(data.filePath(id)));QVERIFY(data.access(id,"configuration","theme").value.isNull());
