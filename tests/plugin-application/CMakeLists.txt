@@ -23,10 +23,10 @@ get_target_property(app_libraries NotepadNext LINK_LIBRARIES)
 target_include_directories(PluginApplicationTests PRIVATE ${app_includes})
 target_compile_definitions(PluginApplicationTests PRIVATE ${app_definitions}
     PLUGIN_TEST_NODE="${NOTEPADNEXT_TEST_NODE}"
-    PLUGIN_TEST_MARKDOWN="${CMAKE_SOURCE_DIR}/examples/markdown-preview"
+    PLUGIN_TEST_PREVIEW="${CMAKE_SOURCE_DIR}/tests/fixtures/contract-preview"
     PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
     PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_SOURCE_DIR}/examples/python-inspector"
-    PLUGIN_TEST_PACKER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/pack.cjs"
+    PLUGIN_TEST_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_SOURCE_DIR}/examples/vscode-hello-world"
     PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_SOURCE_DIR}/examples/vscode-webview"
     PLUGIN_TEST_VSCODE_IMPORTER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/import-vscode.cjs"
@@ -76,14 +76,18 @@ if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_TEST_NODE)
     set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginVSCodeSampleBuild;PluginVSCodeWebviewSampleBuild;PluginPythonSampleBuild")
 endif()
 
+set(NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE "" CACHE PATH "Prebuilt Markdown package for opt-in consumer performance measurements")
 option(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE "Build opt-in production-application plugin performance measurements" OFF)
 if(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE AND APPLE AND NOTEPADNEXT_PLUGIN_WEBVIEWS AND NOTEPADNEXT_TEST_NODE)
+    if(NOT EXISTS "${NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE}/notepadnext-plugin.json")
+        message(FATAL_ERROR "Performance acceptance requires NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE pointing to a prebuilt Marketplace package.")
+    endif()
     qt_add_executable(PluginPerformanceTests MACOSX_BUNDLE PluginPerformanceTests.cpp ${test_sources})
     target_include_directories(PluginPerformanceTests PRIVATE ${app_includes})
     target_compile_definitions(PluginPerformanceTests PRIVATE ${app_definitions}
         PERF_NODE="${NOTEPADNEXT_TEST_NODE}"
-        PERF_MARKDOWN="${CMAKE_SOURCE_DIR}/examples/markdown-preview"
-        PERF_PACKER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/pack.cjs")
+        PERF_MARKDOWN="${NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE}"
+        PERF_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs")
     target_link_libraries(PluginPerformanceTests PRIVATE ${app_libraries} Qt6::Test)
     set_target_properties(PluginPerformanceTests PROPERTIES
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.0"

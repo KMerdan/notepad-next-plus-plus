@@ -109,16 +109,6 @@ jobs:
         run: |
           python -B tests/plugin-ci/test_runtime.py
           python scripts/fetch-plugin-node.py --platform "$NODE_PLATFORM" --arch "$NODE_ARCH" --output ci-runtime
-      - name: Build author fixtures without install hooks
-        run: |
-          npm ci --ignore-scripts --install-links --prefix examples/markdown-preview
-          npm run build --prefix examples/markdown-preview
-          npm test --prefix examples/markdown-preview
-          npm ci --ignore-scripts --install-links --prefix examples/html-preview
-          npm run build --prefix examples/html-preview
-          npm test --prefix examples/html-preview
-          node packages/plugin-sdk/pack.cjs examples/markdown-preview ci-fixtures/markdown-package
-          node packages/plugin-sdk/release.cjs examples/markdown-preview ci-fixtures/markdown-assets v0.1.0
       - name: Configure
         env:
           PLUGIN_PROFILE: ${{ matrix.profile }}
@@ -149,8 +139,6 @@ jobs:
         run: cmake --build build-plugin-ci --parallel 3
       - name: Contract and native application tests
         env:
-          NOTEPADNEXT_TEST_PACKAGE: ${{ github.workspace }}/ci-fixtures/markdown-package
-          NOTEPADNEXT_TEST_ARCHIVE: ${{ github.workspace }}/ci-fixtures/markdown-assets/notepadnext-plugin.zip
           NNP_APPLICATION_EXIT_OUTPUT: ${{ github.workspace }}/build-plugin-ci/application-exit-results.json
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then

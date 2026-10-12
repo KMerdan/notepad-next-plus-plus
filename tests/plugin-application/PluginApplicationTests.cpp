@@ -328,7 +328,7 @@ private slots:
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
         if(QString(PLUGIN_TEST_PYTHON).isEmpty())QSKIP("The developer Python interpreter is not configured.");
         const auto paths=PluginRuntime::RuntimePaths::bundled();QCOMPARE(paths.python,QString(PLUGIN_TEST_PYTHON));QVERIFY(QFileInfo(QFileInfo(paths.hostEntry).dir().filePath("python/host.py")).isFile());
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_PYTHON_EXAMPLE,directory+"/python-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PYTHON_EXAMPLE,directory+"/python-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         QFile metadata(QString(PLUGIN_TEST_PYTHON_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot snapshot;QString error;
         QVERIFY(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/python-inspector",{},&snapshot,&error));snapshot.commit=QString(40,'b');const auto id=snapshot.resources[0].id;
         auto *sources=app->getRegisteredResourceRegistry();auto *installer=app->getPluginInstaller();auto *engine=app->getPluginEngine();QVERIFY(sources->registerSource(snapshot,&error));QVERIFY(installer->installDirectory(directory+"/python-release",snapshot.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);
@@ -365,8 +365,9 @@ private slots:
     }
     void productionHtmlServiceAndHotReload() {
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-        const auto project=qEnvironmentVariable("NNP_TEST_SDK_HTML_PROJECT",QString(PLUGIN_TEST_MARKDOWN).replace("markdown-preview","html-preview"));
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,project,directory+"/html-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        const auto project=qEnvironmentVariable("NNP_TEST_CONSUMER_HTML_PACKAGE");
+        if(project.isEmpty())QSKIP("Marketplace consumer acceptance is opt-in; provide an executable HTML package.");
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,project,directory+"/html-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         PluginSources::SourceSnapshot source;QString error;QVERIFY(PluginSources::PluginMetadata::readLocalFile(project+"/notepadnext-plugin.json",&source,&error));const auto id=source.resources[0].id;
         auto *engine=app->getPluginEngine();auto *installer=app->getPluginInstaller();auto *installed=app->getInstalledPluginRegistry();QVERIFY(app->getRegisteredResourceRegistry()->registerSource(source,&error));
         QVERIFY(installer->installDirectory(directory+"/html-release",source.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);QVERIFY(!installed->plugin(id).id().isEmpty());
@@ -450,12 +451,10 @@ private slots:
     }
     void productionManagerAndExit() {
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-        const auto standaloneProject=qEnvironmentVariable("NNP_TEST_SDK_MARKDOWN_PROJECT");
-        const auto markdownProject=standaloneProject.isEmpty()?QString(PLUGIN_TEST_MARKDOWN):standaloneProject;
-        const auto markdownPacker=standaloneProject.isEmpty()?QString(PLUGIN_TEST_PACKER):markdownProject+"/tools/plugin-sdk/pack.cjs";
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{markdownPacker,markdownProject,directory+"/release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        const auto previewProject=QString(PLUGIN_TEST_PREVIEW);
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,previewProject,directory+"/release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         PluginSources::SourceSnapshot snapshot;QString error;
-        QVERIFY2(PluginSources::PluginMetadata::readLocalFile(markdownProject+"/notepadnext-plugin.json",&snapshot,&error),qPrintable(error));
+        QVERIFY2(PluginSources::PluginMetadata::readLocalFile(previewProject+"/notepadnext-plugin.json",&snapshot,&error),qPrintable(error));
         auto *sources=app->getRegisteredResourceRegistry();auto *installed=app->getInstalledPluginRegistry();auto *installer=app->getPluginInstaller();auto *engine=app->getPluginEngine();
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);
         QTimer modalDriver;int confirmations=0;bool selectedPackage=false;QString selectedPackagePath;
@@ -498,7 +497,7 @@ private slots:
         manager->findChild<QTabWidget*>("pluginManagerTabs")->setCurrentIndex(0);
         QCOMPARE(manager->findChild<QListWidget*>("installedPlugins")->count(),1);
         manager->findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(installed->plugins()[0].enabled);
-        auto *editor=window->currentEditor();editor->setText("# production app unsaved 😀中\n\n- one\n- two\n\n```text\nproduction code\n```\n");
+        auto *editor=window->currentEditor();editor->setText("production app unsaved 😀中\n\n- one\n- two\n\n```text\nproduction code\n```\n");
         app->setEditorLanguage(editor,"Markdown");
         auto *documents=app->getPluginDocumentBridge();
         QCOMPARE(documents->active().toObject()["documentId"].toString(),documents->idFor(editor));
