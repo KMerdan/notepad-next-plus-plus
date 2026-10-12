@@ -388,7 +388,7 @@ private slots:
         const auto repository=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_REPOSITORY");
         if(repository.isEmpty())QSKIP("Live GitHub validation is opt-in.");
         const QString id="kmerdan.markdown-preview";
-        const auto expectedVersion=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_VERSION", "0.1.4");
+        const auto expectedVersion=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_VERSION", "0.1.5");
         auto *sources=app->getRegisteredResourceRegistry();auto *installed=app->getInstalledPluginRegistry();auto *engine=app->getPluginEngine();
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);
         auto *catalog=manager->findChild<QListWidget*>("discoverPlugins"),*local=manager->findChild<QListWidget*>("installedPlugins"),*sourceList=manager->findChild<QListWidget*>("registeredSources");auto *tabs=manager->findChild<QTabWidget*>("pluginManagerTabs");
