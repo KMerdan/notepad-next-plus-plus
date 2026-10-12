@@ -29,7 +29,15 @@ bool PackageLease::lockStore(QLockFile &lock,int waitMs,const std::atomic_bool *
         if(cancel&&cancel->load())return false;
         if(lock.tryLock(0))return true;
         const auto remaining=qint64(budget)-deadline.elapsed();
-        if(lock.error()!=QLockFile::LockFailedError||remaining<=0)return false;
+        bool retryable=lock.error()==QLockFile::LockFailedError;
+#ifdef Q_OS_WIN
+        // A deleted lock may still have open reader handles. CREATE_NEW then
+        // fails while the filename is no longer visible, which QLockFile maps
+        // to PermissionError. Keep the existing bounded worker wait; a genuine
+        // permission failure still fails, and zero-wait GUI callers never wait.
+        retryable=retryable||lock.error()==QLockFile::PermissionError;
+#endif
+        if(!retryable||remaining<=0)return false;
         QThread::msleep(qMin<qint64>(10,remaining));
     }
 }
