@@ -16,6 +16,13 @@
 #include <QSaveFile>
 #include <QSet>
 #include <algorithm>
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <cwchar>
+#endif
 namespace PluginPackages {
 namespace {
 bool reject(QString *error,const QString &text) { if(error)*error=text;return false; }
@@ -36,13 +43,28 @@ bool PackageStore::isSafeRelativePath(const QString &name) {
     return true;
 }
 namespace {
+bool unnamedStreamOnly(const QString &path) {
+#ifdef Q_OS_WIN
+    WIN32_FIND_STREAM_DATA stream{};const auto name=path.toStdWString();
+    const auto handle=FindFirstStreamW(name.c_str(),FindStreamInfoStandard,&stream,0);
+    if(handle==INVALID_HANDLE_VALUE){const auto error=GetLastError();return error==ERROR_HANDLE_EOF||error==ERROR_INVALID_PARAMETER;}
+    bool safe=true;
+    do {if(std::wcscmp(stream.cStreamName,L"::$DATA")!=0){safe=false;break;}}while(FindNextStreamW(handle,&stream));
+    if(safe&&GetLastError()!=ERROR_HANDLE_EOF)safe=false;
+    FindClose(handle);return safe;
+#else
+    Q_UNUSED(path);return true;
+#endif
+}
 struct Inventory { QJsonArray files; qint64 bytes=0; QSet<QString> aliases; };
 bool inventory(const QString &root,const QString &relative,const QString &destination,Inventory *result,QString *error,
                const std::atomic_bool *cancel,const std::function<void(qint64)> &progress,int depth=0) {
     if(cancelled(cancel,error)) return false;
     if(depth>32) return reject(error,"Package directory nesting exceeds 32.");
+    const auto directory=root+(relative.isEmpty()?QString():"/"+relative);
+    if(!unnamedStreamOnly(directory))return reject(error,"Package directories cannot contain alternate data streams.");
     QVector<QFileInfo> entries;
-    QDirIterator iterator(root+(relative.isEmpty()?QString():"/"+relative),QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden|QDir::System);
+    QDirIterator iterator(directory,QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden|QDir::System);
     while(iterator.hasNext()) {
         iterator.next();entries.append(iterator.fileInfo());
         if(entries.size()+result->aliases.size()>PackageStore::MaxFiles+1) return reject(error,"Too many package entries.");
@@ -52,6 +74,7 @@ bool inventory(const QString &root,const QString &relative,const QString &destin
     for(const auto &entry:entries) {
         const auto name=relative.isEmpty()?entry.fileName():relative+'/'+entry.fileName();
         if(!PackageStore::isSafeRelativePath(name)||entry.isSymLink()||(!entry.isDir()&&!entry.isFile())) return reject(error,"Unsafe or unsupported package entry: "+name);
+        if(!unnamedStreamOnly(entry.absoluteFilePath()))return reject(error,"Package entries cannot contain alternate data streams: "+name);
         if(name==".nnp-receipt.json" && destination.isEmpty() && relative.isEmpty()) continue;
         if(name==".nnp-receipt.json") return reject(error,"Package uses a reserved receipt name.");
         const auto alias=name.normalized(QString::NormalizationForm_C).toCaseFolded();

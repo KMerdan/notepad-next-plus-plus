@@ -131,7 +131,7 @@ private slots:
         window->hide();
         window->openFile(file);
         QTRY_VERIFY(window->currentEditor()&&window->currentEditor()->isFile());
-        auto *editor=window->currentEditor();QCOMPARE(editor->getFilePath(),QFileInfo(file).canonicalFilePath());
+        auto *editor=window->currentEditor();QCOMPARE(QDir::fromNativeSeparators(editor->getFilePath()),QFileInfo(file).canonicalFilePath());
         window->show();
         editor->setText("# unsaved 😀中\n");QVERIFY(!editor->isSavedToDisk());QCOMPARE(editor->save(),QFileDevice::NoError);QVERIFY(editor->isSavedToDisk());
 #ifdef NOTEPADNEXT_PLUGINS
