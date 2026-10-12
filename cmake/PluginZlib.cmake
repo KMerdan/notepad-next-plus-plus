@@ -14,12 +14,14 @@ if(NOT TARGET ZLIB::ZLIB)
             cmake_policy(SET CMP0135 NEW)
         endif()
         enable_language(C)
-        set(plugin_zlib_url "https://zlib.net/fossils/zlib-1.3.2.tar.gz")
+        set(plugin_zlib_url
+            "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz"
+            "https://zlib.net/fossils/zlib-1.3.2.tar.gz")
         if(NOTEPADNEXT_ZLIB_ARCHIVE)
             set(plugin_zlib_url "${NOTEPADNEXT_ZLIB_ARCHIVE}")
         endif()
         FetchContent_Declare(nnp_zlib
-            URL "${plugin_zlib_url}"
+            URL ${plugin_zlib_url}
             URL_HASH SHA256=bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16)
         set(ZLIB_BUILD_TESTING OFF CACHE BOOL "Build zlib examples as tests" FORCE)
         set(ZLIB_BUILD_SHARED OFF CACHE BOOL "Build shared zlib" FORCE)
