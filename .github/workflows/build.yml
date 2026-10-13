@@ -125,10 +125,10 @@ jobs:
         with:
           name: package-diagnostics-${{ matrix.arch }}
           path: |
-            build/plugin-packages/**/package-record.json
-            build/plugin-packages/**/bundle-validation.json
-            build/plugin-packages/**/deploy.log
-            build/plugin-packages/**/dmg.log
+            build/plugin-packages/*/package-record.json
+            build/plugin-packages/*/bundle-validation.json
+            build/plugin-packages/*/deploy.log
+            build/plugin-packages/*/dmg.log
           if-no-files-found: ignore
   release:
     name: Prepare binary Release
