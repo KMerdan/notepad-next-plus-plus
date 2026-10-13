@@ -230,9 +230,11 @@ void PluginSession::publishResources() {
     if(views)views->setPublished(true);
 #endif
     invokePending();
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     if(manifest["category"]=="editor-preview")QTimer::singleShot(0,this,[this]{
         if(currentState=="active"&&!busy&&queuedCommand.isEmpty()&&(!views||!views->panelCount()||!hasPreviewDocuments(manifest["preview"].toObject(),documents)))stop("preview-ended");
     });
+#endif
 }
 PluginWebviews::WebviewService *PluginSession::takeWebviewsForRestart(QObject *owner){
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS

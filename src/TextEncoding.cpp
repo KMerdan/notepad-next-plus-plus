@@ -2,6 +2,7 @@
 #include "TextEncoding.h"
 #include <QTextCodec>
 #include <uchardet.h>
+#include <limits>
 namespace {
 QByteArray codecName(const QString &name) {return name.endsWith(" BOM")?name.chopped(4).toLatin1():name.toLatin1();}
 QByteArray header(const QString &name) {
@@ -11,6 +12,7 @@ QByteArray header(const QString &name) {
     return {};
 }
 bool decodeBytes(const QByteArray &bytes,QTextCodec *codec,QString *text) {
+    if(bytes.size()>std::numeric_limits<int>::max())return false;
     QTextCodec::ConverterState state(QTextCodec::IgnoreHeader);
     *text=codec->toUnicode(bytes.constData(),bytes.size(),&state);
     return !state.invalidChars&&!state.remainingChars;
@@ -24,6 +26,7 @@ QStringList TextEncoding::supported() {
 }
 QString TextEncoding::label(const QString &encoding) {return encoding=="Shift_JIS"?QStringLiteral("Shift-JIS (Japanese)"):encoding;}
 bool TextEncoding::decode(const QByteArray &bytes,const QString &encoding,QString *text,QString *error) {
+    if(bytes.size()>std::numeric_limits<int>::max()){if(error)*error="This file exceeds the text decoder's supported size.";return false;}
     auto *codec=QTextCodec::codecForName(codecName(encoding));
     if(!supported().contains(encoding)||!codec){if(error)*error="Unsupported text encoding.";return false;}
     auto input=bytes;const auto bom=header(encoding);if(!bom.isEmpty()&&input.startsWith(bom))input.remove(0,bom.size());
@@ -32,6 +35,7 @@ bool TextEncoding::decode(const QByteArray &bytes,const QString &encoding,QStrin
     *text=candidate;return true;
 }
 bool TextEncoding::encode(const QString &text,const QString &encoding,QByteArray *bytes,QString *error) {
+    if(text.size()>std::numeric_limits<int>::max()){if(error)*error="This document exceeds the text encoder's supported size. No file has been written.";return false;}
     auto *codec=QTextCodec::codecForName(codecName(encoding));
     if(!supported().contains(encoding)||!codec){if(error)*error="Unsupported text encoding.";return false;}
     QTextCodec::ConverterState state(QTextCodec::IgnoreHeader);
