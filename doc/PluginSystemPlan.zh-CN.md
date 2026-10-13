@@ -1,5 +1,7 @@
 # NotepadNext 插件系统技术策划
 
+**2026-10-12 方向修订：** SDK 以 Notepad Next ++ 现有编辑功能的原生公开 API 为目标。最新 [原生 SDK 设计](plugin-system/NativeSDKDesign.zh-CN.md)优先于本文旧的 VS Code 兼容目标；原有适配实现作为实验记录，不继续作为 SDK 核心依赖。当前先进行设计评审，分仓和新增发布暂停。
+
 当前阶段（2026-10-11 用户明确修订）：**本机开发与插件功能验收**。编译、运行、热插拔及开发测试不要求 Developer ID、Apple 公证或发布。正式签名、公证、安装介质发行和面向最终用户的部署验收移入后续发行阶段，不阻塞当前开发；本文原 I4 发行内容保留为未来参考。需要本地打包时使用默认 ad-hoc 签名 `-`，无需开发者证书；不配置或提交 notarytool 凭据。
 
 研究日期：2026-10-10。研究代码基线：`adfd128`，应用版本 `0.15`。本文保留完整交付要求；当前方法和预算属于未正式发布的 0.1 profile。2026-10-11 实施进展：统一 metadata；单插件与 Marketplace 都先注册资源，进入 Uninstalled 后由用户选择安装。资源注册、Qt 管理器、本地／GitHub Release 安装、JSON-RPC、Node 宿主、Scintilla 文档桥、原生命令和 WebEngine Markdown 已接入。更新／回滚、首次使用验证、健康监督和 100 次启停／重载已在本机验证；33 个业务方法的共享 Schema 与插件配置／数据持久化已接入并验证；包回收、父应用异常退出监督、持久诊断和发行作者校验已接入。作者 ZIP／校验工具与草稿发行 CI 模板已准备；[Python 第二语言原型](plugin-system/PythonAdapter.zh-CN.md)已验证同一未保存文本和独立重载。[有界 VS Code 核心与完整 HTML Webview](plugin-system/VSCodeCompatibility.zh-CN.md)已接入；[有界状态与配置](plugin-system/VSCodePersistence.zh-CN.md)已按单个持久编辑会话接入；完整适配语义、进一步性能／故障验收与正式发行仍待完成，见[实施记录](plugin-system/Implementation.zh-CN.md)和[完成审计](plugin-system/CompletionAudit.json)。

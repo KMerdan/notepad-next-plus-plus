@@ -1,0 +1,25 @@
+{
+  "manifestVersion": 1,
+  "id": "demo.text-tools",
+  "name": "Native Text Tools — Design Only",
+  "version": "0.1.0",
+  "list": false,
+  "description": "Non-installable proposal requiring the candidate native host API 0.2 and selection/core bridges.",
+  "engines": {"notepadnext": ">=0.15.0 <0.16.0", "api": "^0.2.0"},
+  "runtime": {"kind": "node", "entry": "dist/index.js"},
+  "capabilities": {
+    "required": ["commands@1", "documents.read@1", "documents.write@1", "editors.selection.read@1", "core.commands@1", "messages@1"],
+    "optional": []
+  },
+  "activationEvents": ["onCommand:demo.text-tools.uppercase-selection", "onCommand:demo.text-tools.remove-duplicate-lines"],
+  "contributes": {
+    "commands": [
+      {"id": "demo.text-tools.uppercase-selection", "title": "Uppercase Selected Text"},
+      {"id": "demo.text-tools.remove-duplicate-lines", "title": "Remove Duplicate Lines"}
+    ],
+    "menus": [
+      {"location": "plugins", "command": "demo.text-tools.uppercase-selection", "order": 200},
+      {"location": "plugins", "command": "demo.text-tools.remove-duplicate-lines", "order": 210}
+    ]
+  }
+}

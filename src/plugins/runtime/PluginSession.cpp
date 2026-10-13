@@ -6,6 +6,7 @@
 #include "WireContract.h"
 #include "PluginDataService.h"
 #include "PackageLease.h"
+#include "SemVer.h"
 #include <QDir>
 #include <QCryptographicHash>
 #include <QFileInfo>
@@ -25,6 +26,9 @@ namespace PluginRuntime {
 namespace {
 QString uuid() { return QUuid::createUuid().toString(QUuid::WithoutBraces); }
 const QHash<QString,QString> capabilities={
+    {"nnp.documents.list","documents.read@1"},{"nnp.documents.getInfo","documents.read@1"},
+    {"nnp.editors.getActive","editors.selection.read@1"},{"nnp.editors.getSelections","editors.selection.read@1"},{"nnp.editors.capture","editors.selection.read@1"},{"nnp.editors.setSelections","editors.selection.write@1"},
+    {"nnp.core.list","core.commands@1"},{"nnp.core.execute","core.commands@1"},{"nnp.webviews.createHtml","webviews.html@1"},
     {"nnp.documents.getActive","documents.read@1"},{"nnp.documents.getSnapshot","documents.read@1"},
     {"nnp.documents.watch","documents.events@1"},{"nnp.documents.applyEdits","documents.write@1"},
     {"nnp.documents.watchAll","documents.delta@1"},{"nnp.documents.getMirrorSnapshot","documents.delta@1"},
@@ -44,6 +48,12 @@ bool fields(const QJsonObject &params,const QStringList &required,const QStringL
 }
 PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,const QString &runtime,const QString &host,QMainWindow *window,PluginDocuments::DocumentBridge *bridge,QObject *parent,bool holdPublication,PluginData::Service *dataService,QString repository,std::shared_ptr<PluginPackages::PackageLease> lease,QString interpreter)
     : QObject(parent),manifest(metadata),packageLease(std::move(lease)),root(package),node(runtime),hostEntry(host),session(uuid()),dataRepository(std::move(repository)),python(std::move(interpreter)),documents(bridge),window(window),data(dataService),process(new PluginRpc::RpcProcess(capabilities.keys(),this)),publicationHeld(holdPublication) {
+    QString negotiationError;
+    const auto apiRange=manifest["engines"].toObject()["api"].toString();
+    // Broad ranges from pre-0.2 packages keep their positional callback
+    // contract. Native invocation is an explicit opt-in excluding API 0.1.
+    if(manifest["runtime"].toObject()["kind"]!="python" && !PluginPackages::SemVer::satisfies("0.1.0",apiRange,&negotiationError)
+        && PluginPackages::SemVer::satisfies("0.2.0",apiRange,&negotiationError))apiVersion="0.2.0";
     process->holdLifetime(packageLease);
     stopDeadline.setSingleShot(true); stopDeadline.setInterval(3500);
     heartbeat.setInterval(10000);
@@ -82,12 +92,12 @@ PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,
         if(packageLease&&!packageLease->pinRuntimeProcess(process->processId(),&leaseError)){fail(leaseError,Failure::OwnershipFailure);return;}
         setState("initializing"); QJsonArray capabilities; for(const auto &capability:grants) capabilities.append(capability);
         const QJsonObject params{{"pluginId",manifest["id"]},{"sessionId",session},{"generation",1},{"protocolVersions",QJsonArray{"0.1"}},
-            {"hostVersion","0.15.0"},{"apiVersion","0.1.0"},{"grantedCapabilities",capabilities},
+            {"hostVersion","0.15.0"},{"apiVersion",apiVersion},{"grantedCapabilities",capabilities},
             {"limits",PluginRpc::profileLimits()}};
         call("nnp.initialize",params,[this,capabilities](const QJsonValue &value,const QJsonObject &error) {
             if(currentState!="initializing") return;
             const auto result=value.toObject();
-            if(!error.isEmpty() || result["protocolVersion"]!="0.1" || result["apiVersion"]!="0.1.0" || result["capabilities"]!=capabilities || result["limits"]!=PluginRpc::profileLimits()) { fail("Plugin initialization or capability negotiation failed.",Failure::InitializationFailed); return; }
+            if(!error.isEmpty() || result["protocolVersion"]!="0.1" || result["apiVersion"]!=apiVersion || result["capabilities"]!=capabilities || result["limits"]!=PluginRpc::profileLimits()) { fail("Plugin initialization or capability negotiation failed.",Failure::InitializationFailed); return; }
             setState("activating");
             call("nnp.plugin.activate",envelope({{"reason",activationReason}}),[this](const QJsonValue &,const QJsonObject &error) {
                 if(currentState!="activating") return;
@@ -120,14 +130,15 @@ void PluginSession::setState(const QString &state) {
 void PluginSession::activate(const QString &reason) {
     if(currentState!="idle") return;
     if(!documents || !window || !QFileInfo(node).isAbsolute() || !QFileInfo(hostEntry).isAbsolute() || !QFileInfo(hostEntry).isFile()) { fail("The controlled plugin runtime is unavailable.",Failure::RuntimeUnavailable); return; }
-    QStringList supported={"documents.read@1","documents.events@1","documents.delta@1","documents.write@1","commands@1","messages@1"
+    QStringList supported={"documents.read@1","documents.events@1","documents.delta@1","documents.write@1","commands@1","messages@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
         ,"webviews@1","webviews.restore@1","webviews.service@1"
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        ,"webviews.compat@1"
+        ,"webviews.compat@1","webviews.html@1"
 #endif
 #endif
     };
+    if(apiVersion=="0.1.0")for(const auto &cap:QStringList{"editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1","webviews.html@1"})supported.removeAll(cap);
     if(data)supported.append({"storage@1","configuration@1"});
     for(const auto &required:manifest["capabilities"].toObject()["required"].toArray()) {
         if(!supported.contains(required.toString())) { fail("Required capability is unavailable: "+required.toString(),Failure::CapabilityMissing); return; }
@@ -143,21 +154,23 @@ void PluginSession::activate(const QString &reason) {
     }
     activationReason=reason; setState("starting"); process->start(node,arguments,root);
 }
-void PluginSession::invoke(const QString &commandId,const QJsonArray &args) {
+void PluginSession::invoke(const QString &commandId,const QJsonArray &args,const QJsonObject &invocation) {
     bool declared=false; for(const auto &command:manifest["contributes"].toObject()["commands"].toArray()) if(command.toObject()["id"]==commandId) declared=true;
     if(!declared) { emit commandFinished(commandId,{},rpcError(-32602,"Command is not declared")); return; }
     if(currentState=="stopping" || currentState=="stopped" || currentState=="failed") { emit commandFinished(commandId,{},rpcError(1004,"Plugin is unavailable")); return; }
     if(busy || !queuedCommand.isEmpty()) return; // coalesce clicks during activation or an open command
-    queuedCommand=commandId; queuedArgs=args;
+    queuedCommand=commandId; queuedArgs=args;queuedInvocation=invocation.isEmpty()?documents->invocation(commandId,args):invocation;
     if(currentState=="idle") activate("command"); else if(currentState=="active") invokePending();
 }
 void PluginSession::invokePending() {
     if(currentState!="active" || publicationHeld || queuedCommand.isEmpty()) return;
-    const auto id=queuedCommand; const auto args=queuedArgs; queuedCommand.clear(); queuedArgs={};
+    const auto id=queuedCommand; const auto args=queuedArgs;const auto target=queuedInvocation; queuedCommand.clear(); queuedArgs={};queuedInvocation={};
     if(!commands.contains(id)) { emit commandFinished(id,{},rpcError(-32602,"Plugin did not register the declared command")); return; }
     busy=true;
     QElapsedTimer elapsed;elapsed.start();
-    commandRequest=call("nnp.commands.invoke",envelope({{"callbackId",commands[id].callbackId},{"args",args}}),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invoke",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error); });
+    const auto invokeMethod=apiVersion=="0.2.0"?QStringLiteral("nnp.commands.invokeNative"):QStringLiteral("nnp.commands.invoke");
+    const auto invokeParams=apiVersion=="0.2.0"?QJsonObject{{"callbackId",commands[id].callbackId},{"invocation",target}}:QJsonObject{{"callbackId",commands[id].callbackId},{"args",args}};
+    commandRequest=call(invokeMethod,envelope(invokeParams),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invoke",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error); });
     if(!messages.isEmpty())process->setDeadlinePaused(commandRequest,true);
 }
 void PluginSession::fail(const QString &sourceMessage,Failure category) {
@@ -295,7 +308,8 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
     if(currentState!="active" && currentState!="activating") { reject(1004,"PluginStopping"); return; }
     const bool dataMethod=method.startsWith("nnp.storage.")||method.startsWith("nnp.configuration.");
     if(dataMethod&&!data) { reject(1005,"UnsupportedCapability"); return; }
-    if(!grants.contains(capabilities.value(method))) { reject(1003,"CapabilityDenied"); return; }
+    const bool htmlMethod=method=="nnp.webviews.setDocument"||method=="nnp.webviews.mapAsset"||method=="nnp.webviews.setTitle";
+    if(!grants.contains(capabilities.value(method))&&!(htmlMethod&&grants.contains("webviews.html@1"))) { reject(1003,"CapabilityDenied"); return; }
     if((method=="nnp.documents.watchAll"||method=="nnp.documents.getMirrorSnapshot")&&!grants.contains("documents.read@1")){reject(1003,"Document delta streams require documents.read@1.");return;}
     if(method=="nnp.window.showMessage") {
         if(currentState!="active"||publicationHeld||!window){reject(1004,"Messages require a validated active plugin.");return;}
@@ -329,9 +343,25 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         },dataRepository,params.value("expectedValue"));
         return;
     }
-    if((currentState!="active"||publicationHeld)&&method=="nnp.documents.applyEdits"){reject(1004,"Document writes require a validated active plugin.");return;}
+    if((currentState!="active"||publicationHeld)&&(method=="nnp.documents.applyEdits"||method=="nnp.core.execute"||method=="nnp.editors.setSelections")){reject(1004,"Document writes require a validated active plugin.");return;}
     if(!documents) { reject(1002,"Document service is unavailable"); return; }
-    if(method=="nnp.documents.getActive") {
+    const bool nativeMethod=method=="nnp.documents.list"||method=="nnp.documents.getInfo"||method.startsWith("nnp.editors.")||method.startsWith("nnp.core.")||method=="nnp.webviews.createHtml";
+    if((nativeMethod||params.contains("selectionGuard"))&&apiVersion!="0.2.0"){reject(1005,"This method requires native API 0.2");return;}
+    if(method=="nnp.documents.list")result=documents->nativeList();
+    else if(method=="nnp.documents.getInfo") {result=documents->nativeInfo(params["documentId"].toString());if(result.toObject().isEmpty())error=rpcError(1002,"DocumentClosed");}
+    else if(method=="nnp.editors.getActive")result=documents->activeEditor();
+    else if(method=="nnp.editors.getSelections")result=documents->selections(params["editorId"].toString(),&error);
+    else if(method=="nnp.editors.capture") {
+        if(!grants.contains("documents.read@1")){reject(1003,"Capture requires documents.read@1");return;}
+        result=documents->capture(params["invocation"].toObject(),&error);
+    }else if(method=="nnp.editors.setSelections")result=documents->setSelections(params,&error);
+    else if(method=="nnp.core.list")result=documents->coreCatalog();
+    else if(method=="nnp.core.execute") {
+        const auto command=params["commandId"].toString();
+        const auto needed=command.startsWith("view.")?QStringLiteral("editors.view.write@1"):QStringLiteral("documents.write@1");
+        if(!grants.contains(needed)){reject(1003,"Native operation requires "+needed);return;}
+        result=documents->executeCore(command,params["request"].toObject(),&error);
+    }else if(method=="nnp.documents.getActive") {
         if(!fields(params,{})) { reject(-32602,"Invalid params"); return; } result=documents->active();
     } else if(method=="nnp.documents.getSnapshot") {
         if(!fields(params,{"documentId"}) || !string(params,"documentId")) { reject(-32602,"Invalid document handle"); return; } result=documents->snapshot(params["documentId"].toString(),&error);
@@ -350,7 +380,8 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         if(error.isEmpty())result=QJsonObject{{"snapshot",snapshot},{"eventSeq",documents->deltaSequence()}};
     } else if(method=="nnp.documents.applyEdits") {
         if(currentState!="active") { reject(1004,"Document writes require an active plugin"); return; }
-        if(!fields(params,{"documentId","expectedVersion","edits"}) || !string(params,"documentId") || !params["expectedVersion"].isDouble() || !params["edits"].isArray()) { reject(-32602,"Invalid document edits"); return; }
+        if(!fields(params,{"documentId","expectedVersion","edits"},{"selectionGuard"}) || !string(params,"documentId") || !params["expectedVersion"].isDouble() || !params["edits"].isArray()) { reject(-32602,"Invalid document edits"); return; }
+        if(params.contains("selectionGuard")&&!documents->checkSelection(params["documentId"].toString(),params["selectionGuard"].toObject(),&error)){process->respond(token,{},error);return;}
         result=documents->applyEdits(params["documentId"].toString(),params["expectedVersion"].toInteger(-1),params["edits"].toArray(),&error);
     } else if(method=="nnp.commands.register") {
         if(!fields(params,{"commandId","callbackId"}) || !string(params,"commandId",192) || !string(params,"callbackId")) { reject(-32602,"Invalid command registration"); return; }
@@ -362,8 +393,8 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     else if(method.startsWith("nnp.webviews.")) {
         if(panelsSuspended){reject(1004,"Plugin panels are suspended for hot update");return;}
-        if((capabilities.value(method)=="webviews.compat@1"||capabilities.value(method)=="webviews.service@1")&&!grants.contains("webviews@1")){reject(1003,"Compatible Webviews require webviews@1 as well");return;}
-        if(!views && (method=="nnp.webviews.create"||method=="nnp.webviews.createCompatible"||method=="nnp.webviews.createService")) {
+        if((capabilities.value(method)=="webviews.compat@1"||capabilities.value(method)=="webviews.service@1"||capabilities.value(method)=="webviews.html@1"||htmlMethod)&&!grants.contains("webviews@1")){reject(1003,"Compatible Webviews require webviews@1 as well");return;}
+        if(!views && (method=="nnp.webviews.create"||method=="nnp.webviews.createCompatible"||method=="nnp.webviews.createHtml"||method=="nnp.webviews.createService")) {
             const auto owner=QString::fromLatin1(QCryptographicHash::hash(session.toUtf8(),QCryptographicHash::Sha256).toHex().left(32));
             views=new PluginWebviews::WebviewService(manifest["id"].toString(),root,window,documents,this,owner);
             views->setRestoreSource(restoreSource);
@@ -377,7 +408,7 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         if(method=="nnp.webviews.createService") {
             const QPointer<PluginRpc::RpcProcess> recipient=process;
             views->createService(params["viewType"].toString(),params["title"].toString(),QUrl(params["endpoint"].toString()),params["nonce"].toString(),session,params["restorationKey"].toString(),[recipient,token](const QJsonObject &result,const QJsonObject &error){if(recipient)recipient->respond(token,result,error);});return;
-        } else if(method=="nnp.webviews.createCompatible") {
+        } else if(method=="nnp.webviews.createCompatible"||method=="nnp.webviews.createHtml") {
             QStringList roots;for(const auto &entry:params["localResourceRoots"].toArray())roots.append(entry.toString());
             result=views->createCompatible(params["panelId"].toString(),params["viewType"].toString(),params["title"].toString(),params["enableScripts"].toBool(),roots,&error,params["restorationKey"].toString());
         } else if(method=="nnp.webviews.create") {

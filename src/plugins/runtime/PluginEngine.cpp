@@ -20,6 +20,7 @@
 #include <QThread>
 #include <QTimer>
 #include <QToolBar>
+#include <QUuid>
 #include <algorithm>
 using PluginDiagnostics::Failure;
 namespace PluginRuntime {
@@ -39,11 +40,12 @@ RuntimePaths RuntimePaths::bundled() {
 }
 PluginPackages::PackagePolicy PluginEngine::packagePolicy() {
     PluginPackages::PackagePolicy policy;
-    policy.capabilities={"commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1"};
+    policy.apiVersion="0.2.0";policy.compatibleApiVersions={"0.1.0"};
+    policy.capabilities={"commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"};
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     policy.capabilities.append("webviews@1");policy.capabilities.append("webviews.restore@1");
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-    policy.capabilities.append("webviews.compat@1");policy.capabilities.append("webviews.service@1");
+    policy.capabilities.append("webviews.compat@1");policy.capabilities.append("webviews.html@1");policy.capabilities.append("webviews.service@1");
 #endif
 #endif
     return policy;
@@ -74,7 +76,7 @@ PluginEngine::PluginEngine(PluginPackages::InstalledPluginRegistry *installedReg
     });
 }
 void PluginEngine::attachWindow(QMainWindow *value,QMenu *pluginsMenu) {
-    Q_ASSERT(!window);window=value;menu=pluginsMenu;
+    Q_ASSERT(!window);documents->setWindowId(QUuid::createUuid().toString(QUuid::WithoutBraces));window=value;menu=pluginsMenu;
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     PluginWebviews::prepareWindow(value);
 #endif
@@ -194,11 +196,11 @@ void PluginEngine::invoke(const QString &id,const QString &command) {
     if(!declared||!p.enabled||quitting||waiting.contains(id)||updating.contains(id)||restoring.contains(id)||hasPreservedPanels(id)||removing.contains(id))return;
     failures.remove(id);restartTickets.remove(id);crashTimes.remove(id);
     if(auto *session=sessions.value(id,nullptr);session&&(session->state()=="failed"||session->state()=="stopped")) {
-        afterStop(id,[this,id,command]{request(id,command,"command");});return;
+        const auto target=documents->invocation(command);afterStop(id,[this,id,command,target]{request(id,command,"command",target);});return;
     }
-    request(id,command,"command");
+    request(id,command,"command",documents->invocation(command));
 }
-void PluginEngine::request(const QString &id,const QString &command,const QString &reason) {
+void PluginEngine::request(const QString &id,const QString &command,const QString &reason,const QJsonObject &invocation) {
     bool validating=updating.contains(id)&&(reason=="update-validation"||reason=="reload");
     if(quitting||!registry->loadError().isEmpty()||waiting.contains(id)||removing.contains(id)||!window||(!registry->plugin(id).enabled&&!validating)||(updating.contains(id)&&!validating))return;
     if(registry->plugin(id).validationDeferred) {
@@ -206,8 +208,8 @@ void PluginEngine::request(const QString &id,const QString &command,const QStrin
         if(!registry->startValidation(id,&message)){updating.remove(id);failures[id]=message;failureCategories[id]=Failure::UpdateFailed;log(id,message.toUtf8(),Failure::UpdateFailed,"failure");emit error(id,message);emit statusChanged(id);return;}
         validating=true;
     }
-    if(auto *session=sessions.value(id,nullptr)) {if(!command.isEmpty()&&session->state()!="stopping")session->invoke(command);return;}
-    if(verifying.contains(id)){if(!command.isEmpty())verifying[id].command=command;return;}
+    if(auto *session=sessions.value(id,nullptr)) {if(!command.isEmpty()&&session->state()!="stopping")session->invoke(command,{},invocation);return;}
+    if(verifying.contains(id)){if(!command.isEmpty()&&verifying[id].command.isEmpty()){verifying[id].command=command;verifying[id].invocation=invocation;}return;}
     if(!QFileInfo(paths.node).isExecutable()||!QFileInfo(paths.hostEntry).isFile()||!QDir::isAbsolutePath(paths.node)||!QDir::isAbsolutePath(paths.hostEntry)) {
         const auto message=tr("The bundled Node 24 runtime or plugin host is missing. Repair the application installation.");failures[id]=message;failureCategories[id]=Failure::RuntimeUnavailable;log(id,message.toUtf8(),Failure::RuntimeUnavailable,"failure");emit statusChanged(id);emit error(id,message);if(validating)failUpdate(id,message);return;
     }
@@ -215,7 +217,7 @@ void PluginEngine::request(const QString &id,const QString &command,const QStrin
         const auto message=tr("This build has no configured Python plugin runtime. Configure an absolute Python 3.12 interpreter path.");failures[id]=message;failureCategories[id]=Failure::RuntimeUnavailable;log(id,message.toUtf8(),Failure::RuntimeUnavailable,"failure");emit statusChanged(id);emit error(id,message);if(validating)failUpdate(id,message);return;
     }
     const auto p=registry->plugin(id);const auto store=registry->packageStorePath();
-    auto cancel=std::make_shared<std::atomic_bool>(false);verifying.insert(id,{cancel,command,reason});emit statusChanged(id);
+    auto cancel=std::make_shared<std::atomic_bool>(false);verifying.insert(id,{cancel,command,reason,invocation});emit statusChanged(id);
     struct Outcome {bool ok=false;QString error;std::shared_ptr<PluginPackages::PackageLease> lease;};auto outcome=std::make_shared<Outcome>();
     auto *thread=QThread::create([p,store,cancel,outcome]{
         outcome->lease=PluginPackages::PackageLease::acquire(store,p.package.digest,&outcome->error,1000);
@@ -223,14 +225,14 @@ void PluginEngine::request(const QString &id,const QString &command,const QStrin
     });
     connect(thread,&QThread::finished,this,[this,id,digest=p.package.digest,cancel,outcome] {
         const auto v=verifying.take(id);
-        if(!cancel->load()&&outcome->ok&&registry->plugin(id).package.digest==digest&&(registry->plugin(id).enabled||updating.contains(id))&&!quitting)startVerified(id,v.command,v.reason,outcome->lease);
+        if(!cancel->load()&&outcome->ok&&registry->plugin(id).package.digest==digest&&(registry->plugin(id).enabled||updating.contains(id))&&!quitting)startVerified(id,v.command,v.reason,outcome->lease,v.invocation);
         else if(!cancel->load()&&!outcome->ok){failures[id]=outcome->error;failureCategories[id]=Failure::PackageInvalid;log(id,outcome->error.toUtf8(),Failure::PackageInvalid,"failure");emit error(id,outcome->error);if(updating.contains(id))failUpdate(id,outcome->error);}
         emit statusChanged(id);
         if(waiting.contains(id)){auto action=waiting.take(id);action();}checkIdle();
     });
     connect(thread,&QThread::finished,thread,&QObject::deleteLater);thread->start();
 }
-void PluginEngine::startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease) {
+void PluginEngine::startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease,const QJsonObject &invocation) {
     if(!window||quitting)return;
     const auto p=registry->plugin(id);
     auto *session=new PluginSession(p.package.metadata,p.package.root,paths.node,paths.hostEntry,window,documents,this,updating.contains(id)||hasPreservedPanels(id),data,p.package.repository,lease,paths.python);sessions.insert(id,session);
@@ -280,7 +282,7 @@ void PluginEngine::startVerified(const QString &id,const QString &command,const 
         collection->request();
         if(waiting.contains(id)){auto action=waiting.take(id);action();}checkIdle();
     });
-    if(command.isEmpty())session->activate(reason);else session->invoke(command);
+    if(command.isEmpty())session->activate(reason);else session->invoke(command,{},invocation);
 }
 void PluginEngine::afterStop(const QString &id,std::function<void()> action) {
     if(waiting.contains(id)){emit operationFinished(id,tr("Another lifecycle operation is in progress."));return;}

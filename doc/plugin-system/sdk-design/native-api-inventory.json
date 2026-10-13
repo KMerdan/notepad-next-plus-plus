@@ -1,0 +1,581 @@
+{
+  "status": "design-only",
+  "apiCandidate": "0.2",
+  "currentHostApi": "0.1.0",
+  "date": "2026-10-12",
+  "head": "4bdf432780aec1c4191ce1bad6739244c0a457f2",
+  "baseline": "Current worktree includes paused repository-split changes; design does not approve or complete them.",
+  "stateMeaning": {
+    "existing-sdk": "At least some listed capability is currently exposed; notes identify additions.",
+    "native-needs-bridge": "Feature exists inside editor; SDK semantics and RPC bridge still needed.",
+    "new-host-work": "Requires a new extensibility/ownership/dispatch service despite related native functionality."
+  },
+  "capabilities": [
+    {
+      "id": "host",
+      "title": "宿主能力与预算",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "host.supports",
+        "host.limits"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/runtime/PluginSession.cpp",
+          "symbols": "initialize and grants",
+          "sha256": "5fa07459d462144de8482630436f3336e0f96d0753e28bf16a16c5652e192d7d"
+        },
+        {
+          "path": "packages/plugin-host/protocol-profile.json",
+          "symbols": "negotiated limits",
+          "sha256": "58e40708f51fb8f0b42645e6107c4a4e83c4a0cf4d0ddad77833628318d9366f"
+        }
+      ],
+      "notes": "握手与预算已存在；统一 SDK helper 待整理"
+    },
+    {
+      "id": "commands",
+      "title": "插件命令与 contributions",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "commands.register"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/runtime/PluginEngine.cpp",
+          "symbols": "syncRegistry",
+          "sha256": "0220c947db31f64ab2dc596a3e25c1fe71130c59135c5e4f9f5a076b0999b515"
+        },
+        {
+          "path": "src/plugins/runtime/PluginSession.cpp",
+          "symbols": "nnp.commands.register",
+          "sha256": "5fa07459d462144de8482630436f3336e0f96d0753e28bf16a16c5652e192d7d"
+        }
+      ],
+      "notes": "静态命令/菜单/toolbar 已有；0.2 invocation context 待新增"
+    },
+    {
+      "id": "document-read",
+      "title": "正文与变更事件",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "documents.getActive",
+        "documents.getSnapshot",
+        "documents.watch"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/documents/DocumentBridge.h",
+          "symbols": "snapshot/event/list",
+          "sha256": "70a4a088cfa6ca8d00bc367de214a24b692dbfe52df834ce75616a1c0019b385"
+        },
+        {
+          "path": "src/plugins/runtime/PluginSession.cpp",
+          "symbols": "nnp.documents.getActive/getSnapshot/watch",
+          "sha256": "5fa07459d462144de8482630436f3336e0f96d0753e28bf16a16c5652e192d7d"
+        }
+      ],
+      "notes": "有效 UTF-8 文本快照最多 2 MiB"
+    },
+    {
+      "id": "document-edit",
+      "title": "原子文本编辑",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "documents.applyEdits"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/documents/DocumentBridge.cpp",
+          "symbols": "applyEdits",
+          "sha256": "cdc80cb18d3289d16dbabe1c48dff4b1adda852229e2095cb70740e91e08252b"
+        }
+      ],
+      "notes": "已实现版本/readonly/范围/重叠检查与一次 undo；selectionGuard 是新桥接"
+    },
+    {
+      "id": "document-list",
+      "title": "文档列表与元数据",
+      "state": "native-needs-bridge",
+      "phase": "A",
+      "candidateSdk": [
+        "documents.list",
+        "documents.getInfo"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/documents/DocumentBridge.h",
+          "symbols": "list/info",
+          "sha256": "70a4a088cfa6ca8d00bc367de214a24b692dbfe52df834ce75616a1c0019b385"
+        },
+        {
+          "path": "src/EditorManager.h",
+          "symbols": "editorCreated/editorClosed",
+          "sha256": "b2649606927ce9aee0a703e62e07c5fb24a013dbc9a34be62a5dda36ca3cdbff"
+        }
+      ],
+      "notes": "底层列表已有；SDK 直接 API 和 EOL/BOM 等字段待新增"
+    },
+    {
+      "id": "editor-selection",
+      "title": "光标、多选区、原子 capture",
+      "state": "native-needs-bridge",
+      "phase": "A",
+      "candidateSdk": [
+        "editors.capture",
+        "editors.getSelections",
+        "editors.setSelections"
+      ],
+      "sources": [
+        {
+          "path": "src/ScintillaNext.h",
+          "symbols": "ScintillaEdit inheritance",
+          "sha256": "01404f884a21bef0cd61a89f90fc339e2ea86c7d4ba35383f17de81a955cf665"
+        },
+        {
+          "path": "src/dialogs/MainWindow.cpp",
+          "symbols": "selection and editor actions",
+          "sha256": "a812f98fea613393dadddb691add7015d5b02b1afa883860d48c34a4887fad10"
+        }
+      ],
+      "notes": "revision/capture/guard 所有权需新桥；初版变换支持普通多选区"
+    },
+    {
+      "id": "core-operations",
+      "title": "去重、排序、大小写、注释、undo/redo",
+      "state": "native-needs-bridge",
+      "phase": "A",
+      "candidateSdk": [
+        "core.list",
+        "core.execute"
+      ],
+      "sources": [
+        {
+          "path": "src/ScintillaNext.cpp",
+          "symbols": "removeDuplicateLines/toggleCommentSelection",
+          "sha256": "bd402f5034cb31af96d74658416bebf17d91ba5e43c08aa02fee6f57c196c8f1"
+        },
+        {
+          "path": "src/ScintillaSorter.cpp",
+          "symbols": "sort",
+          "sha256": "9af5f3be597a6b2db7a42a3950e6a9c1e37802c592574bd15210e8176cf95552"
+        },
+        {
+          "path": "src/dialogs/MainWindow.cpp",
+          "symbols": "connectEditorAction",
+          "sha256": "a812f98fea613393dadddb691add7015d5b02b1afa883860d48c34a4887fad10"
+        }
+      ],
+      "notes": "需要公共 EditorOperations 服务和稳定目录，不直接 trigger 任意 QAction"
+    },
+    {
+      "id": "file-operations",
+      "title": "文件新建、打开、保存、关闭",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "files.create",
+        "files.open",
+        "files.save",
+        "files.close"
+      ],
+      "sources": [
+        {
+          "path": "src/dialogs/MainWindow.h",
+          "symbols": "newFile/openFile/saveFile/closeFile",
+          "sha256": "f8a157789b04d763c3ff736ccad98b9a7ac1bc5234b6c2b613e19b98e03e1ccc"
+        },
+        {
+          "path": "src/ScintillaNext.h",
+          "symbols": "save/saveAs/reload",
+          "sha256": "01404f884a21bef0cd61a89f90fc339e2ea86c7d4ba35383f17de81a955cf665"
+        }
+      ],
+      "notes": "Save As 和未保存关闭语义必须绑定原目标并保留用户选择"
+    },
+    {
+      "id": "search",
+      "title": "搜索、计数、替换",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "search.findAll"
+      ],
+      "sources": [
+        {
+          "path": "src/Finder.h",
+          "symbols": "findNext/count/replaceAll",
+          "sha256": "7b57fd0543fde40b5e6a02a148519ac4dd3b6e7bd8efec5aabcbf269f99681ef"
+        },
+        {
+          "path": "src/QRegexSearch.cpp",
+          "symbols": "FindText",
+          "sha256": "08682a424522a603f048595b3549012b67f104e684bf291442e08e8509a98f7a"
+        },
+        {
+          "path": "src/SearchResultsCollector.h",
+          "symbols": "newResultsEntry",
+          "sha256": "1367fa7d1e25d2bf2bd63953b1c70b47d4546f93583669df96142b9b52a33701"
+        }
+      ],
+      "notes": "初版字面量；正则需要响应/预算/取消策略独立验收"
+    },
+    {
+      "id": "language",
+      "title": "内置语言列表、选择、关键词",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "languages.list",
+        "languages.set"
+      ],
+      "sources": [
+        {
+          "path": "src/NotepadNextApplication.h",
+          "symbols": "getLanguages/setEditorLanguage/getLanguageKeywords",
+          "sha256": "1d3c72a64e359c2055cc77acebae6a1a4e4ae66f1701204aa85d501148075861"
+        },
+        {
+          "path": "src/LuaExtension.h",
+          "symbols": "setEditor",
+          "sha256": "db06739c21c54a2ce9afda43cb51cfc4e479173d07f2f76e2a165ea23cda20b0"
+        }
+      ],
+      "notes": "开放结构化信息；不暴露 execute Lua"
+    },
+    {
+      "id": "eol-encoding",
+      "title": "行尾与文件表示",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "documents.getInfo",
+        "later documents.setLineEnding"
+      ],
+      "sources": [
+        {
+          "path": "src/ScintillaNext.h",
+          "symbols": "BomType/eolString",
+          "sha256": "01404f884a21bef0cd61a89f90fc339e2ea86c7d4ba35383f17de81a955cf665"
+        },
+        {
+          "path": "src/dialogs/MainWindow.h",
+          "symbols": "convertEOLs",
+          "sha256": "f8a157789b04d763c3ff736ccad98b9a7ac1bc5234b6c2b613e19b98e03e1ccc"
+        }
+      ],
+      "notes": "内部 Unicode 与磁盘 BOM 分开；未知字节不猜编码"
+    },
+    {
+      "id": "bookmarks",
+      "title": "用户书签",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "bookmarks.list",
+        "bookmarks.toggle"
+      ],
+      "sources": [
+        {
+          "path": "src/decorators/BookMarkDecorator.h",
+          "symbols": "bookMarkedLines/toggleBookmark",
+          "sha256": "93c1fb94b51cf4eb563f7cf36f7f191dd8dc21dc83e6085ed9efea9dfab5249b"
+        }
+      ],
+      "notes": "用户书签与插件私有装饰分开"
+    },
+    {
+      "id": "decorations",
+      "title": "插件私有标记和高亮",
+      "state": "new-host-work",
+      "phase": "B",
+      "candidateSdk": [
+        "decorations.create",
+        "Decoration.setRanges"
+      ],
+      "sources": [
+        {
+          "path": "src/ScintillaNext.h",
+          "symbols": "allocateIndicator",
+          "sha256": "01404f884a21bef0cd61a89f90fc339e2ea86c7d4ba35383f17de81a955cf665"
+        },
+        {
+          "path": "src/decorators/MarkerAppDecorator.h",
+          "symbols": "mark/clear",
+          "sha256": "adf40668e19976386f13e5190257013f49a4bb3a41c37765d9a1896904b58f6f"
+        }
+      ],
+      "notes": "绘制基础已有；plugin-owned 资源分配、代际清理和冲突语义需新实现"
+    },
+    {
+      "id": "view",
+      "title": "跳转、折叠、已有分屏",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "editors.revealRange",
+        "editors.split",
+        "core.execute"
+      ],
+      "sources": [
+        {
+          "path": "src/DockedEditor.h",
+          "symbols": "splitToRight/splitToBottom",
+          "sha256": "33e3d648dfe3c58d99a6e5f280d4a7514a4575f3722febf3ec18d5cdbe97ea73"
+        },
+        {
+          "path": "src/ScintillaNext.h",
+          "symbols": "goToRange/foldAllLevels",
+          "sha256": "01404f884a21bef0cd61a89f90fc339e2ea86c7d4ba35383f17de81a955cf665"
+        }
+      ],
+      "notes": "split 移动已有 dock，非共享正文克隆；宿主当前绑定单窗口"
+    },
+    {
+      "id": "exports",
+      "title": "HTML/RTF 导出",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "later exports.render"
+      ],
+      "sources": [
+        {
+          "path": "src/Converter.h",
+          "symbols": "convert/convertRange",
+          "sha256": "b90ae6d14e5898bb1dc0b642124eca0f73dc7d62e2f3e71a0cdb752205999d26"
+        },
+        {
+          "path": "src/dialogs/MainWindow.h",
+          "symbols": "exportAsFormat/copyAsFormat",
+          "sha256": "f8a157789b04d763c3ff736ccad98b9a7ac1bc5234b6c2b613e19b98e03e1ccc"
+        }
+      ],
+      "notes": "返回有预算的结果；保存/剪贴板副作用单独声明"
+    },
+    {
+      "id": "macros",
+      "title": "已保存原生宏",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "later macros.list",
+        "later macros.run"
+      ],
+      "sources": [
+        {
+          "path": "src/MacroManager.h",
+          "symbols": "availableMacros",
+          "sha256": "061fe091303a092a354abe9d8406804a2427c104096b8aa12eb0c71d1cef562a"
+        },
+        {
+          "path": "src/Macro.h",
+          "symbols": "replay",
+          "sha256": "8d24689472ee6a389d4c5d742072925535d94743b1828e4651ef1ed36ba6ebee"
+        }
+      ],
+      "notes": "稳定宏 ID/循环预算；不提供裸 Scintilla step 指针"
+    },
+    {
+      "id": "folders",
+      "title": "原生文件夹根目录",
+      "state": "native-needs-bridge",
+      "phase": "B",
+      "candidateSdk": [
+        "later folders.getRoot"
+      ],
+      "sources": [
+        {
+          "path": "src/docks/FolderAsWorkspaceDock.h",
+          "symbols": "rootPath/setRootPath",
+          "sha256": "3874fa341ad9d8d92973259ce47181f4fa5c5fc36d5c9e6653b4f645bc491ce6"
+        }
+      ],
+      "notes": "只开放已有文件夹视图语义"
+    },
+    {
+      "id": "panels",
+      "title": "fragment/HTML/JS 面板",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "webviews.create",
+        "webviews.createHtml"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/webviews/WebviewService.h",
+          "symbols": "create/createCompatible/setHtml/setDocument",
+          "sha256": "00ab5b98ddc14ec9af4903351dcc04becf92e65506706653c8d2ca0f2404d1ae"
+        }
+      ],
+      "notes": "现有渲染基础可复用；createHtml 和 acquireNotepadNextApi 是候选原生命名"
+    },
+    {
+      "id": "service-panels",
+      "title": "激活所属本地 HTTP 服务",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "webviews.createService"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/webviews/WebviewService.h",
+          "symbols": "createService",
+          "sha256": "00ab5b98ddc14ec9af4903351dcc04becf92e65506706653c8d2ca0f2404d1ae"
+        },
+        {
+          "path": "packages/plugin-sdk/local-service.cjs",
+          "symbols": "startLocalService",
+          "sha256": "d712a45fa0a567bceddc8cbf77dfea444057aead9407a5e2317ffc06edc47cb9"
+        }
+      ],
+      "notes": "已验证 owned loopback endpoint；无任意后端内存迁移"
+    },
+    {
+      "id": "restoration",
+      "title": "所有类型面板热更新恢复",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "webviews.registerRestorer"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/runtime/PluginEngine.h",
+          "symbols": "stopPreservingPanels/confirmUpdate",
+          "sha256": "c360f772d25bcf5e3e614b6992b2267e69d9e059cd7890017cbe33a6e3773367"
+        },
+        {
+          "path": "src/plugins/webviews/WebviewService.h",
+          "symbols": "finishRestoration/commitRestoration",
+          "sha256": "00ab5b98ddc14ec9af4903351dcc04becf92e65506706653c8d2ca0f2404d1ae"
+        }
+      ],
+      "notes": "已实现；新 SDK 保留通用生命周期"
+    },
+    {
+      "id": "data",
+      "title": "插件数据与配置",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "storage.get/update",
+        "configuration.get/update"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/data/PluginDataService.h",
+          "symbols": "access",
+          "sha256": "a66afb2f8f62ec666b5d91cdc72cbbb0ef9d6a841c0583213e76301e6e540c3a"
+        },
+        {
+          "path": "src/plugins/data/PluginDataStore.h",
+          "symbols": "plugin-owned stores",
+          "sha256": "98124ee6e73464500aece5b2cec84a3c9ef45134c120c5c8058f55bf0b3a0094"
+        }
+      ],
+      "notes": "不是全局 ApplicationSettings/QSettings 的任意访问"
+    },
+    {
+      "id": "messages",
+      "title": "原生提示",
+      "state": "existing-sdk",
+      "phase": "A",
+      "candidateSdk": [
+        "window.showMessage"
+      ],
+      "sources": [
+        {
+          "path": "src/plugins/runtime/PluginSession.cpp",
+          "symbols": "message dispatch",
+          "sha256": "5fa07459d462144de8482630436f3336e0f96d0753e28bf16a16c5652e192d7d"
+        }
+      ],
+      "notes": "当前字符串动作提示；文件 picker 与表单是后续扩展"
+    },
+    {
+      "id": "appearance",
+      "title": "主题 token 和 SDK 日志",
+      "state": "native-needs-bridge",
+      "phase": "A",
+      "candidateSdk": [
+        "log",
+        "later appearance.getTokens"
+      ],
+      "sources": [
+        {
+          "path": "src/NativeAppearance.h",
+          "symbols": "native appearance",
+          "sha256": "4ea37d594cf8759b98f5edffd356b86364d67e1ca4eb73e177651089c66bc924"
+        },
+        {
+          "path": "src/plugins/diagnostics/PluginDiagnostics.h",
+          "symbols": "diagnostics",
+          "sha256": "e73d3608139b67d6fe0828312bcd61fbf13008779cb0d367dedbd76468d845c7"
+        },
+        {
+          "path": "src/plugins/webviews/WebviewService.h",
+          "symbols": "refreshAppearance",
+          "sha256": "00ab5b98ddc14ec9af4903351dcc04becf92e65506706653c8d2ca0f2404d1ae"
+        }
+      ],
+      "notes": "原生基础已有，公开 token/log facade 待统一"
+    },
+    {
+      "id": "context-menu",
+      "title": "编辑器右键 contributions",
+      "state": "new-host-work",
+      "phase": "C",
+      "candidateSdk": [
+        "manifest editor.context"
+      ],
+      "sources": [
+        {
+          "path": "src/dialogs/MainWindow.h",
+          "symbols": "tabBarRightClicked",
+          "sha256": "f8a157789b04d763c3ff736ccad98b9a7ac1bc5234b6c2b613e19b98e03e1ccc"
+        },
+        {
+          "path": "src/ActionUtils.h",
+          "symbols": "populateActionContainer",
+          "sha256": "67bcaf99ceeb56cfffb58162efc84d302436a5c2069c6dedf6265207b0e5682b"
+        }
+      ],
+      "notes": "需要受限上下文条件和可追踪命令所有权"
+    },
+    {
+      "id": "providers",
+      "title": "补全、格式化、语言扩展 provider",
+      "state": "new-host-work",
+      "phase": "C",
+      "candidateSdk": [
+        "future providers"
+      ],
+      "sources": [
+        {
+          "path": "src/decorators/HTMLAutoCompleteDecorator.h",
+          "symbols": "existing completion behavior",
+          "sha256": "064c4c40d89b3bea69f67677bf9abf04e119504085dc7d473aadd05e08d80b78"
+        },
+        {
+          "path": "src/EditorManager.cpp",
+          "symbols": "setupEditor",
+          "sha256": "52dc80217e40c5552b3a1d2c47a37013e5a7455f96a87fa84fbc6b847105f1a0"
+        }
+      ],
+      "notes": "已有局部功能不是 plugin provider 注册；按需求新建调度/预算/冲突契约"
+    }
+  ],
+  "graphEvidence": "native-design-codegraph.json",
+  "limitations": [
+    "Qt signals/lambdas, Lua and inherited Scintilla calls are not all resolved by the incremental graph. Source behavior was inspected separately.",
+    "TypeScript design declarations are not implemented host APIs.",
+    "Node host RPC capabilities do not provide OS sandboxing."
+  ]
+}

@@ -1,3 +1,5 @@
+**当前原生 SDK 实施入口：** [NativeSDKStatus](NativeSDKStatus.zh-CN.md)、[Native API 0.2](../../packages/plugin-sdk/docs/NativeAPI.zh-CN.md)。以下为原有插件基础实施记录；兼容样例是保留的历史实验。
+
 # 插件系统实施记录
 
 ## 当前开发阶段范围（2026-10-11 用户修订）

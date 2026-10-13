@@ -9,6 +9,8 @@
 #include <QTemporaryDir>
 #include <QTest>
 #include <QTimer>
+#include <QElapsedTimer>
+#include <QEvent>
 #include <QUuid>
 #include <memory>
 #include <QLibraryInfo>
@@ -68,6 +70,7 @@ private:
 #endif
 #ifdef NOTEPADNEXT_PLUGINS
 #include "PluginEngine.h"
+#include "PluginSession.h"
 #include "PluginDataService.h"
 #include "RegisteredResourceRegistry.h"
 #include "PluginManagerDialog.h"
@@ -124,6 +127,86 @@ private slots:
         for(auto *widget:QApplication::topLevelWidgets())if((window=qobject_cast<MainWindow*>(widget)))break;
         QVERIFY(window);app->getSessionManager()->setSessionFileTypes(SessionManager::None);QVERIFY(window->currentEditor());
     }
+
+    void nativeSdkSelectionAndCoreLifecycle() {
+#ifdef NOTEPADNEXT_PLUGINS
+        auto *engine=app->getPluginEngine();auto *documents=app->getPluginDocumentBridge();auto *installer=app->getPluginInstaller();
+        const auto id=QStringLiteral("test.native-tools"),package=directory+"/native-package";QVERIFY(QDir().mkpath(package+"/dist"));
+        const auto cleanup=qScopeGuard([&]{
+            for(const auto &installedId:{id,QStringLiteral("test.legacy-range")})
+                if(!app->getInstalledPluginRegistry()->plugin(installedId).id().isEmpty())engine->uninstall(installedId,true);
+            QElapsedTimer deadline;deadline.start();
+            while((!app->getInstalledPluginRegistry()->plugin(id).id().isEmpty()||!engine->isIdle())&&deadline.elapsed()<5000)QTest::qWait(10);
+        });
+        const auto write=[&](const QString &name,const QByteArray &bytes){QFile file(name);if(!file.open(QIODevice::WriteOnly))return false;return file.write(bytes)==bytes.size();};
+        const auto ready=directory+"/native-ready",gate=directory+"/native-gate";
+        const auto literal=[](const QString &value){return QJsonDocument(QJsonArray{value}).toJson(QJsonDocument::Compact).mid(1).chopped(1);};
+        QJsonObject manifest{{"manifestVersion",1},{"id",id},{"name","Native Text Tools"},{"version","0.1.0"},{"list",false},{"repository","https://github.com/KMerdan/native-sdk-test"},
+            {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.2.0"}}},{"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.cjs"}}},
+            {"capabilities",QJsonObject{{"required",QJsonArray{"commands@1","documents.read@1","documents.write@1","editors.selection.read@1","editors.selection.write@1","core.commands@1"
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+                ,"webviews@1","webviews.html@1"
+#endif
+            }},{"optional",QJsonArray{}}}},
+            {"activationEvents",QJsonArray{"onCommand:test.native-tools.upper"}},
+            {"contributes",QJsonObject{{"commands",QJsonArray{QJsonObject{{"id","test.native-tools.upper"},{"title","Uppercase"}},QJsonObject{{"id","test.native-tools.deduplicate"},{"title","Deduplicate"}}
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+                ,QJsonObject{{"id","test.native-tools.html"},{"title","Native HTML"}}
+#endif
+            }}}}};
+        QVERIFY(write(package+"/notepadnext-plugin.json",QJsonDocument(manifest).toJson()));QVERIFY(write(package+"/LICENSE","GPL-3.0-or-later native integration fixture\n"));
+        QByteArray code="const fs=require('node:fs');exports.activate=async ctx=>{if(ctx.host.apiVersion!=='0.2.0')throw new Error('native negotiation');"
+            "await ctx.commands.register('test.native-tools.upper',async inv=>{const c=await ctx.editors.capture(inv);const list=await ctx.documents.list();const info=await ctx.documents.getInfo(c.document.documentId);if(!list.some(d=>d.documentId===info.documentId)||!Number.isSafeInteger(info.byteLength))throw new Error('native metadata');c.selection=await ctx.editors.setSelections(c.editor.editorId,c.document.version,c.selection.revision,c.selection.selections,c.selection.mainIndex);if((await ctx.core.list()).length!==8)throw new Error('native catalog');fs.writeFileSync("+literal(ready)+",'captured');"
+            "const deadline=Date.now()+3000;while(!fs.existsSync("+literal(gate)+")){if(Date.now()>deadline)throw new Error('gate timeout');await new Promise(r=>setTimeout(r,5));}"
+            "await ctx.documents.applyEdits(c.document.documentId,c.document.version,c.selection.selections.map((s,n)=>({range:s.range,text:c.selectedText[n].toUpperCase()})),{selectionGuard:{editorId:c.editor.editorId,revision:c.selection.revision}});return ctx.host.apiVersion;});"
+            "await ctx.commands.register('test.native-tools.deduplicate',async inv=>{const c=await ctx.editors.capture(inv);return ctx.core.execute('edit.lines.deduplicate',{target:{editorId:c.editor.editorId,documentId:c.document.documentId,expectedVersion:c.document.version,selectionRevision:c.selection.revision}});});";
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        code+="await ctx.commands.register('test.native-tools.html',async()=>{const p=await ctx.webviews.createHtml({viewType:'native-html',title:'Native HTML',enableScripts:true,resourceRoots:['dist']});const src=await p.mapAsset('dist/bridge.js');await p.setDocument('<!doctype html><html><body><h1>Native panel</h1><script src='+JSON.stringify(src)+'></script></body></html>');await p.reveal(true);});";
+#endif
+        code+="};";QVERIFY(write(package+"/dist/index.cjs",code));
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        QVERIFY(write(package+"/dist/bridge.js","const api=acquireNotepadNextApi();api.setState({native:true});document.body.dataset.bridge=String(api.getState().native);"));
+#endif
+        PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(QJsonDocument(manifest).toJson(),manifest["repository"].toString(),{},&source,&error),qPrintable(error));
+        QVERIFY(installer->installDirectory(package,source.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);QVERIFY2(!app->getInstalledPluginRegistry()->plugin(id).id().isEmpty(),qPrintable(error));
+        QVERIFY(engine->setEnabled(id,true,&error));
+        auto *first=window->currentEditor();first->setCodePage(SC_CP_UTF8);first->setText(QStringLiteral("ab😀中\r\ncd\r\n").toUtf8().constData());first->setMultipleSelection(true);first->setSelection(9,0);first->addSelection(13,11);first->emptyUndoBuffer();
+        QJsonObject rpcFailure;const auto documentId=documents->idFor(first);documents->setActive(documentId);const auto nativeWindow=window->winId();
+        QSignalSpy commandErrors(engine,&PluginRuntime::PluginEngine::error);
+        engine->invoke(id,"test.native-tools.upper");
+        window->findChild<QAction*>("actionNew")->trigger();QTRY_VERIFY(window->currentEditor()!=first);auto *second=window->currentEditor();second->setText("keep me");
+        QTRY_VERIFY2_WITH_TIMEOUT(QFileInfo::exists(ready)||!commandErrors.isEmpty(),qPrintable(engine->pluginLog(id)),10000);
+        QVERIFY2(QFileInfo::exists(ready),qPrintable(engine->pluginLog(id)));
+        auto *session=engine->findChild<PluginRuntime::PluginSession*>();QVERIFY(session);QSignalSpy finished(session,&PluginRuntime::PluginSession::commandFinished);
+        QVERIFY(write(gate,"continue"));QTRY_VERIFY_WITH_TIMEOUT(!finished.isEmpty(),5000);QVERIFY2(finished.last()[2].toJsonObject().isEmpty(),qPrintable(finished.last()[2].toJsonObject()["message"].toString()));
+        QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),QStringLiteral("AB😀中\r\nCD\r\n"));QCOMPARE(documents->snapshot(documents->idFor(second),&rpcFailure)["text"].toString(),"keep me");
+        first->undo();QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),QStringLiteral("ab😀中\r\ncd\r\n"));
+        // A selection-only change expires the captured transform before commit.
+        QVERIFY(QFile::remove(ready));QVERIFY(QFile::remove(gate));documents->setActive(documentId);finished.clear();engine->invoke(id,"test.native-tools.upper");QTRY_VERIFY(QFileInfo::exists(ready));first->setSelection(1,0);QVERIFY(write(gate,"continue"));QTRY_VERIFY(!finished.isEmpty());QCOMPARE(finished.last()[2].toJsonObject()["code"].toInt(),1011);
+        QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),QStringLiteral("ab😀中\r\ncd\r\n"));
+        first->setText("b\na\nb\n");first->setEOLMode(SC_EOL_LF);first->emptyUndoBuffer();finished.clear();engine->invoke(id,"test.native-tools.deduplicate");QTRY_VERIFY(!finished.isEmpty());QVERIFY(finished.last()[2].toJsonObject().isEmpty());QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),"b\na\n");first->undo();QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),"b\na\nb\n");
+        first->setReadOnly(true);finished.clear();engine->invoke(id,"test.native-tools.deduplicate");QTRY_VERIFY(!finished.isEmpty());QCOMPARE(finished.last()[2].toJsonObject()["code"].toInt(),1003);first->setReadOnly(false);
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        finished.clear();engine->invoke(id,"test.native-tools.html");QTRY_VERIFY(!finished.isEmpty());QVERIFY2(finished.last()[2].toJsonObject().isEmpty(),qPrintable(finished.last()[2].toJsonObject()["message"].toString()));
+        QWebEnginePage *page=nullptr;for(auto *view:window->findChildren<QWebEngineView*>())if(view->parentWidget()->objectName().contains(id)){page=view->page();break;}
+        if(!page)for(auto *view:window->findChildren<QWebEngineView*>())page=view->page();QVERIFY(page);
+        auto bridged=std::make_shared<bool>(false);QTRY_VERIFY_WITH_TIMEOUT(([&]{page->runJavaScript("document.body?.dataset.bridge==='true'",[bridged](const QVariant &value){*bridged=value.toBool();});return *bridged;})(),5000);
+#endif
+        engine->uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(app->getInstalledPluginRegistry()->plugin(id).id().isEmpty(),5000);QTRY_VERIFY(engine->isIdle());QCOMPARE(window->winId(),nativeWindow);
+        // Older authors sometimes used broad ranges. They must not silently
+        // receive a new object argument instead of positional callback args.
+        const auto legacyId=QStringLiteral("test.legacy-range"),legacyPackage=directory+"/legacy-range";QVERIFY(QDir().mkpath(legacyPackage+"/dist"));
+        auto legacy=manifest;legacy["id"]=legacyId;legacy["name"]="Legacy range";legacy["engines"]=QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api",">=0.1.0"}};
+        legacy["capabilities"]=QJsonObject{{"required",QJsonArray{"commands@1"}},{"optional",QJsonArray{}}};legacy["activationEvents"]=QJsonArray{"onStartup"};legacy["contributes"]=QJsonObject{{"commands",QJsonArray{QJsonObject{{"id","test.legacy-range.run"},{"title","Legacy"}}}}};
+        QVERIFY(write(legacyPackage+"/notepadnext-plugin.json",QJsonDocument(legacy).toJson()));QVERIFY(write(legacyPackage+"/LICENSE","GPL-3.0-or-later fixture"));
+        QVERIFY(write(legacyPackage+"/dist/index.cjs","exports.activate=async ctx=>ctx.commands.register('test.legacy-range.run',(...args)=>({api:ctx.host.apiVersion,count:args.length}));"));
+        QVERIFY(PluginSources::PluginMetadata::parse(QJsonDocument(legacy).toJson(),legacy["repository"].toString(),{},&source,&error));QVERIFY(installer->installDirectory(legacyPackage,source.resources[0]));QTRY_VERIFY(!installer->isBusy());QVERIFY(engine->setEnabled(legacyId,true,&error));QTRY_COMPARE(engine->pluginState(legacyId),QString("active"));
+        PluginRuntime::PluginSession *legacySession=nullptr;for(auto *candidate:engine->findChildren<PluginRuntime::PluginSession*>())if(candidate->state()=="active")legacySession=candidate;QVERIFY(legacySession);QSignalSpy legacyResult(legacySession,&PluginRuntime::PluginSession::commandFinished);engine->invoke(legacyId,"test.legacy-range.run");QTRY_VERIFY(!legacyResult.isEmpty());QVERIFY(legacyResult[0][2].toJsonObject().isEmpty());const auto legacyValue=legacyResult[0][1].toJsonValue().toObject();QCOMPARE(legacyValue["api"],QJsonValue("0.1.0"));QCOMPARE(legacyValue["count"].toInt(),0);
+        engine->uninstall(legacyId,true);QTRY_VERIFY(app->getInstalledPluginRegistry()->plugin(legacyId).id().isEmpty());QTRY_VERIFY(engine->isIdle());
+        first->setSavePoint();second->setSavePoint();documents->setActive(documents->idFor(window->currentEditor()));qInfo()<<"Native SDK: 0.2 negotiation, target retained across activation and tab switch, UTF-16 multi-selection edit/undo, selection conflict, native deduplicate/read-only, native HTML bridge and owned teardown passed.";
+#endif
+    }
+
     void editorOpenSaveReloadAndClose() {
         const auto file=directory+"/sample.md";QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("# saved 😀中\n");f.close();
         // Programmatic tab selection cannot depend on macOS foreground
@@ -389,7 +472,7 @@ private slots:
         const auto repository=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_REPOSITORY");
         if(repository.isEmpty())QSKIP("Live GitHub validation is opt-in.");
         const QString id="kmerdan.markdown-preview";
-        const auto expectedVersion=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_VERSION", "0.1.5");
+        const auto expectedVersion=qEnvironmentVariable("NNP_TEST_LIVE_MARKDOWN_VERSION", "0.1.6");
         auto *sources=app->getRegisteredResourceRegistry();auto *installed=app->getInstalledPluginRegistry();auto *engine=app->getPluginEngine();
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);
         auto *catalog=manager->findChild<QListWidget*>("discoverPlugins"),*local=manager->findChild<QListWidget*>("installedPlugins"),*sourceList=manager->findChild<QListWidget*>("registeredSources");auto *tabs=manager->findChild<QTabWidget*>("pluginManagerTabs");
@@ -452,6 +535,7 @@ private slots:
     }
     void realGitHubMarketplaceLifecycle() {
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        const auto expectedHtml=qEnvironmentVariable("NNP_TEST_LIVE_HTML_VERSION","0.1.2");
         const auto repository=qEnvironmentVariable("NNP_TEST_LIVE_MARKETPLACE_REPOSITORY");
         if(repository.isEmpty())QSKIP("Live marketplace validation is opt-in.");
         const QString md="kmerdan.markdown-preview",html="kmerdan.html-preview";
@@ -497,7 +581,7 @@ private slots:
         QVERIFY(saveDialogPreview(dock,"marketplace-html-before-update"));const auto mdDigest=installed->plugin(md).package.digest;
         window->showPluginManager();const auto registrations=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>registrations,35000);QTRY_COMPARE(catalog->count(),2);
         tabs->setCurrentIndex(0);QVERIFY(select(local,html));manager->findChild<QPushButton*>("updatePlugin")->click();
-        QTRY_VERIFY2_WITH_TIMEOUT(installed->plugin(html).package.metadata["version"]=="0.1.1"&&!installed->plugin(html).updatePending,qPrintable(engine->pluginLog(html)),120000);
+        QTRY_VERIFY2_WITH_TIMEOUT(installed->plugin(html).package.metadata["version"]==expectedHtml&&!installed->plugin(html).updatePending,qPrintable(engine->pluginLog(html)),120000);
         QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(html),QString("active"),15000);QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);
         QCOMPARE(read("document.getElementById('counter').textContent").toString(),QString("Counter: 2"));QCOMPARE(read("document.querySelector('#preview h2').textContent").toString(),QString("Draft survives GitHub update"));QTRY_COMPARE(read("scrollY").toInt(),350);
         QVERIFY(read("fetch('api/document').then(r=>r.json()).then(v=>window.backendPid=v.pid);true").toBool());QTRY_VERIFY(read("window.backendPid>0").toBool());QVERIFY(read("window.backendPid").toInt()!=oldPid);
@@ -505,7 +589,7 @@ private slots:
         QVERIFY(saveDialogPreview(manager,"marketplace-installed-two-plugins"));
         for(const auto &id:{html,md}){window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("uninstallPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).id().isEmpty(),10000);}
         QTRY_COMPARE(engine->sessionCount(),0);QVERIFY(!dock);QVERIFY(!mdDock);QCOMPARE(catalog->count(),2);QCOMPARE(window->winId(),nativeWindow);
-        qInfo()<<"Live marketplace: one URL, two plugins, namespaced installs, HTML 0.1.0 -> 0.1.1 hot update with dock/source/counter/scroll restored and new backend PID; Markdown unaffected; uninstall returns both to Discover";
+        qInfo()<<"Live marketplace: one URL, two plugins, namespaced installs, HTML 0.1.0 -> current catalog hot update with dock/source/counter/scroll restored and new backend PID; Markdown unaffected; uninstall returns both to Discover";
         editor->setText("");editor->setSavePoint();manager->close();
 #endif
     }
@@ -603,6 +687,19 @@ private slots:
         if(window){if(auto *editor=window->currentEditor())editor->setSavePoint();window->close();window=nullptr;}
     }
 };
+// Live UI automation operates a temporary profile. Avoid desktop keystrokes
+// entering those fixtures while the user works in another app. Programmatic
+// controls used by the live driver are unaffected; regular keyboard tests do
+// not opt into this guard.
+class ExternalInputGuard final:public QObject {
+    bool eventFilter(QObject *,QEvent *event)override {
+        switch(event->type()) {
+        case QEvent::KeyPress:case QEvent::KeyRelease:case QEvent::InputMethod:
+        case QEvent::MouseButtonPress:case QEvent::MouseButtonRelease:case QEvent::MouseButtonDblClick:case QEvent::Wheel:return true;
+        default:return false;
+        }
+    }
+};
 int main(int argc,char **argv) {
     QTemporaryDir profile;
     QString profilePath=profile.path();
@@ -619,6 +716,7 @@ int main(int argc,char **argv) {
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);PluginWebviews::registerScheme();
 #endif
     int appArgc=1;char name[]="PluginApplicationTests";char *appArgv[]={name,nullptr};NotepadNextApplication app(appArgc,appArgv,profilePath+"/data");
+    ExternalInputGuard inputGuard;if(qEnvironmentVariableIsSet("NNP_TEST_BLOCK_EXTERNAL_INPUT"))app.installEventFilter(&inputGuard);
 #ifdef PLUGIN_APPLICATION_EXIT_PROBE
     if(!exitScenario.isEmpty())return runApplicationExitProbe(app,profilePath,exitScenario);
 #endif

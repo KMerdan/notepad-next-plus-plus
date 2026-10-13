@@ -1,5 +1,0 @@
-node_modules/
-dist/
-.debug/
-*.tgz
-.DS_Store

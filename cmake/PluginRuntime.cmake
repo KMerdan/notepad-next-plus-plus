@@ -26,6 +26,7 @@ if(NOTEPADNEXT_PLUGINS)
         "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/types.cjs"
         "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/adapter.cjs")
     list(APPEND plugin_vscode_files "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/webviews.cjs" "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/persistence.cjs")
+    list(APPEND plugin_vscode_files "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/configuration.cjs")
     # Host-only edits must refresh the bundle even when no C++ file changed.
     set_property(TARGET NotepadNext APPEND PROPERTY LINK_DEPENDS
         "${CMAKE_BINARY_DIR}/generated/plugin-host/build-profile.json"

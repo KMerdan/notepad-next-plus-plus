@@ -1,3 +1,5 @@
+**Host integration fixture.** The independently maintained first-party plugin source and Releases live in the [official Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview). This application example uses its own ID for repeatable host tests. Plugin authors should start from the [SDK templates](../../packages/plugin-sdk/README.md).
+
 # HTML Preview
 
 基于 SDK 0.1.1 的 Node.js HTTP 服务示例。预览当前 HTML buffer（包括未保存修改），运行 HTML/JS，并调用本地服务 API。更新、Reload 和回滚自动恢复已打开窗口与 state。

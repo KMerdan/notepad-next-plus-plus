@@ -13,6 +13,38 @@ QList<QJsonObject> textEvents(const QSignalSpy &events) {QList<QJsonObject> resu
 class PluginDocumentTests : public QObject {
     Q_OBJECT
 private slots:
+    void nativeCaptureBoundsEscapedResponse() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);const QByteArray text(1100*1024,'\x01');editor.setText(text.constData());editor.selectAll();
+        DocumentBridge bridge;bridge.setWindowId("window");bridge.setActive(bridge.attach(&editor,{},"text"));QJsonObject error;
+        QVERIFY(!bridge.snapshot(bridge.active().toObject()["documentId"].toString(),&error).isEmpty());QVERIFY(error.isEmpty());
+        QVERIFY(bridge.capture(bridge.invocation("test.tools.read"),&error).isEmpty());QCOMPARE(error["code"].toInt(),1008);
+        // Refusing an inflated response does not invalidate its buffer/session.
+        editor.setText("normal");QVERIFY(!bridge.capture(bridge.invocation("test.tools.read"),&error).isEmpty());QVERIFY(error.isEmpty());
+    }
+    void nativeCaptureGuardAndUnicodeSelections() {
+        ScintillaEdit first,second;first.setCodePage(SC_CP_UTF8);second.setCodePage(SC_CP_UTF8);
+        first.setText(QStringLiteral("ab😀中\r\ncd\n").toUtf8().constData());second.setText("other");
+        first.setMultipleSelection(true);first.setSelection(9,0);first.addSelection(13,11);first.setMainSelection(1);first.emptyUndoBuffer();
+        DocumentBridge bridge;bridge.setWindowId("window");const auto a=bridge.attach(&first,{},"text"),b=bridge.attach(&second,{},"text");bridge.setActive(a);
+        const auto invocation=bridge.invocation("test.tools.uppercase");QVERIFY(invocation["editorId"]!=a);
+        // Switching tabs does not retarget the original invocation.
+        bridge.setActive(b);QJsonObject error;auto captured=bridge.capture(invocation,&error);QVERIFY2(error.isEmpty(),qPrintable(error["message"].toString()));
+        QCOMPARE(captured["document"].toObject()["documentId"].toString(),a);QCOMPARE(captured["selectedText"].toArray(),QJsonArray({QStringLiteral("ab😀中"),"cd"}));
+        const auto selection=captured["selection"].toObject();QCOMPARE(selection["mainIndex"].toInteger(),1);
+        QCOMPARE(selection["selections"].toArray()[0].toObject()["range"].toObject()["end"].toObject(),position(0,5));
+        const QJsonObject guard{{"editorId",invocation["editorId"]},{"revision",selection["revision"]}};
+        first.setSelection(1,0);QVERIFY(!bridge.checkSelection(a,guard,&error));QCOMPARE(error["code"].toInt(),1011);
+        captured=bridge.capture(invocation,&error);QVERIFY(error.isEmpty());const auto current=captured["selection"].toObject();
+        QVERIFY(bridge.checkSelection(a,{{"editorId",invocation["editorId"]},{"revision",current["revision"]}},&error));
+        const auto version=bridge.info(a)["version"].toInteger();bridge.applyEdits(a,version,{edit(0,0,2,"AB"),edit(1,0,2,"CD")},&error);QVERIFY(error.isEmpty());
+        QCOMPARE(bridge.snapshot(a,&error)["text"].toString(),QStringLiteral("AB😀中\r\nCD\n"));first.undo();QCOMPARE(bridge.snapshot(a,&error)["text"].toString(),QStringLiteral("ab😀中\r\ncd\n"));
+        QCOMPARE(bridge.snapshot(b,&error)["text"].toString(),"other");
+        auto state=bridge.selections(invocation["editorId"].toString(),&error);const auto old=state;
+        QJsonObject invalid{{"editorId",invocation["editorId"]},{"expectedDocumentVersion",bridge.info(a)["version"]},{"expectedRevision",state["revision"]},{"mainIndex",0},{"selections",state["selections"]}};
+        auto items=invalid["selections"].toArray();auto item=items[0].toObject();item["caret"]=position(0,3);invalid["selections"]=QJsonArray{item};
+        bridge.setSelections(invalid,&error);QCOMPARE(error["code"].toInt(),-32602);QCOMPARE(bridge.selections(invocation["editorId"].toString(),&error),old);
+        bridge.detach(a);bridge.capture(invocation,&error);QCOMPARE(error["code"].toInt(),1002);
+    }
     void deletionDeltaUsesOldUnicodeCoordinates() {
         ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText(QStringLiteral("a😀中\r\né\n").toUtf8().constData());DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");bridge.retainDeltaStream();QSignalSpy events(&bridge,&DocumentBridge::deltaEvent);const auto before=bridge.info(id)["version"].toInteger();
         editor.setTargetStart(1);editor.setTargetEnd(8);editor.replaceTarget(0,"");

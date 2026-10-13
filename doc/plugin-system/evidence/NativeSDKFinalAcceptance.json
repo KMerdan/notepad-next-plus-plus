@@ -1,0 +1,298 @@
+{
+  "date": "2026-10-13",
+  "scope": "Native SDK phase A, three repository split, current macOS plugin manager and Marketplace consumer acceptance; no app signing/notarization/release.",
+  "validatedImplementationCommit": "87126d08e81180c721a576c3eea6d68c02340515",
+  "sourceHashes": {
+    "src/dialogs/PluginReview.h": "1fe57d216743241ce9f97c2129316e504ac4f799aba32d78f5bf2244634fa372",
+    "src/dialogs/PluginManagerDialog.cpp": "f8a8b88f50b01ada6ecf30644750a9d9c5a1459c2f7e7564bd4d48f14c0878a7",
+    "src/plugins/runtime/PluginEngine.cpp": "fa23bebb8e917b45169676729f7d19ccb587f5f7cc44cf5bf9044cf564332b23",
+    "src/plugins/runtime/PluginSession.cpp": "170013b5639c5d909adae60bd04d60d620a9331b1c7d689fa152164478e4063e",
+    "src/plugins/webviews/WebviewService.cpp": "2fe83621018830adfc00c9f8f4f628daea1622db3dd4c889aa7b8b78cc4a287e",
+    "src/plugins/documents/DocumentBridge.cpp": "2dc5e2f9a022e630bd83b287cbf8696c30c7fc15af02ca90bb852173ef7c1e4f",
+    "tests/plugin-application/PluginApplicationTests.cpp": "622d015d39b0011457702cfab9ffd1e4ed69f1797c8e56b4025c5e547a2dbe9c",
+    "src/plugins/packages/PackageLease.cpp": "e03b675b2575d3938f51c7a60325014c7e77e35ce9fd44245ef029f8f1a9505d",
+    "tests/plugin-packages/GitHubReleaseTests.cpp": "fc40ef961e1bb1c3732f6d1e6c603d7a3b92b6bd7c2089e9de8e6b00c878e0d5",
+    "tests/plugin-packages/CMakeLists.txt": "9811c3c91e8d7e1952b49dddc676d8387b120e6c7c35ca01421747859eb252a7",
+    "tests/plugin-webviews/PluginWebviewTests.cpp": "382fc09a73a064aa5f860bf7c89d960c27086e4927be77c3236cf57d4ac6531f"
+  },
+  "nativeApplication": {
+    "log": "native-sdk-final-live-acceptance.log",
+    "result": "5 passed, 0 failed, 0 skipped (3 cases plus init/cleanup)",
+    "cases": [
+      "nativeSdkSelectionAndCoreLifecycle",
+      "realGitHubMarkdownLifecycle",
+      "realGitHubMarketplaceLifecycle"
+    ],
+    "markdownUpdate": "0.1.3 -> 0.1.6",
+    "htmlUpdate": "0.1.0 -> 0.1.2",
+    "verified": [
+      "metadata registration without installation or execution",
+      "explicit package installation disabled by default",
+      "lazy enablement and native plugin commands",
+      "distinct Markdown icon",
+      "host window identity preserved",
+      "owned panel identity/geometry/content/scroll restored on update",
+      "HTML draft/counter state restored and service PID replaced",
+      "HTML update does not replace Markdown",
+      "source removal leaves installed package and data intact",
+      "installation/uninstallation cancellation",
+      "uninstall keeps data by default and returns catalog entry to Discover"
+    ]
+  },
+  "sdk": {
+    "repository": "KMerdan/notepadnext-plugin-sdk",
+    "mainCommit": "3beae5dfd87e98610a18cc909066b951d59be5e8",
+    "pinnedReleaseCommit": "2cc40cf6bbb81b97ec1b203b8c9acaf3b33a02b4",
+    "version": "0.2.1",
+    "ciRun": 38256715370,
+    "ciConclusion": "success",
+    "verifiedCICommands": [
+      "npm test",
+      "node tests/standalone.cjs \"$RUNNER_TEMP/sdk-standalone\""
+    ],
+    "standaloneScope": [
+      "actual npm-format SDK tarball installed outside SDK checkout",
+      "hello/markdown/html-service/text-tools generation, build and tests",
+      "Markdown local debug before and after edits",
+      "native text-tools local debug",
+      "package/ZIP checks and retained historical importer probe"
+    ]
+  },
+  "marketplace": {
+    "repository": "KMerdan/notepadnext-markdown-preview",
+    "commit": "3fe7987b3811e68d532314845a6f34f7d2e02d15",
+    "ciRun": 38249278606,
+    "ciConclusion": "success",
+    "plugins": {
+      "kmerdan.markdown-preview": "0.1.6",
+      "kmerdan.html-preview": "0.1.2"
+    }
+  },
+  "figma": {
+    "fileKey": "cJPphvdJ1ztsU0tzMFIBpD",
+    "lifecycleBoard": "65:12291",
+    "installView": "65:12411",
+    "updateView": "65:12444",
+    "createdPermissionRows": [
+      "74:12362",
+      "74:12363"
+    ],
+    "verified": "Existing editable text/components/token bindings preserved; new restoration permission labels; current catalog and package versions; screenshots inspected without clipping."
+  },
+  "applicationCI": {
+    "status": "passed at the validated implementation heads",
+    "observedAtUTC": "2026-10-13T01:54:31.914672+00:00",
+    "requirements": [
+      "14 standard build variants per PR",
+      "12 host conformance profiles per PR"
+    ],
+    "consumerTestsRequiredInMainCI": false,
+    "validatedPullRequests": [
+      {
+        "pullRequest": "https://github.com/KMerdan/notepad-next-plus-plus/pull/1",
+        "validatedHead": "54e2bc27cf0fa196d5588b7f27fb1bbe725a21e5",
+        "standardBuilds": {
+          "passed": 14,
+          "total": 14
+        },
+        "hostConformanceProfiles": {
+          "passed": 12,
+          "total": 12
+        },
+        "workflowRuns": [
+          38327026397,
+          38327026411
+        ]
+      },
+      {
+        "pullRequest": "https://github.com/KMerdan/notepad-next-plus-plus/pull/2",
+        "validatedHead": "08199997a371468c254aa6cf57039634635fb2c4",
+        "standardBuilds": {
+          "passed": 14,
+          "total": 14
+        },
+        "hostConformanceProfiles": {
+          "passed": 12,
+          "total": 12
+        },
+        "workflowRuns": [
+          38327026422,
+          38327026463
+        ]
+      },
+      {
+        "pullRequest": "https://github.com/KMerdan/notepad-next-plus-plus/pull/3",
+        "validatedHead": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+        "standardBuilds": {
+          "passed": 14,
+          "total": 14
+        },
+        "hostConformanceProfiles": {
+          "passed": 12,
+          "total": 12
+        },
+        "workflowRuns": [
+          38327025508,
+          38327025543
+        ]
+      }
+    ],
+    "snapshotScope": "This records tested source commits; later documentation commits and future changes must be checked separately on GitHub."
+  },
+  "installationLockRegression": {
+    "changeCommit": "c9314f1",
+    "fixtureCommit": "03df0c1",
+    "localMacResult": "43 passed, 0 failed, 0 skipped",
+    "log": "native-sdk-package-lock-regression.log",
+    "windowsCases": [
+      "localInstallationWaitsForMaintenance(recover-temporary-permission-error)",
+      "localInstallationWaitsForMaintenance(cancel-permission-retry)",
+      "localInstallationWaitsForMaintenance(bounded-permission-timeout)"
+    ],
+    "windowsCasesStatus": "passed in actual Windows CI",
+    "fixture": "Temporary directory DACL denies file creation for the process token SID. The Qt probe must observe PermissionError before testing recovery, cancellation or timeout; original DACL restored on every exit.",
+    "invariants": [
+      "bounded one-second worker lock retry",
+      "zero-wait GUI callers unchanged",
+      "cancellation and timeout checks retained",
+      "actual Windows ACL rejection and timed restoration",
+      "no plugin code execution during installation"
+    ],
+    "windowsProof": {
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072961,
+      "suite": "PluginGitHubReleaseTests",
+      "result": "46 passed, 0 failed, 0 skipped",
+      "log": "native-sdk-final-windows-packages.log",
+      "workflowConclusion": "success"
+    },
+    "historicalWindowsProof": {
+      "sourceCommit": "197139c956f1e9eede54c77ce0eabc9f4a35c969",
+      "run": 38325070257,
+      "job": 115061874077,
+      "suite": "PluginGitHubReleaseTests",
+      "result": "46 passed, 0 failed, 0 skipped",
+      "log": "native-sdk-windows-permission-regression.log",
+      "workflowConclusion": "The WebEngine profile failed a separate lifecycle stress fixture; this record proves the package/ACL suite only."
+    }
+  },
+  "lifecycleCompletionRegression": {
+    "changeCommit": "54e2bc2",
+    "validatedImplementationCommit": "fa5e81c2eee0355089db39c63097281d7d9223ea",
+    "localMacResult": "3 passed, 0 failed, 0 skipped (100-cycle case + init/cleanup)",
+    "cycles": 100,
+    "exitedNodeIdentities": 200,
+    "elapsedMs": 91004,
+    "finalFileDescriptors": 33,
+    "warmFileDescriptors": 33,
+    "log": "native-sdk-lifecycle-completion-regression.log",
+    "resources": "NativeSDKLifecycleCompletionResources.json",
+    "invariants": [
+      "await successful public reload completion before next management action",
+      "all 100 cycles retained",
+      "zero sessions/resources after each stop",
+      "all observed native process identities exit",
+      "focus connections and native handles return to warm baseline"
+    ],
+    "remoteWindowsStatus": "passed in actual current Windows WebEngine CI: all 100 cycles; 47 WebEngine cases passed, two explicit consumer opt-in skips",
+    "remoteWindowsProof": {
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072961,
+      "log": "native-sdk-final-windows-x64-webviews.log",
+      "elapsedMs": 121812,
+      "resourceMetricsScope": "The detailed 100-sample FD/focus metrics above are the separate local macOS run, not Windows telemetry."
+    }
+  },
+  "nativePlatformProofs": [
+    {
+      "platform": "windows-x64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072961,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 6183ms",
+          "log": "native-sdk-final-windows-x64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 233688ms",
+          "log": "native-sdk-final-windows-x64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    },
+    {
+      "platform": "linux-x64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072650,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 5074ms",
+          "log": "native-sdk-final-linux-x64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 144646ms",
+          "log": "native-sdk-final-linux-x64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    },
+    {
+      "platform": "macos-arm64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072989,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 10752ms",
+          "log": "native-sdk-final-macos-arm64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 334559ms",
+          "log": "native-sdk-final-macos-arm64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    },
+    {
+      "platform": "macos-x64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072855,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 10482ms",
+          "log": "native-sdk-final-macos-x64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 303174ms",
+          "log": "native-sdk-final-macos-x64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    }
+  ]
+}

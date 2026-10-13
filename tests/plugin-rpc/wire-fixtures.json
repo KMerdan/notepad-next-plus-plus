@@ -1428,7 +1428,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.2.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],
@@ -2697,5 +2697,306 @@
       "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     },
     "valid": true
+  },
+  {
+    "name": "nnp.documents.list accepts native 0.2 params",
+    "method": "nnp.documents.list",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.list rejects missing identity",
+    "method": "nnp.documents.list",
+    "part": "params",
+    "value": {},
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo accepts native 0.2 params",
+    "method": "nnp.documents.getInfo",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "documentId": "doc"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo rejects missing identity",
+    "method": "nnp.documents.getInfo",
+    "part": "params",
+    "value": {
+      "documentId": "doc"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.editors.getActive accepts native 0.2 params",
+    "method": "nnp.editors.getActive",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.editors.getActive rejects missing identity",
+    "method": "nnp.editors.getActive",
+    "part": "params",
+    "value": {},
+    "valid": false
+  },
+  {
+    "name": "nnp.editors.getSelections accepts native 0.2 params",
+    "method": "nnp.editors.getSelections",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "editorId": "ed"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.editors.getSelections rejects missing identity",
+    "method": "nnp.editors.getSelections",
+    "part": "params",
+    "value": {
+      "editorId": "ed"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.editors.capture accepts native 0.2 params",
+    "method": "nnp.editors.capture",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "invocation": {
+        "commandId": "test.native.read",
+        "windowId": "win",
+        "editorId": "ed",
+        "documentId": "doc",
+        "args": []
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.editors.capture rejects missing identity",
+    "method": "nnp.editors.capture",
+    "part": "params",
+    "value": {
+      "invocation": {
+        "commandId": "test.native.read",
+        "windowId": "win",
+        "editorId": "ed",
+        "documentId": "doc",
+        "args": []
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.editors.setSelections accepts native 0.2 params",
+    "method": "nnp.editors.setSelections",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "editorId": "ed",
+      "expectedDocumentVersion": 1,
+      "expectedRevision": 1,
+      "selections": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 0
+            },
+            "end": {
+              "line": 0,
+              "character": 0
+            }
+          },
+          "anchor": {
+            "line": 0,
+            "character": 0
+          },
+          "caret": {
+            "line": 0,
+            "character": 0
+          },
+          "anchorVirtualSpace": 0,
+          "caretVirtualSpace": 0
+        }
+      ],
+      "mainIndex": 0
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.editors.setSelections rejects missing identity",
+    "method": "nnp.editors.setSelections",
+    "part": "params",
+    "value": {
+      "editorId": "ed",
+      "expectedDocumentVersion": 1,
+      "expectedRevision": 1,
+      "selections": [
+        {
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 0
+            },
+            "end": {
+              "line": 0,
+              "character": 0
+            }
+          },
+          "anchor": {
+            "line": 0,
+            "character": 0
+          },
+          "caret": {
+            "line": 0,
+            "character": 0
+          },
+          "anchorVirtualSpace": 0,
+          "caretVirtualSpace": 0
+        }
+      ],
+      "mainIndex": 0
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.core.list accepts native 0.2 params",
+    "method": "nnp.core.list",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.core.list rejects missing identity",
+    "method": "nnp.core.list",
+    "part": "params",
+    "value": {},
+    "valid": false
+  },
+  {
+    "name": "nnp.core.execute accepts native 0.2 params",
+    "method": "nnp.core.execute",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "commandId": "edit.lines.sort",
+      "request": {
+        "target": {
+          "editorId": "ed",
+          "documentId": "doc",
+          "expectedVersion": 1
+        },
+        "order": "ascending",
+        "compare": "caseSensitive"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.core.execute rejects missing identity",
+    "method": "nnp.core.execute",
+    "part": "params",
+    "value": {
+      "commandId": "edit.lines.sort",
+      "request": {
+        "target": {
+          "editorId": "ed",
+          "documentId": "doc",
+          "expectedVersion": 1
+        },
+        "order": "ascending",
+        "compare": "caseSensitive"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.commands.invokeNative accepts native 0.2 params",
+    "method": "nnp.commands.invokeNative",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "callbackId": "callback",
+      "invocation": {
+        "commandId": "test.native.read",
+        "windowId": "win",
+        "editorId": "ed",
+        "documentId": "doc",
+        "args": []
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.commands.invokeNative rejects missing identity",
+    "method": "nnp.commands.invokeNative",
+    "part": "params",
+    "value": {
+      "callbackId": "callback",
+      "invocation": {
+        "commandId": "test.native.read",
+        "windowId": "win",
+        "editorId": "ed",
+        "documentId": "doc",
+        "args": []
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.createHtml accepts native 0.2 params",
+    "method": "nnp.webviews.createHtml",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "viewType": "html",
+      "title": "HTML",
+      "enableScripts": true,
+      "localResourceRoots": [
+        "dist"
+      ]
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.createHtml rejects missing identity",
+    "method": "nnp.webviews.createHtml",
+    "part": "params",
+    "value": {
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "viewType": "html",
+      "title": "HTML",
+      "enableScripts": true,
+      "localResourceRoots": [
+        "dist"
+      ]
+    },
+    "valid": false
   }
 ]

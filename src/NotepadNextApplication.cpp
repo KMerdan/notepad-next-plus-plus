@@ -23,6 +23,8 @@
 #ifdef NOTEPADNEXT_PLUGINS
 #include "RegisteredResourceRegistry.h"
 #include "DocumentBridge.h"
+#include "EditorOperations.h"
+#include "RpcEndpoint.h"
 #include "PluginEngine.h"
 #include "InstalledPluginRegistry.h"
 #include "InstallationService.h"
@@ -144,6 +146,15 @@ bool NotepadNextApplication::init(QNetworkAccessManager *network)
     QString sourceError;
     if (!registeredResourceRegistry->load(&sourceError)) qWarning().noquote() << sourceError;
     pluginDocumentBridge = new PluginDocuments::DocumentBridge(this);
+    pluginDocumentBridge->setNativeServices(EditorOperations::catalog(),
+        [](ScintillaEdit *editor,const QString &command,const QJsonObject &request,QJsonObject *error){
+            if(!EditorOperations::execute(qobject_cast<ScintillaNext*>(editor),command,request)) *error=PluginRpc::rpcError(-32602,"Invalid native command or parameters");
+            return QJsonObject{};
+        },[](ScintillaEdit *widget){
+            const auto editor=qobject_cast<ScintillaNext*>(widget);if(!editor)return QJsonObject{};
+            const auto bom=editor->bom();return QJsonObject{{"name",editor->getName()},{"bom",bom!=ScintillaNext::BomType::None},
+                {"encoding",bom==ScintillaNext::BomType::Utf16LE?"utf-16le":bom==ScintillaNext::BomType::Utf16BE?"utf-16be":editor->codePage()==SC_CP_UTF8?"utf-8":"unknown"}};
+        });
     // EditorManager's earlier connections have already applied these styles.
     connect(settings,&ApplicationSettings::fontNameChanged,pluginDocumentBridge,&PluginDocuments::DocumentBridge::refreshAppearance);
     connect(settings,&ApplicationSettings::fontSizeChanged,pluginDocumentBridge,&PluginDocuments::DocumentBridge::refreshAppearance);

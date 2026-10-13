@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 'use strict';
-const api=acquireVsCodeApi(),source=document.getElementById('source'),counter=document.getElementById('counter');
+const api=(globalThis.acquireNotepadNextApi ?? globalThis.acquireVsCodeApi)(),source=document.getElementById('source'),counter=document.getElementById('counter');
 const previous=api.getState();let count=previous?.count??0;
 const save=()=>api.setState({count,source:source.value});
 function updateCounter(){counter.textContent='Counter: '+count;}

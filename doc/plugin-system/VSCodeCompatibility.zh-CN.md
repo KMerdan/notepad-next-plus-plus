@@ -1,5 +1,8 @@
 # VS Code 兼容配置 0.1.0
 
+**2026-10-12 定位修订：** 本文为已有实验性适配器的历史实现说明，不是原生 SDK 的兼容目标。后续 SDK 以 [Notepad Next ++ 原生能力设计](NativeSDKDesign.zh-CN.md)为准；复用外部插件代码通过移植完成。
+
+
 固定 API 声明基线为 VS Code **1.100.0**，运行端仍是 NotepadNext 原生协议/API **0.1 / 0.1.0**。完整类型声明只用于编译选定样例，运行时支持下表中的子集。此版本实现命令、文档、Qt 消息、有界的完整 HTML Webview、Memento 状态和插件 Global 配置。工作区、配置、迁移等限制见 [状态与配置适配](VSCodePersistence.zh-CN.md)；原方案剩余要求继续保留，不能据此宣称完整 VS Code 兼容。
 
 | API | 当前行为与限制 |

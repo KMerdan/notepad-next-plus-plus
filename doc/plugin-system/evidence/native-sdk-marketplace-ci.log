@@ -1,0 +1,99 @@
+
+> notepad-next-plus-plus-official-plugins@0.1.2 ci
+> node tools/marketplace.cjs ci
+
+
+added 9 packages, and audited 10 packages in 521ms
+
+4 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+> kmerdan-markdown-preview@0.1.6 build
+> tsc -p tsconfig.json
+
+
+> kmerdan-markdown-preview@0.1.6 test
+> node --test test.cjs
+
+kmerdan.markdown-preview: activated
+✔ Markdown follows unsaved edits, reuses and reopens its panel, then cleans up (260.968ms)
+✔ declared toolbar icon conforms to the host PNG metadata profile (2.220792ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 302.67025
+
+added 1 package, and audited 2 packages in 294ms
+
+found 0 vulnerabilities
+
+> kmerdan-html-preview@0.1.2 build
+> node build.cjs
+
+
+> kmerdan-html-preview@0.1.2 test
+> node --test test.cjs
+
+✔ owned Node service serves unsaved HTML, stays lazy, reuses panels and disposes (34.106583ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.463833
+
+> notepad-next-plus-plus-official-plugins@0.1.2 test
+> npm run check && node --test tools/marketplace.test.cjs && npm --prefix plugins/markdown-preview test && npm --prefix plugins/html-preview test
+
+
+> notepad-next-plus-plus-official-plugins@0.1.2 check
+> node tools/marketplace.cjs check
+
+Catalog: 2 plugins, manifests and package versions agree.
+✔ catalog is metadata-only and contains both independently versioned plugins (1.21825ms)
+✔ release selection rejects cross-plugin versions, unstable tags and path traversal (0.553916ms)
+✔ plugins consume the same immutable SDK tarball, not copied SDK source (0.664583ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40.448041
+
+> kmerdan-markdown-preview@0.1.6 test
+> node --test test.cjs
+
+kmerdan.markdown-preview: activated
+✔ Markdown follows unsaved edits, reuses and reopens its panel, then cleans up (261.425583ms)
+✔ declared toolbar icon conforms to the host PNG metadata profile (0.913333ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 302.402458
+
+> kmerdan-html-preview@0.1.2 test
+> node --test test.cjs
+
+✔ owned Node service serves unsaved HTML, stays lazy, reuses panels and disposes (30.724667ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 84.426625

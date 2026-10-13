@@ -118,7 +118,11 @@ bool packageMetadata(const QString &root,const PluginSources::RegisteredResource
     // Metadata selected during review is the authority for permissions and UI.
     if(parsed.metadata!=expected.metadata) return reject(error,"Package metadata differs from the registered resource. Refresh and review the source first.");
     const auto engines=parsed.metadata["engines"].toObject();
-    if(!SemVer::satisfies(policy.applicationVersion,engines["notepadnext"].toString(),error)||!SemVer::satisfies(policy.apiVersion,engines["api"].toString(),error)) return false;
+    if(!SemVer::satisfies(policy.applicationVersion,engines["notepadnext"].toString(),error))return false;
+    bool apiMatches=SemVer::satisfies(policy.apiVersion,engines["api"].toString(),error);
+    for(const auto &version:policy.compatibleApiVersions)if(SemVer::satisfies(version,engines["api"].toString(),error))apiMatches=true;
+    if(!apiMatches)return reject(error,"No supported native API version matches the plugin.");
+    if(parsed.metadata["runtime"].toObject()["kind"]=="python"&&!SemVer::satisfies("0.1.0",engines["api"].toString(),error))return reject(error,"The Python prototype currently supports API 0.1 only.");
     for(const auto &cap:parsed.metadata["capabilities"].toObject()["required"].toArray()) if(!policy.capabilities.contains(cap.toString())) return reject(error,"Required capability is unavailable: "+cap.toString());
     const auto entry=parsed.metadata["runtime"].toObject()["entry"].toString();
     if(!PackageStore::isSafeRelativePath(entry)||!QFileInfo(root+'/'+entry).isFile()) return reject(error,"The package runtime entry is not a regular file.");

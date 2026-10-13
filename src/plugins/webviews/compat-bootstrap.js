@@ -27,9 +27,9 @@
             pending.push({revision, kind, ...entry, hasState}); pendingBytes += entry.bytes;
         }
     };
-    Object.defineProperty(window, 'acquireVsCodeApi', {value: () => {
+    const acquireApi = () => {
         const current = record;
-        if (current.acquired) throw new Error('An instance of the VS Code API has already been acquired');
+        if (current.acquired) throw new Error('The Notepad Next panel API has already been acquired');
         current.acquired = true;
         return Object.freeze({
             postMessage: message => send(current.revision, 'message', message),
@@ -41,7 +41,9 @@
                 return value;
             }
         });
-    }});
+    };
+    Object.defineProperty(window,'acquireNotepadNextApi',{value:acquireApi});
+    Object.defineProperty(window,'acquireVsCodeApi',{value:acquireApi}); // Old packages retain the same instance guard.
     Object.defineProperty(window, key, {value: Object.freeze({snapshot:()=>({hasState:record.state!==undefined,state:record.state===undefined?null:clone(record.state).value}),update: (nextRevision, nextState) => {
         if (record.revision === nextRevision) return;
         record = {revision: nextRevision, state: nextState, acquired: false};

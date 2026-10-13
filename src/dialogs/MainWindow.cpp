@@ -18,6 +18,7 @@
 
 
 #include "MainWindow.h"
+#include "EditorOperations.h"
 #include "BookMarkDecorator.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
@@ -186,7 +187,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
-    connectEditorAction(ui->actionToggleSingleLineComment, &ScintillaNext::toggleCommentSelection);
+    connect(ui->actionToggleSingleLineComment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.toggle"); });
     connectEditorAction(ui->actionSingleLineComment, &ScintillaNext::commentLineSelection);
     connectEditorAction(ui->actionSingleLineUncomment, &ScintillaNext::uncommentLineSelection);
 
@@ -270,8 +271,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionMacintosh, &QAction::triggered, this, handleEolTrigger);
 
 
-    connectEditorAction(ui->actionUpperCase, &ScintillaNext::upperCase);
-    connectEditorAction(ui->actionLowerCase, &ScintillaNext::lowerCase);
+    connect(ui->actionUpperCase, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.case.upper"); });
+    connect(ui->actionLowerCase, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.case.lower"); });
 
     connectEditorAction(ui->actionDuplicateCurrentLine, &ScintillaNext::lineDuplicate);
     connectEditorAction(ui->actionMoveSelectedLinesUp, &ScintillaNext::moveSelectedLinesUp);
@@ -303,36 +304,30 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         editor->deleteTrailingEmptyLines();
     });
 
-    connectEditorAction(ui->actionRemoveDuplicateLines, &ScintillaNext::removeDuplicateLines);
-    connectEditorAction(ui->actionRemoveConsecutiveDuplicateLines, &ScintillaNext::removeConsecutiveDuplicateLines);
+    connect(ui->actionRemoveDuplicateLines, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.lines.deduplicate"); });
+    connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.lines.deduplicate", {{"consecutiveOnly",true}}); });
 
     connect(ui->actionReverseLineOrder, &QAction::triggered, this, [=, this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(ReverseSorter(Sorter::Direction::Ascending));
     });
     connect(ui->actionSortLinesAsc, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Ascending));
+        EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","ascending"},{"compare","caseSensitive"}});
     });
     connect(ui->actionSortLinesAscCaseInsensitive, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(CaseInsensitiveSorter(Sorter::Direction::Ascending));
+        EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","ascending"},{"compare","caseInsensitive"}});
     });
     connect(ui->actionSortLinesbyLengthAsc, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Ascending));
+        EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","ascending"},{"compare","length"}});
     });
     connect(ui->actionSortLinesDesc, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Descending));
+        EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","descending"},{"compare","caseSensitive"}});
     });
     connect(ui->actionSortLinesDescCaseInsensitive, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(CaseInsensitiveSorter(Sorter::Direction::Descending));
+        EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","descending"},{"compare","caseInsensitive"}});
     });
     connect(ui->actionSortLinesbyLengthDesc, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Descending));
+        EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","descending"},{"compare","length"}});
     });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [this]() {
@@ -347,8 +342,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         columnEditor->activateWindow();
     });
 
-    connectEditorAction(ui->actionUndo, &ScintillaNext::undo);
-    connectEditorAction(ui->actionRedo, &ScintillaNext::redo);
+    connect(ui->actionUndo, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.undo"); });
+    connect(ui->actionRedo, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.redo"); });
     connectEditorAction(ui->actionCut, &ScintillaNext::cutAllowLine);
     connectEditorAction(ui->actionCopy, &ScintillaNext::copyAllowLine);
     connectEditorAction(ui->actionDelete, &ScintillaNext::clear);
@@ -772,8 +767,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
-    connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
-    connectEditorAction(ui->actionUnfoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
+    connect(ui->actionFoldAll, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.all", {{"folded",true}}); });
+    connect(ui->actionUnfoldAll, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.all", {{"folded",false}}); });
 
     connectEditorAction(ui->actionFoldLevel1, &ScintillaNext::foldAllLevels, 0);
     connectEditorAction(ui->actionFoldLevel2, &ScintillaNext::foldAllLevels, 1);
