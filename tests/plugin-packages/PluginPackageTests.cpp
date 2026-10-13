@@ -28,7 +28,7 @@ void write(const QString &path,const QByteArray &bytes) {
 }
 QJsonObject manifest() {
     return {{"manifestVersion",1},{"id","tests.sample"},{"name","Sample"},{"version","1.2.3"},{"list",false},
-            {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.1.0"}}},
+            {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.3.0"}}},
             {"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.js"}}},
             {"capabilities",QJsonObject{{"required",QJsonArray{"commands@1"}},{"optional",QJsonArray{}}}},
             {"activationEvents",QJsonArray{"onCommand:tests.sample.open"}},

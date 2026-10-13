@@ -1,0 +1,68 @@
+{
+  "verifiedAt": "2026-10-13",
+  "sdk": {
+    "version": "0.3.0",
+    "commit": "fa2402c091b70621e572584ea8eb4581ccc0c4e5",
+    "sha256": "c5b132cdbe39abd2a64f7ec78ed92d5fdb5f846ec1488b5b7b07d1dc24893af9",
+    "release": "https://github.com/KMerdan/notepadnext-plugin-sdk/releases/tag/v0.3.0",
+    "unitTests": 18,
+    "standaloneSteps": 39
+  },
+  "plugins": [
+    {
+      "plugin": "kmerdan.text-inspector",
+      "version": "0.1.0",
+      "zipSha256": "8a1fefc7c95778d72693c66713acb24dc04da8945bf1e1ca8c70684b5dde30e2",
+      "bytes": 19341,
+      "release": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.text-inspector/v0.1.0"
+    },
+    {
+      "plugin": "kmerdan.todo-navigator",
+      "version": "0.1.0",
+      "zipSha256": "4d233571c5acaf2b703c0d497540e9c18ffd8ce625a2a21217ca60a5a02ee99f",
+      "bytes": 20889,
+      "release": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.todo-navigator/v0.1.0"
+    },
+    {
+      "plugin": "kmerdan.markdown-preview",
+      "version": "0.1.7",
+      "zipSha256": "d325ab1a9d75fd1fd58565b05d463f6dee19c8dd8e6a71c44182490e9c27cdf4",
+      "bytes": 838705,
+      "release": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.markdown-preview/v0.1.7"
+    },
+    {
+      "plugin": "kmerdan.html-preview",
+      "version": "0.1.3",
+      "zipSha256": "e58f0dde7d6d641a8278cb0ff89a71b8aff594929a8fd6fd1c862a7d37e3958d",
+      "bytes": 17449,
+      "release": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/kmerdan.html-preview/v0.1.3"
+    }
+  ],
+  "host": {
+    "profile": "0.3.0",
+    "fullLocalSuites": 18,
+    "finalFocusedSuites": 5,
+    "liveMarketplace": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "repo": "https://github.com/KMerdan/notepadnext-markdown-preview",
+      "gitRef": "",
+      "installed": [
+        "kmerdan.text-inspector",
+        "kmerdan.todo-navigator"
+      ],
+      "operations": [
+        "register four entries",
+        "checksummed online install",
+        "enable",
+        "open panels",
+        "independent up-to-date checks",
+        "uninstall",
+        "main window retained"
+      ]
+    },
+    "versionReplacement": "Generic host fixtures cover actual replacements and panel restoration; live current releases correctly report up-to-date."
+  },
+  "binaryRelease": "Awaiting repaired build workflow CI and five draft assets; not yet published."
+}

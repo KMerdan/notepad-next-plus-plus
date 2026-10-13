@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/KMerdan/notepadnext-plugin-sdk",
   "version": "0.3.0",
-  "commit": "69393865b9fafb2d724014174ffbbcf162e95b37",
+  "commit": "fa2402c091b70621e572584ea8eb4581ccc0c4e5",
   "tag": "v0.3.0",
   "developmentPackage": "https://github.com/KMerdan/notepadnext-plugin-sdk/releases/download/v0.3.0/notepadnext-plugin-sdk-0.3.0.tgz",
   "schemaOwner": "SDK repository; application documentation snapshots are generated"

@@ -16,7 +16,7 @@ endif()
 set(TARGET_EXE "$<TARGET_FILE:NotepadNext>")
 
 # Build the list of arguments for windeployqt
-set(WINDEPLOYQT_ARGS --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-opengl-sw)
+set(WINDEPLOYQT_ARGS --no-translations)
 if(PACKAGE_CONFIG STREQUAL "Debug")
 	list(APPEND WINDEPLOYQT_ARGS --debug)
 endif()
@@ -63,6 +63,9 @@ add_custom_target(package-windows
 
 	# Copy the two extra DLLs (x64 only, see TARGET_ARCH above)
 	${OPENSSL_DLL_COMMANDS}
+
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+		"$<TARGET_FILE_DIR:NotepadNext>/plugins" "${PACKAGE_DIR}/plugins"
 
 	# Run windeployqt with correct flags
 	COMMAND windeployqt ${WINDEPLOYQT_ARGS}

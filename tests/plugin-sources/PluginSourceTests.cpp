@@ -113,7 +113,6 @@ private slots:
     void repositoryNormalization();
     void metadataDiscriminator();
     void invalidMetadataIsRejected();
-    void vscodeCompatibilityMetadata();
     void registrationPersistenceAndMerging();
     void conflictsAndFailedWritesAreAtomic();
     void refreshReplacesOnlyItsOwnAssociations();
@@ -189,24 +188,6 @@ void PluginSourceTests::invalidMetadataIsRejected()
     QVERIFY(!PluginMetadata::parse(QJsonDocument(marketplace).toJson(), QStringLiteral("https://github.com/example/notepadnext-marketplace"), {}, &result, &error));
     QVERIFY(!PluginMetadata::parse(QByteArray(PluginMetadata::MaxMetadataBytes + 1, ' '), QStringLiteral("https://github.com/example/markdown-preview"), {}, &result, &error));
     QVERIFY(!PluginMetadata::parse(QByteArray(33, '[') + QByteArray(33, ']'), QStringLiteral("https://github.com/example/markdown-preview"), {}, &result, &error));
-}
-
-void PluginSourceTests::vscodeCompatibilityMetadata()
-{
-    auto valid=fixture("markdown-preview.manifest.json");valid["repository"]="https://github.com/tests/vscode";const auto command=valid["contributes"].toObject()["commands"].toArray()[0].toObject()["id"].toString();
-    valid["contributes"]=QJsonObject{{"commands",QJsonArray{QJsonObject{{"id",command},{"title","Read"}}}}};valid["activationEvents"]=QJsonArray{"onCommand:"+command};
-    valid["capabilities"]=QJsonObject{{"required",QJsonArray{"commands@1","documents.read@1","documents.delta@1","messages@1"}},{"optional",QJsonArray{}}};
-    valid["compatibility"]=QJsonObject{{"kind","vscode"},{"version","0.1.0"},{"api","1.100.0"},{"extensionRoot","dist"},{"commands",QJsonArray{QJsonObject{{"id","extension.read"},{"target",command}}}}};
-    SourceSnapshot result;QString error;const auto parse=[&](const QJsonObject &value){return PluginMetadata::parse(QJsonDocument(value).toJson(),"https://github.com/tests/vscode",{},&result,&error);};QVERIFY2(parse(valid),qPrintable(error));
-    for(int scenario=0;scenario<6;++scenario){auto invalid=valid,c=invalid["compatibility"].toObject();
-        if(scenario==0)c["version"]="0.2.0";
-        if(scenario==1)c["commands"]=QJsonArray{QJsonObject{{"id","extension.read"},{"target","other.plugin.command"}}};
-        if(scenario==2)c["commands"]=QJsonArray{c["commands"].toArray()[0],c["commands"].toArray()[0]};
-        if(scenario==3)c["commands"]=QJsonArray{};
-        if(scenario==4)invalid["runtime"]=QJsonObject{{"kind","python"},{"entry","dist/index.py"}};
-        if(scenario==5)invalid["capabilities"]=QJsonObject{{"required",QJsonArray{"commands@1","documents.read@1"}},{"optional",QJsonArray{}}};
-        invalid["compatibility"]=c;QVERIFY2(!parse(invalid),qPrintable(QString::number(scenario)));QVERIFY(!error.isEmpty());
-    }
 }
 
 void PluginSourceTests::registrationPersistenceAndMerging()

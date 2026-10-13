@@ -22,7 +22,7 @@ int main(int argc,char **argv) {
     QObject::connect(&peer,&PluginRpc::RpcProcess::started,&app,[&]{
         if(!lease->pinRuntimeProcess(peer.processId(),&error)){app.exit(5);return;}
         const QJsonObject identity{{"sessionId","parent-crash-test"},{"generation",1}};
-        auto initialize=identity;initialize["pluginId"]=manifest["id"];initialize["protocolVersions"]=QJsonArray{"0.1"};initialize["hostVersion"]="0.15.0";initialize["apiVersion"]="0.1.0";initialize["grantedCapabilities"]=QJsonArray{"commands@1"};initialize["limits"]=PluginRpc::profileLimits();
+        auto initialize=identity;initialize["pluginId"]=manifest["id"];initialize["protocolVersions"]=QJsonArray{"0.1"};initialize["hostVersion"]="0.15.0";initialize["apiVersion"]="0.3.0";initialize["grantedCapabilities"]=QJsonArray{"commands@1"};initialize["limits"]=PluginRpc::profileLimits();
         peer.call("nnp.initialize",initialize,[&,identity](const QJsonValue &,const QJsonObject &error){
             if(!error.isEmpty()){app.exit(6);return;}
             auto activate=identity;activate["reason"]="command";

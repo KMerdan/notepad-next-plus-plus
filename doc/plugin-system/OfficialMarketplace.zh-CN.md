@@ -37,4 +37,4 @@ Notepad Next ++ 的第一方插件由 KMerdan 在同一公开仓库维护：
 
 验证记录见 [MarketplaceValidation.json](evidence/MarketplaceValidation.json)。主应用仍是本地开发构建，本次发布的是插件安装包。
 
-本次三仓拆分及原生 API 0.2 的实现/证据见 [Native SDK 状态](NativeSDKStatus.zh-CN.md)。Markdown/HTML 保留 host API 0.1 与原 ID/来源，新的 SDK 包不改变旧命令回调签名。
+本次三仓拆分及原生 API 0.3 的实现/证据见 [Native SDK 状态](NativeSDKPhaseBStatus.zh-CN.md)。当前四个官方插件均使用 native API 0.3 和正式 SDK 0.3.0 Release；原插件 ID/来源保持一致，旧 API profile 已移除。新工具 Text Inspector / TODO Navigator 也可从同一 URL 安装。

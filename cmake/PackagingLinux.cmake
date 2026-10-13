@@ -67,6 +67,7 @@ add_custom_target(appdir
     COMMAND ${CMAKE_COMMAND}
         --install .
         --prefix ${APPDIR_USR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "$<TARGET_FILE_DIR:NotepadNext>/plugins" "${APPDIR_USR}/bin/plugins"
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS NotepadNext
 )

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "NotepadNext unified plugin and marketplace metadata draft 0.2",
-  "description": "One metadata contract. list=false declares one native Node or Python plugin; list=array declares a marketplace of plugin metadata. Registration is metadata-only and never installs or executes plugins. Package validation additionally requires list=false, SemVer, identity, capabilities, file containment and actual package checks. Python activation needs an explicitly configured prototype interpreter.",
+  "description": "Native Node plugin (list=false) or Marketplace catalog (list=array). Registration is metadata-only; the native API profile is 0.3.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -66,10 +66,7 @@
       ],
       "properties": {
         "kind": {
-          "enum": [
-            "node",
-            "python"
-          ]
+          "const": "node"
         },
         "entry": {
           "type": "string",
@@ -215,9 +212,6 @@
       "maxLength": 8192,
       "pattern": "^(https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/?|file:///[^?#]+)$",
       "description": "Canonical GitHub repository or local metadata file URI. Local registration resolves an omitted repository to its file URI; GitHub registration resolves it to the input repository. Marketplace plugin entries require a GitHub repository. A package claim cannot silently change the registered origin."
-    },
-    "compatibility": {
-      "$ref": "#/$defs/vscodeCompatibility"
     },
     "displayIcon": {
       "type": "string",

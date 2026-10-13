@@ -14,8 +14,8 @@ endforeach()
 qt_add_executable(PluginApplicationTests MACOSX_BUNDLE PluginApplicationTests.cpp ${test_sources})
 if(APPLE)
     set_target_properties(PluginApplicationTests PROPERTIES
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.0"
-        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.0")
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}")
 endif()
 get_target_property(app_includes NotepadNext INCLUDE_DIRECTORIES)
 get_target_property(app_definitions NotepadNext COMPILE_DEFINITIONS)
@@ -24,12 +24,7 @@ target_include_directories(PluginApplicationTests PRIVATE ${app_includes})
 target_compile_definitions(PluginApplicationTests PRIVATE ${app_definitions}
     PLUGIN_TEST_NODE="${NOTEPADNEXT_TEST_NODE}"
     PLUGIN_TEST_PREVIEW="${CMAKE_SOURCE_DIR}/tests/fixtures/contract-preview"
-    PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
-    PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_SOURCE_DIR}/examples/python-inspector"
     PLUGIN_TEST_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
-    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_SOURCE_DIR}/tests/fixtures/legacy-hello-world"
-    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_SOURCE_DIR}/tests/fixtures/legacy-webview"
-    PLUGIN_TEST_LEGACY_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_SCREENSHOT="${CMAKE_BINARY_DIR}/plugin-manager-installed.png")
 target_link_libraries(PluginApplicationTests PRIVATE ${app_libraries} Qt6::Test)
 get_target_property(app_link_dependencies NotepadNext LINK_DEPENDS)
@@ -94,8 +89,8 @@ if(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE AND APPLE AND NOTEPADNEXT_PLUGIN_WEBVIEW
         PERF_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs")
     target_link_libraries(PluginPerformanceTests PRIVATE ${app_libraries} Qt6::Test)
     set_target_properties(PluginPerformanceTests PROPERTIES
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.0"
-        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.0"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
         AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/dialogs;${CMAKE_SOURCE_DIR}/src/widgets;${CMAKE_SOURCE_DIR}/src/docks")
     if(app_link_dependencies)
         set_property(TARGET PluginPerformanceTests APPEND PROPERTY LINK_DEPENDS ${app_link_dependencies})
