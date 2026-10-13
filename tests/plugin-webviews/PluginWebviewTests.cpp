@@ -580,20 +580,26 @@ exports.activate=async ctx=>{
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("# stress unsaved 😀");window.setCentralWidget(&editor);
         PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"markdown");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});auto *menu=window.menuBar()->addMenu("Plugins");engine.attachWindow(&window,menu);window.show();
-        QSignalSpy done(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error);QVERIFY(installer.installDirectory(temp.path()+"/package",source.resources[0]));QTRY_COMPARE_WITH_TIMEOUT(done.size(),1,10000);QVERIFY(done[0][1].toString().isEmpty());
+        QSignalSpy done(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error),operations(&engine,&PluginController::operationFinished);QVERIFY(installer.installDirectory(temp.path()+"/package",source.resources[0]));QTRY_COMPARE_WITH_TIMEOUT(done.size(),1,10000);QVERIFY(done[0][1].toString().isEmpty());
         const auto id=source.resources[0].id,command=id+".open";QElapsedTimer duration;duration.start();
         const auto initial=lifecycleNativeSample();QJsonObject warm;QJsonArray samples;int exitedIdentities=0;
         for(int cycle=0;cycle<100;++cycle) {
-            QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,command);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);
+            QVERIFY2(engine.setEnabled(id,true,&error),qPrintable(error));engine.invoke(id,command);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);
             QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QWebEngineView*>().size(),1,10000);QTRY_VERIFY_WITH_TIMEOUT(engine.resourceCount()>=3,5000);
             QList<ProcessIdentity> processes;
             for(auto *process:engine.findChildren<PluginRpc::RpcProcess*>())if(process->processId()>0){ProcessIdentity identity;QVERIFY(ProcessIdentity::capture(process->processId(),&identity,&error));processes.append(identity);}
             QVERIFY(!processes.isEmpty());
-            engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);
+            const auto beforeReload=operations.size();engine.reload(id);
+            // Active precedes the queued panel-restoration confirmation. Use
+            // the public lifecycle acknowledgement before the next action.
+            QTRY_COMPARE_WITH_TIMEOUT(operations.size(),beforeReload+1,10000);
+            QCOMPARE(operations.last()[0].toString(),id);
+            QVERIFY2(operations.last()[1].toString().isEmpty(),qPrintable(engine.pluginLog(id)));
+            QCOMPARE(engine.pluginState(id),QString("active"));
             QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QWebEngineView*>().size(),1,10000);QTRY_VERIFY_WITH_TIMEOUT(engine.resourceCount()>=3,5000);
             for(auto *process:engine.findChildren<PluginRpc::RpcProcess*>())if(process->processId()>0){ProcessIdentity identity;QVERIFY(ProcessIdentity::capture(process->processId(),&identity,&error));bool known=false;for(const auto &prior:processes)if(prior.pid==identity.pid&&prior.start==identity.start)known=true;if(!known)processes.append(identity);}
             QVERIFY(processes.size()>=2);
-            QVERIFY(engine.setEnabled(id,false,&error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);
+            QVERIFY2(engine.setEnabled(id,false,&error),qPrintable(error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);
             QCOMPARE(engine.resourceCount(),0);QVERIFY(menu->actions().isEmpty());QTRY_VERIFY(window.findChildren<QWebEngineView*>().isEmpty());QTRY_VERIFY(window.findChildren<QDockWidget*>().isEmpty());QTRY_VERIFY(engine.findChildren<PluginSession*>().isEmpty());
             for(const auto &identity:processes){QTRY_VERIFY_WITH_TIMEOUT(identity.state()==ProcessIdentity::State::Exited,5000);++exitedIdentities;}
             const auto snapshot=lifecycleNativeSample();QCOMPARE(snapshot["focusConnections"],initial["focusConnections"]);if(cycle==2)warm=snapshot;
