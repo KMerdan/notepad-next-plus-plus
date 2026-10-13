@@ -284,12 +284,12 @@ void WebviewService::refreshPreviewSource() {
             else if(d->published&&panel.requestedVisible&&!d->suspended)panel.dock->show();
         }
         if(d->suspended)continue;
-        if(panel.sourceDocument==selected) {emit event(id,"sourceChanged",QJsonObject{{"document",source},{"hasState",!panel.state.isUndefined()},{"state",panel.state.isUndefined()?QJsonValue(QJsonValue::Null):panel.state}});continue;}
+        if(panel.sourceDocument==selected) {++panel.sourceSequence;emit event(id,"sourceChanged",QJsonObject{{"document",source},{"hasState",!panel.state.isUndefined()},{"state",panel.state.isUndefined()?QJsonValue(QJsonValue::Null):panel.state}});continue;}
         const auto old=panel.sourceDocument;const auto sequence=++panel.sourceSequence;
         const QPointer<WebviewService> safe=this;
         const auto finish=[safe,id,selected,old,source,sequence](const QVariant &value) {
             if(!safe||!safe->d->panels.contains(id))return;
-            auto &panel=safe->d->panels[id];if(panel.sourceSequence!=sequence||safe->d->suspended)return;
+            auto &panel=safe->d->panels[id];if(panel.sourceSequence!=sequence||safe->d->suspended||PluginRuntime::previewSource(safe->d->previewPolicy,safe->d->documents).toObject()["documentId"].toString()!=selected)return;
             const auto bytes=value.toString().toUtf8();const auto snapshot=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
             if(!old.isEmpty()&&PluginRuntime::previewMatches(safe->d->previewPolicy,safe->d->documents->info(old))) {
                 // Bounded ephemeral state. It never becomes persistent plugin data.

@@ -137,6 +137,13 @@ private slots:
         QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("3");})(),5000);
         events.clear();documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();*result=QVariant();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("9");})(),5000);
+        // A browser snapshot is asynchronous. A->B->A must invalidate the
+        // in-flight B transition even though the host still owns A's page.
+        events.clear();documents.setActive(a);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();
+        service.page(panel)->runJavaScript("const stop=Date.now()+300;while(Date.now()<stop){};");
+        events.clear();documents.setActive(b);QTest::qWait(20);documents.setActive(a);QTest::qWait(400);
+        QString lastSource;for(const auto &event:events)if(event[1].toString()=="sourceChanged")lastSource=event[2].toJsonValue().toObject()["document"].toObject()["documentId"].toString();
+        QCOMPARE(lastSource,a);
     }
     void previewEngineStopsWithItsOwnerAndNeverReplaysOpen() {
         using namespace PluginPackages;using namespace PluginRuntime;
