@@ -80,12 +80,64 @@
     "verified": "Existing editable text/components/token bindings preserved; new restoration permission labels; current catalog and package versions; screenshots inspected without clipping."
   },
   "applicationCI": {
-    "status": "pending latest pushed-head CI completion",
+    "status": "passed at the validated implementation heads",
+    "observedAtUTC": "2026-10-13T01:54:31.914672+00:00",
     "requirements": [
       "14 standard build variants per PR",
       "12 host conformance profiles per PR"
     ],
-    "consumerTestsRequiredInMainCI": false
+    "consumerTestsRequiredInMainCI": false,
+    "validatedPullRequests": [
+      {
+        "pullRequest": "https://github.com/KMerdan/notepad-next-plus-plus/pull/1",
+        "validatedHead": "54e2bc27cf0fa196d5588b7f27fb1bbe725a21e5",
+        "standardBuilds": {
+          "passed": 14,
+          "total": 14
+        },
+        "hostConformanceProfiles": {
+          "passed": 12,
+          "total": 12
+        },
+        "workflowRuns": [
+          38327026397,
+          38327026411
+        ]
+      },
+      {
+        "pullRequest": "https://github.com/KMerdan/notepad-next-plus-plus/pull/2",
+        "validatedHead": "08199997a371468c254aa6cf57039634635fb2c4",
+        "standardBuilds": {
+          "passed": 14,
+          "total": 14
+        },
+        "hostConformanceProfiles": {
+          "passed": 12,
+          "total": 12
+        },
+        "workflowRuns": [
+          38327026422,
+          38327026463
+        ]
+      },
+      {
+        "pullRequest": "https://github.com/KMerdan/notepad-next-plus-plus/pull/3",
+        "validatedHead": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+        "standardBuilds": {
+          "passed": 14,
+          "total": 14
+        },
+        "hostConformanceProfiles": {
+          "passed": 12,
+          "total": 12
+        },
+        "workflowRuns": [
+          38327025508,
+          38327025543
+        ]
+      }
+    ],
+    "snapshotScope": "This records tested source commits; later documentation commits and future changes must be checked separately on GitHub."
   },
   "installationLockRegression": {
     "changeCommit": "c9314f1",
@@ -107,6 +159,15 @@
       "no plugin code execution during installation"
     ],
     "windowsProof": {
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072961,
+      "suite": "PluginGitHubReleaseTests",
+      "result": "46 passed, 0 failed, 0 skipped",
+      "log": "native-sdk-final-windows-packages.log",
+      "workflowConclusion": "success"
+    },
+    "historicalWindowsProof": {
       "sourceCommit": "197139c956f1e9eede54c77ce0eabc9f4a35c969",
       "run": 38325070257,
       "job": 115061874077,
@@ -134,6 +195,104 @@
       "all observed native process identities exit",
       "focus connections and native handles return to warm baseline"
     ],
-    "remoteWindowsStatus": "pending latest CI"
-  }
+    "remoteWindowsStatus": "passed in actual current Windows WebEngine CI: all 100 cycles; 47 WebEngine cases passed, two explicit consumer opt-in skips",
+    "remoteWindowsProof": {
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072961,
+      "log": "native-sdk-final-windows-x64-webviews.log",
+      "elapsedMs": 121812,
+      "resourceMetricsScope": "The detailed 100-sample FD/focus metrics above are the separate local macOS run, not Windows telemetry."
+    }
+  },
+  "nativePlatformProofs": [
+    {
+      "platform": "windows-x64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072961,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 6183ms",
+          "log": "native-sdk-final-windows-x64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 233688ms",
+          "log": "native-sdk-final-windows-x64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    },
+    {
+      "platform": "linux-x64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072650,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 5074ms",
+          "log": "native-sdk-final-linux-x64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 144646ms",
+          "log": "native-sdk-final-linux-x64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    },
+    {
+      "platform": "macos-arm64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072989,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 10752ms",
+          "log": "native-sdk-final-macos-arm64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 334559ms",
+          "log": "native-sdk-final-macos-arm64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    },
+    {
+      "platform": "macos-x64",
+      "sourceCommit": "95c5f03f07e4cb03d41084b1fa9999690f39dfb5",
+      "run": 38327025508,
+      "job": 115068072855,
+      "suites": {
+        "PluginApplicationTests": {
+          "result": "Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 10482ms",
+          "log": "native-sdk-final-macos-x64-application.log"
+        },
+        "PluginWebviewTests": {
+          "result": "Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 303174ms",
+          "log": "native-sdk-final-macos-x64-webviews.log"
+        }
+      },
+      "verified": [
+        "nativeSdkSelectionAndCoreLifecycle",
+        "lifecycleStress100Cycles",
+        "compatible HTML, independent Node service and shared Node service restorers"
+      ],
+      "consumerSkips": "Three application and two WebEngine product acceptance cases are explicit opt-ins; real public consumers were validated separately on macOS."
+    }
+  ]
 }

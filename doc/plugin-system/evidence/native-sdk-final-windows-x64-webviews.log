@@ -1,0 +1,83 @@
+********* Start testing of PluginWebviewTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (x86_64-little_endian-llp64 shared (dynamic) release build; by MSVC 2022), windows server2022
+PASS   : PluginWebviewTests::initTestCase()
+QINFO  : PluginWebviewTests::firstPanelKeepsEditorWindow() Native surface replacements: 0
+PASS   : PluginWebviewTests::firstPanelKeepsEditorWindow()
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Either the 'unsafe-inline' keyword, a hash ('sha256-hfjQRUB+1Oah1DK8XSsYtPB5rWE3oiTiuaAtLMHW03U='), or a nonce ('nonce-...') is required to enable inline execution.
+
+QCRITICAL: PluginWebviewTests::compatibleFullPagePolicyAndStateBridge() js: Refused to load the script 'https://example.com/must-not-load.js' because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-allowed'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+PASS   : PluginWebviewTests::compatibleFullPagePolicyAndStateBridge()
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to load the script 'nnp-plugin://e39dec12d6b64cbabd88dd5acb7858e3/cccccccccccccccccccccccccccccccc/asset/dist/media/own.js' because it violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+QCRITICAL: PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy() js: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'none'". Either the 'unsafe-inline' keyword, a hash ('sha256-FUFLEu5vjA/VQJw34usTCC7o69Ot9eK/DwKQVszYQAg='), or a nonce ('nonce-...') is required to enable inline execution.
+
+PASS   : PluginWebviewTests::compatibleAssetBoundariesCrossPanelAndScriptPolicy()
+PASS   : PluginWebviewTests::focusNotificationsAfterDeferredDockCleanup()
+PASS   : PluginWebviewTests::adaptedVSCodeWebviewInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleNativeCapabilityPair()
+PASS   : PluginWebviewTests::nativeMessagesEnforceCapabilitiesPublicationAndOwnership()
+PASS   : PluginWebviewTests::originalVSCodeHelloWorldInstalledLifecycle()
+PASS   : PluginWebviewTests::compatibleEditorTransactionAndHumanMessageWait()
+PASS   : PluginWebviewTests::nativeDeltaCapabilitiesAndCensusLimit()
+PASS   : PluginWebviewTests::nativeDocumentMirrorLifecycle()
+PASS   : PluginWebviewTests::pythonInspectorExample()
+PASS   : PluginWebviewTests::pythonPluginLifecycle()
+PASS   : PluginWebviewTests::collectionPreservesRunningSession()
+PASS   : PluginWebviewTests::persistentFailureDiagnostics()
+PASS   : PluginWebviewTests::largeCommandFailureIsBounded()
+PASS   : PluginWebviewTests::retryWhileFailedProcessDrains()
+PASS   : PluginWebviewTests::compatiblePersistenceLifecycle()
+PASS   : PluginWebviewTests::pluginDataLifecycle()
+PASS   : PluginWebviewTests::activationResourceStaging()
+PASS   : PluginWebviewTests::healthTimeout()
+PASS   : PluginWebviewTests::boundedCrashRecovery()
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 1 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 11 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 21 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 31 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 41 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 51 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 61 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 71 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 81 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() lifecycle cycle 91 owned resources 0
+QINFO  : PluginWebviewTests::lifecycleStress100Cycles() 100 lifecycle cycles elapsed ms 121812
+PASS   : PluginWebviewTests::lifecycleStress100Cycles()
+PASS   : PluginWebviewTests::updateDuringInitialActivationDoesNotPreserveHiddenStagedPanels()
+PASS   : PluginWebviewTests::serviceEndpointsRequireOwnedLoopbackPaths()
+PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(compatible-html)
+PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(node-http-service)
+PASS   : PluginWebviewTests::universalHotUpdatePreservesPanelsAndDoesNotReplayCommands(shared-node-service)
+PASS   : PluginWebviewTests::updateValidationAndRollback()
+PASS   : PluginWebviewTests::installedManagerLifecycle()
+PASS   : PluginWebviewTests::htmlPolicy()
+PASS   : PluginWebviewTests::imageContainment()
+PASS   : PluginWebviewTests::realPageAndCleanup()
+PASS   : PluginWebviewTests::nativeLongPageScrollsToOffscreenText()
+PASS   : PluginWebviewTests::nativeAppearanceTracksHostWithoutReload()
+PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(initial-font-data)
+PASS   : PluginWebviewTests::nativeAppearancePendingAndFontEscapes(theme-during-preparation)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(publish-and-bounded-overlap)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(document-edited-before-publication)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(active-document-changed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(document-closed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(panel-disposed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(synchronous-publication-wins)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(service-destroyed)
+PASS   : PluginWebviewTests::asyncHtmlOwnership(unsafe-html-rejected)
+SKIP   : PluginWebviewTests::realMarkdownImagesAndDocumentStates() Marketplace consumer acceptance is opt-in; provide an executable Markdown package.
+D:\a\notepad-next-plus-plus\notepad-next-plus-plus\tests\plugin-webviews\PluginWebviewTests.cpp(937) : failure location
+SKIP   : PluginWebviewTests::realMarkdownSession() Marketplace consumer acceptance is opt-in; provide an executable Markdown package.
+D:\a\notepad-next-plus-plus\notepad-next-plus-plus\tests\plugin-webviews\PluginWebviewTests.cpp(974) : failure location
+PASS   : PluginWebviewTests::cleanupTestCase()
+Totals: 47 passed, 0 failed, 2 skipped, 0 blacklisted, 233688ms
+********* Finished testing of PluginWebviewTests *********

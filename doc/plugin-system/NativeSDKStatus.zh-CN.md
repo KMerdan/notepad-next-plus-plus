@@ -24,4 +24,4 @@ Marketplace 的 Markdown/HTML 保留 ID、来源和 0.1 profile，使用新版 S
 
 公开 URL 完整流程再次验证：Markdown 0.1.3 → 0.1.6；HTML 0.1.0 → 0.1.2 更新保持 dock/geometry、draft、counter、scroll，并更换服务 PID；Markdown 包不被 HTML 更新替换。卸载回到 Discover，主窗口 ID 保持。SDK 与插件的 CI 资产逐字节等于本机安装/构建验证过的包。
 
-2026-10-13 收尾验收：当前实现再次通过真实 macOS 原生 API 与公开 repo URL 的两个插件完整生命周期，**3 cases + init/cleanup，5 passed、0 failed、0 skipped**。权限确认文案和可编辑 Figma 生命周期稿已同步。独立 SDK 与 Marketplace 的最新 CI 已核对通过；主仓最新提交的跨平台 CI 尚在运行，不据本机结果宣称全部平台完成。当前证据与源码摘要见 [NativeSDKFinalAcceptance.json](evidence/NativeSDKFinalAcceptance.json)。
+2026-10-13 收尾验收：当前实现再次通过真实 macOS 原生 API 与公开 repo URL 的两个插件完整生命周期，**3 cases + init/cleanup，5 passed、0 failed、0 skipped**。权限确认文案和可编辑 Figma 生命周期稿已同步。独立 SDK 与 Marketplace 的最新 CI 已核对通过；三个应用 PR 的指定验证提交均通过 **14／14 基础构建、12／12 宿主契约配置**；原始 Linux、Windows、macOS ARM／Intel 产物确认执行原生 SDK 和通用热更新用例。该记录是指定源码提交的验证快照；后续提交仍以 GitHub checks 为准。当前证据与源码摘要见 [NativeSDKFinalAcceptance.json](evidence/NativeSDKFinalAcceptance.json)。

@@ -27,7 +27,7 @@ The SDK is a Git submodule pinned to a reviewed commit. The Marketplace consumes
 
 ## Build and validate
 
-The native SDK changes are developed on `codex/split-plugin-sdk` until the application PR is merged:
+The commands below select the native SDK review branch. Once [application PR #3](https://github.com/KMerdan/notepad-next-plus-plus/pull/3) is merged, omit `--branch codex/split-plugin-sdk` to build the default branch:
 
 ```sh
 git clone --branch codex/split-plugin-sdk --recurse-submodules https://github.com/KMerdan/notepad-next-plus-plus.git

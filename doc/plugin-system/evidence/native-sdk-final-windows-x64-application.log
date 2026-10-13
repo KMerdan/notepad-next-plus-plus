@@ -1,0 +1,53 @@
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (x86_64-little_endian-llp64 shared (dynamic) release build; by MSVC 2022), windows server2022
+QINFO  : PluginApplicationTests::initTestCase() bool __cdecl NotepadNextApplication::init(class QNetworkAccessManager *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl TranslationManager::loadTranslation(class QLocale)
+QINFO  : PluginApplicationTests::initTestCase() __cdecl LuaState::LuaState(void)
+QINFO  : PluginApplicationTests::initTestCase() __cdecl MacroManager::MacroManager(class QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MacroManager::loadSettings(void)
+QINFO  : PluginApplicationTests::initTestCase() __cdecl MainWindow::MainWindow(class NotepadNextApplication *)
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() __cdecl FileListDock::FileListDock(class MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::setupLanguageMenu(void)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::applyStyleSheet(void)
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::restoreSettings(void)
+QINFO  : PluginApplicationTests::initTestCase() AutoUpdates: 0
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl NotepadNextApplication::openFiles(const class QList<class QString> &)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::newFile(void)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl EditorManager::setupEditor(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int __cdecl EditorManager::detectEOLMode(class ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() class Scintilla::Internal::RegexSearchBase *__cdecl Scintilla::Internal::CreateRegexSearch(class Scintilla::Internal::CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::addEditor(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::detectLanguage(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::setLanguage(class ScintillaNext *,const class QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl DockedEditor::addEditor(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::activateEditor(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool __cdecl MainWindow::checkFileForModification(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::updateGui(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::updateFileStatusBasedUi(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::updateSaveStatusBasedUi(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::updateEOLBasedUi(class ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void __cdecl MainWindow::updateLanguageBasedUi(class ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+PASS   : PluginApplicationTests::nativeSdkSelectionAndCoreLifecycle()
+PASS   : PluginApplicationTests::editorOpenSaveReloadAndClose()
+PASS   : PluginApplicationTests::deployedLibraryAudit()
+PASS   : PluginApplicationTests::macOSChrome()
+PASS   : PluginApplicationTests::macOSSettingsDialog()
+PASS   : PluginApplicationTests::macOSSearchDialogs()
+PASS   : PluginApplicationTests::macOSUtilityDialogs()
+PASS   : PluginApplicationTests::productionPythonAdapter()
+PASS   : PluginApplicationTests::productionVSCodeHelloWorld()
+PASS   : PluginApplicationTests::productionVSCodeWebview()
+SKIP   : PluginApplicationTests::productionHtmlServiceAndHotReload() Marketplace consumer acceptance is opt-in; provide an executable HTML package.
+D:\a\notepad-next-plus-plus\notepad-next-plus-plus\tests\plugin-application\PluginApplicationTests.cpp(452) : failure location
+SKIP   : PluginApplicationTests::realGitHubMarkdownLifecycle() Live GitHub validation is opt-in.
+D:\a\notepad-next-plus-plus\notepad-next-plus-plus\tests\plugin-application\PluginApplicationTests.cpp(473) : failure location
+SKIP   : PluginApplicationTests::realGitHubMarketplaceLifecycle() Live marketplace validation is opt-in.
+D:\a\notepad-next-plus-plus\notepad-next-plus-plus\tests\plugin-application\PluginApplicationTests.cpp(540) : failure location
+PASS   : PluginApplicationTests::productionManagerAndExit()
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 13 passed, 0 failed, 3 skipped, 0 blacklisted, 6183ms
+********* Finished testing of PluginApplicationTests *********
