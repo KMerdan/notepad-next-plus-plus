@@ -3,8 +3,10 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths: ['.github/workflows/**', 'CMakeLists.txt', 'cmake/**', 'src/**', 'thirdparty/**', 'packages/**', 'tests/**', 'scripts/**', 'deploy/**', 'installer/**', 'icon/**', 'doc/ReleaseNotes.md']
     tags: ['v*']
   pull_request:
+    paths: ['.github/workflows/**', 'CMakeLists.txt', 'cmake/**', 'src/**', 'thirdparty/**', 'packages/**', 'tests/**', 'scripts/**', 'deploy/**', 'installer/**', 'icon/**', 'doc/ReleaseNotes.md']
 permissions:
   contents: read
 concurrency:
@@ -90,9 +92,21 @@ jobs:
       - name: macOS package
         if: matrix.platform == 'darwin'
         run: cmake --build build --target dmg
+      - name: Stage Windows package
+        if: matrix.platform == 'win'
+        run: cmake --build build --target package-windows
+      - name: Windows copyright notices
+        if: matrix.platform == 'win'
+        run: python scripts/package-notices.py --destination build/package/licenses --cache build/CMakeCache.txt
       - name: Windows packages
         if: matrix.platform == 'win'
         run: cmake --build build --target zip installer
+      - name: Stage Linux AppDir
+        if: matrix.platform == 'linux'
+        run: cmake --build build --target appdir
+      - name: Linux copyright notices
+        if: matrix.platform == 'linux'
+        run: python scripts/package-notices.py --destination build/AppDir/usr/share/licenses/NotepadNextPlusPlus --cache build/CMakeCache.txt
       - name: Linux package
         if: matrix.platform == 'linux'
         env:

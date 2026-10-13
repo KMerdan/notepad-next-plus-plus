@@ -33,9 +33,18 @@ def checked_node(app,archive,arch):
     node=app/'Contents/Helpers/nnp-node'
     if sha(node)!=digest.hexdigest():raise ValueError('Bundled Node differs from the verified official archive')
     return {'archiveSha256':sha(archive),'originalBinarySha256':digest.hexdigest(),'version':lock['version']}
-def notices(app,qt):
-    destination=app/'Contents/Resources/licenses';destination.mkdir(exist_ok=False)
+def notices_to_directory(destination,qt,cache):
+    destination.mkdir(parents=True,exist_ok=False)
     for file,name in [(REPO/'LICENSE','NOTEPADNEXT-LICENSE'),(REPO/'thirdparty/scintilla/License.txt','SCINTILLA-LICENSE'),(REPO/'thirdparty/lexilla/License.txt','LEXILLA-LICENSE'),(REPO/'thirdparty/uchardet/COPYING','UCHARDET-COPYING')]:shutil.copyfile(file,destination/name)
+    values={}
+    for line in cache.read_text().splitlines():
+        if not line.startswith(('#','//')) and ':' in line and '=' in line:
+            key,rest=line.split(':',1);values[key]=rest.split('=',1)[1]
+    for key,filename,label in [('SingleApplication_SOURCE_DIR','LICENSE','SINGLEAPPLICATION-LICENSE'),('QSimpleUpdater_SOURCE_DIR','LICENSE.md','QSIMPLEUPDATER-LICENSE'),('QtADS_SOURCE_DIR','LICENSE','DOCKING-LICENSE'),('editorconfig-core-qt_SOURCE_DIR','LICENSE','EDITORCONFIG-LICENSE')]:
+        if not values.get(key):raise ValueError('Missing configured dependency source: '+key)
+        shutil.copyfile(Path(values[key])/filename,destination/label)
+    shutil.copyfile(REPO/'doc/plugin-system/licenses/zlib-1.3.2-LICENSE',destination/'ZLIB-LICENSE')
+    (destination/'SOURCES.md').write_text('''# Corresponding source locations\n\nApplication and bundled editor dependencies: https://github.com/KMerdan/notepad-next-plus-plus (source tag matches the application version; CMake pins fetched dependency commits). SDK: https://github.com/KMerdan/notepadnext-plugin-sdk/tree/v0.3.0.\n\nNode 24.21.0: https://nodejs.org/dist/v24.21.0/node-v24.21.0.tar.xz\nQt 6.10.0: https://download.qt.io/archive/qt/6.10/6.10.0/single/qt-everywhere-src-6.10.0.tar.xz\n\nExact installed Qt SDK SPDX documents and extracted copyright/license notices are included here. Original application and dependency notices are retained; individual components keep their own licenses.\n''')
     lua=(REPO/'thirdparty/lua/src/lua.h').read_text()
     start=lua.index('Copyright (C) 1994-2017 Lua.org, PUC-Rio.',lua.index('struct lua_Debug'))
     end=lua.index('******************************************************************************/',start)
@@ -107,7 +116,9 @@ def package(args):
     subprocess.run(['/usr/bin/ditto',str(source),str(app)],check=True)
     with (root/'deploy.log').open('w') as log:
         subprocess.run([str(qt/'bin/macdeployqt'),str(app),'-no-strip','-verbose=2'],stdout=log,stderr=log,check=True)
-        inventory=notices(app,qt)
+        cache=next((folder/'CMakeCache.txt' for folder in source.parents if (folder/'CMakeCache.txt').is_file()),None)
+        if cache is None:raise ValueError('Packaging requires the matching CMake cache for dependency notices')
+        inventory=notices_to_directory(app/'Contents/Resources/licenses',qt,cache)
         # Verify closure before signing. macdeployqt can return success while
         # an optional deployed plugin still refers to a missing framework.
         verifier.inspect(app,args.arch,require_signatures=False)
