@@ -1846,7 +1846,8 @@
           "enum": [
             "message",
             "closed",
-            "loadFailed"
+            "loadFailed",
+            "sourceChanged"
           ]
         },
         "payload": {
@@ -4909,6 +4910,60 @@
         "type"
       ],
       "additionalProperties": false
+    },
+    "nnp.previews.getSource.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.previews.getSource.result": {
+      "$ref": "#/$defs/activeDocument"
+    },
+    "nnp.webviews.reloadSource.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        },
+        "source": {
+          "$ref": "#/$defs/renderContext"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panelId",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.reloadSource.result": {
+      "$ref": "#/$defs/null"
     }
   }
 }

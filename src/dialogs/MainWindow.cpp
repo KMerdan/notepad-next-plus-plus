@@ -57,6 +57,7 @@
 #include "ApplicationSettings.h"
 
 #include "ScintillaNext.h"
+#include "TextEncoding.h"
 
 #include "RecentFilesListManager.h"
 #include "RecentFilesListMenuBuilder.h"
@@ -192,6 +193,31 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionToggleSingleLineComment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.toggle"); });
     connect(ui->actionSingleLineComment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.add"); });
     connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.remove"); });
+
+    ui->menuEncodings->clear();
+    auto *reloadMenu=ui->menuEncodings->addMenu(tr("Reload with Encoding"));
+    auto *convertMenu=ui->menuEncodings->addMenu(tr("Convert to Encoding"));
+    auto *encodings=new QActionGroup(this);encodings->setExclusive(true);
+    for(const auto &encoding:TextEncoding::supported()) {
+        auto *convert=convertMenu->addAction(TextEncoding::label(encoding));convert->setData(encoding);convert->setCheckable(true);encodings->addAction(convert);
+        connect(convert,&QAction::triggered,this,[this,encoding]{
+            auto *editor=currentEditor();if(!editor)return;QString error;
+            if(!editor->convertEncoding(encoding,&error))QMessageBox::warning(this,tr("Cannot Convert Encoding"),error);
+            ui->statusBar->refresh(editor);
+        });
+        auto *reload=reloadMenu->addAction(TextEncoding::label(encoding));
+        connect(reload,&QAction::triggered,this,[this,encoding]{
+            QPointer<ScintillaNext> editor=currentEditor();if(!editor||!editor->isFile())return;
+            if(editor->modify()&&QMessageBox::warning(this,tr("Reload with Encoding"),tr("Reloading discards unsaved changes in this tab. Continue?"),QMessageBox::Discard|QMessageBox::Cancel,QMessageBox::Cancel)!=QMessageBox::Discard)return;
+            if(!editor)return;QString error;
+            if(!editor->reloadEncoding(encoding,&error))QMessageBox::warning(this,tr("Cannot Reload Encoding"),error);
+            ui->statusBar->refresh(editor);
+        });
+    }
+    connect(ui->menuEncodings,&QMenu::aboutToShow,this,[this,reloadMenu,convertMenu,encodings]{
+        const auto *editor=currentEditor();reloadMenu->setEnabled(editor&&editor->isFile());convertMenu->setEnabled(editor&&!editor->readOnly());
+        for(auto *action:encodings->actions())action->setChecked(editor&&action->data().toString()==editor->textEncoding());
+    });
 
     connect(ui->actionBase64Encode, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
@@ -2016,6 +2042,7 @@ void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileEr
 
     // Map error code to human-readable string
     QString errorString;
+    if(!editor->encodingError().isEmpty()){QMessageBox::warning(this,tr("Cannot Save Document"),editor->encodingError());return;}
     switch (error) {
         case QFileDevice::ReadError:        errorString = tr("Read error"); break;
         case QFileDevice::WriteError:       errorString = tr("Write error"); break;

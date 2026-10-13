@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "PluginEngine.h"
+#include "PreviewPolicy.h"
 #include "../../PluginIcons.h"
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
 #include "WebviewService.h"
@@ -39,7 +40,7 @@ PluginPackages::PackagePolicy PluginEngine::packagePolicy() {
     policy.applicationVersion=NNP_APPLICATION_VERSION;policy.apiVersion="0.3.0";
     policy.capabilities={"documents.native.events@1","editors.selection.events@1","files.read@1","files.write@1","search.read@1","languages.read@1","languages.write@1","bookmarks.read@1","bookmarks.write@1","decorations.write@1","commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"};
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-    policy.capabilities.append("webviews@1");policy.capabilities.append("webviews.restore@1");
+    policy.capabilities.append("webviews.document@1");policy.capabilities.append("webviews@1");policy.capabilities.append("webviews.restore@1");
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
     policy.capabilities.append("webviews.compat@1");policy.capabilities.append("webviews.html@1");policy.capabilities.append("webviews.service@1");
 #endif
@@ -65,6 +66,12 @@ PluginEngine::PluginEngine(PluginPackages::InstalledPluginRegistry *installedReg
     connect(installer,&PluginPackages::InstallationService::busyChanged,this,[this](bool busy){if(!busy)collection->request();checkIdle();});
     connect(installer,&PluginPackages::InstallationService::updatePrepared,this,&PluginEngine::installUpdate);
     connect(documents,&PluginDocuments::DocumentBridge::event,this,[this](const QString &type,const QJsonValue &document,qint64){
+        if(type=="closed"||type=="metadataChanged")QTimer::singleShot(0,this,[this]{
+            for(const auto &p:registry->plugins())if(p.package.metadata["category"]=="editor-preview" && !hasPreviewDocuments(p.package.metadata["preview"].toObject(),documents)) {
+                if(verifying.contains(p.id()))verifying[p.id()].cancel->store(true);
+                if(!updating.contains(p.id())&&!restoring.contains(p.id())) {releasePreservedPanels(p.id());if(auto *session=sessions.value(p.id()))session->stop("source-closed");}
+            }
+        });
         if(type!="activeChanged"&&type!="metadataChanged")return;
         if(!document.isObject())return;
         const auto event="onLanguage:"+document.toObject()["languageId"].toString();
@@ -189,6 +196,7 @@ bool PluginEngine::setEnabled(const QString &id,bool enabled,QString *message) {
 void PluginEngine::invoke(const QString &id,const QString &command) {
     const auto p=registry->plugin(id);bool declared=false;
     for(const auto &item:p.package.metadata["contributes"].toObject()["commands"].toArray())if(item.toObject()["id"]==command)declared=true;
+    if(p.package.metadata["category"]=="editor-preview" && previewSource(p.package.metadata["preview"].toObject(),documents).isNull()){emit error(id,tr("Select a supported editor tab before opening this preview."));return;}
     if(!declared||!p.enabled||quitting||waiting.contains(id)||updating.contains(id)||restoring.contains(id)||hasPreservedPanels(id)||removing.contains(id))return;
     failures.remove(id);restartTickets.remove(id);crashTimes.remove(id);
     if(auto *session=sessions.value(id,nullptr);session&&(session->state()=="failed"||session->state()=="stopped")) {
@@ -234,7 +242,11 @@ void PluginEngine::startVerified(const QString &id,const QString &command,const 
 #endif
     session->setProperty("verifiedPackageDigest",p.package.digest);
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-    connect(session,&PluginSession::panelsChanged,this,[this,id]{emit statusChanged(id);});
+    connect(session,&PluginSession::panelsChanged,this,[this,id,session]{emit statusChanged(id);
+        if(registry->plugin(id).package.metadata["category"]=="editor-preview")QTimer::singleShot(0,this,[this,id,safe=QPointer<PluginSession>(session)]{
+            auto *session=safe.data();if(session&&sessions.value(id)==session&&session->state()=="active"&&!updating.contains(id)&&!restoring.contains(id)&&session->webviews()&&!session->webviews()->panelCount())session->stop("preview-closed");
+        });
+    });
 #endif
     for(const auto &action:actions)if(action&&action->property("pluginId")==id) {
         for(const auto &item:p.package.metadata["contributes"].toObject()["commands"].toArray())if(item.toObject()["id"]==action->property("commandId").toString()) {

@@ -220,6 +220,51 @@
         "markdown"
       ],
       "description": "Optional host-owned visual identity. It is available in Discover and before activation; package image files are read only after verification."
+    },
+    "category": {
+      "enum": [
+        "command",
+        "editor-tool",
+        "editor-preview",
+        "window-tool",
+        "background-service"
+      ],
+      "description": "Purpose and native component ownership, independent of activation and capabilities."
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "viewType",
+        "languages",
+        "extensions"
+      ],
+      "properties": {
+        "viewType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\.[a-z0-9]+$"
+          },
+          "maxItems": 16,
+          "uniqueItems": true
+        }
+      }
     }
   },
   "$defs": {
@@ -270,58 +315,6 @@
         }
       ],
       "description": "Same plugin metadata, with a release repository. Nested marketplaces are not supported in this draft."
-    },
-    "vscodeCompatibility": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "kind",
-        "version",
-        "api",
-        "extensionRoot",
-        "commands"
-      ],
-      "properties": {
-        "kind": {
-          "const": "vscode"
-        },
-        "version": {
-          "const": "0.1.0"
-        },
-        "api": {
-          "const": "1.100.0"
-        },
-        "extensionRoot": {
-          "const": "dist"
-        },
-        "commands": {
-          "type": "array",
-          "maxItems": 32,
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "id",
-              "target"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 192,
-                "pattern": "^[A-Za-z0-9_.-]+$"
-              },
-              "target": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 192,
-                "pattern": "^[A-Za-z0-9_.-]+$"
-              }
-            }
-          }
-        }
-      },
-      "description": "Bounded CJS VS Code adapter. Fixed declaration baseline is not a claim of complete VS Code APIs. Alias targets must exactly cover declared native commands; read/delta/commands required capabilities are checked semantically."
     }
   },
   "allOf": [
@@ -372,6 +365,30 @@
                 "contributes"
               ]
             }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "category": {
+            "const": "editor-preview"
+          }
+        },
+        "required": [
+          "category"
+        ]
+      },
+      "then": {
+        "required": [
+          "preview"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "preview"
           ]
         }
       }

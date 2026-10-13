@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "WebviewService.h"
+#include "../runtime/PreviewPolicy.h"
 #include "HtmlPolicy.h"
 #include "DocumentBridge.h"
 #include "RpcEndpoint.h"
@@ -180,6 +181,10 @@ struct WebviewService::Private {
         quint64 order=0;
         QString restoreId,title;
         QJsonObject browserState;
+        QString sourceDocument;
+        QHash<QString,QJsonObject> documentStates;
+        quint64 sourceSequence=0;
+        bool sourceNeedsReload=false;
         QPointer<QWidget> container;
         bool claimed=false,uiRestored=false,preservedPlacement=false;
         QPointer<QWidget> contextBar;
@@ -195,6 +200,7 @@ struct WebviewService::Private {
     Handler *handler;
     Interceptor *interceptor;
     QHash<QString,Panel> panels;
+    QJsonObject previewPolicy;
     qint64 imageBytes=0;
     bool published=true;
     bool appearancePending=false;
@@ -230,11 +236,76 @@ WebviewService::WebviewService(const QString &id,const QString &root,QMainWindow
         connect(documents,&PluginDocuments::DocumentBridge::appearanceChanged,this,&WebviewService::refreshAppearance);
         connect(documents,&PluginDocuments::DocumentBridge::event,this,[this](const QString &type){
             if(type=="activeChanged")refreshAppearance();
+            if(!d->previewPolicy.isEmpty())QTimer::singleShot(0,this,&WebviewService::refreshPreviewSource);
             for(auto it=d->panels.cbegin();it!=d->panels.cend();++it)refreshPanelContext(it.key());
         });
     }
 }
 WebviewService::~WebviewService() { clear(); delete d->profile; }
+void WebviewService::configurePreview(const QJsonObject &policy) {d->previewPolicy=policy;}
+void WebviewService::reloadSource(const QString &id,const QJsonObject &source,std::function<void(const QJsonObject &)> completed) {
+    if(!d->panels.contains(id)||!d->panels[id].service||d->previewPolicy.isEmpty()||d->suspended){completed(rpcError(1004,"Source preview is closed or suspended"));return;}
+    const auto valid=[this,source]{
+        const auto current=PluginRuntime::previewSource(d->previewPolicy,d->documents);
+        if(current.isNull())return source["documentId"].isNull()&&source["version"].isNull();
+        return source["documentId"]==current.toObject()["documentId"]&&source["version"]==current.toObject()["version"];
+    };
+    if(!valid()){completed(rpcError(1001,"Source tab or document version changed"));return;}
+    const QPointer<WebviewService> safe=this;const auto sequence=d->panels[id].sourceSequence;
+    const auto finish=[safe,id,valid,sequence,completed](const QVariant &value){
+        if(!safe||!safe->d->panels.contains(id)||safe->d->suspended){completed(rpcError(1004,"Source preview closed during reload"));return;}
+        auto &panel=safe->d->panels[id];if(panel.sourceSequence!=sequence||!valid()){completed(rpcError(1001,"Source changed during reload"));return;}
+        if(!panel.sourceNeedsReload&&value.isValid()) {
+            const auto bytes=value.toString().toUtf8();panel.browserState=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
+            const auto state=panel.browserState["snapshot"].toObject();panel.state=state["hasState"].toBool()?state["state"]:QJsonValue(QJsonValue::Undefined);
+        }
+        QJsonObject error;if(!safe->installCompatibleBridge(id,&error)){completed(error);return;}
+        panel.sourceNeedsReload=false;panel.loaded=false;panel.page->load(panel.url);completed({});
+    };
+    auto &panel=d->panels[id];
+    if(panel.sourceNeedsReload||!panel.loaded){finish(QVariant());return;}
+    panel.page->runJavaScript("JSON.stringify({scrollX,scrollY,snapshot:window[Symbol.for('NotepadNext.compatWebviewBootstrap')]?.snapshot?.()})",finish);
+}
+void WebviewService::refreshPreviewSource() {
+    if(d->previewPolicy.isEmpty())return;
+    // The source outlives neither its tab nor its current file type, even when
+    // this service is preserving docks for an in-flight update.
+    if(!PluginRuntime::hasPreviewDocuments(d->previewPolicy,d->documents)) {clear();return;}
+    const auto source=PluginRuntime::previewSource(d->previewPolicy,d->documents);
+    const auto selected=source.toObject()["documentId"].toString();
+    const auto ids=d->panels.keys();
+    for(const auto &id:ids) {
+        if(!d->panels.contains(id))continue;
+        auto &panel=d->panels[id];
+        for(const auto &document:panel.documentStates.keys())
+            if(!PluginRuntime::previewMatches(d->previewPolicy,d->documents->info(document)))panel.documentStates.remove(document);
+        if(panel.dock) {
+            if(selected.isEmpty())panel.dock->hide();
+            else if(d->published&&panel.requestedVisible&&!d->suspended)panel.dock->show();
+        }
+        if(d->suspended)continue;
+        if(panel.sourceDocument==selected) {emit event(id,"sourceChanged",QJsonObject{{"document",source},{"hasState",!panel.state.isUndefined()},{"state",panel.state.isUndefined()?QJsonValue(QJsonValue::Null):panel.state}});continue;}
+        const auto old=panel.sourceDocument;const auto sequence=++panel.sourceSequence;
+        const QPointer<WebviewService> safe=this;
+        const auto finish=[safe,id,selected,old,source,sequence](const QVariant &value) {
+            if(!safe||!safe->d->panels.contains(id))return;
+            auto &panel=safe->d->panels[id];if(panel.sourceSequence!=sequence||safe->d->suspended)return;
+            const auto bytes=value.toString().toUtf8();const auto snapshot=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
+            if(!old.isEmpty()&&PluginRuntime::previewMatches(safe->d->previewPolicy,safe->d->documents->info(old))) {
+                // Bounded ephemeral state. It never becomes persistent plugin data.
+                if(panel.documentStates.size()>=32&&!panel.documentStates.contains(old))panel.documentStates.erase(panel.documentStates.begin());
+                panel.documentStates.insert(old,snapshot);
+            }
+            panel.sourceNeedsReload=true;panel.sourceDocument=selected;panel.browserState=panel.documentStates.value(selected);panel.uiRestored=false;
+            const auto state=panel.browserState["snapshot"].toObject();panel.state=state["hasState"].toBool()?state["state"]:QJsonValue(QJsonValue::Undefined);
+            // Service pages stay loaded. Their renderer receives the tab's state
+            // explicitly; fragment/HTML pages receive it on their next load.
+            emit safe->event(id,"sourceChanged",QJsonObject{{"document",source},{"hasState",!panel.state.isUndefined()},{"state",panel.state.isUndefined()?QJsonValue(QJsonValue::Null):panel.state}});
+        };
+        if(!panel.page||!panel.loaded){finish(QString());continue;}
+        panel.page->runJavaScript(QStringLiteral(R"JS((()=>{const snapshot=window[Symbol.for('NotepadNext.compatWebviewBootstrap')]?.snapshot?.();const r={scrollX,scrollY,snapshot,fields:[]};for(const [i,n] of Array.from(document.querySelectorAll('input:not([type=password]):not([type=file]),textarea,select')).slice(0,128).entries()){if(n.value.length>4096)continue;r.fields.push({i,id:n.id,tag:n.tagName,type:n.type,value:n.value,checked:n.checked,selected:n.selectedIndex});if(new TextEncoder().encode(JSON.stringify(r)).length>120*1024){r.fields.pop();break;}}return JSON.stringify(r);})())JS"),finish);
+    }
+}
 QString WebviewService::appearanceCss() const {
     const auto palette=d->window?d->window->palette():qApp->palette();
     const auto bodyFont=d->window?d->window->font():qApp->font();
@@ -383,6 +454,11 @@ QJsonObject WebviewService::create(const QString &viewType,const QString &title,
 }
 QJsonObject WebviewService::createPanel(const QString &id,const QString &viewType,const QString &title,const QString &position,bool compatible,QJsonObject *error,const QString &restorationKey) {
     *error={};
+    if(!d->previewPolicy.isEmpty()) {
+        if(viewType!=d->previewPolicy["viewType"].toString()){*error=rpcError(1003,"Panel view type does not match the preview declaration");return {};}
+        if(!PluginRuntime::hasPreviewDocuments(d->previewPolicy,d->documents)){*error=rpcError(1002,"No supported source tab remains");return {};}
+        if(!d->panels.isEmpty()){*error=rpcError(1007,"Editor previews own one shared dock per window");return {};}
+    }
     if(!d->window || viewType.isEmpty() || viewType.size()>128 || title.isEmpty() || title.toUcs4().size()>128 || (position!="right" && position!="bottom")) { *error=rpcError(-32602,"Invalid panel declaration"); return {}; }
     if(d->panels.contains(id)) { *error=rpcError(-32602,"Duplicate panel ID");return {}; }
     if(d->panels.size()>=8) { *error=rpcError(1007,"Panel limit reached"); return {}; }
@@ -433,7 +509,7 @@ QJsonObject WebviewService::createPanel(const QString &id,const QString &viewTyp
         auto &panel=d->panels[id]; panel.loaded=ok && panel.page && panel.page->owns(panel.page->url());
         if(panel.loaded&&!panel.compatible)applyAppearance(id);
         if(panel.loaded&&panel.compatible){const auto outgoing=panel.outgoing;panel.outgoing.clear();panel.outgoingBytes=0;for(const auto &message:outgoing){QJsonObject error;postMessage(id,message,&error);}}
-        if(panel.loaded&&!panel.restoreId.isEmpty())restoreBrowserState(id);
+        if(panel.loaded&&(!panel.restoreId.isEmpty()||!d->previewPolicy.isEmpty()))restoreBrowserState(id);
         if(!ok) emit event(id,"loadFailed",QStringLiteral("Panel page could not load."));
         refreshPanelContext(id);
     });
@@ -447,7 +523,14 @@ QJsonObject WebviewService::createPanel(const QString &id,const QString &viewTyp
     panel.preservedPlacement=!restoreId.isEmpty();
     if(!restoreId.isEmpty()){
         auto &old=d->restoreSource->d->panels[restoreId];old.claimed=true;
+        panel.sourceDocument=old.sourceDocument;panel.documentStates=old.documentStates;
         panel.state=old.state;panel.browserState=old.browserState;panel.requestedVisible=old.requestedVisible;panel.preserveFocus=true;
+    }
+    if(!d->previewPolicy.isEmpty()) {
+        const auto source=PluginRuntime::previewSource(d->previewPolicy,d->documents).toObject();const auto selected=source["documentId"].toString();
+        if(!panel.sourceDocument.isEmpty()&&panel.sourceDocument!=selected)panel.documentStates.insert(panel.sourceDocument,panel.browserState);
+        if(panel.sourceDocument!=selected){panel.browserState=panel.documentStates.value(selected);const auto snapshot=panel.browserState["snapshot"].toObject();panel.state=snapshot["hasState"].toBool()?snapshot["state"]:QJsonValue(QJsonValue::Undefined);}
+        panel.sourceDocument=selected;
     }
     panel.contextBar=contextBar;panel.documentLabel=documentLabel;panel.contextStatus=contextStatus;panel.footer=footer;
     d->panels.insert(id,panel);
@@ -471,12 +554,14 @@ bool WebviewService::reveal(const QString &id,bool preserveFocus,QJsonObject *er
     *error={}; if(!d->panels.contains(id) || !d->panels[id].dock) { *error=rpcError(1004,"Panel closed"); return false; }
     d->panels[id].requestedVisible=true;d->panels[id].preserveFocus=preserveFocus;
     if(!d->published||(!d->panels[id].restoreId.isEmpty()&&d->restoreSource))return true;
+    if(!d->previewPolicy.isEmpty()&&PluginRuntime::previewSource(d->previewPolicy,d->documents).isNull())return true;
     auto *dock=d->panels[id].dock.data(); dock->show(); dock->raise(); if(!preserveFocus) dock->widget()->setFocus(); return true;
 }
 void WebviewService::setPublished(bool published) {
     d->published=published;
     for(auto it=d->panels.begin();it!=d->panels.end();++it)if(it->dock) {
         auto &panel=it.value();
+        if(published&&!d->previewPolicy.isEmpty()&&PluginRuntime::previewSource(d->previewPolicy,d->documents).isNull()){panel.dock->hide();continue;}
         if(published&&panel.preservedPlacement){viewState(it.key());continue;}
         if(published&&panel.compatible&&panel.page&&!panel.url.isEmpty()&&!panel.page->owns(panel.page->url()))panel.page->load(panel.url);
         if(!published)panel.dock->hide();

@@ -2,6 +2,7 @@
 #include "NotepadNextApplication.h"
 #include "MainWindow.h"
 #include "ScintillaNext.h"
+#include "TextEncoding.h"
 #include "SessionManager.h"
 #include <QAction>
 #include <QFile>
@@ -290,6 +291,30 @@ private slots:
         QSKIP("Native HTML panels unavailable");
 #endif
     }
+    void nativeTextEncodingRoundTripsAndLossProtection() {
+        const QString unicode=QString::fromUtf8("日本語 中文 😀 café\r\n");
+        for(const auto &encoding:QStringList{"UTF-8","UTF-8 BOM","UTF-16LE","UTF-16LE BOM","UTF-16BE","UTF-16BE BOM"}) {
+            QByteArray bytes;QString text,error;QVERIFY2(TextEncoding::encode(unicode,encoding,&bytes,&error),qPrintable(error));
+            QVERIFY2(TextEncoding::decode(bytes,encoding,&text,&error),qPrintable(error));QCOMPARE(text,unicode);
+        }
+        for(const auto &sample:QList<QPair<QString,QString>>{{"Shift_JIS",QString::fromUtf8("日本語")},{"Windows-1252",QString::fromUtf8("café €")},{"GB18030",QString::fromUtf8("中文")}}) {
+            QByteArray bytes;QString text,error;QVERIFY2(TextEncoding::encode(sample.second,sample.first,&bytes,&error),qPrintable(error));
+            QVERIFY(TextEncoding::decode(bytes,sample.first,&text,&error));QCOMPARE(text,sample.second);
+        }
+        QString text,error;QVERIFY(!TextEncoding::decode(QByteArray::fromHex("eda080"),"UTF-8",&text,&error));
+        QTemporaryDir dir;const auto file=dir.filePath("encoding.txt");{QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("original");}
+        std::unique_ptr<ScintillaNext> editor(ScintillaNext::fromFile(file));QVERIFY(editor);
+        QVERIFY(editor->convertEncoding("Windows-1252",&error));QVERIFY(editor->modify());
+        editor->appendText(4,"\xf0\x9f\x98\x80");
+        QVERIFY(editor->save()!=QFileDevice::NoError);QVERIFY(editor->modify());QVERIFY(editor->encodingError().contains("cannot represent"));
+        {QFile f(file);QVERIFY(f.open(QIODevice::ReadOnly));QCOMPARE(f.readAll(),QByteArray("original"));}
+        const auto before=QByteArray((char*)editor->characterPointer(),editor->textLength());
+        {QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write(QByteArray::fromHex("eda080"));}
+        QVERIFY(!editor->reloadEncoding("UTF-8",&error));QCOMPARE(QByteArray((char*)editor->characterPointer(),editor->textLength()),before);
+        QVERIFY(editor->convertEncoding("UTF-16LE BOM",&error));QVERIFY(editor->save()==QFileDevice::NoError);QVERIFY(!editor->modify());
+        std::unique_ptr<ScintillaNext> reopened(ScintillaNext::fromFile(file));QVERIFY(reopened);QCOMPARE(reopened->textEncoding(),QString("UTF-16LE BOM"));
+        QCOMPARE(QByteArray((char*)reopened->characterPointer(),reopened->textLength()),before);
+    }
     void editorOpenSaveReloadAndClose() {
         const auto file=directory+"/sample.md";QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("# saved 😀中\n");f.close();
         // Programmatic tab selection cannot depend on macOS foreground
@@ -503,11 +528,11 @@ private slots:
         manager->findChild<QPushButton*>("togglePluginEnabled")->click();QCOMPARE(engine->sessionCount(),0);manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),10000);QTRY_VERIFY_WITH_TIMEOUT(window->findChild<QWebEngineView*>(),10000);
         QPointer<QDockWidget> dock;for(auto *candidate:window->findChildren<QDockWidget*>())if(candidate->findChild<QWebEngineView*>())dock=candidate;QVERIFY(dock);dock->setFloating(true);dock->resize(700,680);dock->move(160,140);QTest::qWait(100);const auto geometry=dock->geometry();
         const auto read=[&](const QString &script){auto result=std::make_shared<QVariant>();auto ready=std::make_shared<bool>(false);dock->findChild<QWebEngineView*>()->page()->runJavaScript(script,[result,ready](const QVariant &value){*result=value;*ready=true;});QElapsedTimer timer;timer.start();while(!*ready&&timer.elapsed()<5000)QTest::qWait(10);return *result;};
-        QTRY_VERIFY_WITH_TIMEOUT(read("document.getElementById('source')?.value.includes('Unsaved HTML')").toBool(),10000);QTRY_COMPARE(read("window.previewExecuted").toInt(),42);
-        QVERIFY(read("document.getElementById('counter').click();document.getElementById('counter').click();document.getElementById('source').value='<h2>Draft HTML survives reload</h2>';document.getElementById('source').dispatchEvent(new Event('input'));document.getElementById('run').click();true").toBool());
+        QTRY_VERIFY_WITH_TIMEOUT(read("document.querySelector('h1')?.textContent==='Unsaved HTML'").toBool(),10000);QTRY_COMPARE(read("window.previewExecuted").toInt(),42);
+        QVERIFY(read("window.testApi=acquireNotepadNextApi();window.testApi.setState({counter:2});true").toBool());
         QVERIFY(saveDialogPreview(dock,"html-service-before-reload"));engine->reload(id);QTRY_VERIFY2_WITH_TIMEOUT(engine->pluginState(id)=="active",qPrintable(engine->pluginLog(id)),15000);
-        QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);QCOMPARE(read("document.getElementById('counter').textContent").toString(),QString("Counter: 2"));QVERIFY(read("document.getElementById('source').value.includes('Draft HTML survives reload')").toBool());QCOMPARE(read("document.querySelector('#preview h2').textContent").toString(),QString("Draft HTML survives reload"));
-        QVERIFY(read("fetch('api/document').then(r=>r.json()).then(v=>window.backendPid=v.pid);true").toBool());QTRY_VERIFY(read("window.backendPid>0").toBool());QVERIFY(saveDialogPreview(dock,"html-service-after-reload"));
+        QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);QTRY_COMPARE(read("(window.testApi??=acquireNotepadNextApi()).getState()?.counter").toInt(),2);QCOMPARE(read("document.querySelector('h1').textContent").toString(),QString("Unsaved HTML"));QCOMPARE(read("window.previewExecuted").toInt(),42);
+        QVERIFY(!read("document.querySelector('textarea')").isValid());QVERIFY(saveDialogPreview(dock,"html-service-after-reload"));
         engine->uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),10000);QTRY_VERIFY(!dock);QVERIFY(!window->findChild<QWebEngineView*>());QCOMPARE(editor->textRange(0,editor->length()),QByteArray("<h1>Unsaved HTML</h1><script>window.previewExecuted=42;</script>"));editor->setText("");editor->setSavePoint();manager->close();
 #endif
     }

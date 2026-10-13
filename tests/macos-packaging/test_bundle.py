@@ -31,7 +31,8 @@ class BundleTests(unittest.TestCase):
         cls.run_command(['xcrun','clang','-arch',cls.arch,'-mmacosx-version-min=13.5','-dynamiclib',str(cls.root/'lib.c'),'-install_name','@rpath/libfixture.dylib','-o',str(contents/'Frameworks/libfixture.dylib')])
         cls.run_command(['xcrun','clang','-arch',cls.arch,'-mmacosx-version-min=13.5',str(cls.root/'main.c'),'-L'+str(contents/'Frameworks'),'-lfixture','-Wl,-rpath,@executable_path/../Frameworks','-o',str(contents/'MacOS/Fixture')])
         shutil.copyfile(contents/'Frameworks/libfixture.dylib',contents/'PlugIns/platforms/libqcocoa.dylib')
-        (contents/'Info.plist').write_bytes(plistlib.dumps({'CFBundleExecutable':'Fixture','CFBundleIdentifier':'org.notepadnext.bundle-fixture','CFBundlePackageType':'APPL','CFBundleVersion':'1.0','CFBundleShortVersionString':'1.0','LSMinimumSystemVersion':'13.5'}))
+        (contents/'Info.plist').write_bytes(plistlib.dumps({'CFBundleIconFile':'NotepadNext.icns','CFBundleExecutable':'Fixture','CFBundleIdentifier':'org.notepadnext.bundle-fixture','CFBundlePackageType':'APPL','CFBundleVersion':'1.0','CFBundleShortVersionString':'1.0','LSMinimumSystemVersion':'13.5'}))
+        shutil.copyfile(REPO/'icon/NotepadNext.icns',contents/'Resources/NotepadNext.icns')
         (contents/'Resources/qt.conf').write_text('[Paths]\nPlugins=PlugIns\n')
         # Signing the main executable also seals the app. Seal nested code first;
         # Intel linkers do not provide the initial ad-hoc seals present on arm64.

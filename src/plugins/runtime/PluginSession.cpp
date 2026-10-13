@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "PluginSession.h"
+#include "PreviewPolicy.h"
 #include "DocumentBridge.h"
 #include "RpcEndpoint.h"
 #include "ProtocolProfile.h"
@@ -34,7 +35,7 @@ const QHash<QString,QString> capabilities={
     {"nnp.documents.list","documents.read@1"},{"nnp.documents.getInfo","documents.read@1"},
     {"nnp.editors.getActive","editors.selection.read@1"},{"nnp.editors.getSelections","editors.selection.read@1"},{"nnp.editors.capture","editors.selection.read@1"},{"nnp.editors.setSelections","editors.selection.write@1"},
     {"nnp.core.list","core.commands@1"},{"nnp.core.execute","core.commands@1"},{"nnp.webviews.createHtml","webviews.html@1"},
-    {"nnp.documents.getActive","documents.read@1"},{"nnp.documents.getSnapshot","documents.read@1"},
+    {"nnp.webviews.reloadSource","webviews.document@1"},{"nnp.previews.getSource","webviews.document@1"},{"nnp.documents.getActive","documents.read@1"},{"nnp.documents.getSnapshot","documents.read@1"},
     {"nnp.documents.watch","documents.events@1"},{"nnp.documents.applyEdits","documents.write@1"},
     {"nnp.documents.watchAll","documents.delta@1"},{"nnp.documents.getMirrorSnapshot","documents.delta@1"},
     {"nnp.window.showMessage","messages@1"},
@@ -139,7 +140,7 @@ void PluginSession::activate(const QString &reason) {
     if(!documents || !window || !QFileInfo(node).isAbsolute() || !QFileInfo(hostEntry).isAbsolute() || !QFileInfo(hostEntry).isFile()) { fail("The controlled plugin runtime is unavailable.",Failure::RuntimeUnavailable); return; }
     QStringList supported={"documents.read@1","documents.events@1","documents.delta@1","documents.write@1","commands@1","messages@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-        ,"webviews@1","webviews.restore@1","webviews.service@1"
+        ,"webviews@1","webviews.restore@1","webviews.service@1","webviews.document@1"
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
         ,"webviews.compat@1","webviews.html@1"
 #endif
@@ -229,6 +230,9 @@ void PluginSession::publishResources() {
     if(views)views->setPublished(true);
 #endif
     invokePending();
+    if(manifest["category"]=="editor-preview")QTimer::singleShot(0,this,[this]{
+        if(currentState=="active"&&!busy&&queuedCommand.isEmpty()&&(!views||!views->panelCount()||!hasPreviewDocuments(manifest["preview"].toObject(),documents)))stop("preview-ended");
+    });
 }
 PluginWebviews::WebviewService *PluginSession::takeWebviewsForRestart(QObject *owner){
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
@@ -404,6 +408,9 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         const auto needed=command.startsWith("view.")?QStringLiteral("editors.view.write@1"):QStringLiteral("documents.write@1");
         if(!grants.contains(needed)){reject(1003,"Native operation requires "+needed);return;}
         result=documents->executeCore(command,params["request"].toObject(),&error);
+    }else if(method=="nnp.previews.getSource") {
+        if(manifest["category"]!="editor-preview" || !grants.contains("documents.read@1")){reject(1003,"Source binding requires an editor-preview declaration and documents.read@1");return;}
+        result=previewSource(manifest["preview"].toObject(),documents);
     }else if(method=="nnp.documents.getActive") {
         if(!fields(params,{})) { reject(-32602,"Invalid params"); return; } result=documents->active();
     } else if(method=="nnp.documents.getSnapshot") {
@@ -440,6 +447,7 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         if(!views && (method=="nnp.webviews.create"||method=="nnp.webviews.createCompatible"||method=="nnp.webviews.createHtml"||method=="nnp.webviews.createService")) {
             const auto owner=QString::fromLatin1(QCryptographicHash::hash(session.toUtf8(),QCryptographicHash::Sha256).toHex().left(32));
             views=new PluginWebviews::WebviewService(manifest["id"].toString(),root,window,documents,this,owner);
+            if(manifest["category"]=="editor-preview")views->configurePreview(manifest["preview"].toObject());
             views->setRestoreSource(restoreSource);
             connect(views,&PluginWebviews::WebviewService::panelsChanged,this,&PluginSession::panelsChanged);
             views->setPublished(currentState=="active"&&!publicationHeld);
@@ -448,6 +456,10 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
             });
         }
         if(!views) { reject(1004,"Panel closed"); return; }
+        if(method=="nnp.webviews.reloadSource") {
+            if(manifest["category"]!="editor-preview"){reject(1003,"Source reload requires an editor-preview declaration");return;}
+            const QPointer<PluginRpc::RpcProcess> recipient=process;views->reloadSource(params["panelId"].toString(),params["source"].toObject(),[recipient,token](const QJsonObject &error){if(recipient)recipient->respond(token,QJsonValue(QJsonValue::Null),error);});return;
+        }
         if(method=="nnp.webviews.createService") {
             const QPointer<PluginRpc::RpcProcess> recipient=process;
             views->createService(params["viewType"].toString(),params["title"].toString(),QUrl(params["endpoint"].toString()),params["nonce"].toString(),session,params["restorationKey"].toString(),[recipient,token](const QJsonObject &result,const QJsonObject &error){if(recipient)recipient->respond(token,result,error);});return;

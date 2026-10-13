@@ -20,6 +20,8 @@ class WebviewService : public QObject {
 public:
     WebviewService(const QString &pluginId, const QString &packageRoot, QMainWindow *window, PluginDocuments::DocumentBridge *documents, QObject *parent=nullptr, const QString &owner={});
     ~WebviewService() override;
+    void configurePreview(const QJsonObject &policy);
+    void reloadSource(const QString &panelId,const QJsonObject &source,std::function<void(const QJsonObject &)> completed);
     QJsonObject create(const QString &viewType, const QString &title, const QString &position, QJsonObject *error,const QString &restorationKey={});
     bool reveal(const QString &panelId, bool preserveFocus, QJsonObject *error);
     bool setHtml(const QString &panelId, const QString &html, const QJsonObject &renderContext, QJsonObject *error);
@@ -60,6 +62,7 @@ private:
     struct Private;
     QJsonObject createPanel(const QString &panelId, const QString &viewType, const QString &title, const QString &position, bool compatible, QJsonObject *error,const QString &restorationKey={});
     bool installCompatibleBridge(const QString &panelId,QJsonObject *error);
+    void refreshPreviewSource();
     void viewState(const QString &panelId);
     void restoreBrowserState(const QString &panelId);
     QJsonObject renderContextError(const QString &panelId, const QJsonObject &context) const;

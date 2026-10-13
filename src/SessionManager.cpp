@@ -25,6 +25,7 @@
 #include "NotepadNextApplication.h"
 
 #include <QDir>
+#include <QSaveFile>
 #include <QStandardPaths>
 #include <QUuid>
 
@@ -76,7 +77,11 @@ QDir SessionManager::sessionDirectory() const
 
 void SessionManager::saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const
 {
-    editor->saveCopyAs(sessionDirectory().filePath(sessionFileName));
+    // Recovery copies preserve the UTF-8 buffer even when the selected save
+    // encoding cannot represent a newly entered character.
+    QSaveFile backup(sessionDirectory().filePath(sessionFileName));
+    const auto bytes=QByteArray::fromRawData((char*)editor->characterPointer(),editor->textLength());
+    if(!backup.open(QIODevice::WriteOnly)||backup.write(bytes)!=bytes.size()||!backup.commit())qWarning("Session backup could not be written");
 }
 
 SessionManager::SessionFileType SessionManager::determineType(ScintillaNext *editor) const
@@ -394,6 +399,8 @@ ScintillaNext *SessionManager::loadTempFile(QSettings &settings)
 
 void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &settings)
 {
+    settings.setValue("Encoding",editor->textEncoding());
+    settings.setValue("EncodingDirty",editor->QObject::property("encodingDirty").toBool());
     settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
     settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
 
@@ -410,6 +417,7 @@ void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &se
 
 void SessionManager::loadEditorViewDetails(ScintillaNext *editor, QSettings &settings)
 {
+    editor->restoreEncodingPreference(settings.value("Encoding",editor->textEncoding()).toString(),settings.value("EncodingDirty",false).toBool());
     const int firstVisibleLine = settings.value("FirstVisibleLine").toInt() - 1;
     const int currentPosition = settings.value("CurrentPosition").toInt();
 

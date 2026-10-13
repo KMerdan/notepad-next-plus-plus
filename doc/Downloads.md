@@ -36,7 +36,7 @@ The Cask supports macOS, with separate Apple Silicon/Intel downloads. Linux and 
 
 ## Install plugins
 
-In **Plugins → Plugin Manager → Add Source…**, register `https://github.com/KMerdan/notepadnext-markdown-preview` with an empty Git ref. Discover lists Markdown Preview, HTML Preview, Text Inspector and TODO Navigator. Choose Install, review permissions, then enable in Installed. Refresh Catalog and use Update to fetch a newer release; open panels restore after a successful update.
+In **Plugins → Plugin Manager → Add Source…**, register `https://github.com/KMerdan/notepadnext-plugin-marketplace` with an empty Git ref. Discover lists Markdown Preview and HTML Preview. Choose Install, review permissions, then enable in Installed. Refresh Catalog and use Update to fetch a newer release; open panels restore after a successful update.
 
 ## Release maintenance
 

@@ -2,7 +2,7 @@
 
 Notepad Next ++ 的第一方插件由 KMerdan 在同一公开仓库维护：
 
-**https://github.com/KMerdan/notepadnext-markdown-preview**
+**https://github.com/KMerdan/notepadnext-plugin-marketplace**
 
 此 URL 从原 Markdown 插件仓库升级而来，保留地址以维持已安装插件的更新来源和按来源隔离的数据；它是本 fork 的官方目录，不代表上游 NotepadNext。GitHub 的仓库说明和 README 已改为官方 Marketplace。旧 Markdown Release 和 `kmerdan.markdown-preview` ID 保留。
 

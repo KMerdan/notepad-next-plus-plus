@@ -103,6 +103,41 @@ private:
 class PluginWebviewTests : public QObject {
     Q_OBJECT
 private slots:
+    void previewFollowsMatchingTabsAndClosesWithLastSource() {
+        QTemporaryDir temp;QMainWindow window;prepareWindow(&window);window.show();
+        ScintillaEdit first,second,other;PluginDocuments::DocumentBridge documents;
+        const auto a=documents.attach(&first,QUrl("file:///one.html"),"html"),b=documents.attach(&second,QUrl("file:///two.html"),"html"),c=documents.attach(&other,QUrl("file:///notes.txt"),"text");documents.setActive(a);
+        WebviewService service("tests.preview",temp.path(),&window,&documents);service.configurePreview({{"viewType","html-preview"},{"languages",QJsonArray{"html"}},{"extensions",QJsonArray{".html"}}});
+        QCOMPARE(service.panelCount(),0);QJsonObject error;const auto panel=service.create("html-preview","HTML Preview","right",&error)["panelId"].toString();QVERIFY(error.isEmpty());QVERIFY(service.reveal(panel,true,&error));
+        auto *dock=window.findChild<QDockWidget*>("plugin:tests.preview:html-preview");QVERIFY(dock);QVERIFY(dock->isVisible());QSignalSpy events(&service,&WebviewService::event);
+        documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QCOMPARE(service.panelCount(),1);
+        documents.detach(a);QTest::qWait(30);QCOMPARE(service.panelCount(),1);
+        documents.setActive(c);QTRY_VERIFY(!dock->isVisible());QCOMPARE(service.panelCount(),1);
+        documents.setActive(b);QTRY_VERIFY(dock->isVisible());
+        documents.detach(b);QTRY_COMPARE(service.panelCount(),0);
+        const auto d=documents.attach(&first,QUrl("file:///again.html"),"html");documents.setActive(d);QTest::qWait(30);QCOMPARE(service.panelCount(),0);
+        const auto reopened=service.create("html-preview","HTML Preview","right",&error)["panelId"].toString();QVERIFY(error.isEmpty());QVERIFY(service.reveal(reopened,true,&error));
+        auto *opened=window.findChild<QDockWidget*>("plugin:tests.preview:html-preview");QVERIFY(opened);opened->close();QTRY_COMPARE(service.panelCount(),0);documents.setActive(c);documents.setActive(d);QTest::qWait(30);QCOMPARE(service.panelCount(),0);
+    }
+    void previewRetainsIndependentBrowserStatePerTab() {
+        QTemporaryDir temp;QMainWindow window;prepareWindow(&window);window.show();
+        ScintillaEdit first,second;PluginDocuments::DocumentBridge documents;
+        const auto a=documents.attach(&first,QUrl("file:///one.html"),"html"),b=documents.attach(&second,QUrl("file:///two.html"),"html");documents.setActive(a);
+        WebviewService service("tests.preview-state",temp.path(),&window,&documents);
+        service.configurePreview({{"viewType","html-preview"},{"languages",QJsonArray{"html"}},{"extensions",QJsonArray{".html"}}});
+        QJsonObject error;const auto panel=QString(32,'a');QVERIFY(!service.createCompatible(panel,"html-preview","HTML Preview",true,{},&error).isEmpty());
+        const auto render=[&]{QVERIFY(service.setDocument(panel,"<!doctype html><html><body><h1>Preview</h1></body></html>",&error));QTRY_VERIFY(service.page(panel)->url()==service.pageUrl(panel));};
+        render();auto result=std::make_shared<QVariant>();
+        QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("typeof acquireNotepadNextApi",[result](auto v){*result=v;});return result->toString()=="function";})(),5000);
+        service.page(panel)->runJavaScript("(window.testApi??=acquireNotepadNextApi()).setState({counter:3});scrollTo(0,0);");QTest::qWait(50);
+        QSignalSpy events(&service,&WebviewService::event);documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();
+        *result=QVariant();QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState()??null)",[result](auto v){*result=v;});return result->toString()=="null";})(),5000);
+        service.page(panel)->runJavaScript("(window.testApi??=acquireNotepadNextApi()).setState({counter:9});");QTest::qWait(50);
+        events.clear();documents.setActive(a);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();*result=QVariant();
+        QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("3");})(),5000);
+        events.clear();documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();*result=QVariant();
+        QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("9");})(),5000);
+    }
     void firstPanelKeepsEditorWindow() {
         QMainWindow window;
         auto *editor=new QPlainTextEdit(&window);window.setCentralWidget(editor);

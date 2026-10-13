@@ -60,7 +60,7 @@ private slots:
         QCOMPARE(error.isEmpty(),fixture["valid"].toBool());
     }
     void wireMethodCoverage() {
-        QCOMPARE(WireContract::methods().size(),68);QFile file(QStringLiteral(RPC_FIXTURES_DIR "/wire-fixtures.json"));QVERIFY(file.open(QIODevice::ReadOnly));QSet<QString> covered;
+        QCOMPARE(WireContract::methods().size(),70);QFile file(QStringLiteral(RPC_FIXTURES_DIR "/wire-fixtures.json"));QVERIFY(file.open(QIODevice::ReadOnly));QSet<QString> covered;
         for(const auto &value:QJsonDocument::fromJson(file.readAll()).array())if(value.toObject()["valid"].toBool())covered.insert(value.toObject()["method"].toString());
         QFile native(QStringLiteral(RPC_FIXTURES_DIR "/../../packages/plugin-sdk/schemas/native-b-fixtures.json"));QVERIFY(native.open(QIODevice::ReadOnly));
         for(const auto &value:QJsonDocument::fromJson(native.readAll()).array())if(value.toObject()["valid"].toBool())covered.insert(value.toObject()["method"].toString());

@@ -91,7 +91,7 @@ QJsonObject DocumentBridge::info(const QString &id) const {
     const auto it = buffers.constFind(id); if (it == buffers.cend()) return {};
     if(!it->editor && !it->lastInfo.isEmpty())return it->lastInfo;
     const QJsonObject result{{"documentId", id}, {"uri", it->uri.toString(QUrl::FullyEncoded)}, {"languageId", it->language}, {"version", it->version},
-        {"isDirty", it->editor && it->editor->modify()}, {"isReadonly", !it->editor || it->editor->readOnly()}};
+        {"isDirty", it->editor && (it->editor->modify()||it->editor->QObject::property("encodingDirty").toBool())}, {"isReadonly", !it->editor || it->editor->readOnly()}};
     it->lastInfo=result;return result;
 }
 QJsonValue DocumentBridge::active() const { return buffers.contains(activeId) && buffers[activeId].editor ? QJsonValue(info(activeId)) : QJsonValue(QJsonValue::Null); }
