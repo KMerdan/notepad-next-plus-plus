@@ -529,7 +529,7 @@ private slots:
             dialog->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();
         });driver.start(15);const auto guard=qScopeGuard([&]{driver.stop();});
         QTimer::singleShot(0,manager,[&]{auto *entry=qobject_cast<QDialog*>(QApplication::activeModalWidget());QVERIFY(entry);entry->findChild<QLineEdit*>("repositoryInput")->setText(repository);entry->findChild<QLineEdit*>("sourceRefInput")->clear();entry->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();});
-        manager->findChild<QPushButton*>("addSource")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);tabs->setCurrentIndex(1);QTRY_COMPARE(catalog->count(),4);
+        auto *registerButton=manager->findChild<QPushButton*>("registerResources");QVERIFY(registerButton);registerButton->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);tabs->setCurrentIndex(1);QTRY_COMPARE(catalog->count(),4);
         const auto select=[](QListWidget *list,const QString &id){for(int n=0;n<list->count();++n)if(list->item(n)->data(Qt::UserRole).toString()==id){list->setCurrentRow(n);return true;}return false;};
         auto *editor=window->currentEditor();editor->setText("TODO native Marketplace\nTODO second result\n");editor->setSelection(0,4);editor->setSavePoint();const auto nativeWindow=window->winId();
         const QStringList ids{"kmerdan.text-inspector","kmerdan.todo-navigator"};
