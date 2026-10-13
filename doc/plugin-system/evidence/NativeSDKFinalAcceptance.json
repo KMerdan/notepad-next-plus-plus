@@ -12,7 +12,8 @@
     "tests/plugin-application/PluginApplicationTests.cpp": "622d015d39b0011457702cfab9ffd1e4ed69f1797c8e56b4025c5e547a2dbe9c",
     "src/plugins/packages/PackageLease.cpp": "e03b675b2575d3938f51c7a60325014c7e77e35ce9fd44245ef029f8f1a9505d",
     "tests/plugin-packages/GitHubReleaseTests.cpp": "fc40ef961e1bb1c3732f6d1e6c603d7a3b92b6bd7c2089e9de8e6b00c878e0d5",
-    "tests/plugin-packages/CMakeLists.txt": "9811c3c91e8d7e1952b49dddc676d8387b120e6c7c35ca01421747859eb252a7"
+    "tests/plugin-packages/CMakeLists.txt": "9811c3c91e8d7e1952b49dddc676d8387b120e6c7c35ca01421747859eb252a7",
+    "tests/plugin-webviews/PluginWebviewTests.cpp": "382fc09a73a064aa5f860bf7c89d960c27086e4927be77c3236cf57d4ac6531f"
   },
   "nativeApplication": {
     "log": "native-sdk-final-live-acceptance.log",
@@ -96,7 +97,7 @@
       "localInstallationWaitsForMaintenance(cancel-permission-retry)",
       "localInstallationWaitsForMaintenance(bounded-permission-timeout)"
     ],
-    "windowsCasesStatus": "awaiting latest Windows CI",
+    "windowsCasesStatus": "passed in actual Windows CI",
     "fixture": "Temporary directory DACL denies file creation for the process token SID. The Qt probe must observe PermissionError before testing recovery, cancellation or timeout; original DACL restored on every exit.",
     "invariants": [
       "bounded one-second worker lock retry",
@@ -104,6 +105,35 @@
       "cancellation and timeout checks retained",
       "actual Windows ACL rejection and timed restoration",
       "no plugin code execution during installation"
-    ]
+    ],
+    "windowsProof": {
+      "sourceCommit": "197139c956f1e9eede54c77ce0eabc9f4a35c969",
+      "run": 38325070257,
+      "job": 115061874077,
+      "suite": "PluginGitHubReleaseTests",
+      "result": "46 passed, 0 failed, 0 skipped",
+      "log": "native-sdk-windows-permission-regression.log",
+      "workflowConclusion": "The WebEngine profile failed a separate lifecycle stress fixture; this record proves the package/ACL suite only."
+    }
+  },
+  "lifecycleCompletionRegression": {
+    "changeCommit": "54e2bc2",
+    "validatedImplementationCommit": "fa5e81c2eee0355089db39c63097281d7d9223ea",
+    "localMacResult": "3 passed, 0 failed, 0 skipped (100-cycle case + init/cleanup)",
+    "cycles": 100,
+    "exitedNodeIdentities": 200,
+    "elapsedMs": 91004,
+    "finalFileDescriptors": 33,
+    "warmFileDescriptors": 33,
+    "log": "native-sdk-lifecycle-completion-regression.log",
+    "resources": "NativeSDKLifecycleCompletionResources.json",
+    "invariants": [
+      "await successful public reload completion before next management action",
+      "all 100 cycles retained",
+      "zero sessions/resources after each stop",
+      "all observed native process identities exit",
+      "focus connections and native handles return to warm baseline"
+    ],
+    "remoteWindowsStatus": "pending latest CI"
   }
 }
