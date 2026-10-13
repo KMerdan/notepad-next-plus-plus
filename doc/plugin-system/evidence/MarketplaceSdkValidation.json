@@ -1,0 +1,112 @@
+{
+  "sdk": {
+    "version": "0.1.2",
+    "path": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-marketplace-delivery/sdk/notepadnext-plugin-sdk-0.1.2.tgz",
+    "sha256": "e975ba0b6cf56718b92e204a6eabcaea207d7d0f937a36cb86b81c0a9e42f89b",
+    "files": 53
+  },
+  "markdownProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-marketplace-delivery/markdown-demo",
+  "helloProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-marketplace-delivery/hello-demo",
+  "htmlProject": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-marketplace-delivery/html-service-demo",
+  "localPackage": "/Users/merdankiji/localGit/NotepadNext/build/plugin-sdk-marketplace-delivery/artifacts/markdown-preview-0.1.0",
+  "zip": {
+    "name": "notepadnext-plugin.zip",
+    "size": 835750,
+    "sha256": "73ef5e5c335e806340d8029aa59633319db61148746284f3d9c10d0dd990aef8"
+  },
+  "steps": [
+    {
+      "name": "01-sdk-pack",
+      "result": "passed"
+    },
+    {
+      "name": "02-install-sdk-tarball",
+      "result": "passed"
+    },
+    {
+      "name": "03-create-markdown",
+      "result": "passed"
+    },
+    {
+      "name": "04-markdown-install",
+      "result": "passed"
+    },
+    {
+      "name": "05-markdown-locked-install",
+      "result": "passed"
+    },
+    {
+      "name": "05a-sdk-typecheck",
+      "result": "passed"
+    },
+    {
+      "name": "06-markdown-build",
+      "result": "passed"
+    },
+    {
+      "name": "07-markdown-test",
+      "result": "passed"
+    },
+    {
+      "name": "08-markdown-debug",
+      "result": "passed"
+    },
+    {
+      "name": "09-markdown-edited-debug",
+      "result": "passed"
+    },
+    {
+      "name": "10-local-package",
+      "result": "passed"
+    },
+    {
+      "name": "11-plugin-bundle",
+      "result": "passed"
+    },
+    {
+      "name": "12-create-hello",
+      "result": "passed"
+    },
+    {
+      "name": "13-hello-install",
+      "result": "passed"
+    },
+    {
+      "name": "14-hello-build",
+      "result": "passed"
+    },
+    {
+      "name": "15-hello-test",
+      "result": "passed"
+    },
+    {
+      "name": "16-hello-debug",
+      "result": "passed"
+    },
+    {
+      "name": "17-create-html",
+      "result": "passed"
+    },
+    {
+      "name": "18-html-install",
+      "result": "passed"
+    },
+    {
+      "name": "19-html-build",
+      "result": "passed"
+    },
+    {
+      "name": "20-html-test",
+      "result": "passed"
+    },
+    {
+      "name": "21-html-package",
+      "result": "passed"
+    }
+  ],
+  "notes": [
+    "SDK installed from its actual npm tarball; template moved before dependency installation.",
+    "Locked install, build, tests, local debug and packaging use only the standalone project.",
+    "Editor integration is a separate native check; no publication or signing performed."
+  ]
+}

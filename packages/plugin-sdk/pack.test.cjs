@@ -69,6 +69,13 @@ test('release publishes the ZIP and matching author checksums without evaluating
   assert.equal(checksums.assets[0].sha256,require('node:crypto').createHash('sha256').update(bytes).digest('hex'));assert.equal(result.assets[0].sha256,checksums.assets[0].sha256);
   await assert.rejects(fs.lstat(path.join(source,'sentinel')),{code:'ENOENT'});await assert.rejects(release(source,output),/already exists/);
 });
+test('marketplace release accepts its plugin namespace and rejects another plugin',async t=> {
+  const {source,output}=await fixture(t);
+  await assert.rejects(release(source,output,'tests.other/v1.0.0'),/tag/);
+  await assert.rejects(release(source,output,'tests.sample/v1.0.1'),/tag/);
+  const result=await release(source,output,'tests.sample/v1.0.0');
+  assert.equal(result.pluginId,'tests.sample');assert.equal(result.version,'1.0.0');
+});
 test('release rejects mismatched tags, unstable versions and incomplete builds without leaving output',async t=> {
   const {source,output,write}=await fixture(t);await assert.rejects(release(source,output,'v2.0.0'),/tag/);await assert.rejects(fs.lstat(output),{code:'ENOENT'});
   await write('notepadnext-plugin.json',{id:'tests.sample',version:'1.0.0-beta.1'});await assert.rejects(release(source,output),/SemVer/);

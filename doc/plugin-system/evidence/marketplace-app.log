@@ -1,0 +1,161 @@
+********* Start testing of PluginApplicationTests *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.3)), macos 27.0.1
+QINFO  : PluginApplicationTests::initTestCase() bool NotepadNextApplication::init(QNetworkAccessManager *)
+QINFO  : PluginApplicationTests::initTestCase() void TranslationManager::loadTranslation(QLocale)
+QINFO  : PluginApplicationTests::initTestCase() LuaState::LuaState()
+QINFO  : PluginApplicationTests::initTestCase() MacroManager::MacroManager(QObject *)
+QINFO  : PluginApplicationTests::initTestCase() void MacroManager::loadSettings()
+QINFO  : PluginApplicationTests::initTestCase() MainWindow::MainWindow(NotepadNextApplication *)
+2026-10-12 19:29:30.895 PluginApplicationTests[68701:21529832] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/n7/l0kdrhmn7lz3vt69sj82m8rm0000gn/T/com.yourcompany.5c0d84ae.PluginApplicationTests.savedState
+QINFO  : PluginApplicationTests::initTestCase() setupUi Completed
+QINFO  : PluginApplicationTests::initTestCase() FileListDock::FileListDock(MainWindow *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setupLanguageMenu()
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::applyStyleSheet()
+QINFO  : PluginApplicationTests::initTestCase() Loading stylesheet: ":/stylesheets/npp.css"
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::restoreSettings()
+QINFO  : PluginApplicationTests::initTestCase() void NotepadNextApplication::openFiles(const QStringList &)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::newFile()
+QINFO  : PluginApplicationTests::initTestCase() void EditorManager::setupEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() int EditorManager::detectEOLMode(ScintillaNext *) const
+QINFO  : PluginApplicationTests::initTestCase() RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::detectLanguage(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::setLanguage(ScintillaNext *, const QString &)
+QINFO  : PluginApplicationTests::initTestCase() Language Name: Text
+QINFO  : PluginApplicationTests::initTestCase() void DockedEditor::addEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::activateEditor(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() bool MainWindow::checkFileForModification(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateGui(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateFileStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateEOLBasedUi(ScintillaNext *)
+QINFO  : PluginApplicationTests::initTestCase() void MainWindow::updateLanguageBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::initTestCase()
+2026-10-12 19:29:31.117 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:31.117 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:31.117 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:31.117 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:31.315 PluginApplicationTests[68701:21529832] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+2026-10-12 19:29:32.634 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:32.637 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:33.365 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:33.367 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+[68701:259:1012/192934.544233:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+[68701:259:1012/192934.545263:ERROR:service_utils.cc(339)] Skia Graphite backend = "" not found - falling back to Ganesh!
+2026-10-12 19:29:34.625 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.626 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.629 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.630 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.879 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.883 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.887 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.888 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.901 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.901 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.909 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.910 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.916 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.917 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.919 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.922 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.927 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.928 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.931 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.933 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.942 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:34.942 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:35.587 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:35.590 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:35.591 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:35.593 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:35.594 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+Updating Markdown: "Update…" "active"
+2026-10-12 19:29:36.583 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:36.587 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.075 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.079 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.223 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.225 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.227 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.230 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.827 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.828 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.830 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.831 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.835 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.965 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:38.965 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.552 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.555 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.560 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.563 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.566 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.930 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.930 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.934 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.937 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.989 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.991 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.995 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:39.996 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:40.153 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:40.160 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:40.161 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:40.165 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:41.074 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:41.079 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:41.087 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+UI lifecycle: repo registration, real v0.1.3 install, lazy enable, preview, current catalog update with automatic dock and scroll restoration, disable/re-enable, source removal with package preserved, independent update check, cancellation and uninstall passed
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::realGitHubMarkdownLifecycle()
+2026-10-12 19:29:41.272 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:41.272 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:41.968 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:41.968 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:42.600 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:42.601 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:42.603 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:42.604 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:43.573 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:43.575 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+2026-10-12 19:29:44.326 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:44.326 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.113 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.117 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.127 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.128 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.668 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.670 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.715 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.715 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.719 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.720 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.725 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:45.725 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:46.357 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:46.357 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:46.365 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:46.366 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:47.467 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:47.476 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:47.483 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:47.485 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.743 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.744 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.747 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.747 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.948 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.953 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.954 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+2026-10-12 19:29:48.959 PluginApplicationTests[68701:21529832] TSMSendMessageToUIServer: CFMessagePortSendRequest FAILED(-1) to send to port com.apple.tsm.uiserver
+Live marketplace: one URL, two plugins, namespaced installs, HTML 0.1.0 -> 0.1.1 hot update with dock/source/counter/scroll restored and new backend PID; Markdown unaffected; uninstall returns both to Discover
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+PASS   : PluginApplicationTests::realGitHubMarketplaceLifecycle()
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *)
+void MainWindow::saveSettings() const
+void SessionManager::saveSession(MainWindow *)
+PASS   : PluginApplicationTests::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 18279ms
+********* Finished testing of PluginApplicationTests *********

@@ -11,7 +11,8 @@ async function release(source,output,expectedTag) {
   try{await fs.lstat(output);throw new Error('Release output already exists.');}catch(error){if(error.code!=='ENOENT')throw error;}
   const metadata=JSON.parse(await fs.readFile(path.join(source,'notepadnext-plugin.json'),'utf8'));
   if(typeof metadata.id!=='string'||!/^[a-z0-9][a-z0-9._-]{0,127}(?![\s\S])/.test(metadata.id)||typeof metadata.version!=='string'||!/^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?![\s\S])/.test(metadata.version))throw new Error('Release needs a valid plugin ID and stable SemVer version.');
-  if(expectedTag!==undefined&&expectedTag!=='v'+metadata.version)throw new Error('Release tag must equal v'+metadata.version+'.');
+  const legacyTag='v'+metadata.version,marketplaceTag=metadata.id+'/'+legacyTag;
+  if(expectedTag!==undefined&&expectedTag!==legacyTag&&expectedTag!==marketplaceTag)throw new Error('Release tag must equal '+legacyTag+' or '+marketplaceTag+'.');
   await fs.mkdir(path.dirname(output),{recursive:true});const stage=await fs.mkdtemp(path.join(path.dirname(output),'.nnp-release-'));
   try {
     const packed=await pack(source,path.join(stage,'package'));
@@ -28,6 +29,6 @@ async function release(source,output,expectedTag) {
 }
 module.exports={release};
 if(require.main===module) {
-  if(process.argv.length<4||process.argv.length>5){console.error('Usage: node release.cjs <built-plugin-directory> <new-release-directory> [v<version>]');process.exitCode=2;}
+  if(process.argv.length<4||process.argv.length>5){console.error('Usage: node release.cjs <built-plugin-directory> <new-release-directory> [v<version> | <plugin-id>/v<version>]');process.exitCode=2;}
   else release(...process.argv.slice(2)).then(result=>console.log(JSON.stringify(result,null,2))).catch(error=>{console.error(error.message);process.exitCode=1;});
 }
