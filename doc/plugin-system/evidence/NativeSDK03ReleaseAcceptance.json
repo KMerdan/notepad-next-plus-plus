@@ -163,6 +163,11 @@
     "version": "0.15.1",
     "minimumMacOS": "14",
     "rubySyntax": "pass",
-    "homebrewStyle": "pass"
+    "homebrewStyle": "pass",
+    "publicTapRegistered": true,
+    "publicAssetFetch": "pass",
+    "fetchedAssetSha256": "7fa6a88547715dc59ec3efc2b29b9107938a15a4a64a317639405a37b2440499",
+    "installDryRun": "pass",
+    "userApplicationInstalledOrOverwritten": false
   }
 }
