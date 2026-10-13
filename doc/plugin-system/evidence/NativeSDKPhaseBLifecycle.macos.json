@@ -1,20 +1,8 @@
 {
   "cycles": 100,
-  "elapsedMs": 95525,
+  "elapsedMs": 102385,
   "exitedNodeIdentities": 200,
   "final": {
-    "descriptorTypes": {
-      "1": 12,
-      "5": 5,
-      "6": 28,
-      "9": 1
-    },
-    "fileDescriptors": 46,
-    "focusConnections": 0,
-    "rssBytes": 179748864,
-    "threads": 38
-  },
-  "initial": {
     "descriptorTypes": {
       "1": 12,
       "5": 5,
@@ -23,10 +11,22 @@
     },
     "fileDescriptors": 44,
     "focusConnections": 0,
-    "rssBytes": 163069952,
-    "threads": 36
+    "rssBytes": 171655168,
+    "threads": 39
   },
-  "qualification": "Real Scintilla/PluginEngine/WebEngine lifecycle. Raw native counts are preserved. Qt global provider pool is held at two warmed event-dispatcher workers, with expiry disabled during this test; previous settings are restored. RPC workers use normal lifecycle. Every owned Node identity, session, panel, Dock and focus connection is checked after each stop. All native descriptors return to the three-cycle warm baseline. RSS includes shared Qt/provider caches and is not a peak measurement.",
+  "initial": {
+    "descriptorTypes": {
+      "1": 12,
+      "5": 5,
+      "6": 18,
+      "9": 1
+    },
+    "fileDescriptors": 36,
+    "focusConnections": 0,
+    "rssBytes": 162086912,
+    "threads": 32
+  },
+  "qualification": "Real Scintilla/PluginEngine/WebEngine lifecycle. Every owned Node identity, session, panel, Dock and focus connection is checked after each stop. Raw native counts are preserved. macOS non-pipe descriptors must return to the three-cycle warm baseline. Pipe totals include shared Qt event dispatchers that initialize lazily in the unchanged baseline, so they are diagnostic rather than per-plugin ownership proof. No global provider-pool settings are changed. RSS includes shared Qt/provider caches and is not a peak measurement.",
   "samples": [
     {
       "cycle": 1,
@@ -34,13 +34,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 163856384,
-        "threads": 37
+        "rssBytes": 163561472,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -52,13 +52,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 164691968,
-        "threads": 37
+        "rssBytes": 164429824,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -70,13 +70,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 165511168,
-        "threads": 37
+        "rssBytes": 165167104,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -88,13 +88,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 165527552,
-        "threads": 37
+        "rssBytes": 165199872,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -106,13 +106,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 165609472,
-        "threads": 37
+        "rssBytes": 165462016,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -124,13 +124,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 165658624,
-        "threads": 37
+        "rssBytes": 165789696,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -142,13 +142,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 165756928,
-        "threads": 37
+        "rssBytes": 165871616,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -160,13 +160,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 20,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 38,
         "focusConnections": 0,
-        "rssBytes": 165969920,
-        "threads": 37
+        "rssBytes": 165937152,
+        "threads": 33
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -178,13 +178,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166068224,
-        "threads": 37
+        "rssBytes": 166100992,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -196,13 +196,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166281216,
-        "threads": 37
+        "rssBytes": 166199296,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -214,13 +214,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166313984,
-        "threads": 37
+        "rssBytes": 166346752,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -232,13 +232,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166330368,
-        "threads": 37
+        "rssBytes": 166379520,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -250,13 +250,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166363136,
-        "threads": 37
+        "rssBytes": 166445056,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -268,13 +268,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166494208,
-        "threads": 37
+        "rssBytes": 166477824,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -286,13 +286,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 166707200,
-        "threads": 37
+        "rssBytes": 166625280,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -304,13 +304,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
         "rssBytes": 166789120,
-        "threads": 37
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -322,13 +322,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 167034880,
-        "threads": 37
+        "rssBytes": 166821888,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -340,13 +340,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 167149568,
-        "threads": 37
+        "rssBytes": 166838272,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -358,13 +358,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 167510016,
-        "threads": 37
+        "rssBytes": 166936576,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -376,13 +376,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 167804928,
-        "threads": 37
+        "rssBytes": 167051264,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -394,13 +394,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168165376,
-        "threads": 37
+        "rssBytes": 167182336,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -412,13 +412,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168361984,
-        "threads": 37
+        "rssBytes": 167215104,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -430,13 +430,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168443904,
-        "threads": 37
+        "rssBytes": 167346176,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -448,13 +448,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168476672,
-        "threads": 37
+        "rssBytes": 167346176,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -466,13 +466,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168607744,
-        "threads": 37
+        "rssBytes": 167477248,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -484,13 +484,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168607744,
-        "threads": 37
+        "rssBytes": 167542784,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -502,13 +502,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168656896,
-        "threads": 37
+        "rssBytes": 167690240,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -520,13 +520,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168640512,
-        "threads": 37
+        "rssBytes": 167723008,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -538,13 +538,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 168706048,
-        "threads": 37
+        "rssBytes": 167723008,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -556,13 +556,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 169017344,
-        "threads": 37
+        "rssBytes": 167870464,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -574,13 +574,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 169263104,
-        "threads": 37
+        "rssBytes": 168001536,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -592,13 +592,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 169590784,
-        "threads": 37
+        "rssBytes": 168263680,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -610,13 +610,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 169820160,
-        "threads": 37
+        "rssBytes": 168263680,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -628,13 +628,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 173998080,
-        "threads": 38
+        "rssBytes": 168296448,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -646,13 +646,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 173998080,
-        "threads": 38
+        "rssBytes": 168378368,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -664,13 +664,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174276608,
-        "threads": 38
+        "rssBytes": 168411136,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -682,13 +682,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174407680,
-        "threads": 38
+        "rssBytes": 168542208,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -700,13 +700,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174424064,
-        "threads": 38
+        "rssBytes": 168542208,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -718,13 +718,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174424064,
-        "threads": 38
+        "rssBytes": 168673280,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -736,13 +736,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174505984,
-        "threads": 38
+        "rssBytes": 168706048,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -754,13 +754,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174571520,
-        "threads": 38
+        "rssBytes": 168706048,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -772,13 +772,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174587904,
-        "threads": 38
+        "rssBytes": 168853504,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -790,13 +790,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174620672,
-        "threads": 38
+        "rssBytes": 168869888,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -808,13 +808,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174653440,
-        "threads": 38
+        "rssBytes": 168919040,
+        "threads": 34
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -826,13 +826,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 174653440,
-        "threads": 38
+        "rssBytes": 169213952,
+        "threads": 35
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -844,12 +844,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 176996352,
+        "rssBytes": 169312256,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -862,12 +862,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177012736,
+        "rssBytes": 169443328,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -880,12 +880,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177029120,
+        "rssBytes": 169459712,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -898,12 +898,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177111040,
+        "rssBytes": 169476096,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -916,12 +916,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177111040,
+        "rssBytes": 169476096,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -934,12 +934,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177143808,
+        "rssBytes": 169476096,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -952,12 +952,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177160192,
+        "rssBytes": 169689088,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -970,12 +970,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177192960,
+        "rssBytes": 169902080,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -988,12 +988,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177258496,
+        "rssBytes": 169902080,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -1006,12 +1006,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177274880,
+        "rssBytes": 169918464,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -1024,12 +1024,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177405952,
+        "rssBytes": 169934848,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -1042,12 +1042,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177569792,
+        "rssBytes": 169934848,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -1060,12 +1060,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177569792,
+        "rssBytes": 169984000,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -1078,12 +1078,12 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177766400,
+        "rssBytes": 170082304,
         "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
@@ -1096,13 +1096,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 24,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 42,
         "focusConnections": 0,
-        "rssBytes": 177717248,
-        "threads": 37
+        "rssBytes": 170082304,
+        "threads": 38
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1114,13 +1114,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178208768,
-        "threads": 37
+        "rssBytes": 170131456,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1132,13 +1132,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178274304,
-        "threads": 37
+        "rssBytes": 170131456,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1150,13 +1150,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178307072,
-        "threads": 37
+        "rssBytes": 170131456,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1168,13 +1168,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178307072,
-        "threads": 37
+        "rssBytes": 170131456,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1186,13 +1186,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178421760,
-        "threads": 37
+        "rssBytes": 170131456,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1204,13 +1204,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178552832,
-        "threads": 37
+        "rssBytes": 170147840,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1222,13 +1222,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178552832,
-        "threads": 37
+        "rssBytes": 170164224,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1240,13 +1240,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178569216,
-        "threads": 37
+        "rssBytes": 170377216,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1258,13 +1258,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178569216,
-        "threads": 37
+        "rssBytes": 170459136,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1276,13 +1276,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178569216,
-        "threads": 37
+        "rssBytes": 170590208,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1294,13 +1294,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178569216,
-        "threads": 37
+        "rssBytes": 170622976,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1312,13 +1312,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178733056,
-        "threads": 37
+        "rssBytes": 170639360,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1330,13 +1330,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178749440,
-        "threads": 37
+        "rssBytes": 170688512,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1348,13 +1348,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178864128,
-        "threads": 37
+        "rssBytes": 170704896,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1366,13 +1366,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178880512,
-        "threads": 37
+        "rssBytes": 170704896,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1384,13 +1384,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 178978816,
-        "threads": 37
+        "rssBytes": 170721280,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1402,13 +1402,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179126272,
-        "threads": 37
+        "rssBytes": 170737664,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1420,13 +1420,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179126272,
-        "threads": 37
+        "rssBytes": 170737664,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1438,13 +1438,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179486720,
-        "threads": 37
+        "rssBytes": 170754048,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1456,13 +1456,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179552256,
-        "threads": 38
+        "rssBytes": 170786816,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1474,13 +1474,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179552256,
-        "threads": 38
+        "rssBytes": 170786816,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1492,13 +1492,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179552256,
-        "threads": 38
+        "rssBytes": 170803200,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1510,13 +1510,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179552256,
-        "threads": 38
+        "rssBytes": 170819584,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1528,13 +1528,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179568640,
-        "threads": 38
+        "rssBytes": 170835968,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1546,13 +1546,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179519488,
-        "threads": 37
+        "rssBytes": 170852352,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1564,13 +1564,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179519488,
-        "threads": 37
+        "rssBytes": 170852352,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1582,13 +1582,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179535872,
-        "threads": 37
+        "rssBytes": 170852352,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1600,13 +1600,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179535872,
-        "threads": 37
+        "rssBytes": 170868736,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1618,13 +1618,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179568640,
-        "threads": 38
+        "rssBytes": 170917888,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1636,13 +1636,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179585024,
-        "threads": 38
+        "rssBytes": 170917888,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1654,13 +1654,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179585024,
-        "threads": 38
+        "rssBytes": 170917888,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1672,13 +1672,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179601408,
-        "threads": 38
+        "rssBytes": 171048960,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1690,13 +1690,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179634176,
-        "threads": 38
+        "rssBytes": 171065344,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1708,13 +1708,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179666944,
-        "threads": 38
+        "rssBytes": 171130880,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1726,13 +1726,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179666944,
-        "threads": 38
+        "rssBytes": 171180032,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1744,13 +1744,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179699712,
-        "threads": 38
+        "rssBytes": 171458560,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1762,13 +1762,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179699712,
-        "threads": 38
+        "rssBytes": 171573248,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1780,13 +1780,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179732480,
-        "threads": 38
+        "rssBytes": 171655168,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1798,13 +1798,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179732480,
-        "threads": 38
+        "rssBytes": 171655168,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1816,13 +1816,13 @@
         "descriptorTypes": {
           "1": 12,
           "5": 5,
-          "6": 28,
+          "6": 26,
           "9": 1
         },
-        "fileDescriptors": 46,
+        "fileDescriptors": 44,
         "focusConnections": 0,
-        "rssBytes": 179748864,
-        "threads": 38
+        "rssBytes": 171655168,
+        "threads": 39
       },
       "ownedNodeIdentitiesExited": 2,
       "resources": 0,
@@ -1833,13 +1833,13 @@
     "descriptorTypes": {
       "1": 12,
       "5": 5,
-      "6": 28,
+      "6": 20,
       "9": 1
     },
-    "fileDescriptors": 46,
+    "fileDescriptors": 38,
     "focusConnections": 0,
-    "rssBytes": 165511168,
-    "threads": 37
+    "rssBytes": 165167104,
+    "threads": 33
   },
   "warmAfterCycles": 3
 }

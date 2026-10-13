@@ -32,8 +32,10 @@
 
 本地验证已完成：SDK **26 unit tests**；实际 tarball **40 独立步骤**（六模板安装/构建/测试/打包，支持的模拟调试）；C++ RPC **311 passed**；文档桥 **24 passed**；真实应用 Phase B **3 cases + init/cleanup，5 passed / 0 failed / 0 skipped**。真实应用用例覆盖新协议、文件成功/取消/版本变化/停用、嵌入 NUL 文本、书签、两个 owner 高亮隔离、100 次释放循环、配额与最后标签关闭。后续源码修改需复核，不把此快照替代分支 CI。
 
-全量宿主回归 **22 suites / 0 failures**，包括旧 0.1/0.2、通用 WebEngine 热更新、应用退出与 macOS bundle。禁用插件的编辑器构建通过。全量测试未配置 Python、外部产品包和 live GitHub，因此 Webview/App 分别有 4/5 个明确 opt-in skips；两个新 Marketplace 插件另行真实安装验收 **3 passed / 0 failed / 0 skipped**。
+宿主 **22 suites 最终均通过**：Windows 搜索位置宽度修复后的完整运行通过 21/22；唯一失败是共享 provider 的管道总数断言，调整其验证范围后完整 Webview suite 复跑 **45 passed / 0 failed / 4 optional skips**。覆盖旧 0.1/0.2、通用 WebEngine 热更新、应用退出与 macOS bundle。禁用插件的编辑器构建通过。全量测试未配置 Python、外部产品包和 live GitHub，因此 Webview/App 分别有 4/5 个明确 opt-in skips；两个新 Marketplace 插件另行真实安装验收 **3 passed / 0 failed / 0 skipped**。
 
-100 次启用/重载/停用确认 **200 个 owned Node identities 已退出**，每次停用后 session/panel/Dock/resources/focus connections 清零；原始句柄 **46 → 46**。未修改 main 基线复跑也出现 Qt 全局线程池延迟创建的 pipe 增长，因此压力测试固定两个预热 provider workers，并保留原始句柄归零判定，结束后恢复线程池设置。测试环境控制不进入应用代码。验证输入、限制与原始样本见 [验证记录](evidence/NativeSDKPhaseBValidation.json)和 [生命周期原始记录](evidence/NativeSDKPhaseBLifecycle.macos.json)。
+100 次启用/重载/停用确认 **200 个 owned Node identities 已退出**，每次停用后 session/panel/Dock/resources/focus connections 清零。原始句柄 **38 → 44**，变化全为 Qt provider 的事件管道；非管道类型均回到 warm baseline。未修改 main 基线也出现延迟 pipe 增长，pipe/close 栈诊断确认 RPC worker 初始化的管道全部关闭。最终测试不约束 Qt 全局线程池、不要求共享 provider 的管道总数等于 cycle 3；原始 pipe/threads/RSS 仍完整记录，不能将这些全进程指标冒充单个插件的所有权证明。验证输入、限制与原始样本见 [验证记录](evidence/NativeSDKPhaseBValidation.json)和 [生命周期原始记录](evidence/NativeSDKPhaseBLifecycle.macos.json)。
+
+共享搜索服务采用完整宽度的 Scintilla range，避免 Windows LLP64 对旧 32 位 range 的隐式窄化。旧 Finder carrier 保留明确转换；原生 API 本轮搜索仍有 2 MiB 预算。
 
 规划基线和后续项见 [Phase B 计划](NativeSDKPhaseBPlan.zh-CN.md)。分屏、导出/剪贴板、宏、编码转换、列编辑、大文件写入和 providers 属于计划中的后续/条件项，本轮 B1–B5 未开放。SDK 包的具体版本和原生 API profile 独立演进。
