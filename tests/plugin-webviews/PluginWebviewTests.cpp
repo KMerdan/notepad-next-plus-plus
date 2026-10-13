@@ -138,6 +138,36 @@ private slots:
         events.clear();documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();*result=QVariant();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("9");})(),5000);
     }
+    void previewEngineStopsWithItsOwnerAndNeverReplaysOpen() {
+        using namespace PluginPackages;using namespace PluginRuntime;
+        QTemporaryDir temp;QString error;const QString id="tests.owned-preview";
+        const auto root=temp.path()+"/input";
+        auto resource=runtimeFixture(root,id,R"JS(exports.activate=async ctx=>{
+ await new Promise(r=>setTimeout(r,200));let panel;
+ const open=async()=>{if(!await ctx.previews.getSource())return null;
+  panel=await ctx.webviews.createCompatible({panelId:require('node:crypto').randomBytes(16).toString('hex'),viewType:'owned',title:'Owned preview',enableScripts:true});
+  await panel.setDocument('<!doctype html><h1>Owned source</h1>');await panel.reveal(true);
+ };
+ ctx.subscriptions.push(ctx.webviews.registerRestorer('owned',open));
+ await ctx.commands.register('tests.owned-preview.open',open);
+};)JS",{"commands@1","documents.read@1","webviews@1","webviews.compat@1","webviews.restore@1","webviews.document@1"});
+        resource.metadata["category"]="editor-preview";resource.metadata["preview"]=QJsonObject{{"viewType","owned"},{"languages",QJsonArray{"html"}},{"extensions",QJsonArray{".html"}}};
+        QFile metadata(root+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::WriteOnly));metadata.write(QJsonDocument(resource.metadata).toJson());metadata.close();
+        InstalledPluginRegistry registry(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(registry.load(&error));InstallationService installer(&registry,PluginEngine::packagePolicy());
+        QMainWindow window;ScintillaEdit first,second;PluginDocuments::DocumentBridge documents;
+        const auto a=documents.attach(&first,QUrl("file:///one.html"),"html"),b=documents.attach(&second,QUrl("file:///two.html"),"html");documents.setActive(a);
+        PluginEngine engine(&registry,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));window.show();
+        QSignalSpy installed(&installer,&InstallationService::finished),operations(&engine,&PluginController::operationFinished);
+        QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,10000);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));
+        QVERIFY(engine.setEnabled(id,true,&error));QTest::qWait(50);QCOMPARE(engine.sessionCount(),0);QCOMPARE(engine.pluginPanelCount(id),0);
+        engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginPanelCount(id),1,10000);
+        auto *dock=window.findChild<QDockWidget*>("plugin:"+id+":owned");QVERIFY(dock);dock->close();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);
+        documents.setActive(b);documents.setActive(a);QTest::qWait(50);QCOMPARE(engine.pluginPanelCount(id),0);QCOMPARE(engine.sessionCount(),0);QVERIFY(registry.plugin(id).enabled);
+        engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginPanelCount(id),1,10000);documents.setActive(b);documents.detach(a);QTest::qWait(50);QCOMPARE(engine.pluginPanelCount(id),1);
+        engine.reload(id);documents.detach(b);QTRY_VERIFY_WITH_TIMEOUT(!operations.isEmpty(),15000);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.pluginPanelCount(id),0);QCOMPARE(engine.sessionCount(),0);QVERIFY(registry.plugin(id).enabled);
+        const auto c=documents.attach(&first,QUrl("file:///again.html"),"html");documents.setActive(c);QTest::qWait(50);QCOMPARE(engine.sessionCount(),0);
+        engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginPanelCount(id),1,10000);documents.detach(c);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);
+    }
     void firstPanelKeepsEditorWindow() {
         QMainWindow window;
         auto *editor=new QPlainTextEdit(&window);window.setCentralWidget(editor);
