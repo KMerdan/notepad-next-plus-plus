@@ -36,5 +36,5 @@ if(NOTEPADNEXT_TEST_NODE)
 endif()
 
 if(NOTEPADNEXT_TEST_NODE)
-    add_test(NAME PluginNativeSdkTests COMMAND "${NOTEPADNEXT_TEST_NODE}" --test "${CMAKE_CURRENT_SOURCE_DIR}/native.test.cjs")
+    add_test(NAME PluginNativeSdkTests COMMAND "${NOTEPADNEXT_TEST_NODE}" --test "${CMAKE_CURRENT_SOURCE_DIR}/native.test.cjs" "${CMAKE_CURRENT_SOURCE_DIR}/phase-b.test.cjs")
 endif()

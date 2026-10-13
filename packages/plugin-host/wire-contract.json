@@ -3,7 +3,7 @@
   "protocolVersion": "0.1",
   "apiVersion": "0.1.0",
   "schemaFile": "wire.schema.json",
-  "compatibility": "Exact 0.1.0 API and negotiated 0.1 protocol. Unknown protocol offers may coexist with 0.1; future APIs/limits are rejected before importing plugin code. New major profiles need separate schemas and shared fixtures.",
+  "compatibility": "API 0.1/0.2 sessions retain existing callbacks and capabilities. API 0.3 is explicit opt-in for Phase B. JSON-RPC and wire profile remain 0.1; native limits are queried separately.",
   "methods": {
     "nnp.initialize": {
       "direction": "hostToPlugin",
@@ -1155,6 +1155,686 @@
         1011
       ],
       "budget": "Native API 0.2. Single bound host window, 2 MiB UTF-8 snapshot/edit preflight, 256 selections/edits."
+    },
+    "nnp.host.getNativeLimits": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.host.getNativeLimits.params",
+      "resultSchema": "#/$defs/nnp.host.getNativeLimits.result",
+      "capability": "documents.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.documents.readRange": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.readRange.params",
+      "resultSchema": "#/$defs/nnp.documents.readRange.result",
+      "capability": "documents.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.documents.watchNative": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.watchNative.params",
+      "resultSchema": "#/$defs/nnp.documents.watchNative.result",
+      "capability": "documents.native.events@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.editors.watchSelections": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.watchSelections.params",
+      "resultSchema": "#/$defs/nnp.editors.watchSelections.result",
+      "capability": "editors.selection.events@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.documents.nativeEvent": {
+      "direction": "hostToPlugin",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.documents.nativeEvent.params",
+      "capability": "documents.native.events@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "event",
+      "api": "0.3.0",
+      "cancellation": "Owned subscription disposal and session revocation stop delivery.",
+      "errors": [],
+      "budget": "128 coalesced events; bounded native metadata and selections"
+    },
+    "nnp.editors.activate": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.activate.params",
+      "resultSchema": "#/$defs/nnp.editors.activate.result",
+      "capability": "editors.view.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "view",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.editors.revealRange": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.revealRange.params",
+      "resultSchema": "#/$defs/nnp.editors.revealRange.result",
+      "capability": "editors.view.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "view",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.editors.getOptions": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.editors.getOptions.params",
+      "resultSchema": "#/$defs/nnp.editors.getOptions.result",
+      "capability": "editors.selection.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.files.create": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.files.create.params",
+      "resultSchema": "#/$defs/nnp.files.create.result",
+      "capability": "files.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "file",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.files.open": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.files.open.params",
+      "resultSchema": "#/$defs/nnp.files.open.result",
+      "capability": "files.read@1",
+      "states": [
+        "active"
+      ],
+      "effect": "file",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.files.save": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.files.save.params",
+      "resultSchema": "#/$defs/nnp.files.save.result",
+      "capability": "files.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "file",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.files.saveAs": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.files.saveAs.params",
+      "resultSchema": "#/$defs/nnp.files.saveAs.result",
+      "capability": "files.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "file",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.files.close": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.files.close.params",
+      "resultSchema": "#/$defs/nnp.files.close.result",
+      "capability": "files.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "file",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.search.findAll": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.search.findAll.params",
+      "resultSchema": "#/$defs/nnp.search.findAll.result",
+      "capability": "search.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.search.count": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.search.count.params",
+      "resultSchema": "#/$defs/nnp.search.count.result",
+      "capability": "search.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.languages.list": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.languages.list.params",
+      "resultSchema": "#/$defs/nnp.languages.list.result",
+      "capability": "languages.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.languages.getKeywords": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.languages.getKeywords.params",
+      "resultSchema": "#/$defs/nnp.languages.getKeywords.result",
+      "capability": "languages.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.languages.set": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.languages.set.params",
+      "resultSchema": "#/$defs/nnp.languages.set.result",
+      "capability": "languages.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "metadata",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.documents.convertLineEndings": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.documents.convertLineEndings.params",
+      "resultSchema": "#/$defs/nnp.documents.convertLineEndings.result",
+      "capability": "documents.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "document",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.bookmarks.list": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.bookmarks.list.params",
+      "resultSchema": "#/$defs/nnp.bookmarks.list.result",
+      "capability": "bookmarks.read@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.bookmarks.set": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.bookmarks.set.params",
+      "resultSchema": "#/$defs/nnp.bookmarks.set.result",
+      "capability": "bookmarks.write@1",
+      "states": [
+        "active"
+      ],
+      "effect": "view",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.decorations.create": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.decorations.create.params",
+      "resultSchema": "#/$defs/nnp.decorations.create.result",
+      "capability": "decorations.write@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "stagedResource",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.decorations.set": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.decorations.set.params",
+      "resultSchema": "#/$defs/nnp.decorations.set.result",
+      "capability": "decorations.write@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "stagedResource",
+      "api": "0.3.0",
+      "cancellation": "Reads stop between bounded chunks. Writes revalidate session before commit; a lost reply has unknown outcome and must not be retried.",
+      "errors": [
+        -32602,
+        -32603,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1011,
+        1012
+      ],
+      "budget": "native limits returned by nnp.host.getNativeLimits"
+    },
+    "nnp.resources.nativeEvent": {
+      "direction": "hostToPlugin",
+      "kind": "notification",
+      "paramsSchema": "#/$defs/nnp.resources.nativeEvent.params",
+      "capability": "decorations.write@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "resourceEvent",
+      "api": "0.3.0",
+      "cancellation": "Session revocation stops delivery.",
+      "errors": [],
+      "budget": "Owned decoration handles only"
     }
   },
   "errors": {

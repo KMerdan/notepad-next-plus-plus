@@ -7,8 +7,10 @@
 #include <QJsonObject>
 #include <QPointer>
 #include <QUrl>
+#include <QSet>
 #include <functional>
 #include "ScintillaEdit.h"
+class QMainWindow;
 
 namespace PluginDocuments {
 // Owns buffer identities, never the widgets. All operations and notifications
@@ -17,6 +19,7 @@ class DocumentBridge : public QObject {
     Q_OBJECT
 public:
     static constexpr qsizetype MaxSnapshotBytes = 2 * 1024 * 1024;
+    static constexpr qsizetype MaxRangeBytes = 256 * 1024;
     explicit DocumentBridge(QObject *parent = nullptr);
     QString attach(ScintillaEdit *editor, const QUrl &uri, const QString &language);
     QString idFor(ScintillaEdit *editor) const;
@@ -24,6 +27,7 @@ public:
     void setActive(const QString &id);
     void updateMetadata(const QString &id, const QUrl &uri, const QString &language);
     void reset(const QString &id);
+    void lifecycle(const QString &type, const QString &id);
     QJsonValue active() const;
     // Native presentation only; no widget or appearance API crosses RPC.
     QFont activeEditorFont() const;
@@ -42,6 +46,32 @@ public:
     QJsonObject setSelections(const QJsonObject &request, QJsonObject *error);
     bool checkTarget(const QJsonObject &target, QJsonObject *error);
     bool checkSelection(const QString &documentId, const QJsonObject &guard, QJsonObject *error);
+    ScintillaEdit *editorForDocument(const QString &id) const;
+    QJsonObject editorInfo(const QString &id) const;
+    QJsonArray editorList() const;
+    bool checkVersion(const QString &id, qint64 expectedVersion, QJsonObject *error) const;
+    bool boundedBytePosition(const QString &id, const QJsonObject &position, sptr_t *result, QJsonObject *error) const;
+    QJsonObject readRange(const QJsonObject &request, QJsonObject *error) const;
+    QJsonObject revealRange(const QJsonObject &request, QJsonObject *error);
+    QJsonObject convertLineEndings(const QJsonObject &request, QJsonObject *error);
+    QJsonObject editorOptions(const QString &editorId, QJsonObject *error) const;
+    void search(const QJsonObject &request, bool countOnly, std::function<bool()> allowed,
+                std::function<void(const QJsonValue &, const QJsonObject &)> completed);
+    void flushNativeEvents();
+    void retainNativeStream();
+    void releaseNativeStream();
+    QJsonObject boundedSelections(const QString &editorId,QJsonObject *error);
+    qint64 nativeSequence() const { return nativeEventSequence; }
+    using Extension = std::function<QJsonValue(const QString &, const QJsonObject &, QMainWindow *, const QString &, std::function<bool()>, QJsonObject *)>;
+    void setExtensionServices(Extension handler) { extensionHandler=std::move(handler); }
+    QJsonValue extension(const QString &method, const QJsonObject &params, QMainWindow *window,
+                         const QString &owner, std::function<bool()> allowed, QJsonObject *error);
+    void releaseOwner(const QString &owner);
+    int ownedResourceCount(const QString &owner) const;
+    void publishOwner(const QString &owner) { if(publishResources)publishResources(owner); }
+    void setPublicationService(std::function<void(const QString &)> publish) { publishResources=std::move(publish); }
+    void setResourceServices(std::function<void(const QString &)> release, std::function<int(const QString &)> count) { releaseResources=std::move(release); countResources=std::move(count); }
+    static QJsonObject nativeLimits();
     void setWindowId(const QString &id) { windowId = id; }
     void setNativeServices(const QJsonArray &catalog,
         std::function<QJsonObject(ScintillaEdit *, const QString &, const QJsonObject &, QJsonObject *)> execute,
@@ -53,9 +83,11 @@ public:
     void releaseDeltaStream();
     qint64 deltaSequence() const { return mirrorSequence; }
 signals:
+    void resourceEvent(const QString &owner,const QJsonObject &event);
     void appearanceChanged();
     void event(const QString &type, const QJsonValue &document, qint64 eventSeq);
     void deltaEvent(const QJsonObject &event, qint64 eventSeq);
+    void nativeEvent(const QJsonObject &event, qint64 eventSeq);
 private:
     struct PendingDelta {QJsonObject range;sptr_t position=-1,length=0; qint64 offset=0,units=0;};
     struct Buffer { QPointer<ScintillaEdit> editor; QUrl uri; QString language; qint64 version = 1; bool applying = false; QList<QMetaObject::Connection> connections;PendingDelta pending; bool metadataPending=false; QString editorId; qint64 selectionRevision=1; QJsonArray selectionBytes; mutable QJsonObject lastInfo; };
@@ -64,12 +96,24 @@ private:
     QJsonArray rawSelections(ScintillaEdit *editor) const;
     void emitEvent(const QString &type, const QJsonValue &document);
     void emitDelta(const QJsonObject &event);
+    void queueNativeEvent(QJsonObject event, bool immediate=false);
+    void nativeDocumentEvent(const QString &type, const QJsonValue &document);
     bool deltaPosition(ScintillaEdit *editor,sptr_t byte,QJsonObject *position) const;
     QHash<QString, Buffer> buffers;
     QString activeId;
     qint64 sequence = 0;
     qint64 mirrorSequence=0;
     int deltaObservers=0;
+    qint64 nativeEventSequence=0;
+    bool nativeFlushScheduled=false;
+    int nativeObservers=0;
+    QHash<QString,QJsonObject> pendingNativeEvents, nativeMetadataCache;
+    QHash<QString,QString> nativeEditorIds;
+    QSet<QString> pendingSelectionEvents;
+    Extension extensionHandler;
+    std::function<void(const QString &)> releaseResources;
+    std::function<void(const QString &)> publishResources;
+    std::function<int(const QString &)> countResources;
     QString windowId;
     QJsonArray nativeCatalog;
     std::function<QJsonObject(ScintillaEdit *, const QString &, const QJsonObject &, QJsonObject *)> nativeExecute;

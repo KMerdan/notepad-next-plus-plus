@@ -40,8 +40,8 @@ RuntimePaths RuntimePaths::bundled() {
 }
 PluginPackages::PackagePolicy PluginEngine::packagePolicy() {
     PluginPackages::PackagePolicy policy;
-    policy.apiVersion="0.2.0";policy.compatibleApiVersions={"0.1.0"};
-    policy.capabilities={"commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"};
+    policy.apiVersion="0.3.0";policy.compatibleApiVersions={"0.2.0","0.1.0"};
+    policy.capabilities={"documents.native.events@1","editors.selection.events@1","files.read@1","files.write@1","search.read@1","languages.read@1","languages.write@1","bookmarks.read@1","bookmarks.write@1","decorations.write@1","commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"};
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     policy.capabilities.append("webviews@1");policy.capabilities.append("webviews.restore@1");
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)

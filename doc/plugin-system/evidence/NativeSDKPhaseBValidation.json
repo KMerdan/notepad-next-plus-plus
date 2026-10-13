@@ -1,0 +1,132 @@
+{
+  "date": "2026-10-13",
+  "platform": "macOS arm64",
+  "qt": "6.10.0",
+  "node": "24.21.0",
+  "nativeApi": "0.3.0",
+  "wireProfile": "0.1",
+  "sourceBaseCommit": "ef1711879946089fb22e5cc430125c65afadd915",
+  "sourceQualification": "Local validation on the base commit plus these working-tree source hashes. Documentation-only changes do not change the tested source. GitHub CI separately checks each pushed PR head.",
+  "changedSourceSha256": {
+    "packages/plugin-host/client.cjs": "9f373d81ae91d8c9ede696313a9bd64520f9fab146ec45b36309135b7d78814e",
+    "packages/plugin-host/host.cjs": "827301a1bfbc373052b65d1a30e80ffd90e85578100147c1f92f3f0fa3f7aa9d",
+    "packages/plugin-host/rpc.cjs": "922b2b486d6cc44c18cc38737e0b3880348c91ccd52a1baaea6d2b9c328e31d8",
+    "packages/plugin-host/wire-contract.json": "d27dc64b81eeabc6c8a613040de63fa995169af115dcaf10da9ecf1888e83bf2",
+    "packages/plugin-host/wire.schema.json": "6397720b9f44d1355bc2798c3244ce258039ee20bd9ced15f62b7a92b532a491",
+    "packages/plugin-sdk-lock.json": "9c0b8056b8db6bc02a438dd637ecae49302cb97787d0dac0a3f93881c62a21d6",
+    "scripts/sync-plugin-sdk-contracts.py": "2a5edfa6e7f39efa611f0148683fd10c76afad4da58c94c1f18c9ecf7ee549ed",
+    "src/CMakeLists.txt": "eb6f0c01b7929b6d8e25ab73ba72a2162dd307809b7f5250c60beb69134eb797",
+    "src/EditorBufferOperations.h": "54206915834a27195ece993e66a1264e6f3655ed2a9791a833de44ea3f23ee3f",
+    "src/EditorOperations.cpp": "b915310ce65a86326031b981ea51429f0b1f6078dd2a69dccdd89cd178c59e87",
+    "src/FileOperations.cpp": "1bdd37be83e432a727a6aed633c78a4c144c96704f0f6c3ec2cbaf906ff8c315",
+    "src/FileOperations.h": "08ddb8b30b356167dc4e1b80d1650094137484fe27752dcc8349dc5e344d975f",
+    "src/Finder.cpp": "9b673d45aa844ca4e54fd7968a3b0642700230b932abc0c14e03c10426e7ea36",
+    "src/NativeEditorServices.cpp": "060f0aedbb1b6a490cc272fe11cb64c6a92acd1db20c10e472f8331ae5ba5ec9",
+    "src/NativeEditorServices.h": "db91efc295f569133a922bfcd91ba170346cbf0557227c4e7b453e4a49a3cf25",
+    "src/NotepadNextApplication.cpp": "453e4dcca2e949246955fa58838e2acf9deeff365a7c811adfe2de93804e0821",
+    "src/RangeAllocator.cpp": "13d5e670eb28c43fa82fe294c0e8dc380ca018b83e5001dced5074e75936db45",
+    "src/RangeAllocator.h": "96691a375799db916a84c1eb0c1ad20f5b84a36020f018f5514fdb3d0a70dbc3",
+    "src/ScintillaNext.cpp": "c1eecb5ad653a31c6115b0c7eef1956319796345ec8ecb995200e43180d90dd7",
+    "src/ScintillaNext.h": "8680a6512394090ab89cf23d652d8388505158f1268b75d99bfca91cce716d4c",
+    "src/SearchService.h": "698f0431eb7523e5e292c3de8feb8fa2345b7e93c89110113a26d093c7977bcf",
+    "src/dialogs/MainWindow.cpp": "68b41cab15829edbb0dd033fc399061c24e410441952cf18806f6787e10d879a",
+    "src/dialogs/MainWindow.h": "05cf0d52a4d65f22bb7d7f53f35dfaf7dd4646b5da734c8fad98f40e25102622",
+    "src/plugins/documents/CMakeLists.txt": "60de6191b09d121b0634d63532b6c040bc469128dac232193ea996fa7708536d",
+    "src/plugins/documents/DocumentBridge.cpp": "a8bc8c18b7466351e3b7a3acfc9db667ec0afd1f17137017da5881d3e0c07003",
+    "src/plugins/documents/DocumentBridge.h": "19ae4e582fd13084725ad7214f80a3d9a5e1399f4a0d4978bd87858669c6fcdf",
+    "src/plugins/documents/DocumentBridgePhaseB.cpp": "9bd09ec8470d5659c1d3b90df8aba726857c735d18f33d6e892820942da5f98a",
+    "src/plugins/runtime/PluginEngine.cpp": "c95c08626eae34c329531b5d23c598f86a3a36dca7934306ee4b56faa4803966",
+    "src/plugins/runtime/PluginSession.cpp": "8a5829b790d04fe9653083fc7113cd90a9895db605e1a9288dda7fa1e5c641b5",
+    "src/plugins/runtime/PluginSession.h": "61cb8a00643c2f624b228dad847576577da0019386125bf78469fe44d7f9637d",
+    "tests/fixtures/README.md": "62fbfc2e5d0782bd697070fb9d29cdb058b1861318a9485936b59ec27feaafd1",
+    "tests/fixtures/native-phase-b/LICENSE": "7b2741977b798f285d7dac2c78cec669c9f959ae26c455d2015bcbcc7c0f7f25",
+    "tests/fixtures/native-phase-b/dist/index.cjs": "13ab1f7bfd00f67d3f9717dfd34a9ec28e3815f71a2e58fe4ac52a8220873e54",
+    "tests/fixtures/native-phase-b/notepadnext-plugin.json": "43eac6d9d9ae3edb3021fd04c0f7304a5d0b92f3da2b9e1a6d02e83d7e9efb26",
+    "tests/plugin-application/PluginApplicationTests.cpp": "ef5e6e7e6a3acee38bed2b54bd3d8110edc89851d5115e0ece06c59ce4a2bfc6",
+    "tests/plugin-documents/PluginDocumentTests.cpp": "6e3b49cbe348e5c6ca03717821e275e2a98ea1a1f99c2c9f15264e52c3ccadbd",
+    "tests/plugin-rpc/CMakeLists.txt": "7153b216d41dfb94cc5c2ba1d709b133383bea23a6ecd1853fcf91785c9652ba",
+    "tests/plugin-rpc/PluginRpcTests.cpp": "6cbb5981aea5095913a10109ebad94c4a2c56e94c713326e67351a107db85e09",
+    "tests/plugin-rpc/host.test.cjs": "2ab4e27bdc6baa48f03340fe55547c8367cf228a380912429ab289edd2e7d2f7",
+    "tests/plugin-rpc/phase-b.test.cjs": "7237ab675ed41de625e6d15b7ef652faa0be609f73d5ae1420d50ea98e436f73",
+    "tests/plugin-rpc/wire-fixtures.json": "f8c2c3340054ded6789885c5547d7d8d78f3883387ea0df34f0847681f20cd08",
+    "tests/plugin-rpc/wire.test.cjs": "c0b93ad09b428a103a179905a41c985a4a36eff3d1aac16d21a23ac1b7c17f7a",
+    "tests/plugin-webviews/PluginWebviewTests.cpp": "2c5d366309643b8d943e81d2de1f110cf31d432096fab8b93a3323b9113be340"
+  },
+  "sdk": {
+    "version": "0.3.0",
+    "commit": "69393865b9fafb2d724014174ffbbcf162e95b37",
+    "unitTests": 26,
+    "standaloneSteps": 40,
+    "templates": 6,
+    "releasePublished": false
+  },
+  "marketplace": {
+    "commit": "91b46c3a5442304a1956a1688200f904b2861371",
+    "pluginCount": 4,
+    "businessTestsPassed": true,
+    "newConsumerApplicationAcceptance": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "newPluginReleasesPublished": false
+  },
+  "application": {
+    "ctestSuites": 22,
+    "ctestFailures": 0,
+    "elapsedSeconds": 240.06,
+    "rpcCasesPassed": 311,
+    "documentCasesPassed": 24,
+    "phaseBApplicationPassed": 5,
+    "phaseBApplicationFailed": 0,
+    "webviewPassed": 45,
+    "webviewSkipped": 4,
+    "applicationPassed": 15,
+    "applicationSkipped": 5,
+    "skipQualification": "Python interpreter, external Marketplace packages and live GitHub acceptance were not configured in the full suite. New Marketplace consumers were separately installed/tested with explicit local packages; native protocol/file/resource acceptance passed without skips.",
+    "editorOnlyBuildPassed": true,
+    "lifecycleReport": "NativeSDKPhaseBLifecycle.macos.json",
+    "lifecycleCycles": 100,
+    "ownedNodeIdentitiesExited": 200,
+    "warmFileDescriptors": 46,
+    "finalFileDescriptors": 46,
+    "lifecycleQualification": "Real Scintilla/PluginEngine/WebEngine lifecycle. Raw native counts are preserved. Qt global provider pool is held at two warmed event-dispatcher workers, with expiry disabled during this test; previous settings are restored. RPC workers use normal lifecycle. Every owned Node identity, session, panel, Dock and focus connection is checked after each stop. All native descriptors return to the three-cycle warm baseline. RSS includes shared Qt/provider caches and is not a peak measurement."
+  },
+  "baselineInvestigation": {
+    "baselineCommit": "ef1711879946089fb22e5cc430125c65afadd915",
+    "unchangedBaselineRawDescriptorsWarm": 38,
+    "unchangedBaselineRawDescriptorsFinal": 42,
+    "growthType": "PROX_FDTYPE_PIPE",
+    "diagnostic": "pipe/close diagnostic stacks identified Qt event dispatcher workers; all traced RpcWorker initialization pipes closed. The test warms and bounds only the global provider pool; it keeps the original raw-descriptor assertion and all per-cycle ownership checks."
+  },
+  "releasePackages": [
+    {
+      "schemaVersion": 1,
+      "pluginId": "kmerdan.text-inspector",
+      "version": "0.1.0",
+      "assets": [
+        {
+          "name": "notepadnext-plugin.zip",
+          "size": 19341,
+          "sha256": "8a1fefc7c95778d72693c66713acb24dc04da8945bf1e1ca8c70684b5dde30e2"
+        }
+      ],
+      "entries": 10,
+      "sourceMetadataSha256": "4e54ebc796995558afa71e035e21754ebedda026880d843cb36665295de029a4"
+    },
+    {
+      "schemaVersion": 1,
+      "pluginId": "kmerdan.todo-navigator",
+      "version": "0.1.0",
+      "assets": [
+        {
+          "name": "notepadnext-plugin.zip",
+          "size": 20889,
+          "sha256": "4d233571c5acaf2b703c0d497540e9c18ffd8ce625a2a21217ca60a5a02ee99f"
+        }
+      ],
+      "entries": 11,
+      "sourceMetadataSha256": "1c6e9204bf51adef74689d28d6ea5cc52a8f4e34973a822cf2019807acc136f3"
+    }
+  ]
+}

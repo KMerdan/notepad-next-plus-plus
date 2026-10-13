@@ -40,6 +40,8 @@
 #include <QDialogButtonBox>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QSignalSpy>
 #include <QListWidget>
@@ -207,6 +209,94 @@ private slots:
 #endif
     }
 
+    void nativeSdkPhaseBProtocolLifecycle() {
+#ifdef NOTEPADNEXT_PLUGINS
+        auto *engine=app->getPluginEngine();auto *documents=app->getPluginDocumentBridge();auto *installer=app->getPluginInstaller();
+        const auto id=QStringLiteral("test.native-b"),package=directory+"/native-b-package";
+        const auto fixture=QDir(QFileInfo(QStringLiteral(PLUGIN_TEST_STAGER)).absolutePath()).filePath("../fixtures/native-phase-b");
+        QVERIFY(QDir().mkpath(package+"/dist"));
+        for(const auto &name:QStringList{"notepadnext-plugin.json","LICENSE","dist/index.cjs"})QVERIFY(QFile::copy(fixture+'/'+name,package+'/'+name));
+        QFile metadata(package+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));auto manifest=QJsonDocument::fromJson(metadata.readAll()).object();metadata.close();manifest["repository"]="https://github.com/KMerdan/native-sdk-test";
+        QVERIFY(metadata.open(QIODevice::WriteOnly));metadata.write(QJsonDocument(manifest).toJson());metadata.close();
+        PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(QJsonDocument(manifest).toJson(),manifest["repository"].toString(),{},&source,&error),qPrintable(error));
+        const auto cleanup=qScopeGuard([&]{engine->uninstall(id,true);QElapsedTimer timer;timer.start();while(!engine->isIdle()&&timer.elapsed()<5000)QTest::qWait(10);});
+        window->newFile();auto *editor=window->currentEditor();editor->setText(QStringLiteral("TODO 😀中\nTODO\n").toUtf8().constData());editor->setSelection(1,0);app->setEditorLanguage(editor,"Text");
+        const auto nativeWindow=window->winId();QVERIFY(installer->installDirectory(package,source.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);QVERIFY(engine->setEnabled(id,true,&error));QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),10000);
+        PluginRuntime::PluginSession *session=nullptr;for(auto *candidate:engine->findChildren<PluginRuntime::PluginSession*>())if(candidate->state()=="active")session=candidate;QVERIFY(session);
+        QSignalSpy result(session,&PluginRuntime::PluginSession::commandFinished);const auto saved=directory+"/native-b-result.txt";
+        session->invoke("test.native-b.run",{QUrl::fromLocalFile(saved).toString()});QTRY_VERIFY_WITH_TIMEOUT(!result.isEmpty(),15000);
+        QVERIFY2(result[0][2].toJsonObject().isEmpty(),qPrintable(QJsonDocument(result[0][2].toJsonObject()).toJson()));const auto report=result[0][1].toJsonValue().toObject();QCOMPARE(report["apiVersion"].toString(),"0.3.0");QCOMPARE(report["queryCount"].toInt(),2);QVERIFY(report["events"].toArray().contains("saved"));
+        QFile file(saved);QVERIFY(file.open(QIODevice::ReadOnly));QCOMPARE(QString::fromUtf8(file.readAll()),QStringLiteral("Generated 😀中\n"));QCOMPARE(window->winId(),nativeWindow);QCOMPARE(documents->ownedResourceCount(session->sessionId()),0);QCOMPARE(session->resourceCount(),1);
+        editor->setSavePoint();
+#else
+        QSKIP("Plugin host disabled");
+#endif
+    }
+    void nativeSdkPhaseBFileDialogCancellationAndStaleTarget() {
+#ifdef NOTEPADNEXT_PLUGINS
+        auto *documents=app->getPluginDocumentBridge();window->newFile();QPointer<ScintillaNext> editor=window->currentEditor();editor->setText("unsaved draft");const auto id=documents->idFor(editor);QJsonObject error;
+        const auto nul=QString::fromUtf8(QByteArray("a\0b",3));const auto created=documents->extension("nnp.files.create",{{"text",nul},{"activate",false}},window,"creating",[]{return true;},&error).toObject();QVERIFY(error.isEmpty());const auto createdId=created["document"].toObject()["documentId"].toString();QCOMPARE(documents->snapshot(createdId,&error)["text"].toString(),nul);auto *createdEditor=qobject_cast<ScintillaNext*>(documents->editorForDocument(createdId));QVERIFY(createdEditor);createdEditor->setSavePoint();createdEditor->close();
+        const bool previous=QApplication::testAttribute(Qt::AA_DontUseNativeDialogs);QApplication::setAttribute(Qt::AA_DontUseNativeDialogs,true);const auto restore=qScopeGuard([&]{QApplication::setAttribute(Qt::AA_DontUseNativeDialogs,previous);if(editor)editor->setSavePoint();});
+        QTimer driver;driver.setInterval(10);bool dialogSeen=false;
+        connect(&driver,&QTimer::timeout,window,[&]{for(auto *dialog:window->findChildren<QFileDialog*>())if(dialog->isVisible()){dialogSeen=true;dialog->reject();driver.stop();}});driver.start();
+        const auto cancelled=documents->extension("nnp.files.saveAs",{{"documentId",id},{"expectedVersion",documents->info(id)["version"]}},window,"dialogs",[]{return true;},&error).toObject();QVERIFY(error.isEmpty());QVERIFY(dialogSeen);QCOMPARE(cancelled["status"].toString(),"cancelled");QCOMPARE(editor->get_text_range(0,editor->length()),QByteArray("unsaved draft"));
+        driver.disconnect();const auto path=directory+"/stale-save.txt";dialogSeen=false;
+        connect(&driver,&QTimer::timeout,window,[&]{for(auto *dialog:window->findChildren<QFileDialog*>())if(dialog->isVisible()){dialogSeen=true;driver.stop();editor->insertText(0,"changed ");dialog->selectFile(path);static_cast<QDialog*>(dialog)->accept();}});driver.start();
+        documents->extension("nnp.files.saveAs",{{"documentId",id},{"expectedVersion",documents->info(id)["version"]}},window,"dialogs",[]{return true;},&error);QVERIFY(dialogSeen);QCOMPARE(error["code"].toInt(),1001);QVERIFY(!QFileInfo::exists(path));QVERIFY(editor->get_text_range(0,editor->length()).startsWith("changed "));
+        driver.disconnect();dialogSeen=false;connect(&driver,&QTimer::timeout,window,[&]{for(auto *dialog:window->findChildren<QMessageBox*>())if(dialog->isVisible()){dialogSeen=true;dialog->reject();driver.stop();}});driver.start();
+        const auto closed=documents->extension("nnp.files.close",{{"documentId",id},{"expectedVersion",documents->info(id)["version"]},{"policy","prompt"}},window,"dialogs",[]{return true;},&error).toObject();QVERIFY(error.isEmpty());QVERIFY(dialogSeen);QCOMPARE(closed["status"].toString(),"cancelled");QVERIFY(documents->editorForDocument(id));
+        driver.disconnect();dialogSeen=false;bool permitted=true;connect(&driver,&QTimer::timeout,window,[&]{for(auto *dialog:window->findChildren<QFileDialog*>())if(dialog->isVisible()){dialogSeen=true;permitted=false;driver.stop();}});driver.start();
+        documents->extension("nnp.files.saveAs",{{"documentId",id},{"expectedVersion",documents->info(id)["version"]}},window,"dialogs",[&]{return permitted;},&error);QVERIFY(dialogSeen);QCOMPARE(error["code"].toInt(),1004);QVERIFY(!QFileInfo::exists(path));
+#else
+        QSKIP("Plugin host disabled");
+#endif
+    }
+    void nativeSdkPhaseBOwnedDecorationsAndLastTabClose() {
+#ifdef NOTEPADNEXT_PLUGINS
+        auto *documents=app->getPluginDocumentBridge();window->newFile();auto *editor=window->currentEditor();editor->setText("one two\n");const auto id=documents->idFor(editor);const auto version=documents->info(id)["version"].toInteger();QJsonObject error;
+        const auto create=[&](const QString &owner){return documents->extension("nnp.decorations.create",{{"documentId",id},{"style","highlight"},{"color","#007aff"}},window,owner,[]{return true;},&error).toObject()["resourceId"].toString();};
+        const auto first=create("owner-one"),second=create("owner-two");QVERIFY(error.isEmpty());QVERIFY(!first.isEmpty());QVERIFY(!second.isEmpty());
+        const auto set=[&](const QString &owner,const QString &handle,int start){return documents->extension("nnp.decorations.set",{{"resourceId",handle},{"expectedVersion",version},{"ranges",QJsonArray{QJsonObject{{"start",QJsonObject{{"line",0},{"character",start}}},{"end",QJsonObject{{"line",0},{"character",start+1}}}}}}},window,owner,[]{return true;},&error);};
+        const auto indicator=editor->indicatorCurrent();set("owner-one",first,0);set("owner-two",second,4);QVERIFY(error.isEmpty());QCOMPARE(editor->indicatorAllOnFor(0),sptr_t(0));
+        documents->publishOwner("owner-one");documents->publishOwner("owner-two");QVERIFY(editor->indicatorAllOnFor(0)!=0);QVERIFY(editor->indicatorAllOnFor(4)!=0);QCOMPARE(editor->indicatorCurrent(),indicator);
+        documents->extension("nnp.resources.dispose",{{"resourceId",second}},window,"owner-one",[]{return true;},&error);QCOMPARE(error["code"].toInt(),1003);documents->releaseOwner("owner-one");QCOMPARE(editor->indicatorAllOnFor(0),sptr_t(0));QVERIFY(editor->indicatorAllOnFor(4)!=0);
+        documents->releaseOwner("owner-two");QCOMPARE(editor->indicatorAllOnFor(4),sptr_t(0));
+        for(int n=0;n<100;++n){const auto handle=create("reloading");QVERIFY(error.isEmpty());QVERIFY(!handle.isEmpty());set("reloading",handle,0);QVERIFY(error.isEmpty());documents->publishOwner("reloading");documents->releaseOwner("reloading");QCOMPARE(documents->ownedResourceCount("reloading"),0);QCOMPARE(editor->indicatorCurrent(),indicator);}
+        QStringList handles;for(int n=0;n<8;++n){handles<<create("quota");QVERIFY(error.isEmpty());}QVERIFY(create("quota").isEmpty());QCOMPARE(error["code"].toInt(),1007);documents->releaseOwner("quota");
+        const auto windowId=window->winId();const bool exitOnClose=app->getSettings()->exitOnLastTabClosed();app->getSettings()->setExitOnLastTabClosed(true);const auto restore=qScopeGuard([&]{app->getSettings()->setExitOnLastTabClosed(exitOnClose);});
+        for(const auto *other:window->editors())const_cast<ScintillaNext*>(other)->setSavePoint();
+        while(window->editorCount()>1){auto *other=window->editors().last();other->close();}
+        auto *last=window->currentEditor();const auto lastId=documents->idFor(last);const auto lastVersion=documents->info(lastId)["version"].toInteger();
+        const auto closed=documents->extension("nnp.files.close",{{"documentId",lastId},{"expectedVersion",lastVersion},{"policy","ifClean"}},window,"closing",[]{return true;},&error).toObject();QVERIFY(error.isEmpty());QCOMPARE(closed["status"].toString(),"completed");QCOMPARE(window->winId(),windowId);QCOMPARE(window->editorCount(),1);QVERIFY(window->currentEditor());
+#else
+        QSKIP("Plugin host disabled");
+#endif
+    }
+    void productionNativeConsumerTools() {
+#if defined(NOTEPADNEXT_PLUGINS) && defined(NOTEPADNEXT_PLUGIN_WEBVIEWS)
+        const auto inspector=qEnvironmentVariable("NNP_TEST_CONSUMER_INSPECTOR_PACKAGE"),todo=qEnvironmentVariable("NNP_TEST_CONSUMER_TODO_PACKAGE");
+        if(inspector.isEmpty()||todo.isEmpty())QSKIP("Native consumer acceptance is opt-in; provide executable Marketplace packages.");
+        auto *engine=app->getPluginEngine();auto *installer=app->getPluginInstaller();const auto nativeWindow=window->winId();
+        window->newFile();auto *editor=window->currentEditor();QByteArray text="TODO 😀中\n";for(int n=0;n<120;++n)text+="TODO again item "+QByteArray::number(n)+"\n";editor->setText(text.constData());editor->setSelection(12,0);
+        const auto read=[&](const QString &script){QPointer<QWebEngineView> view=window->findChild<QWebEngineView*>();if(!view)return QVariant();auto value=std::make_shared<QVariant>();auto ready=std::make_shared<bool>(false);view->page()->runJavaScript(script,[value,ready](const QVariant &result){*value=result;*ready=true;});QElapsedTimer wait;wait.start();while(!*ready&&wait.elapsed()<3000)QTest::qWait(10);return *value;};
+        for(const auto &package:QStringList{inspector,todo}) {
+            PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::readLocalFile(package+"/notepadnext-plugin.json",&source,&error),qPrintable(error));const auto id=source.resources[0].id;const auto command=source.resources[0].metadata["contributes"].toObject()["commands"].toArray()[0].toObject()["id"].toString();
+            const auto cleanup=qScopeGuard([&]{engine->uninstall(id,true);QElapsedTimer wait;wait.start();while(!engine->isIdle()&&wait.elapsed()<5000)QTest::qWait(10);});
+            QVERIFY(installer->installDirectory(package,source.resources[0]));QTRY_VERIFY(!installer->isBusy());QVERIFY(engine->setEnabled(id,true,&error));engine->invoke(id,command);QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QTRY_VERIFY(window->findChild<QWebEngineView*>());
+            if(id.endsWith("text-inspector")){QTRY_VERIFY_WITH_TIMEOUT(read("document.body?.textContent.includes('TODO 😀中')").toBool(),10000);}
+            else {
+                QTRY_COMPARE_WITH_TIMEOUT(read("document.querySelector('#results')?.children.length").toInt(),121,10000);
+                read("document.querySelector('#query').value='again';document.querySelector('#query').dispatchEvent(new Event('input'))");QTRY_COMPARE_WITH_TIMEOUT(read("document.querySelector('#results')?.children.length").toInt(),120,10000);
+                read("window.scrollTo(0,160)");QTRY_VERIFY(read("window.scrollY").toInt()>0);const auto scroll=read("window.scrollY").toInt();QDockWidget *dock=nullptr;for(auto *candidate:window->findChildren<QDockWidget*>())if(candidate->objectName().startsWith("plugin:"+id+":"))dock=candidate;QVERIFY(dock);const auto geometry=dock->geometry();QSignalSpy changed(engine,&PluginPackages::PluginController::operationFinished);engine->reload(id);QTRY_VERIFY_WITH_TIMEOUT(!changed.isEmpty(),15000);QVERIFY2(changed.last()[1].toString().isEmpty(),qPrintable(changed.last()[1].toString()));
+                QTRY_COMPARE_WITH_TIMEOUT(read("document.querySelector('#query')?.value").toString(),QString("again"),10000);QTRY_COMPARE_WITH_TIMEOUT(read("document.querySelector('#results')?.children.length").toInt(),120,10000);QTRY_COMPARE_WITH_TIMEOUT(read("window.scrollY").toInt(),scroll,10000);QCOMPARE(dock->geometry(),geometry);QVERIFY(editor->indicatorAllOnFor(editor->positionFromLine(1)+5)!=0);
+            }
+            QCOMPARE(window->winId(),nativeWindow);engine->uninstall(id,true);QTRY_VERIFY(app->getInstalledPluginRegistry()->plugin(id).id().isEmpty());QTRY_VERIFY(engine->isIdle());QVERIFY(!window->findChild<QWebEngineView*>());
+        }
+        editor->setSavePoint();
+#else
+        QSKIP("Native HTML panels unavailable");
+#endif
+    }
     void editorOpenSaveReloadAndClose() {
         const auto file=directory+"/sample.md";QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("# saved 😀中\n");f.close();
         // Programmatic tab selection cannot depend on macOS foreground

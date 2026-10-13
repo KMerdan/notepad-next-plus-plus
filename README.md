@@ -10,8 +10,9 @@ NotepadNext's original copyright notices are retained. This fork continues under
 | --- | --- |
 | Build the editor | [Build instructions](doc/Building.md), [plugin-enabled build](doc/plugin-system/Implementation.zh-CN.md) |
 | Install Markdown or HTML Preview | [Official Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview), [manager lifecycle](doc/plugin-system/OfficialMarketplace.zh-CN.md) |
-| Develop a plugin | [Independent SDK](https://github.com/KMerdan/notepadnext-plugin-sdk), [native API 0.2](packages/plugin-sdk/docs/NativeAPI.zh-CN.md) |
-| Understand current capability and limits | [Native SDK status](doc/plugin-system/NativeSDKStatus.zh-CN.md) |
+| Develop a plugin | [Independent SDK](https://github.com/KMerdan/notepadnext-plugin-sdk), [native API 0.3](packages/plugin-sdk/docs/PhaseB.zh-CN.md), [API 0.2](packages/plugin-sdk/docs/NativeAPI.zh-CN.md) |
+| Understand current capability and limits | [Phase B implementation](doc/plugin-system/NativeSDKPhaseBStatus.zh-CN.md), [Phase A acceptance](doc/plugin-system/NativeSDKStatus.zh-CN.md) |
+| Plan the next native APIs | [SDK Phase B priorities and acceptance plan](doc/plugin-system/NativeSDKPhaseBPlan.zh-CN.md) |
 | Understand architecture and future APIs | [Native SDK design](doc/plugin-system/NativeSDKDesign.zh-CN.md) |
 | Find technical documentation | [Documentation index](doc/plugin-system/README.md) |
 
@@ -21,16 +22,16 @@ NotepadNext's original copyright notices are retained. This fork continues under
 | --- | --- |
 | [notepad-next-plus-plus](https://github.com/KMerdan/notepad-next-plus-plus) | Native editor services, Qt UI, JSON-RPC host, plugin install/update/lifecycle and native tests |
 | [notepadnext-plugin-sdk](https://github.com/KMerdan/notepadnext-plugin-sdk) | API types, metadata/wire contracts, templates, debugging/testing/service helpers and packaging tools |
-| [Official Plugin Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview) | Markdown/HTML plugin source, catalog and independent installable releases |
+| [Official Plugin Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview) | Markdown/HTML previews, Text Inspector, TODO Navigator, catalog and independent installable releases |
 
-The SDK is a Git submodule pinned to a reviewed commit. The Marketplace consumes an exact SDK Release tarball through locked development dependencies. Its original repository URL is retained so existing Markdown installations keep their trusted source and data.
+The SDK is a Git submodule pinned to a reviewed commit. The Marketplace uses locked, immutable SDK tarballs: published Releases for existing previews and a pinned commit archive for the Phase B development plugins. Its original repository URL is retained so existing Markdown installations keep their trusted source and data. SDK 0.3 and the new plugin Releases are separate from these development branches.
 
 ## Build and validate
 
-The commands below select the native SDK review branch. Once [application PR #3](https://github.com/KMerdan/notepad-next-plus-plus/pull/3) is merged, omit `--branch codex/split-plugin-sdk` to build the default branch:
+Build the default branch, including its pinned dependencies:
 
 ```sh
-git clone --branch codex/split-plugin-sdk --recurse-submodules https://github.com/KMerdan/notepad-next-plus-plus.git
+git clone --recurse-submodules https://github.com/KMerdan/notepad-next-plus-plus.git
 cd notepad-next-plus-plus
 cmake -S . -B build -DCMAKE_PREFIX_PATH=/path/to/Qt
 cmake --build build --parallel
@@ -42,11 +43,11 @@ For contract/integration tests, configure `-DNOTEPADNEXT_BUILD_PLUGIN_TESTS=ON` 
 
 ## Extend the editor
 
-Native API 0.2 fixes the originating editor at command invocation, captures UTF-16 text/selections together, rejects stale document/selection writes, commits edit batches as one undo step and exposes eight existing editor operations through stable IDs. Native menus and plugins use the same `EditorOperations` implementation. Full HTML panels use `acquireNotepadNextApi()`; fragment and local Node service panels retain generic hot-update restoration.
+Native API 0.3 extends the 0.2 document/selection foundation with bounded range reads, native subscriptions, file lifecycle, literal search, language/EOL/bookmarks and owned highlights. The shared native command catalog now contains 18 operations; API 0.2 retains its original eight. Menus and plugins reuse native services. Full HTML panels use `acquireNotepadNextApi()`; panels retain generic hot-update restoration, and new-session highlights publish only after validation. See the [implementation and limits](doc/plugin-system/NativeSDKPhaseBStatus.zh-CN.md).
 
 Existing API 0.1 Markdown/HTML packages keep their callback contract and IDs. Register a repository through **Plugin Manager → Add Source…**; then explicitly install from **Discover**, enable in **Installed**, and open its command. Updates restore owned panels; uninstall is separate from removing a source.
 
-The SDK's purpose is to enhance Notepad Next ++. Other editors' plugins may be studied and ported. A retained bounded VS Code adapter/importer is a historical experiment, isolated from the native SDK. File/search/language/bookmark/provider APIs in the larger design remain future work.
+The SDK's purpose is to enhance Notepad Next ++. Other editors' plugins may be studied and ported. A retained bounded VS Code adapter/importer is a historical experiment, isolated from the native SDK. Providers, encoding conversion, macros and other conditional extensions remain future work.
 
 Trusted Node/Python plugins run in separate processes. Capabilities govern host RPC; they do not provide an operating-system sandbox. The Python prototype currently negotiates API 0.1 and needs an explicitly configured Python 3.12 interpreter.
 

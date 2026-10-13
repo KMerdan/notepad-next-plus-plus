@@ -17,6 +17,7 @@
  */
 
 #include "Finder.h"
+#include "SearchService.h"
 
 #include "UndoAction.h"
 
@@ -43,6 +44,7 @@ bool Finder::isRegexSearch() const
 Sci_CharacterRange Finder::searchTarget(Sci_Position start, Sci_Position end)
 {
     const QByteArray searchText = find_options.text.toUtf8();
+    if(!isRegexSearch())return SearchService::findLiteral(editor,searchText,searchFlags(),start,end,false);
 
     editor->setTargetRange(start, end);
 

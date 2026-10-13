@@ -1,6 +1,8 @@
 # Notepad Next ++ 原生插件 SDK 设计
 
-**状态：架构设计，2026-10-12；阶段 A 已落地。** 实际已实现的 API 以 [SDK Native API 0.2](../../packages/plugin-sdk/docs/NativeAPI.zh-CN.md) 和 [实施状态](NativeSDKStatus.zh-CN.md) 为准。本文保留 A/B/C 的完整设计；下方 [候选完整声明](sdk-design/native-api.d.ts) 包含尚未实现的 B/C 方法，不能直接当作发布 API。SDK 安装模板使用独立仓库中的 text-tools、Markdown 和 HTML/service 模板。
+**状态：架构设计，2026-10-12；2026-10-13 阶段 B 开发分支已实施。** 实际已实现的 API 以 [Phase B 状态](NativeSDKPhaseBStatus.zh-CN.md)、[SDK Phase B 指南](../../packages/plugin-sdk/docs/PhaseB.zh-CN.md)和 [SDK Native API 0.2](../../packages/plugin-sdk/docs/NativeAPI.zh-CN.md)为准。本文保留 A/B/C 的完整设计；下方 [候选完整声明](sdk-design/native-api.d.ts) 仍包含未实现的方法，不能直接当作发布 API。SDK 模板由独立仓库维护。
+
+2026-10-13 的当前开发顺序、范围与验收标准由 [Phase B 计划](NativeSDKPhaseBPlan.zh-CN.md)维护。本文下方“实施前基线”和原始 inventory 保留为历史设计，当前源码盘点见 [Phase B inventory](sdk-design/phase-b-api-inventory.json)。
 
 用户目标是：把 Notepad Next 已有编辑功能和方法包装为稳定 SDK，让插件组合、复用和增强编辑器。编辑器保持自己的文档、选区、分屏、搜索、语言和宏模型。VS Code 插件可作为代码/功能参考；其运行时适配实验独立保留，不作为原生 SDK 的依赖或发展目标。
 
@@ -26,7 +28,7 @@
 | 预览和交互面板、本地 HTML 服务 | `WebviewService`、SDK service helper | `webviews.create/createHtml/createService` | fragment/service 已开放；完整 HTML 使用现有渲染基础，新增原生命名入口 |
 | 消息、插件配置/数据、日志 | `PluginSession`、`PluginDataService`、diagnostics | `window`、`configuration`、`storage`、`log` | 消息与插件数据已开放；SDK 日志 facade、原生配置表单待完善 |
 
-[机器可读盘点](sdk-design/native-api-inventory.json)记录每项的状态、首批优先级及源代码位置。代码图只辅助追踪：Qt signal/lambda、Lua 和继承的 Scintilla 调用有未解析边，关键行为另以源码核对，不把图的命中数当作覆盖率。
+[实施前机器可读盘点](sdk-design/native-api-inventory.json)记录当时的候选状态、优先级及源代码位置；它不是阶段 A 落地后的支持列表。代码图只辅助追踪：Qt signal/lambda、Lua 和继承的 Scintilla 调用有未解析边，关键行为另以源码核对，不把图的命中数当作覆盖率。
 
 ## 2. 三层 API 与宿主边界
 
@@ -163,7 +165,7 @@ Active → 更新候选包 → 新 activation 恢复资源 → 成功切换 / �
 
 ## 6. 版本、迁移与分仓安排
 
-应用版本、SDK 包 SemVer、公开 host API、wire profile、manifestVersion 和插件包版本分别管理。SDK 包 0.1.x 不意味着所有候选 API 0.2 可用；完整候选类型仍是设计资料；已实现的阶段 A 则通过 SDK 0.2.0 的 `./native` export 发布。
+应用版本、SDK 包 SemVer、公开 host API、wire profile、manifestVersion 和插件包版本分别管理。阶段 A 使用 native API 0.2，阶段 B 开发分支新增明确 opt-in 的 native API 0.3，均通过 SDK 的 `./native` export 提供。完整候选类型仍是设计资料；实际实现与边界以 [Phase B 状态](NativeSDKPhaseBStatus.zh-CN.md)为准。
 
 已有 API 0.1 插件按其协商的契约继续运行。新的 callback context、selection guard、native core 服务需新方法/schema 或 API 0.2 profile；不得在旧 invoke 的 args 前悄悄插入新参数。现有 Markdown/HTML ID、来源、installed data 和历史 Release 保留。热更新能力沿用通用模型。
 

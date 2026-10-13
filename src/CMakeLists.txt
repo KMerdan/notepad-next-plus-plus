@@ -33,6 +33,9 @@ qt_add_executable(NotepadNext
 	EditorManager.h
 	EditorOperations.h
 	EditorOperations.cpp
+	FileOperations.h
+	FileOperations.cpp
+	SearchService.h
 	EditorPrintPreviewRenderer.h
 	FileDialogHelpers.h
 	Finder.h
@@ -266,6 +269,7 @@ target_link_libraries(NotepadNext
 )
 
 if(NOTEPADNEXT_PLUGINS)
+    target_sources(NotepadNext PRIVATE NativeEditorServices.h NativeEditorServices.cpp)
     target_sources(NotepadNext PRIVATE dialogs/PluginManagerDialog.cpp dialogs/PluginManagerDialog.h)
     target_link_libraries(NotepadNext PRIVATE NotepadNextPluginSources NotepadNextPluginRuntime)
     target_compile_definitions(NotepadNext PRIVATE NOTEPADNEXT_PLUGINS)

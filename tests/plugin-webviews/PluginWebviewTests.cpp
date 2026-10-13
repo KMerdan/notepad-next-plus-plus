@@ -43,6 +43,10 @@
 #include <QPlatformSurfaceEvent>
 #include <QWindow>
 #include <QSaveFile>
+#include <QThreadPool>
+#include <QSemaphore>
+#include <QEventLoop>
+#include <QScopeGuard>
 #ifdef Q_OS_MACOS
 #include <libproc.h>
 #endif
@@ -581,11 +585,31 @@ exports.activate=async ctx=>{
         PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"markdown");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});auto *menu=window.menuBar()->addMenu("Plugins");engine.attachWindow(&window,menu);window.show();
         QSignalSpy done(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error),operations(&engine,&PluginController::operationFinished);QVERIFY(installer.installDirectory(temp.path()+"/package",source.resources[0]));QTRY_COMPARE_WITH_TIMEOUT(done.size(),1,10000);QVERIFY(done[0][1].toString().isEmpty());
+        // Isolate ownership stress from lazy global-provider worker creation.
+        // An unchanged baseline also grows Qt event-dispatcher pipe pairs long
+        // after cycle three. Keep two provider workers alive and initialize
+        // their event dispatchers before sampling; RPC workers remain normal.
+        auto *pool=QThreadPool::globalInstance();
+        const auto oldMaximum=pool->maxThreadCount(),oldExpiry=pool->expiryTimeout();
+        pool->setMaxThreadCount(2);pool->setExpiryTimeout(-1);
+        const auto restorePool=qScopeGuard([pool,oldMaximum,oldExpiry]{pool->setMaxThreadCount(oldMaximum);pool->setExpiryTimeout(oldExpiry);});
+        struct WarmWorkers {QSemaphore entered,release;};
+        const auto workers=std::make_shared<WarmWorkers>();
+        for(int n=0;n<2;++n)pool->start([workers]{QEventLoop loop;workers->entered.release();workers->release.acquire();});
+        const auto warmed=workers->entered.tryAcquire(2,10000);workers->release.release(2);QVERIFY(warmed);
+        QTRY_COMPARE(pool->activeThreadCount(),0);
         const auto id=source.resources[0].id,command=id+".open";QElapsedTimer duration;duration.start();
         const auto initial=lifecycleNativeSample();QJsonObject warm;QJsonArray samples;int exitedIdentities=0;
         for(int cycle=0;cycle<100;++cycle) {
             QVERIFY2(engine.setEnabled(id,true,&error),qPrintable(error));engine.invoke(id,command);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);
             QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QWebEngineView*>().size(),1,10000);QTRY_VERIFY_WITH_TIMEOUT(engine.resourceCount()>=3,5000);
+            if(cycle<3) {
+                // A widget exists before Chromium has loaded its first page.
+                // Establish the warm provider baseline from a usable renderer,
+                // rather than an immediately cancelled page initialization.
+                auto ready=std::make_shared<bool>(false);
+                QTRY_VERIFY_WITH_TIMEOUT(([&]{window.findChild<QWebEngineView*>()->page()->runJavaScript("document.readyState==='complete' && !!document.body",[ready](const QVariant &value){*ready=value.toBool();});return *ready;})(),10000);
+            }
             QList<ProcessIdentity> processes;
             for(auto *process:engine.findChildren<PluginRpc::RpcProcess*>())if(process->processId()>0){ProcessIdentity identity;QVERIFY(ProcessIdentity::capture(process->processId(),&identity,&error));processes.append(identity);}
             QVERIFY(!processes.isEmpty());
@@ -609,11 +633,11 @@ exports.activate=async ctx=>{
             // speed is recorded below. CTest enforces the overall time limit.
         }
         // Let deferred provider cleanup settle; RSS is recorded, not required
-        // to equal its allocator/cache baseline. Handles must return after
-        // the first three warm-up cycles on the observed native platform.
+        // to equal its allocator/cache baseline. With the provider worker
+        // pool initialized, every raw descriptor must return after warm-up.
         QTest::qWait(1000);const auto final=lifecycleNativeSample();
         const auto output=qEnvironmentVariable("NNP_LIFECYCLE_RESOURCE_OUTPUT");
-        if(!output.isEmpty()){QSaveFile file(output);QVERIFY(file.open(QIODevice::WriteOnly));const QJsonObject report{{"cycles",100},{"elapsedMs",duration.elapsed()},{"initial",initial},{"warmAfterCycles",3},{"warm",warm},{"final",final},{"exitedNodeIdentities",exitedIdentities},{"samples",samples},{"qualification","Real Scintilla/PluginEngine/WebEngine lifecycle. Focus connection and native handle counts after stop; RSS includes shared Qt/provider caches and is not a peak measurement."}};QVERIFY(file.write(QJsonDocument(report).toJson())>0);QVERIFY(file.commit());}
+        if(!output.isEmpty()){QSaveFile file(output);QVERIFY(file.open(QIODevice::WriteOnly));const QJsonObject report{{"cycles",100},{"elapsedMs",duration.elapsed()},{"initial",initial},{"warmAfterCycles",3},{"warm",warm},{"final",final},{"exitedNodeIdentities",exitedIdentities},{"samples",samples},{"qualification","Real Scintilla/PluginEngine/WebEngine lifecycle. Raw native counts are preserved. Qt global provider pool is held at two warmed event-dispatcher workers, with expiry disabled during this test; previous settings are restored. RPC workers use normal lifecycle. Every owned Node identity, session, panel, Dock and focus connection is checked after each stop. All native descriptors return to the three-cycle warm baseline. RSS includes shared Qt/provider caches and is not a peak measurement."}};QVERIFY(file.write(QJsonDocument(report).toJson())>0);QVERIFY(file.commit());}
 #ifdef Q_OS_MACOS
         QVERIFY(warm["fileDescriptors"].toInt()>0);QVERIFY(final["fileDescriptors"].toInt()>0);QVERIFY2(final["fileDescriptors"].toInt()<=warm["fileDescriptors"].toInt(),"Native handles did not return to their warm lifecycle baseline; raw counts preserved.");
 #endif

@@ -48,6 +48,7 @@ public:
     static int stringToEolMode(QString eolMode);
 
     int allocateIndicator(const QString &name);
+    bool releaseIndicator(const QString &name);
 
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }

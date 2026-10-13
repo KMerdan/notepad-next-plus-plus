@@ -32,7 +32,7 @@ register(endpoint,'nnp.initialize',async params=>{
   requireObject(params);
   if(state!=='new') throw new RpcError(-32602,'Already initialized');
   if(params.pluginId!==manifest.id || typeof params.sessionId!=='string' || !params.sessionId || !Number.isSafeInteger(params.generation) || params.generation<1
-    || !Array.isArray(params.protocolVersions) || !params.protocolVersions.includes('0.1') || !['0.1.0','0.2.0'].includes(params.apiVersion)
+    || !Array.isArray(params.protocolVersions) || !params.protocolVersions.includes('0.1') || !['0.1.0','0.2.0','0.3.0'].includes(params.apiVersion)
     || !Array.isArray(params.grantedCapabilities) || new Set(params.grantedCapabilities).size!==params.grantedCapabilities.length
     || !params.limits || Object.keys(limits).some(key=>params.limits[key]!==limits[key])) throw new RpcError(-32602,'Incompatible initialize contract');
   const declared=new Set([...(manifest.capabilities?.required ?? []),...(manifest.capabilities?.optional ?? [])]);

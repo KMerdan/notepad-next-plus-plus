@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QStringDecoder>
 #include <QThread>
+#include <QTimer>
 #include <QUuid>
 #include <algorithm>
 #include <cmath>
@@ -151,7 +152,20 @@ QJsonArray DocumentBridge::rawSelections(ScintillaEdit *editor) const {
 void DocumentBridge::refreshSelection(const QString &id) {
     if(!buffers.contains(id)||!buffers[id].editor)return;
     auto &buffer=buffers[id];const auto next=rawSelections(buffer.editor);
-    if(next!=buffer.selectionBytes){buffer.selectionBytes=next;++buffer.selectionRevision;}
+    if(next!=buffer.selectionBytes){
+        buffer.selectionBytes=next;++buffer.selectionRevision;
+        if(!nativeObservers)return;
+        if(pendingSelectionEvents.contains(id))return;
+        pendingSelectionEvents.insert(id);
+        QTimer::singleShot(0,this,[this,id]{
+            pendingSelectionEvents.remove(id);
+            if(!editorForDocument(id))return;
+            QJsonObject error;const auto state=boundedSelections(buffers[id].editorId,&error);
+            QJsonObject value{{"type",error.isEmpty()?"selectionChanged":"reset"},{"document",nativeInfo(id)},{"editorId",buffers[id].editorId}};
+            if(error.isEmpty())value["selection"]=state;else value["reason"]="selectionUnmappable";
+            queueNativeEvent(value);
+        });
+    }
 }
 QJsonObject DocumentBridge::selections(const QString &editorId,QJsonObject *error) {
     *error={};const auto id=documentForEditor(editorId);
@@ -248,6 +262,7 @@ QJsonObject DocumentBridge::executeCore(const QString &command,const QJsonObject
     return {{"version",buffers.value(id).version}};
 }
 void DocumentBridge::emitEvent(const QString &type, const QJsonValue &document) {
+    nativeDocumentEvent(type,document);
     if(type!="contentInvalidated"&&type!="reset")emitDelta({{"type",type},{"document",document}});
     emit event(type, document, ++sequence);
 }

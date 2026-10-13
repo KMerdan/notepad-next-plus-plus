@@ -23,6 +23,7 @@
 #ifdef NOTEPADNEXT_PLUGINS
 #include "RegisteredResourceRegistry.h"
 #include "DocumentBridge.h"
+#include "NativeEditorServices.h"
 #include "EditorOperations.h"
 #include "RpcEndpoint.h"
 #include "PluginEngine.h"
@@ -146,6 +147,10 @@ bool NotepadNextApplication::init(QNetworkAccessManager *network)
     QString sourceError;
     if (!registeredResourceRegistry->load(&sourceError)) qWarning().noquote() << sourceError;
     pluginDocumentBridge = new PluginDocuments::DocumentBridge(this);
+    auto *nativeServices=new NativeEditorServices(this,pluginDocumentBridge);
+    pluginDocumentBridge->setExtensionServices([nativeServices](const QString &method,const QJsonObject &params,QMainWindow *window,const QString &owner,std::function<bool()> allowed,QJsonObject *error){return nativeServices->dispatch(method,params,window,owner,std::move(allowed),error);});
+    pluginDocumentBridge->setPublicationService([nativeServices](const QString &owner){nativeServices->publishOwner(owner);});
+    pluginDocumentBridge->setResourceServices([nativeServices](const QString &owner){nativeServices->releaseOwner(owner);},[nativeServices](const QString &owner){return nativeServices->resourceCount(owner);});
     pluginDocumentBridge->setNativeServices(EditorOperations::catalog(),
         [](ScintillaEdit *editor,const QString &command,const QJsonObject &request,QJsonObject *error){
             if(!EditorOperations::execute(qobject_cast<ScintillaNext*>(editor),command,request)) *error=PluginRpc::rpcError(-32602,"Invalid native command or parameters");
@@ -186,8 +191,9 @@ bool NotepadNextApplication::init(QNetworkAccessManager *network)
         connect(editor, &ScintillaNext::closed, pluginDocumentBridge, [this, id] { pluginDocumentBridge->detach(id); });
         connect(editor, &ScintillaNext::renamed, pluginDocumentBridge, metadata);
         connect(editor, &ScintillaNext::saved, pluginDocumentBridge, metadata);
+        connect(editor, &ScintillaNext::saved, pluginDocumentBridge, [this,id]{pluginDocumentBridge->lifecycle("saved",id);});
         connect(editor, &ScintillaNext::lexerChanged, pluginDocumentBridge, metadata);
-        connect(editor, &ScintillaNext::reloaded, pluginDocumentBridge, [this, id] { pluginDocumentBridge->reset(id); });
+        connect(editor, &ScintillaNext::reloaded, pluginDocumentBridge, [this, id] { pluginDocumentBridge->reset(id); pluginDocumentBridge->lifecycle("reloaded",id); });
     });
 #endif
 
@@ -548,6 +554,10 @@ MainWindow *NotepadNextApplication::createNewWindow()
 
     window = new MainWindow(this);
 #ifdef NOTEPADNEXT_PLUGINS
+    connect(pluginDocumentBridge,&PluginDocuments::DocumentBridge::event,window,[this](const QString &type,const QJsonValue &value,qint64){
+        if(type!="metadataChanged"&&type!="reset")return;
+        const auto editor=window->currentEditor();if(editor&&pluginDocumentBridge->idFor(editor)==value.toObject()["documentId"].toString())window->refreshEditorMetadata(editor);
+    });
     connect(window, &MainWindow::editorActivated, pluginDocumentBridge, [this](ScintillaNext *editor) {
         pluginDocumentBridge->setActive(pluginDocumentBridge->idFor(editor));
     });

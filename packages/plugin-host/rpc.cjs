@@ -218,7 +218,9 @@ class Endpoint {
       };
       const timer = setTimeout(() => {
         if (!this.pending.has(id)) return;
-        this.pending.delete(id); cleanup(); reject(new RpcError(1006, 'RPC request timed out'));
+        this.pending.delete(id); cleanup();
+        try { this.notify('nnp.request.cancel', { requestId: id }); } catch { this.diagnostic('RPC timeout cancellation could not be sent'); }
+        reject(new RpcError(1006, 'RPC request timed out'));
       }, timeout);
       const cleanup = () => { clearTimeout(timer); signal?.removeEventListener('abort', cancel); };
       this.pending.set(id, { resolve, reject, cleanup }); signal?.addEventListener('abort', cancel, { once: true });
