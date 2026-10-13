@@ -554,22 +554,23 @@ private slots:
             dialog->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();
         });driver.start(15);const auto guard=qScopeGuard([&]{driver.stop();});
         QTimer::singleShot(0,manager,[&]{auto *entry=qobject_cast<QDialog*>(QApplication::activeModalWidget());QVERIFY(entry);entry->findChild<QLineEdit*>("repositoryInput")->setText(repository);entry->findChild<QLineEdit*>("sourceRefInput")->clear();entry->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();});
-        auto *registerButton=manager->findChild<QPushButton*>("registerResources");QVERIFY(registerButton);registerButton->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);tabs->setCurrentIndex(1);QTRY_COMPARE(catalog->count(),4);
+        auto *registerButton=manager->findChild<QPushButton*>("registerResources");QVERIFY(registerButton);registerButton->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);tabs->setCurrentIndex(1);QTRY_COMPARE(catalog->count(),2);
         const auto select=[](QListWidget *list,const QString &id){for(int n=0;n<list->count();++n)if(list->item(n)->data(Qt::UserRole).toString()==id){list->setCurrentRow(n);return true;}return false;};
-        auto *editor=window->currentEditor();editor->setText("TODO native Marketplace\nTODO second result\n");editor->setSelection(0,4);editor->setSavePoint();const auto nativeWindow=window->winId();
-        const QStringList ids{"kmerdan.text-inspector","kmerdan.todo-navigator"};
+        const auto nativeWindow=window->winId();QList<ScintillaNext*> previewEditors;
+        const QStringList ids{"kmerdan.markdown-preview","kmerdan.html-preview"};
         const auto cleanup=qScopeGuard([&]{for(const auto &id:ids)if(!installed->plugin(id).id().isEmpty())engine->uninstall(id,true);});
         for(const auto &id:ids){
             tabs->setCurrentIndex(1);QVERIFY(select(catalog,id));const auto installs=dialogs.count("releaseInstallReview");manager->findChild<QPushButton*>("installPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("releaseInstallReview")>installs,35000);QTRY_VERIFY_WITH_TIMEOUT(!installed->plugin(id).id().isEmpty(),35000);
-            QCOMPARE(installed->plugin(id).package.metadata["engines"].toObject()["api"].toString(),"^0.3.0");QCOMPARE(installed->plugin(id).package.metadata["version"].toString(),"0.1.0");QVERIFY(engine->setEnabled(id,true,&error));
+            QCOMPARE(installed->plugin(id).package.metadata["engines"].toObject()["api"].toString(),"^0.3.0");QCOMPARE(installed->plugin(id).package.metadata["category"].toString(),"editor-preview");QVERIFY(engine->setEnabled(id,true,&error));
+            window->newFile();auto *editor=window->currentEditor();previewEditors.append(editor);const bool html=id.endsWith("html-preview");editor->setText(html?"<h1>Native Marketplace</h1>":"# Native Marketplace\n");app->setEditorLanguage(editor,html?"HTML":"Markdown");editor->setSavePoint();
             window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);
             QTRY_VERIFY_WITH_TIMEOUT(([&]{for(auto *dock:window->findChildren<QDockWidget*>())if(dock->objectName().contains(id)&&dock->findChild<QWebEngineView*>())return true;return false;})(),10000);
             window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));const auto upToDate=dialogs.count("pluginUpToDate");manager->findChild<QPushButton*>("updatePlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("pluginUpToDate")>upToDate,35000);
         }
         QCOMPARE(engine->sessionCount(),2);QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"native-marketplace-installed"));
         for(const auto &id:ids){window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("uninstallPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).id().isEmpty(),10000);}
-        QTRY_VERIFY(engine->isIdle());QCOMPARE(catalog->count(),4);QCOMPARE(window->winId(),nativeWindow);manager->close();editor->setText("");editor->setSavePoint();
-        qInfo()<<"Live native Marketplace: default repo URL, four entries, two checksummed release installs, API 0.3 activation, panels, independent up-to-date checks and uninstall; window retained.";
+        QTRY_VERIFY(engine->isIdle());QCOMPARE(catalog->count(),2);QCOMPARE(window->winId(),nativeWindow);manager->close();for(auto *editor:previewEditors)window->closeFile(editor);
+        qInfo()<<"Live native Marketplace: canonical repo URL, two product previews, checksummed release installs, explicit activation, panels, independent up-to-date checks and uninstall; window retained.";
 #endif
     }
     void productionManagerAndExit() {

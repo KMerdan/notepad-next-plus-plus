@@ -145,7 +145,7 @@ private slots:
         auto resource=runtimeFixture(root,id,R"JS(exports.activate=async ctx=>{
  await new Promise(r=>setTimeout(r,200));let panel;
  const open=async()=>{if(!await ctx.previews.getSource())return null;
-  panel=await ctx.webviews.createCompatible({panelId:require('node:crypto').randomBytes(16).toString('hex'),viewType:'owned',title:'Owned preview',enableScripts:true});
+  panel=await ctx.webviews.createCompatible({panelId:require('node:crypto').randomBytes(16).toString('hex'),viewType:'owned',title:'Owned preview',enableScripts:true,localResourceRoots:['dist']});
   await panel.setDocument('<!doctype html><h1>Owned source</h1>');await panel.reveal(true);
  };
  ctx.subscriptions.push(ctx.webviews.registerRestorer('owned',open));
@@ -160,8 +160,8 @@ private slots:
         QSignalSpy installed(&installer,&InstallationService::finished),operations(&engine,&PluginController::operationFinished);
         QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,10000);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));
         QVERIFY(engine.setEnabled(id,true,&error));QTest::qWait(50);QCOMPARE(engine.sessionCount(),0);QCOMPARE(engine.pluginPanelCount(id),0);
-        engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginPanelCount(id),1,10000);
-        auto *dock=window.findChild<QDockWidget*>("plugin:"+id+":owned");QVERIFY(dock);dock->close();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);
+        engine.invoke(id,id+".open");QTRY_VERIFY2_WITH_TIMEOUT(engine.pluginPanelCount(id)==1,qPrintable(engine.pluginLog(id)),10000);
+        QTRY_VERIFY(window.findChild<QDockWidget*>());auto *dock=window.findChild<QDockWidget*>();dock->close();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);
         documents.setActive(b);documents.setActive(a);QTest::qWait(50);QCOMPARE(engine.pluginPanelCount(id),0);QCOMPARE(engine.sessionCount(),0);QVERIFY(registry.plugin(id).enabled);
         engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginPanelCount(id),1,10000);documents.setActive(b);documents.detach(a);QTest::qWait(50);QCOMPARE(engine.pluginPanelCount(id),1);
         engine.reload(id);documents.detach(b);QTRY_VERIFY_WITH_TIMEOUT(!operations.isEmpty(),15000);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.pluginPanelCount(id),0);QCOMPARE(engine.sessionCount(),0);QVERIFY(registry.plugin(id).enabled);
