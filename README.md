@@ -10,9 +10,9 @@ NotepadNext's original copyright notices are retained. This fork continues under
 | --- | --- |
 | Download / Homebrew install | [Binary downloads and installation](doc/Downloads.md), [Releases](https://github.com/KMerdan/notepad-next-plus-plus/releases) |
 | Build the editor | [Build instructions](doc/Building.md), [plugin-enabled build](doc/plugin-system/Implementation.zh-CN.md) |
-| Install Markdown or HTML Preview | [Official Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview), [manager lifecycle](doc/plugin-system/OfficialMarketplace.zh-CN.md) |
-| Develop a plugin | [Independent SDK](https://github.com/KMerdan/notepadnext-plugin-sdk), [native API 0.3](packages/plugin-sdk/docs/PhaseB.zh-CN.md), [API 0.2](packages/plugin-sdk/docs/NativeAPI.zh-CN.md) |
-| Understand current capability and limits | [Phase B implementation](doc/plugin-system/NativeSDKPhaseBStatus.zh-CN.md), [Phase A acceptance](doc/plugin-system/NativeSDKStatus.zh-CN.md) |
+| Install an official plugin | [Official Marketplace](https://github.com/KMerdan/notepadnext-markdown-preview), [manager lifecycle](doc/plugin-system/OfficialMarketplace.zh-CN.md) |
+| Develop a plugin | [Independent SDK](https://github.com/KMerdan/notepadnext-plugin-sdk), [native API 0.3](https://github.com/KMerdan/notepadnext-plugin-sdk/blob/main/docs/PhaseB.zh-CN.md), [editing API guide](https://github.com/KMerdan/notepadnext-plugin-sdk/blob/main/docs/NativeAPI.zh-CN.md) |
+| Understand current capability and limits | [Phase B implementation](doc/plugin-system/NativeSDKPhaseBStatus.zh-CN.md), [current SDK guide](https://github.com/KMerdan/notepadnext-plugin-sdk/blob/main/README.md) |
 | Plan the next native APIs | [SDK Phase B priorities and acceptance plan](doc/plugin-system/NativeSDKPhaseBPlan.zh-CN.md) |
 | Understand architecture and future APIs | [Native SDK design](doc/plugin-system/NativeSDKDesign.zh-CN.md) |
 | Find technical documentation | [Documentation index](doc/plugin-system/README.md) |
@@ -44,7 +44,7 @@ For contract/integration tests, configure `-DNOTEPADNEXT_BUILD_PLUGIN_TESTS=ON` 
 
 ## Extend the editor
 
-Native API 0.3 extends the 0.2 document/selection foundation with bounded range reads, native subscriptions, file lifecycle, literal search, language/EOL/bookmarks and owned highlights. The shared native command catalog contains 18 operations. Menus and plugins reuse native services. Full HTML panels use `acquireNotepadNextApi()`; panels retain generic hot-update restoration, and new-session highlights publish only after validation. See the [implementation and limits](doc/plugin-system/NativeSDKPhaseBStatus.zh-CN.md).
+Native API 0.3 exposes document/selection primitives, bounded range reads, native subscriptions, file lifecycle, literal search, language/EOL/bookmarks and owned highlights. The shared native command catalog contains 18 operations. Menus and plugins reuse native services. Full HTML panels use `acquireNotepadNextApi()`; panels retain generic hot-update restoration, and new-session highlights publish only after validation. See the [implementation and limits](doc/plugin-system/NativeSDKPhaseBStatus.zh-CN.md).
 
 All four official plugins now declare native API 0.3. Register a repository through **Plugin Manager → Add Source…**; then explicitly install from **Discover**, enable in **Installed**, and open its command. Updates restore owned panels; uninstall is separate from removing a source.
 
