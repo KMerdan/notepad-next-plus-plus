@@ -43,5 +43,5 @@ PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(release-lock-a
 PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(cancel-while-lock-held)
 PASS   : GitHubReleaseTests::localInstallationWaitsForMaintenance(bounded-lock-timeout)
 PASS   : GitHubReleaseTests::cleanupTestCase()
-Totals: 43 passed, 0 failed, 0 skipped, 0 blacklisted, 2050ms
+Totals: 43 passed, 0 failed, 0 skipped, 0 blacklisted, 1998ms
 ********* Finished testing of GitHubReleaseTests *********
