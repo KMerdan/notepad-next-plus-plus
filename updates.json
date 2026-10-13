@@ -2,9 +2,9 @@
   "updates": {
     "windows": {
       "open-url": "https://github.com/KMerdan/notepad-next-plus-plus/releases",
-      "latest-version": "0.15",
-      "download-url": "",
-      "changelog": "",
+      "latest-version": "0.15.1",
+      "download-url": "https://github.com/KMerdan/notepad-next-plus-plus/releases/download/v0.15.1/NotepadNextPlusPlus-0.15.1-windows-x86_64-installer.exe",
+      "changelog": "Native SDK 0.3, editor enhancement plugins, hot-update panel restoration, and bundled Node/WebEngine.",
       "mandatory": false
     }
   }

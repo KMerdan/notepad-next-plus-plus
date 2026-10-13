@@ -75,7 +75,6 @@ build.ninja
 # Plugin author build outputs
 node_modules/
 /examples/*/dist/
-/examples/vscode-hello-world/out/
 aqtinstall.log
 
 # Rebuildable local codegraph evidence
