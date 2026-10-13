@@ -22,7 +22,7 @@
 | `window.createWebviewPanel` | 同步返回所属代理，远端创建、reveal、title/html 属性写入与 URI 映射串行确认。创建确认前 dispose 会跳过后续发布并回收晚到句柄。需要 Qt WebEngine 6.6+ 与 `webviews@1`、`webviews.compat@1` 两个能力。 |
 | `WebviewPanel` | `viewType/webview/title/viewColumn/visible/active/reveal/dispose/onDidDispose/onDidChangeViewState`。真实 Qt 可见性/焦点通知；目前只映射逻辑 One/Active，Beside/Two/Three 明确拒绝。隐藏时保留 DOM，显式要求丢弃隐藏上下文的选项不支持。 |
 | `Webview` | `html/options/cspSource/asWebviewUri/postMessage/onDidReceiveMessage`。完整 HTML 文档；本地 JS/CSS/图片在声明的资源目录内映射。options 在创建时拍快照，运行期修改明确拒绝。 |
-| 浏览器 `acquireVsCodeApi()` | 每页只能获取一次；支持 `postMessage/getState/setState`。状态是有界 JSON，保存最近提交到宿主的值，在同一面板换页时恢复。面板关闭/插件重载/应用退出后不保留；panel serializer 尚未实现。 |
+| 浏览器 `acquireVsCodeApi()` | 每页只能获取一次；支持 `postMessage/getState/setState`。状态是有界 JSON，保存最近提交到宿主的值，在同一面板换页时恢复。同一面板换页及热更新/Reload/回滚时可恢复；window.registerWebviewPanelSerializer 映射到 webviews.restore@1。正常关闭和应用退出后不保留。 |
 | 未实现 API | `UnsupportedApi`（业务错误 1005）含 API 名称与配置版本并写诊断，不以空实现宣称兼容。类型类未列出的方法没有实现。`then/__esModule` 是模块互操作字段。 |
 
 消息最多同时 8 个，文字最多 8 KiB UTF-8，动作最多 8 个、每个最多 1 KiB。创建先返回所属 messageId，选择用可靠 `nnp.window.messageEvent` 通知，早于创建应答的选择被缓存。只在成功激活且资源已发布时展示。停用、卸载和失败清除所有所属窗口，不保留旧会话通知。
@@ -53,4 +53,4 @@
 
 Node 契约测试、Qt 安装/菜单/重载/停用测试与生产 Application 测试验证该命令路径。另有真实 Scintilla Unicode 编辑、单次 undo/redo、等待超过 5 秒的消息选择，以及等待期间停用清理。核心验证记录见 [核心证据](evidence/VSCodeCoreValidation.json)。
 
-[Webview 样例](../../examples/vscode-webview/README.md)来自同一固定 MIT 提交的 Cat Coding，保留精确上游文件和 SHA-256。浏览器 JS/CSS 未修改；扩展源码移除 serializer 注册，远程 GIF 换成声明目录内的自有 PNG fixture。它验证完整 HTML、CSS/JS/图片、计数器、双向消息，以及安装后的关闭重开、重载、停用和卸载。该样例是明确记录改动的移植，不冒充原样运行；HelloWorld 仍保留未修改的命令样例证据。Webview 新增 Schema 的 33 方法/174 fixtures 已独立验证，见 [Schema 证据](evidence/VSCodeWebviewSchemaValidation.json)。有界持久状态与插件全局配置已另行接入，见 [状态与配置适配](VSCodePersistence.zh-CN.md)。I3 状态继续为 partial。
+[Webview 样例](../../examples/vscode-webview/README.md)来自同一固定 MIT 提交的 Cat Coding，保留精确上游文件和 SHA-256。浏览器 JS/CSS 未修改；扩展源码保留上游 serializer 注册以恢复热更新，远程 GIF 换成声明目录内的自有 PNG fixture。它验证完整 HTML、CSS/JS/图片、计数器、双向消息，以及安装后的关闭重开、重载、停用和卸载。该样例是明确记录改动的移植，不冒充原样运行；HelloWorld 仍保留未修改的命令样例证据。Webview 新增 Schema 的 33 方法/174 fixtures 已独立验证，见 [Schema 证据](evidence/VSCodeWebviewSchemaValidation.json)。有界持久状态与插件全局配置已另行接入，见 [状态与配置适配](VSCodePersistence.zh-CN.md)。I3 状态继续为 partial。

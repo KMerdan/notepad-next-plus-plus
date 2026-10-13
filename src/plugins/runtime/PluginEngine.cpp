@@ -41,9 +41,9 @@ PluginPackages::PackagePolicy PluginEngine::packagePolicy() {
     PluginPackages::PackagePolicy policy;
     policy.capabilities={"commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1"};
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-    policy.capabilities.append("webviews@1");
+    policy.capabilities.append("webviews@1");policy.capabilities.append("webviews.restore@1");
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-    policy.capabilities.append("webviews.compat@1");
+    policy.capabilities.append("webviews.compat@1");policy.capabilities.append("webviews.service@1");
 #endif
 #endif
     return policy;
@@ -119,7 +119,7 @@ void PluginEngine::syncRegistry(bool activate) {
             action->setIcon(QIcon(package.root+'/'+c.icon));
         if(PluginIcons::isMarkdown(package.metadata))action->setProperty("hostBrandResource",":/icons/markdown-preview.svg");
         action->setToolTip(c.title);
-        action->setObjectName("pluginCommand:"+c.command);action->setProperty("pluginId",c.id);action->setProperty("commandId",c.command);action->setEnabled(!quitting&&!updating.contains(c.id));
+        action->setObjectName("pluginCommand:"+c.command);action->setProperty("pluginId",c.id);action->setProperty("commandId",c.command);action->setEnabled(!quitting&&!updating.contains(c.id)&&!restoring.contains(c.id)&&!hasPreservedPanels(c.id));
         connect(action,&QAction::triggered,this,[this,c]{invoke(c.id,c.command);});
         if(c.tool)toolbar->addAction(action);
         else {
@@ -141,10 +141,11 @@ void PluginEngine::syncRegistry(bool activate) {
 }
 QString PluginEngine::pluginState(const QString &id) const {
     if(removing.contains(id))return "stopping";
-    if(updating.contains(id))return "updating";
+    if(updating.contains(id)||restoring.contains(id)||(hasPreservedPanels(id)&&!failures.contains(id)))return "updating";
     if(restartTickets.contains(id))return "restarting";
     if(waiting.contains(id))return "stopping";
     if(verifying.contains(id))return "verifying";
+    if(hasPreservedPanels(id)&&failures.contains(id))return "failed";
     if(sessions.contains(id))return sessions.value(id)->state();
     if(failures.contains(id))return "failed";
     return registry->plugin(id).enabled?"ready":"disabled";
@@ -152,6 +153,7 @@ QString PluginEngine::pluginState(const QString &id) const {
 int PluginEngine::pluginPanelCount(const QString &id) const {
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     const auto session=sessions.value(id,nullptr);
+    if(preservedPanels.value(id))return qMax(preservedPanels.value(id)->panelCount(),session&&session->webviews()?session->webviews()->panelCount():0);
     return session&&session->webviews()?session->webviews()->panelCount():0;
 #else
     Q_UNUSED(id);return 0;
@@ -179,16 +181,17 @@ void PluginEngine::log(const QString &id,const QByteArray &text,Failure category
     emit logsChanged(id);
 }
 bool PluginEngine::setEnabled(const QString &id,bool enabled,QString *message) {
-    if(quitting||updating.contains(id)||removing.contains(id)){if(message)*message=tr("Wait for shutdown or the plugin operation to finish.");return false;}
+    if(quitting||updating.contains(id)||restoring.contains(id)||(hasPreservedPanels(id)&&(!failures.contains(id)||enabled))||removing.contains(id)){if(message)*message=tr("Wait for shutdown or the plugin operation to finish.");return false;}
     const bool ok=registry->setEnabled(id,enabled,message);
     if(ok){failures.remove(id);restartTickets.remove(id);crashTimes.remove(id);if(enabled)syncRegistry();}
+    if(ok&&!enabled&&hasPreservedPanels(id)){afterStop(id,[this,id]{releasePreservedPanels(id);syncRegistry(false);emit statusChanged(id);});}
     if(ok&&!enabled){if(verifying.contains(id))verifying[id].cancel->store(true);if(sessions.contains(id))sessions[id]->stop("disable");}
     if(ok)emit statusChanged(id);return ok;
 }
 void PluginEngine::invoke(const QString &id,const QString &command) {
     const auto p=registry->plugin(id);bool declared=false;
     for(const auto &item:p.package.metadata["contributes"].toObject()["commands"].toArray())if(item.toObject()["id"]==command)declared=true;
-    if(!declared||!p.enabled||quitting||waiting.contains(id)||updating.contains(id)||removing.contains(id))return;
+    if(!declared||!p.enabled||quitting||waiting.contains(id)||updating.contains(id)||restoring.contains(id)||hasPreservedPanels(id)||removing.contains(id))return;
     failures.remove(id);restartTickets.remove(id);crashTimes.remove(id);
     if(auto *session=sessions.value(id,nullptr);session&&(session->state()=="failed"||session->state()=="stopped")) {
         afterStop(id,[this,id,command]{request(id,command,"command");});return;
@@ -196,7 +199,7 @@ void PluginEngine::invoke(const QString &id,const QString &command) {
     request(id,command,"command");
 }
 void PluginEngine::request(const QString &id,const QString &command,const QString &reason) {
-    bool validating=updating.contains(id)&&reason=="update-validation";
+    bool validating=updating.contains(id)&&(reason=="update-validation"||reason=="reload");
     if(quitting||!registry->loadError().isEmpty()||waiting.contains(id)||removing.contains(id)||!window||(!registry->plugin(id).enabled&&!validating)||(updating.contains(id)&&!validating))return;
     if(registry->plugin(id).validationDeferred) {
         updating.insert(id);QString message;
@@ -230,7 +233,10 @@ void PluginEngine::request(const QString &id,const QString &command,const QStrin
 void PluginEngine::startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease) {
     if(!window||quitting)return;
     const auto p=registry->plugin(id);
-    auto *session=new PluginSession(p.package.metadata,p.package.root,paths.node,paths.hostEntry,window,documents,this,updating.contains(id),data,p.package.repository,lease,paths.python);sessions.insert(id,session);
+    auto *session=new PluginSession(p.package.metadata,p.package.root,paths.node,paths.hostEntry,window,documents,this,updating.contains(id)||hasPreservedPanels(id),data,p.package.repository,lease,paths.python);sessions.insert(id,session);
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    session->setRestoreSource(preservedPanels.value(id));
+#endif
     session->setProperty("verifiedPackageDigest",p.package.digest);
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     connect(session,&PluginSession::panelsChanged,this,[this,id]{emit statusChanged(id);});
@@ -245,17 +251,21 @@ void PluginEngine::startVerified(const QString &id,const QString &command,const 
         if(state=="active")*becameActive=true;
         log(id,("state: "+state).toUtf8(),Failure::None,"state");emit statusChanged(id);
         if(state=="active"&&updating.contains(id))QTimer::singleShot(0,this,[this,id,session]{confirmUpdate(id,session);});
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        else if(state=="active"&&preservedPanels.contains(id))QTimer::singleShot(0,this,[this,id,session]{confirmUpdate(id,session);});
+#endif
     });
     connect(session,&PluginSession::stderrOutput,this,[this,id](const QByteArray &bytes){log(id,bytes,Failure::None,"stderr");});
     connect(session,&PluginSession::diagnostic,this,[this,id](const QString &message){log(id,message.toUtf8());});
     connect(session,&PluginSession::failed,this,[this,id,session,digest=p.package.digest,becameActive](const QString &message){
         failures[id]=message;failureCategories[id]=session->failureCategory();log(id,message.toUtf8(),session->failureCategory(),"failure");emit error(id,message);emit statusChanged(id);
         const auto current=registry->plugin(id);
-        if(updating.contains(id)&&current.updatePending&&current.package.digest==digest)failUpdate(id,message);
+        if(updating.contains(id)&&current.package.digest==digest)failUpdate(id,message);
         else if(*becameActive&&!updating.contains(id))scheduleRecovery(id,digest);
     });
     connect(session,&PluginSession::commandFinished,this,[this,id,session](const QString &,const QJsonValue &,const QJsonObject &failure){
         if(failure.isEmpty())return;
+        if(failure["code"].toInt()==1004&&(session->isTransportClosing()||updating.contains(id)||hasPreservedPanels(id)||removing.contains(id)))return;
         // Closed queued calls are consequences of the already reported
         // activation/process failure, or an intentional management stop.
         // Keep that primary classification and do not report a second fault.
@@ -282,10 +292,34 @@ void PluginEngine::afterStop(const QString &id,std::function<void()> action) {
         emit statusChanged(id);
     }else action();
 }
+void PluginEngine::stopPreservingPanels(const QString &id,std::function<void()> action){
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    if(!preservedPanels.contains(id)&&sessions.contains(id)&&sessions[id]->state()=="active")if(auto *source=sessions[id]->takeWebviewsForRestart(this)){
+        preservedPanels.insert(id,source);const QPointer<PluginEngine> safe=this;
+        source->suspendForRestart([safe,id,action=std::move(action)]{if(safe&&!safe->quitting)safe->afterStop(id,action);});return;
+    }
+#endif
+    afterStop(id,std::move(action));
+}
+void PluginEngine::releasePreservedPanels(const QString &id){
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    if(auto source=preservedPanels.take(id))source->deleteLater();
+#else
+    Q_UNUSED(id);
+#endif
+}
+bool PluginEngine::hasPreservedPanels(const QString &id)const{
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    return preservedPanels.contains(id);
+#else
+    Q_UNUSED(id);return false;
+#endif
+}
 void PluginEngine::reload(const QString &id) {
     if(quitting||updating.contains(id)||removing.contains(id)||!registry->plugin(id).enabled){emit operationFinished(id,tr("Enable the plugin and wait for its operation before reloading it."));return;}
     restartTickets.remove(id);crashTimes.remove(id);
-    afterStop(id,[this,id]{request(id,{},"reload");emit operationFinished(id,{});});
+    updating.insert(id);syncRegistry();
+    stopPreservingPanels(id,[this,id]{request(id,{},"reload");});
 }
 void PluginEngine::uninstall(const QString &id,bool keepData) {
     if(quitting||updating.contains(id)||removing.contains(id)||waiting.contains(id)||registry->plugin(id).id()!=id)return;
@@ -293,6 +327,7 @@ void PluginEngine::uninstall(const QString &id,bool keepData) {
     removing.insert(id);syncRegistry(false);emit statusChanged(id);
     restartTickets.remove(id);crashTimes.remove(id);
     afterStop(id,[this,id,keepData,repository] {
+        releasePreservedPanels(id);
         QString message;
         if(!registry->remove(id,&message)) {
             removing.remove(id);syncRegistry(false);emit statusChanged(id);emit operationFinished(id,message);checkIdle();return;
@@ -313,7 +348,7 @@ void PluginEngine::installUpdate(const PluginPackages::PreparedPackage &package,
     }
     const bool wasActive=sessions.contains(id)&&sessions.value(id)->state()=="active";
     restartTickets.remove(id);crashTimes.remove(id);updating.insert(id);syncRegistry();emit statusChanged(id);
-    afterStop(id,[this,id,package,sources,origin,expectedDigest,wasActive] {
+    stopPreservingPanels(id,[this,id,package,sources,origin,expectedDigest,wasActive] {
         QString message;
         if(!registry->beginUpdate(package,sources,origin,expectedDigest,&message,!wasActive)) {
             updating.remove(id);syncRegistry();if(registry->plugin(id).enabled)request(id,{},"update-rejected");emit statusChanged(id);emit operationFinished(id,message);return;
@@ -327,7 +362,7 @@ void PluginEngine::rollback(const QString &id) {
     if(quitting||updating.contains(id)||removing.contains(id)||waiting.contains(id)||!current.previous){emit operationFinished(id,tr("No previous version is available now."));return;}
     const bool wasActive=sessions.contains(id)&&sessions.value(id)->state()=="active";
     restartTickets.remove(id);crashTimes.remove(id);updating.insert(id);syncRegistry();emit statusChanged(id);
-    afterStop(id,[this,id,digest=current.package.digest,deferred=current.validationDeferred,wasActive] {
+    stopPreservingPanels(id,[this,id,digest=current.package.digest,deferred=current.validationDeferred,wasActive] {
         QString message;
         const bool ok=deferred?registry->abortUpdate(id,&message):registry->beginRollback(id,digest,&message,!wasActive);
         if(!ok) {
@@ -338,13 +373,23 @@ void PluginEngine::rollback(const QString &id) {
     });
 }
 void PluginEngine::confirmUpdate(const QString &id,PluginSession *session) {
-    if(quitting||!updating.contains(id)||sessions.value(id)!=session||session->state()!="active")return;
-    QString message;
-    if(!registry->confirmUpdate(id,&message)){failUpdate(id,message);return;}
-    session->publishResources();
-    updating.remove(id);failures.remove(id);syncRegistry();
-    if(!registry->plugin(id).enabled&&sessions.value(id)==session)session->stop("update-validation-complete");
-    log(id,"Update activation validated; previous revision retained.");emit statusChanged(id);emit operationFinished(id,{});
+    if(quitting||restoring.contains(id)||sessions.value(id)!=session||session->state()!="active")return;
+    restoring.insert(id);const QPointer<PluginEngine> safe=this;const QPointer<PluginSession> active=session;
+    session->restoreWebviews([safe,active,id](const QJsonObject &error){
+        if(!safe)return;safe->restoring.remove(id);
+        if(safe->quitting||!active||safe->sessions.value(id)!=active)return;
+        if(!error.isEmpty()){
+            if(safe->updating.contains(id))safe->failUpdate(id,error["message"].toString());
+            else{safe->failures[id]=error["message"].toString();safe->failureCategories[id]=Failure::UpdateFailed;emit safe->statusChanged(id);emit safe->operationFinished(id,error["message"].toString());}
+            return;
+        }
+        QString message;const bool pending=safe->registry->plugin(id).updatePending;
+        if(pending&&!safe->registry->confirmUpdate(id,&message)){safe->failUpdate(id,message);return;}
+        active->commitWebviewRestoration();active->publishResources();safe->releasePreservedPanels(id);
+        safe->updating.remove(id);safe->failures.remove(id);safe->syncRegistry();
+        if(!safe->registry->plugin(id).enabled)active->stop("update-validation-complete");
+        safe->log(id,"Activation and open panels restored; previous revision retained.");emit safe->statusChanged(id);emit safe->operationFinished(id,{});
+    });
 }
 void PluginEngine::failUpdate(const QString &id,const QString &message) {
     // Defer out of a session failure signal: process exit also emits stopped,
@@ -353,7 +398,7 @@ void PluginEngine::failUpdate(const QString &id,const QString &message) {
         if(quitting||!updating.contains(id)||waiting.contains(id))return;
         afterStop(id,[this,id,message] {
             QString recoveryError;
-            const bool restored=registry->abortUpdate(id,&recoveryError);
+            const bool restored=!registry->plugin(id).updatePending||registry->abortUpdate(id,&recoveryError);
             updating.remove(id);failures.remove(id);
             if(!restored){failures[id]=recoveryError;failureCategories[id]=Failure::UpdateFailed;}
             log(id,(restored?tr("Update failed; previous version restored: ")+message:recoveryError).toUtf8(),Failure::UpdateFailed,"failure");
@@ -389,7 +434,11 @@ void PluginEngine::shutdown() {
     waiting.clear();restartTickets.clear();
     for(auto &v:verifying)v.cancel->store(true);
     for(const auto &action:actions)if(action)action->setEnabled(false);
-    for(auto *session:sessions.values())session->stop("shutdown");checkIdle();
+    for(auto *session:sessions.values())session->stop("shutdown");
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    const auto ids=preservedPanels.keys();for(const auto &id:ids)releasePreservedPanels(id);
+#endif
+    checkIdle();
 }
 void PluginEngine::forceStop() {for(auto *session:sessions.values())session->forceStop();installer->cancel();}
 }

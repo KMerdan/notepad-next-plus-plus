@@ -123,6 +123,12 @@ async def main():
             traceback.print_exc()
             raise RpcError(-32603, "Plugin activation failed")
 
+    async def restore(params, _):
+        current(params)
+        if state != "active" or "webviews.restore@1" not in identity["grantedCapabilities"]:
+            raise RpcError(1004, "Panel restoration requires an active, authorized plugin")
+        return await client.restore_panels(params["panels"])
+
     async def deactivate():
         nonlocal state, stopping
         if stopping:
@@ -154,7 +160,7 @@ async def main():
         current(params)
         return None
 
-    for method, handler in [("nnp.initialize", initialize), ("nnp.plugin.activate", activate), ("nnp.plugin.deactivate", stop), ("nnp.shutdown", shutdown), ("nnp.health.ping", ping)]:
+    for method, handler in [("nnp.initialize", initialize), ("nnp.plugin.activate", activate), ("nnp.webviews.restore", restore), ("nnp.plugin.deactivate", stop), ("nnp.shutdown", shutdown), ("nnp.health.ping", ping)]:
         register(endpoint, method, handler)
 
     def on_frame(body):

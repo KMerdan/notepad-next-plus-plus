@@ -2573,5 +2573,129 @@
       "expectedValue": null
     },
     "valid": false
+  },
+  {
+    "name": "nnp.webviews.restore valid params",
+    "method": "nnp.webviews.restore",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panels": [
+        {
+          "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "viewType": "counter",
+          "title": "Counter",
+          "kind": "service",
+          "hasState": true,
+          "state": {
+            "count": 37
+          }
+        }
+      ]
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.restore extra property",
+    "method": "nnp.webviews.restore",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panels": [
+        {
+          "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "viewType": "counter",
+          "title": "Counter",
+          "kind": "service",
+          "hasState": true,
+          "state": {
+            "count": 37
+          }
+        }
+      ],
+      "extra": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.restore missing identity",
+    "method": "nnp.webviews.restore",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "panels": [
+        {
+          "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "viewType": "counter",
+          "title": "Counter",
+          "kind": "service",
+          "hasState": true,
+          "state": {
+            "count": 37
+          }
+        }
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.restore valid result",
+    "method": "nnp.webviews.restore",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.createService valid params",
+    "method": "nnp.webviews.createService",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "viewType": "counter",
+      "title": "Counter",
+      "endpoint": "http://127.0.0.1:32000/nnp/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/index.html",
+      "nonce": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.webviews.createService extra property",
+    "method": "nnp.webviews.createService",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "viewType": "counter",
+      "title": "Counter",
+      "endpoint": "http://127.0.0.1:32000/nnp/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/index.html",
+      "nonce": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "extra": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.createService missing identity",
+    "method": "nnp.webviews.createService",
+    "part": "params",
+    "value": {
+      "generation": 1,
+      "viewType": "counter",
+      "title": "Counter",
+      "endpoint": "http://127.0.0.1:32000/nnp/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/index.html",
+      "nonce": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.webviews.createService valid result",
+    "method": "nnp.webviews.createService",
+    "part": "result",
+    "value": {
+      "panelId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "valid": true
   }
 ]

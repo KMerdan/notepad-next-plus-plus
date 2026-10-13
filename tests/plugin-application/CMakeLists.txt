@@ -23,13 +23,13 @@ get_target_property(app_libraries NotepadNext LINK_LIBRARIES)
 target_include_directories(PluginApplicationTests PRIVATE ${app_includes})
 target_compile_definitions(PluginApplicationTests PRIVATE ${app_definitions}
     PLUGIN_TEST_NODE="${NOTEPADNEXT_TEST_NODE}"
-    PLUGIN_TEST_MARKDOWN="${CMAKE_SOURCE_DIR}/examples/markdown-preview"
+    PLUGIN_TEST_PREVIEW="${CMAKE_SOURCE_DIR}/tests/fixtures/contract-preview"
     PLUGIN_TEST_PYTHON="${NOTEPADNEXT_TEST_PYTHON}"
     PLUGIN_TEST_PYTHON_EXAMPLE="${CMAKE_SOURCE_DIR}/examples/python-inspector"
-    PLUGIN_TEST_PACKER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/pack.cjs"
-    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_SOURCE_DIR}/examples/vscode-hello-world"
-    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_SOURCE_DIR}/examples/vscode-webview"
-    PLUGIN_TEST_VSCODE_IMPORTER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/import-vscode.cjs"
+    PLUGIN_TEST_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
+    PLUGIN_TEST_VSCODE_SOURCE="${CMAKE_SOURCE_DIR}/tests/fixtures/legacy-hello-world"
+    PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE="${CMAKE_SOURCE_DIR}/tests/fixtures/legacy-webview"
+    PLUGIN_TEST_LEGACY_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs"
     PLUGIN_TEST_SCREENSHOT="${CMAKE_BINARY_DIR}/plugin-manager-installed.png")
 target_link_libraries(PluginApplicationTests PRIVATE ${app_libraries} Qt6::Test)
 get_target_property(app_link_dependencies NotepadNext LINK_DEPENDS)
@@ -62,28 +62,36 @@ if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_TEST_NODE)
         VERBATIM)
 endif()
 add_test(NAME PluginApplicationTests COMMAND PluginApplicationTests)
+set_tests_properties(PluginApplicationTests PROPERTIES ENVIRONMENT "NNP_TEST_QT_LOG_FILE=${CMAKE_BINARY_DIR}/PluginApplicationTests.qt.txt")
 if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_PLUGIN_WEBVIEWS AND NOTEPADNEXT_TEST_NODE)
     target_sources(PluginApplicationTests PRIVATE ApplicationExitProbe.cpp)
     target_compile_definitions(PluginApplicationTests PRIVATE PLUGIN_APPLICATION_EXIT_PROBE)
     add_executable(PluginApplicationExitTests ApplicationExitTests.cpp)
+    # This process-only driver depends on the UI test bundle but owns no forms.
+    # CMake 3.31 otherwise declares the dependency's UI outputs twice in Ninja.
+    set_target_properties(PluginApplicationExitTests PROPERTIES AUTOUIC OFF)
     target_link_libraries(PluginApplicationExitTests PRIVATE NotepadNextPluginPackages NotepadNextPluginData Qt6::Test)
     target_compile_definitions(PluginApplicationExitTests PRIVATE EXIT_APPLICATION="$<TARGET_FILE:PluginApplicationTests>")
     add_dependencies(PluginApplicationExitTests PluginApplicationTests)
-    add_test(NAME PluginApplicationExitTests COMMAND PluginApplicationExitTests)
+    add_test(NAME PluginApplicationExitTests COMMAND PluginApplicationExitTests -o -,txt -o "${CMAKE_BINARY_DIR}/PluginApplicationExitTests.qt.txt,txt")
     set_tests_properties(PluginApplicationExitTests PROPERTIES RUN_SERIAL TRUE TIMEOUT 90)
 endif()
 if(NOTEPADNEXT_PLUGINS AND NOTEPADNEXT_TEST_NODE)
-    set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginVSCodeSampleBuild;PluginVSCodeWebviewSampleBuild")
+    set_tests_properties(PluginApplicationTests PROPERTIES DEPENDS "PluginPythonSampleBuild")
 endif()
 
+set(NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE "" CACHE PATH "Prebuilt Markdown package for opt-in consumer performance measurements")
 option(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE "Build opt-in production-application plugin performance measurements" OFF)
 if(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE AND APPLE AND NOTEPADNEXT_PLUGIN_WEBVIEWS AND NOTEPADNEXT_TEST_NODE)
+    if(NOT EXISTS "${NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE}/notepadnext-plugin.json")
+        message(FATAL_ERROR "Performance acceptance requires NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE pointing to a prebuilt Marketplace package.")
+    endif()
     qt_add_executable(PluginPerformanceTests MACOSX_BUNDLE PluginPerformanceTests.cpp ${test_sources})
     target_include_directories(PluginPerformanceTests PRIVATE ${app_includes})
     target_compile_definitions(PluginPerformanceTests PRIVATE ${app_definitions}
         PERF_NODE="${NOTEPADNEXT_TEST_NODE}"
-        PERF_MARKDOWN="${CMAKE_SOURCE_DIR}/examples/markdown-preview"
-        PERF_PACKER="${CMAKE_SOURCE_DIR}/packages/plugin-sdk/pack.cjs")
+        PERF_MARKDOWN="${NOTEPADNEXT_PERFORMANCE_PLUGIN_PACKAGE}"
+        PERF_STAGER="${CMAKE_SOURCE_DIR}/tests/plugin-ci/stage-fixture.cjs")
     target_link_libraries(PluginPerformanceTests PRIVATE ${app_libraries} Qt6::Test)
     set_target_properties(PluginPerformanceTests PROPERTIES
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.0"
@@ -98,6 +106,6 @@ if(NOTEPADNEXT_BUILD_PLUGIN_PERFORMANCE AND APPLE AND NOTEPADNEXT_PLUGIN_WEBVIEW
         COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NOTEPADNEXT_TEST_NODE}" "$<TARGET_BUNDLE_DIR:PluginPerformanceTests>/Contents/Helpers/nnp-node"
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${test_host_source}" "$<TARGET_BUNDLE_DIR:PluginPerformanceTests>/Contents/Resources/plugin-host"
         VERBATIM)
-    add_test(NAME PluginPerformanceTests COMMAND PluginPerformanceTests)
+    add_test(NAME PluginPerformanceTests COMMAND PluginPerformanceTests -o -,txt -o "${CMAKE_BINARY_DIR}/PluginPerformanceTests.qt.txt,txt")
     set_tests_properties(PluginPerformanceTests PROPERTIES RUN_SERIAL TRUE TIMEOUT 600 LABELS "performance")
 endif()

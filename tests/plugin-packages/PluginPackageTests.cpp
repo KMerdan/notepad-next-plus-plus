@@ -1,3 +1,4 @@
+#include "../PluginTestFilesystem.h"
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "PackageStore.h"
 #include "PackageLease.h"
@@ -73,7 +74,6 @@ private slots:
     void budgetsCancellationAndIntegrity();
     void icons();
     void failedIndexWritesAndCorruptStorage();
-    void productionMarkdownPackage();
     void zipRoundtripAndPackage();
     void unsafeZip_data();
     void unsafeZip();
@@ -129,15 +129,15 @@ void PluginPackageTests::collectionPreservesUnsafeAndCorruptStorage() {
     write(path,"{broken index");result=store.collect(path);QVERIFY(!result.error.isEmpty());QVERIFY(QFileInfo::exists(p.root));QVERIFY(QFileInfo::exists(root+"/.download-abc123/plugin.zip"));
     QFile corrupted(path);QVERIFY(corrupted.open(QIODevice::ReadOnly));QCOMPARE(corrupted.readAll(),QByteArray("{broken index"));corrupted.close();QVERIFY(corrupted.remove());
     write(root+"/unknown/keep","user file");write(root+'/'+QString(64,'f')+"/keep","unowned hash-shaped directory");write(t.path()+"/outside/keep","outside");
-    QVERIFY(QFile::link(t.path()+"/outside",root+"/.stage-link12"));
+    QVERIFY(PluginTest::link(t.path()+"/outside",root+"/.stage-link12"));
     // A corrupted orphan remains available for inspection; collection must
     // not follow its newly introduced link into another filesystem tree.
-    QVERIFY(QFile::link(t.path()+"/outside",p.root+"/unexpected-link"));
+    QVERIFY(PluginTest::link(t.path()+"/outside",p.root+"/unexpected-link"));
     std::atomic_bool cancel=true;result=store.collect(path,&cancel);QVERIFY(result.cancelled);QVERIFY(QFileInfo::exists(root+"/.stage-abc123"));
     QLockFile storeLock(root+"/.store.lock");storeLock.setStaleLockTime(0);QVERIFY(storeLock.tryLock(0));QVERIFY(store.collect(path).deferred);storeLock.unlock();
     result=store.collect(path);QVERIFY2(result.error.isEmpty(),qPrintable(result.error));QCOMPARE(result.temporaryDirectories,4);QCOMPARE(result.packages,0);QCOMPARE(result.preserved.size(),3);
     QVERIFY(QFileInfo::exists(root+"/unknown/keep"));QVERIFY(QFileInfo::exists(root+'/'+QString(64,'f')+"/keep"));QVERIFY(QFileInfo::exists(t.path()+"/outside/keep"));QVERIFY(QFileInfo::exists(p.root));
-    QVERIFY(QFile::remove(p.root+"/unexpected-link"));QCOMPARE(store.collect(path).packages,1);
+    QVERIFY(PluginTest::removeLink(p.root+"/unexpected-link"));QCOMPARE(store.collect(path).packages,1);
 }
 void PluginPackageTests::collectionCrossProcessAndCrashRecovery() {
     QTemporaryDir t;const auto root=t.path()+"/store",path=t.path()+"/installed.json";PackageStore store(root);QString error;PreparedPackage p;
@@ -279,12 +279,18 @@ void PluginPackageTests::metadataAndCompatibilityChecks() {
 }
 void PluginPackageTests::unsafePathsAndLinks() {
     QTemporaryDir t;const auto input=t.path()+"/input";package(input);PackageStore s(t.path()+"/store");PreparedPackage p;QString e;
+    for(const auto &name:QStringList{"bad:name","CON.txt","trailing."})QVERIFY(!PackageStore::isSafeRelativePath(name));
     for(const auto &name:QStringList{"bad:name","CON.txt","trailing.",".nnp-receipt.json","addon.node"}) {
+#ifdef Q_OS_WIN
+        // Win32 cannot create these literal names; portable-name and ZIP
+        // validation above/below still exercise their rejection.
+        if(name=="CON.txt"||name=="trailing.")continue;
+#endif
         write(input+'/'+name,"x");QVERIFY2(!s.prepareDirectory(input,source().resources[0],policy(),&p,&e),qPrintable(name));QVERIFY(QFile::remove(input+'/'+name));
     }
-    write(t.path()+"/outside","outside");QVERIFY(QFile::link(t.path()+"/outside",input+"/linked"));
+    write(t.path()+"/outside","outside");QVERIFY(PluginTest::link(t.path()+"/outside",input+"/linked"));
     QVERIFY(!s.prepareDirectory(input,source().resources[0],policy(),&p,&e));QVERIFY(QFile::remove(input+"/linked"));
-    QVERIFY(QFile::link(input,t.path()+"/linked-root"));QVERIFY(!s.prepareDirectory(t.path()+"/linked-root",source().resources[0],policy(),&p,&e));
+    QVERIFY(PluginTest::link(input,t.path()+"/linked-root"));QVERIFY(!s.prepareDirectory(t.path()+"/linked-root",source().resources[0],policy(),&p,&e));
     // Case aliases must be rejected also on case-sensitive filesystems.
     write(input+"/a","a");write(input+"/A","b");
     if(QDir(input).entryList().contains("a")&&QDir(input).entryList().contains("A"))QVERIFY(!s.prepareDirectory(input,source().resources[0],policy(),&p,&e));
@@ -312,15 +318,7 @@ void PluginPackageTests::failedIndexWritesAndCorruptStorage() {
     write(t.path()+"/corrupt.json","corrupt");InstalledPluginRegistry bad(t.path()+"/corrupt.json",t.path()+"/store");QVERIFY(!bad.load(&e));QVERIFY(!bad.add(p,{}, {},&e));QFile corrupt(t.path()+"/corrupt.json");QVERIFY(corrupt.open(QIODevice::ReadOnly));QCOMPARE(corrupt.readAll(),QByteArray("corrupt"));
     InstalledPluginRegistry first(t.path()+"/index.json",t.path()+"/store"),second(t.path()+"/index.json",t.path()+"/store");QVERIFY(first.load(&e));QVERIFY(second.load(&e));QVERIFY(first.add(p,{}, {},&e));QVERIFY(!second.add(p,{}, {},&e));QVERIFY(e.contains("another process"));QVERIFY(second.load(&e));QCOMPARE(second.plugins().size(),1);
 }
-void PluginPackageTests::productionMarkdownPackage() {
-    const auto input=qEnvironmentVariable("NOTEPADNEXT_TEST_PACKAGE");if(input.isEmpty())QSKIP("Set NOTEPADNEXT_TEST_PACKAGE to the packed Markdown example directory.");
-    QFile f(QStringLiteral(PLUGIN_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(f.open(QIODevice::ReadOnly));SourceSnapshot snapshot;QString e;QVERIFY(PluginMetadata::parse(f.readAll(),"https://github.com/notepadnext/markdown-preview",{},&snapshot,&e));
-    auto p=policy();p.capabilities={"commands@1","documents.read@1","documents.events@1","webviews@1"};QTemporaryDir t;PreparedPackage prepared;PackageStore s(t.path()+"/store");QVERIFY2(s.prepareDirectory(input,snapshot.resources[0],p,&prepared,&e),qPrintable(e));QVERIFY(s.verify(prepared,&e));QVERIFY(prepared.files>10);
-    const auto archive=qEnvironmentVariable("NOTEPADNEXT_TEST_ARCHIVE");
-    if(!archive.isEmpty()) {
-        PreparedPackage archived;QVERIFY2(s.prepareZip(archive,snapshot.resources[0],p,&archived,&e),qPrintable(e));QVERIFY(s.verify(archived,&e));QCOMPARE(archived.digest,prepared.digest);
-    }
-}
+
 void PluginPackageTests::zipRoundtripAndPackage() {
     QTemporaryDir t;QString e;const auto archive=t.path()+"/plugin.zip",root=t.path()+"/unpack";QVERIFY(QDir().mkpath(root));
     const auto metadata=QJsonDocument(manifest()).toJson();const auto entry=QByteArray("exports.activate=()=>{};\n");

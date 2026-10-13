@@ -76,6 +76,7 @@ async function open() {
 }
 export async function activate(api:PluginContext) {
   context=api; stopped=false;
+  api.subscriptions.push(api.webviews.registerRestorer('markdown-preview',()=>open()));
   console.info(api.pluginId + ": activated");
   await context.commands.register('__PLUGIN_ID__.open',open);
 }

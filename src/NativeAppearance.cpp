@@ -121,6 +121,15 @@ public:
 };
 }
 #endif
+void restoreEditorColors(ScintillaNext *editor) {
+#ifdef Q_OS_MACOS
+    const auto colors=editor->QObject::property("nativeStyleColors").toList();
+    if(colors.size()!=512)return;
+    for(int style=0;style<256;++style){editor->styleSetFore(style,colors[style*2].toInt());editor->styleSetBack(style,colors[style*2+1].toInt());}
+#else
+    Q_UNUSED(editor);
+#endif
+}
 void editorColors(ScintillaNext *editor,bool remember) {
 #ifdef Q_OS_MACOS
     auto colors=editor->QObject::property("nativeStyleColors").toList();

@@ -15,6 +15,7 @@ class QToolBar;
 namespace PluginDocuments {class DocumentBridge;}
 namespace PluginData {class Service;}
 namespace PluginPackages {class PackageCollectionService;}
+namespace PluginWebviews {class WebviewService;}
 namespace PluginRuntime {
 class PluginSession;
 struct RuntimePaths {
@@ -51,6 +52,9 @@ private:
     void request(const QString &id,const QString &command,const QString &reason);
     void startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease);
     void afterStop(const QString &id,std::function<void()> action);
+    void stopPreservingPanels(const QString &id,std::function<void()> action);
+    void releasePreservedPanels(const QString &id);
+    bool hasPreservedPanels(const QString &id) const;
     void checkIdle();
     void log(const QString &id,const QByteArray &text,PluginDiagnostics::Failure category=PluginDiagnostics::Failure::None,const QString &kind="diagnostic",const QJsonObject &details={});
     void installUpdate(const PluginPackages::PreparedPackage &package,const QStringList &sources,const QJsonObject &origin,const QString &expectedDigest);
@@ -80,6 +84,10 @@ private:
     QHash<QString,QString> failures;
     QHash<QString,PluginDiagnostics::Failure> failureCategories;
     QSet<QString> updating;
+    QSet<QString> restoring;
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    QHash<QString,QPointer<PluginWebviews::WebviewService>> preservedPanels;
+#endif
     QSet<QString> removing;
     QHash<QString,QVector<qint64>> crashTimes;
     QHash<QString,quint64> restartTickets;

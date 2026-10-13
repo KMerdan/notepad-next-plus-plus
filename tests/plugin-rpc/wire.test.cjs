@@ -6,7 +6,7 @@ const {createClient}=require('../../packages/plugin-host/client.cjs');
 const fixtures=require('./wire-fixtures.json');
 for(const fixture of fixtures)test(fixture.name,()=>assert.equal(validate(fixture.method,fixture.part,fixture.value),fixture.valid));
 test('every negotiated method has positive and negative shared fixtures',()=>{
-  assert.equal(Object.keys(contract.methods).length,33);
+  assert.equal(Object.keys(contract.methods).length,35);
   for(const name of Object.keys(contract.methods)){
     assert.ok(fixtures.some(f=>f.method===name&&f.part==='params'&&f.valid));
     assert.ok(fixtures.some(f=>f.method===name&&f.part==='params'&&!f.valid));
@@ -41,4 +41,21 @@ test('SDK compare-and-exchange preserves null, deletion and conflict responses',
   const client=createClient(caller,{pluginId:'tests.data',sessionId:'fixture-session',generation:1,grantedCapabilities:['storage@1','configuration@1']},{},()=>true);
   let calls=0;for(const namespace of ['storage','configuration'])host.register(`nnp.${namespace}.update`,params=>{++calls;assert.equal(params.key,'state');assert.equal(Object.hasOwn(params,'expectedValue'),true);if(calls===1){assert.equal(params.expectedValue,null);assert.deepEqual(params.value,{count:1});}else if(calls===2){assert.deepEqual(params.expectedValue,{count:1});assert.equal(Object.hasOwn(params,'value'),false);}else throw new RpcError(1001,'Conflict');return null;});
   try{await client.api.storage.compareExchange('state',null,{count:1});await client.api.configuration.compareExchange('state',{count:1});await assert.rejects(client.api.storage.compareExchange('state',null,1),{code:1001});await assert.rejects(client.api.storage.compareExchange('state',undefined,1),{code:-32602});assert.equal(calls,3);}finally{caller.close();host.close();}
+});
+test('restoration callbacks bind same-type panels individually and never invoke commands',async()=>{
+  const caller=new Endpoint(json=>{void host.receive(Buffer.from(json));}),host=new Endpoint(json=>{void caller.receive(Buffer.from(json));});
+  const client=createClient(caller,{pluginId:'tests.restore',sessionId:'fixture-session',generation:1,grantedCapabilities:['webviews@1','webviews.restore@1']},{},()=>true);const keys=[];
+  host.register('nnp.webviews.create',params=>{keys.push(params.restorationKey);return {panelId:params.restorationKey};});host.register('nnp.resources.dispose',()=>null);
+  client.api.webviews.registerRestorer('preview',async old=>{assert.equal(old.state.count,37);await client.api.webviews.create('preview',old.title);});
+  await client.restorePanels(['a','b'].map(letter=>({panelId:letter.repeat(32),viewType:'preview',title:'Preview',kind:'fragment',hasState:true,state:{count:37}})));
+  assert.deepEqual(keys,['a'.repeat(32),'b'.repeat(32)]);await assert.rejects(client.restorePanels([{viewType:'missing'}]),{code:1005});await client.dispose();caller.close();host.close();
+});
+test('tasks created during restoration do not retain the old panel key afterward',async()=>{
+  const caller=new Endpoint(json=>{void host.receive(Buffer.from(json));}),host=new Endpoint(json=>{void caller.receive(Buffer.from(json));});
+  const client=createClient(caller,{pluginId:'tests.restore',sessionId:'fixture-session',generation:1,grantedCapabilities:['webviews@1','webviews.restore@1']},{},()=>true),keys=[];
+  host.register('nnp.webviews.create',params=>{keys.push(params.restorationKey);return {panelId:String(keys.length).repeat(32)};});host.register('nnp.resources.dispose',()=>null);
+  let finish;const later=new Promise(resolve=>{finish=resolve;});
+  client.api.webviews.registerRestorer('preview',async()=>{await client.api.webviews.create('preview','Restored');setTimeout(async()=>{await client.api.webviews.create('preview','Future panel');finish();},0);});
+  await client.restorePanels([{panelId:'a'.repeat(32),viewType:'preview',title:'Preview',kind:'fragment',hasState:false,state:null}]);await later;
+  assert.deepEqual(keys,['a'.repeat(32),undefined]);await client.dispose();caller.close();host.close();
 });

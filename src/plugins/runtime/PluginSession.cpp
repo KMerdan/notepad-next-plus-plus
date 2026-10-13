@@ -31,7 +31,7 @@ const QHash<QString,QString> capabilities={
     {"nnp.window.showMessage","messages@1"},
     {"nnp.commands.register","commands@1"},{"nnp.webviews.create","webviews@1"},{"nnp.webviews.reveal","webviews@1"},
     {"nnp.webviews.setHtml","webviews@1"},{"nnp.webviews.mapResource","webviews@1"},{"nnp.webviews.postMessage","webviews@1"},
-    {"nnp.webviews.createCompatible","webviews.compat@1"},{"nnp.webviews.setDocument","webviews.compat@1"},{"nnp.webviews.mapAsset","webviews.compat@1"},{"nnp.webviews.setTitle","webviews.compat@1"},
+    {"nnp.webviews.createService","webviews.service@1"},{"nnp.webviews.createCompatible","webviews.compat@1"},{"nnp.webviews.setDocument","webviews.compat@1"},{"nnp.webviews.mapAsset","webviews.compat@1"},{"nnp.webviews.setTitle","webviews.compat@1"},
     {"nnp.storage.get","storage@1"},{"nnp.storage.update","storage@1"},
     {"nnp.configuration.get","configuration@1"},{"nnp.configuration.update","configuration@1"},{"nnp.resources.dispose",{}}
 };
@@ -122,7 +122,7 @@ void PluginSession::activate(const QString &reason) {
     if(!documents || !window || !QFileInfo(node).isAbsolute() || !QFileInfo(hostEntry).isAbsolute() || !QFileInfo(hostEntry).isFile()) { fail("The controlled plugin runtime is unavailable.",Failure::RuntimeUnavailable); return; }
     QStringList supported={"documents.read@1","documents.events@1","documents.delta@1","documents.write@1","commands@1","messages@1"
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-        ,"webviews@1"
+        ,"webviews@1","webviews.restore@1","webviews.service@1"
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
         ,"webviews.compat@1"
 #endif
@@ -212,6 +212,43 @@ void PluginSession::publishResources() {
     if(views)views->setPublished(true);
 #endif
     invokePending();
+}
+PluginWebviews::WebviewService *PluginSession::takeWebviewsForRestart(QObject *owner){
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    auto *source=views;views=nullptr;panelsSuspended=source!=nullptr;if(source)source->setParent(owner);return source;
+#else
+    Q_UNUSED(owner);return nullptr;
+#endif
+}
+void PluginSession::setRestoreSource(PluginWebviews::WebviewService *source){
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    restoreSource=source;
+#else
+    Q_UNUSED(source);
+#endif
+}
+void PluginSession::commitWebviewRestoration(){
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    if(views)views->commitRestoration();restoreSource=nullptr;
+#endif
+}
+void PluginSession::restoreWebviews(std::function<void(const QJsonObject &)> completed){
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+    if(!restoreSource){completed({});return;}
+    if(!restoreSource->panelCount()){completed({});return;}
+    const auto pending=restoreSource->restorationDescriptors();
+    if(pending.isEmpty()&&views){views->finishRestoration(completed);return;}
+    if(!grants.contains("webviews.restore@1")){completed(rpcError(1005,"The updated plugin must implement webviews.restore@1 to restore its open panels."));return;}
+    const QPointer<PluginSession> safe=this;
+    call("nnp.webviews.restore",envelope({{"panels",pending}}),[safe,completed](const QJsonValue &,const QJsonObject &error){
+        if(!error.isEmpty()){completed(error);return;}
+        if(!safe||safe->state()!="active"){completed(rpcError(1004,"Plugin closed during panel restoration"));return;}
+        if(safe->views)safe->views->finishRestoration(completed);
+        else completed(rpcError(1005,"The updated plugin did not recreate its open panels"));
+    },10000);
+#else
+    completed({});
+#endif
 }
 int PluginSession::resourceCount() const {
     return watches.size()+deltaWatches.size()+commands.size()+messages.size()
@@ -324,10 +361,12 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
     }
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     else if(method.startsWith("nnp.webviews.")) {
-        if(capabilities.value(method)=="webviews.compat@1"&&!grants.contains("webviews@1")){reject(1003,"Compatible Webviews require webviews@1 as well");return;}
-        if(!views && (method=="nnp.webviews.create"||method=="nnp.webviews.createCompatible")) {
+        if(panelsSuspended){reject(1004,"Plugin panels are suspended for hot update");return;}
+        if((capabilities.value(method)=="webviews.compat@1"||capabilities.value(method)=="webviews.service@1")&&!grants.contains("webviews@1")){reject(1003,"Compatible Webviews require webviews@1 as well");return;}
+        if(!views && (method=="nnp.webviews.create"||method=="nnp.webviews.createCompatible"||method=="nnp.webviews.createService")) {
             const auto owner=QString::fromLatin1(QCryptographicHash::hash(session.toUtf8(),QCryptographicHash::Sha256).toHex().left(32));
             views=new PluginWebviews::WebviewService(manifest["id"].toString(),root,window,documents,this,owner);
+            views->setRestoreSource(restoreSource);
             connect(views,&PluginWebviews::WebviewService::panelsChanged,this,&PluginSession::panelsChanged);
             views->setPublished(currentState=="active"&&!publicationHeld);
             connect(views,&PluginWebviews::WebviewService::event,this,[this](const QString &panelId,const QString &type,const QJsonValue &payload) {
@@ -335,12 +374,15 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
             });
         }
         if(!views) { reject(1004,"Panel closed"); return; }
-        if(method=="nnp.webviews.createCompatible") {
+        if(method=="nnp.webviews.createService") {
+            const QPointer<PluginRpc::RpcProcess> recipient=process;
+            views->createService(params["viewType"].toString(),params["title"].toString(),QUrl(params["endpoint"].toString()),params["nonce"].toString(),session,params["restorationKey"].toString(),[recipient,token](const QJsonObject &result,const QJsonObject &error){if(recipient)recipient->respond(token,result,error);});return;
+        } else if(method=="nnp.webviews.createCompatible") {
             QStringList roots;for(const auto &entry:params["localResourceRoots"].toArray())roots.append(entry.toString());
-            result=views->createCompatible(params["panelId"].toString(),params["viewType"].toString(),params["title"].toString(),params["enableScripts"].toBool(),roots,&error);
+            result=views->createCompatible(params["panelId"].toString(),params["viewType"].toString(),params["title"].toString(),params["enableScripts"].toBool(),roots,&error,params["restorationKey"].toString());
         } else if(method=="nnp.webviews.create") {
-            if(!fields(params,{"viewType","title","position"}) || !string(params,"viewType") || !string(params,"title") || !QRegularExpression("^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$").match(params["viewType"].toString()).hasMatch()) { reject(-32602,"Invalid panel declaration"); return; }
-            result=views->create(params["viewType"].toString(),params["title"].toString(),params["position"].toString(),&error);
+            if(!fields(params,{"viewType","title","position"},{"restorationKey"}) || !string(params,"viewType") || !string(params,"title") || !QRegularExpression("^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$").match(params["viewType"].toString()).hasMatch()) { reject(-32602,"Invalid panel declaration"); return; }
+            result=views->create(params["viewType"].toString(),params["title"].toString(),params["position"].toString(),&error,params["restorationKey"].toString());
         } else {
             if(!string(params,"panelId")) { reject(-32602,"Invalid panel handle"); return; }
             const auto id=params["panelId"].toString();

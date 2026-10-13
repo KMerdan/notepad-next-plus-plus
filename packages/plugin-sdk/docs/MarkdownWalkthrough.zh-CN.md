@@ -78,7 +78,7 @@ npm test
 npm run package -- ../artifacts/markdown-preview-0.1.1
 ```
 
-在 **Sources** 选中之前注册的本地 metadata 来源，点击 **Refresh**。回到 **Installed → Update…**，选择 `markdown-preview-0.1.1` 目录并确认。Update 保留启用状态；宿主校验后切换到新包，失败时可恢复旧包。需要手动重启当前安装代码时使用 **More → Reload**。
+在 **Sources** 选中之前注册的本地 metadata 来源，点击 **Refresh**。回到 **Installed → Update…**，选择 `markdown-preview-0.1.1` 目录并确认。Update 保留启用状态、已打开的面板位置和滚动；模板已注册通用恢复回调，更新或 **More → Reload** 后无需再次打开预览。新版本激活或面板恢复失败时回到旧包。详见 [通用恢复契约](HotUpdate.zh-CN.md)。
 
 本流程注册源码项目的 metadata，因此提高版本后刷新同一路径就能读到新版本；若注册的是某个旧安装目录内的 metadata，需要改用新的资源来源。
 

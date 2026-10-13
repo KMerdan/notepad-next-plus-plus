@@ -5,7 +5,7 @@
     const revision = __NNP_REVISION__, initialState = __NNP_STATE__;
     // Provisional/old navigations can receive the current script collection.
     // Only initialize the document whose URL owns this revision.
-    if (location.protocol !== 'nnp-plugin:' || !location.pathname.endsWith('/page-' + revision + '.html')) return;
+    if (!location.href.split('#')[0].startsWith(__NNP_PREFIX__)) return;
     const key = Symbol.for('NotepadNext.compatWebviewBootstrap');
     if (window[key]) { window[key].update(revision, initialState); return; }
     let record = {revision, state: initialState, acquired: false}, bridge;
@@ -42,7 +42,7 @@
             }
         });
     }});
-    Object.defineProperty(window, key, {value: Object.freeze({update: (nextRevision, nextState) => {
+    Object.defineProperty(window, key, {value: Object.freeze({snapshot:()=>({hasState:record.state!==undefined,state:record.state===undefined?null:clone(record.state).value}),update: (nextRevision, nextState) => {
         if (record.revision === nextRevision) return;
         record = {revision: nextRevision, state: nextState, acquired: false};
         pending.length = 0; pendingBytes = 0;

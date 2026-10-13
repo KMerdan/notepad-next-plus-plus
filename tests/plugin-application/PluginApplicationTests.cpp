@@ -89,6 +89,7 @@ private:
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
 #include "WebviewService.h"
 #include <QWebEngineView>
+#include <QDockWidget>
 #include <QWebEnginePage>
 #endif
 class PluginApplicationTests:public QObject {
@@ -130,7 +131,7 @@ private slots:
         window->hide();
         window->openFile(file);
         QTRY_VERIFY(window->currentEditor()&&window->currentEditor()->isFile());
-        auto *editor=window->currentEditor();QCOMPARE(editor->getFilePath(),QFileInfo(file).canonicalFilePath());
+        auto *editor=window->currentEditor();QCOMPARE(QDir::fromNativeSeparators(editor->getFilePath()),QFileInfo(file).canonicalFilePath());
         window->show();
         editor->setText("# unsaved 😀中\n");QVERIFY(!editor->isSavedToDisk());QCOMPARE(editor->save(),QFileDevice::NoError);QVERIFY(editor->isSavedToDisk());
 #ifdef NOTEPADNEXT_PLUGINS
@@ -327,7 +328,7 @@ private slots:
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
         if(QString(PLUGIN_TEST_PYTHON).isEmpty())QSKIP("The developer Python interpreter is not configured.");
         const auto paths=PluginRuntime::RuntimePaths::bundled();QCOMPARE(paths.python,QString(PLUGIN_TEST_PYTHON));QVERIFY(QFileInfo(QFileInfo(paths.hostEntry).dir().filePath("python/host.py")).isFile());
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_PYTHON_EXAMPLE,directory+"/python-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PYTHON_EXAMPLE,directory+"/python-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         QFile metadata(QString(PLUGIN_TEST_PYTHON_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot snapshot;QString error;
         QVERIFY(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/python-inspector",{},&snapshot,&error));snapshot.commit=QString(40,'b');const auto id=snapshot.resources[0].id;
         auto *sources=app->getRegisteredResourceRegistry();auto *installer=app->getPluginInstaller();auto *engine=app->getPluginEngine();QVERIFY(sources->registerSource(snapshot,&error));QVERIFY(installer->installDirectory(directory+"/python-release",snapshot.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);
@@ -342,7 +343,7 @@ private slots:
     void productionVSCodeHelloWorld() {
 #ifdef NOTEPADNEXT_PLUGINS
         const auto paths=PluginRuntime::RuntimePaths::bundled();QVERIFY(QFileInfo(QFileInfo(paths.hostEntry).dir().filePath("vscode/adapter.cjs")).isFile());QVERIFY(QFileInfo(QFileInfo(paths.hostEntry).dir().filePath("vscode/types.cjs")).isFile());
-        QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_VSCODE_IMPORTER,PLUGIN_TEST_VSCODE_SOURCE,directory+"/vscode-release"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError().constData());
+        QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_LEGACY_STAGER,PLUGIN_TEST_VSCODE_SOURCE,directory+"/vscode-release"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError().constData());
         QFile metadata(directory+"/vscode-release/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/microsoft/vscode-extension-samples",{},&source,&error),qPrintable(error));source.commit=QString(40,'c');const auto id=source.resources[0].id;
         auto *sources=app->getRegisteredResourceRegistry();auto *installer=app->getPluginInstaller();auto *engine=app->getPluginEngine();QVERIFY(sources->registerSource(source,&error));QVERIFY(installer->installDirectory(directory+"/vscode-release",source.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);QVERIFY(!app->getInstalledPluginRegistry()->plugin(id).enabled);
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);QCOMPARE(manager->findChild<QListWidget*>("installedPlugins")->count(),1);manager->findChild<QPushButton*>("togglePluginEnabled")->click();QCOMPARE(engine->sessionCount(),0);manager->findChild<QPushButton*>("runPluginCommand")->click();
@@ -354,12 +355,33 @@ private slots:
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
         if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
         const auto paths=PluginRuntime::RuntimePaths::bundled();QVERIFY(QFileInfo(QFileInfo(paths.hostEntry).dir().filePath("vscode/webviews.cjs")).isFile());
-        QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_VSCODE_IMPORTER,PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE,directory+"/vscode-webview-release","--webviews","--resource=media"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError().constData());
+        QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_LEGACY_STAGER,PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE,directory+"/vscode-webview-release","--webviews","--resource=media"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError().constData());
         QFile metadata(directory+"/vscode-webview-release/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/microsoft/vscode-extension-samples",{},&source,&error),qPrintable(error));source.commit=QString(40,'d');const auto id=source.resources[0].id,command=source.resources[0].metadata["compatibility"].toObject()["commands"].toArray()[0].toObject()["target"].toString();
         auto *sources=app->getRegisteredResourceRegistry();auto *installer=app->getPluginInstaller();auto *engine=app->getPluginEngine();QVERIFY(sources->registerSource(source,&error));QCOMPARE(engine->sessionCount(),0);QVERIFY(installer->installDirectory(directory+"/vscode-webview-release",source.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);QVERIFY(!app->getInstalledPluginRegistry()->plugin(id).enabled);
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);QCOMPARE(manager->findChild<QListWidget*>("installedPlugins")->count(),1);manager->findChild<QPushButton*>("togglePluginEnabled")->click();QCOMPARE(engine->sessionCount(),0);QAction *action=nullptr;for(auto *candidate:engine->findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+command)action=candidate;QVERIFY(action);action->trigger();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),10000);QTRY_VERIFY(window->findChild<QWebEngineView*>());QPointer<QWebEnginePage> page=window->findChild<QWebEngineView*>()->page();auto preview=std::make_shared<QJsonObject>();
         QTRY_VERIFY2_WITH_TIMEOUT(([&]{if(!page)return false;page->runJavaScript("Math.random=()=>1;JSON.stringify({count:Number(document.querySelector('#lines-of-code-counter')?.textContent),image:document.querySelector('img')?.naturalWidth,styles:document.styleSheets.length})",[preview](const QVariant &value){*preview=QJsonDocument::fromJson(value.toString().toUtf8()).object();});return (*preview)["count"].toInt()>0&&(*preview)["image"].toInt()==48&&(*preview)["styles"].toInt()==2;})(),qPrintable(engine->pluginLog(id)),10000);
         engine->uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),5000);QCOMPARE(engine->resourceCount(),0);QCOMPARE(app->getInstalledPluginRegistry()->plugins().size(),0);QVERIFY(!page);QVERIFY(!window->findChild<QWebEngineView*>());QTRY_VERIFY(window->findChildren<QMessageBox*>().isEmpty());manager->close();
+#endif
+    }
+    void productionHtmlServiceAndHotReload() {
+#ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
+        const auto project=qEnvironmentVariable("NNP_TEST_CONSUMER_HTML_PACKAGE");
+        if(project.isEmpty())QSKIP("Marketplace consumer acceptance is opt-in; provide an executable HTML package.");
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,project,directory+"/html-release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        PluginSources::SourceSnapshot source;QString error;QVERIFY(PluginSources::PluginMetadata::readLocalFile(project+"/notepadnext-plugin.json",&source,&error));const auto id=source.resources[0].id;
+        auto *engine=app->getPluginEngine();auto *installer=app->getPluginInstaller();auto *installed=app->getInstalledPluginRegistry();QVERIFY(app->getRegisteredResourceRegistry()->registerSource(source,&error));
+        QVERIFY(installer->installDirectory(directory+"/html-release",source.resources[0]));QTRY_VERIFY_WITH_TIMEOUT(!installer->isBusy(),10000);QVERIFY(!installed->plugin(id).id().isEmpty());
+        auto *editor=window->currentEditor();editor->setText("<h1>Unsaved HTML</h1><script>window.previewExecuted=42;</script>");app->setEditorLanguage(editor,"HTML");const auto nativeWindow=window->winId();
+        window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);auto *list=manager->findChild<QListWidget*>("installedPlugins");for(int i=0;i<list->count();++i)if(list->item(i)->data(Qt::UserRole)==id)list->setCurrentRow(i);
+        manager->findChild<QPushButton*>("togglePluginEnabled")->click();QCOMPARE(engine->sessionCount(),0);manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),10000);QTRY_VERIFY_WITH_TIMEOUT(window->findChild<QWebEngineView*>(),10000);
+        QPointer<QDockWidget> dock;for(auto *candidate:window->findChildren<QDockWidget*>())if(candidate->findChild<QWebEngineView*>())dock=candidate;QVERIFY(dock);dock->setFloating(true);dock->resize(700,680);dock->move(160,140);QTest::qWait(100);const auto geometry=dock->geometry();
+        const auto read=[&](const QString &script){auto result=std::make_shared<QVariant>();auto ready=std::make_shared<bool>(false);dock->findChild<QWebEngineView*>()->page()->runJavaScript(script,[result,ready](const QVariant &value){*result=value;*ready=true;});QElapsedTimer timer;timer.start();while(!*ready&&timer.elapsed()<5000)QTest::qWait(10);return *result;};
+        QTRY_VERIFY_WITH_TIMEOUT(read("document.getElementById('source')?.value.includes('Unsaved HTML')").toBool(),10000);QTRY_COMPARE(read("window.previewExecuted").toInt(),42);
+        QVERIFY(read("document.getElementById('counter').click();document.getElementById('counter').click();document.getElementById('source').value='<h2>Draft HTML survives reload</h2>';document.getElementById('source').dispatchEvent(new Event('input'));document.getElementById('run').click();true").toBool());
+        QVERIFY(saveDialogPreview(dock,"html-service-before-reload"));engine->reload(id);QTRY_VERIFY2_WITH_TIMEOUT(engine->pluginState(id)=="active",qPrintable(engine->pluginLog(id)),15000);
+        QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);QCOMPARE(read("document.getElementById('counter').textContent").toString(),QString("Counter: 2"));QVERIFY(read("document.getElementById('source').value.includes('Draft HTML survives reload')").toBool());QCOMPARE(read("document.querySelector('#preview h2').textContent").toString(),QString("Draft HTML survives reload"));
+        QVERIFY(read("fetch('api/document').then(r=>r.json()).then(v=>window.backendPid=v.pid);true").toBool());QTRY_VERIFY(read("window.backendPid>0").toBool());QVERIFY(saveDialogPreview(dock,"html-service-after-reload"));
+        engine->uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),10000);QTRY_VERIFY(!dock);QVERIFY(!window->findChild<QWebEngineView*>());QCOMPARE(editor->textRange(0,editor->length()),QByteArray("<h1>Unsaved HTML</h1><script>window.previewExecuted=42;</script>"));editor->setText("");editor->setSavePoint();manager->close();
 #endif
     }
     void realGitHubMarkdownLifecycle() {
@@ -387,26 +409,31 @@ private slots:
             manager->findChild<QPushButton*>("registerResources")->click();
         };
         const auto select=[&](QListWidget *list,const QString &key){for(int row=0;row<list->count();++row)if(list->item(row)->data(Qt::UserRole).toString()==key){list->setCurrentRow(row);return true;}return false;};
-        registerRepo("v0.1.2");QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);QVERIFY(installed->plugin(id).id().isEmpty());QCOMPARE(engine->sessionCount(),0);QVERIFY(select(catalog,id));
+        registerRepo("v0.1.3");QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);QVERIFY(installed->plugin(id).id().isEmpty());QCOMPARE(engine->sessionCount(),0);QVERIFY(select(catalog,id));
 #ifdef Q_OS_MACOS
         QCOMPARE(catalog->currentItem()->icon().name(),QString(":/icons/markdown-preview.svg"));
 #endif
         manager->setPalette(dialogPalette(false));QVERIFY(saveDialogPreview(manager,"lifecycle-discover-available"));manager->setPalette(dialogPalette(true));QVERIFY(saveDialogPreview(manager,"lifecycle-discover-dark"));manager->setPalette(dialogPalette(false));
-        manager->findChild<QPushButton*>("installPlugin")->click();QTRY_COMPARE_WITH_TIMEOUT(installed->plugin(id).package.metadata["version"].toString(),QString("0.1.2"),120000);QVERIFY(!installed->plugin(id).enabled);QCOMPARE(engine->sessionCount(),0);QVERIFY(select(catalog,id));QVERIFY(manager->findChild<QPushButton*>("manageDiscoveredPlugin")->isVisibleTo(tabs->widget(1)));QVERIFY(saveDialogPreview(manager,"lifecycle-installed-disabled"));
+        manager->findChild<QPushButton*>("installPlugin")->click();QTRY_COMPARE_WITH_TIMEOUT(installed->plugin(id).package.metadata["version"].toString(),QString("0.1.3"),120000);QVERIFY(!installed->plugin(id).enabled);QCOMPARE(engine->sessionCount(),0);QVERIFY(select(catalog,id));QVERIFY(manager->findChild<QPushButton*>("manageDiscoveredPlugin")->isVisibleTo(tabs->widget(1)));QVERIFY(saveDialogPreview(manager,"lifecycle-installed-disabled"));
         manager->findChild<QPushButton*>("manageDiscoveredPlugin")->click();QCOMPARE(tabs->currentIndex(),0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(installed->plugin(id).enabled);QCOMPARE(engine->sessionCount(),0);
         QAction *action=nullptr;for(auto *candidate:engine->findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:kmerdan.markdown-preview.open")action=candidate;QVERIFY(action);
 #ifdef Q_OS_MACOS
         QCOMPARE(action->icon().name(),QString(":/icons/markdown-preview.svg"));
 #endif
-        const auto nativeWindow=window->winId();auto *editor=window->currentEditor();editor->setText("# GitHub-installed unsaved 😀中\n");app->setEditorLanguage(editor,"Markdown");action->trigger();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QTRY_VERIFY(window->findChild<QWebEngineView*>());QCOMPARE(window->winId(),nativeWindow);
+        const auto nativeWindow=window->winId();auto *editor=window->currentEditor();QByteArray markdown="# GitHub-installed unsaved 😀中\n";for(int i=0;i<120;++i)markdown+="\nLong unsaved paragraph "+QByteArray::number(i)+".\n";editor->setText(markdown.constData());app->setEditorLanguage(editor,"Markdown");action->trigger();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QTRY_VERIFY(window->findChild<QWebEngineView*>());QCOMPARE(window->winId(),nativeWindow);
+        QPointer<QDockWidget> previewDock;for(auto *dock:window->findChildren<QDockWidget*>())if(dock->findChild<QWebEngineView*>())previewDock=dock;QVERIFY(previewDock);
+        previewDock->setFloating(true);previewDock->resize(600,500);previewDock->move(180,180);QTest::qWait(100);const auto previewGeometry=previewDock->geometry();
+        auto browserState=std::make_shared<int>(-1);QPointer<QWebEnginePage> beforePage=previewDock->findChild<QWebEngineView*>()->page();
+        QTRY_VERIFY_WITH_TIMEOUT(([&]{beforePage->runJavaScript("scrollTo(0,420);scrollY",[browserState](const QVariant &v){*browserState=v.toInt();});return *browserState==420;})(),10000);
         auto *data=engine->findChild<PluginData::Service*>();QVERIFY(data);
         bool stored=false;data->access(id,"storage","lifecycle",true,"survives-update-and-uninstall",[&](const PluginData::Result &result){stored=result.error.isEmpty();},installed->plugin(id).package.repository);QTRY_VERIFY(stored);
         const auto dataRepository=installed->plugin(id).package.repository;
         const auto verifyData=[&]{bool read=false;QString value;data->access(id,"storage","lifecycle",false,QJsonValue::Undefined,[&](const PluginData::Result &result){read=true;value=result.value.toString();},dataRepository);QTRY_VERIFY(read);QCOMPARE(value,QString("survives-update-and-uninstall"));};
         const auto digest=installed->plugin(id).package.digest;window->showPluginManager();
-        const auto before=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>before,35000);QTRY_VERIFY_WITH_TIMEOUT(([&]{for(const auto &source:sources->sources())if(source.repository==dataRepository&&source.ref.isEmpty())return true;return false;})(),35000);QVERIFY(select(local,id));tabs->setCurrentIndex(0);auto *update=manager->findChild<QPushButton*>("updatePlugin");QTRY_VERIFY(update->isEnabled());qInfo()<<"Updating Markdown:"<<update->text()<<engine->pluginState(id);update->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).package.metadata["version"].toString()=="0.1.3"&&!installed->plugin(id).updatePending,120000);QVERIFY(installed->plugin(id).enabled);QVERIFY(installed->plugin(id).package.digest!=digest);QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"lifecycle-installed-updated"));
-        manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_VERIFY_WITH_TIMEOUT(window->findChild<QWebEngineView*>(),10000);
+        const auto before=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>before,35000);QTRY_VERIFY_WITH_TIMEOUT(([&]{for(const auto &source:sources->sources())if(source.repository==dataRepository&&source.ref.isEmpty())return true;return false;})(),35000);QVERIFY(select(local,id));tabs->setCurrentIndex(0);auto *update=manager->findChild<QPushButton*>("updatePlugin");QTRY_VERIFY(update->isEnabled());qInfo()<<"Updating Markdown:"<<update->text()<<engine->pluginState(id);update->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).package.metadata["version"].toString()=="0.1.4"&&!installed->plugin(id).updatePending,120000);QVERIFY(installed->plugin(id).enabled);QVERIFY(installed->plugin(id).package.digest!=digest);QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"lifecycle-installed-updated"));
+        QVERIFY(previewDock);QVERIFY(previewDock->isFloating());QCOMPARE(previewDock->geometry(),previewGeometry);QVERIFY(!beforePage);QTRY_VERIFY_WITH_TIMEOUT(window->findChild<QWebEngineView*>(),10000);
         auto heading=std::make_shared<QString>();QPointer<QWebEnginePage> page=window->findChild<QWebEngineView*>()->page();QTRY_VERIFY_WITH_TIMEOUT(([&]{if(!page)return false;page->runJavaScript("document.querySelector('h1')?.textContent",[heading](const QVariant &v){*heading=v.toString();});return *heading==QStringLiteral("GitHub-installed unsaved 😀中");})(),10000);
+        *browserState=-1;QTRY_VERIFY_WITH_TIMEOUT(([&]{page->runJavaScript("scrollY",[browserState](const QVariant &v){*browserState=v.toInt();});return *browserState==420;})(),10000);
         QVERIFY(saveDialogPreview(window,"lifecycle-running-preview"));
         verifyData();window->showPluginManager();
         manager->findChild<QPushButton*>("togglePluginEnabled")->click();QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),10000);QVERIFY(!installed->plugin(id).enabled);QVERIFY(!window->findChild<QWebEngineView*>());manager->findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(installed->plugin(id).enabled);QCOMPARE(engine->sessionCount(),0);
@@ -418,18 +445,16 @@ private slots:
         const auto registrations=dialogs.count("registerSourceReview");registerRepo({});QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("registerSourceReview")>registrations,35000);tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);
         window->showPluginManager();cancelUninstall=true;manager->findChild<QPushButton*>("uninstallPlugin")->click();QVERIFY(!installed->plugin(id).id().isEmpty());QVERIFY(keptData);cancelUninstall=false;manager->findChild<QPushButton*>("uninstallPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),10000);QVERIFY(installed->plugin(id).id().isEmpty());QVERIFY(!window->findChild<QWebEngineView*>());QVERIFY(select(catalog,id));tabs->setCurrentIndex(1);QVERIFY(manager->findChild<QPushButton*>("installPlugin")->isVisible());verifyData();QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"lifecycle-discover-after-uninstall"));
         cancelInstall=true;const auto installs=dialogs.count("releaseInstallReview");manager->findChild<QPushButton*>("installPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("releaseInstallReview")>installs,35000);QVERIFY(installed->plugin(id).id().isEmpty());QCOMPARE(engine->sessionCount(),0);
-        qInfo()<<"UI lifecycle: repo registration, real v0.1.2 install, lazy enable, preview, real v0.1.3 update, disable/re-enable, source removal with package preserved, independent update check, cancellation and uninstall passed";
+        qInfo()<<"UI lifecycle: repo registration, real v0.1.3 install, lazy enable, preview, real v0.1.4 update with automatic dock and scroll restoration, disable/re-enable, source removal with package preserved, independent update check, cancellation and uninstall passed";
         editor->setText("");editor->setSavePoint();manager->close();
 #endif
     }
     void productionManagerAndExit() {
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
-        const auto standaloneProject=qEnvironmentVariable("NNP_TEST_SDK_MARKDOWN_PROJECT");
-        const auto markdownProject=standaloneProject.isEmpty()?QString(PLUGIN_TEST_MARKDOWN):standaloneProject;
-        const auto markdownPacker=standaloneProject.isEmpty()?QString(PLUGIN_TEST_PACKER):markdownProject+"/tools/plugin-sdk/pack.cjs";
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{markdownPacker,markdownProject,directory+"/release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
+        const auto previewProject=QString(PLUGIN_TEST_PREVIEW);
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,previewProject,directory+"/release"});QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         PluginSources::SourceSnapshot snapshot;QString error;
-        QVERIFY2(PluginSources::PluginMetadata::readLocalFile(markdownProject+"/notepadnext-plugin.json",&snapshot,&error),qPrintable(error));
+        QVERIFY2(PluginSources::PluginMetadata::readLocalFile(previewProject+"/notepadnext-plugin.json",&snapshot,&error),qPrintable(error));
         auto *sources=app->getRegisteredResourceRegistry();auto *installed=app->getInstalledPluginRegistry();auto *installer=app->getPluginInstaller();auto *engine=app->getPluginEngine();
         window->showPluginManager();auto *manager=window->findChild<PluginManagerDialog*>();QVERIFY(manager);
         QTimer modalDriver;int confirmations=0;bool selectedPackage=false;QString selectedPackagePath;
@@ -472,7 +497,7 @@ private slots:
         manager->findChild<QTabWidget*>("pluginManagerTabs")->setCurrentIndex(0);
         QCOMPARE(manager->findChild<QListWidget*>("installedPlugins")->count(),1);
         manager->findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(installed->plugins()[0].enabled);
-        auto *editor=window->currentEditor();editor->setText("# production app unsaved 😀中\n\n- one\n- two\n\n```text\nproduction code\n```\n");
+        auto *editor=window->currentEditor();editor->setText("production app unsaved 😀中\n\n- one\n- two\n\n```text\nproduction code\n```\n");
         app->setEditorLanguage(editor,"Markdown");
         auto *documents=app->getPluginDocumentBridge();
         QCOMPARE(documents->active().toObject()["documentId"].toString(),documents->idFor(editor));
@@ -537,6 +562,13 @@ int main(int argc,char **argv) {
 #ifdef PLUGIN_APPLICATION_EXIT_PROBE
     if(!exitScenario.isEmpty())return runApplicationExitProbe(app,profilePath,exitScenario);
 #endif
-    PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();return QTest::qExec(&tests,argc,argv);
+    PluginApplicationTests tests;tests.app=&app;tests.directory=profile.path();
+    const auto selected=qEnvironmentVariable("NNP_TEST_APPLICATION_FUNCTIONS");
+    QStringList testArgs{QString::fromLocal8Bit(argv[0])};
+    if(!selected.isEmpty())testArgs+=selected.split(',',Qt::SkipEmptyParts);
+    else for(int i=1;i<argc;++i)testArgs.append(QString::fromLocal8Bit(argv[i]));
+    const auto log=qEnvironmentVariable("NNP_TEST_QT_LOG_FILE");
+    if(!log.isEmpty())testArgs<<"-o"<<"-,txt"<<"-o"<<log+",txt";
+    return QTest::qExec(&tests,testArgs);
 }
 #include "PluginApplicationTests.moc"

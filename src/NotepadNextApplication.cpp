@@ -325,6 +325,7 @@ QStringList NotepadNextApplication::getLanguages() const
 
 void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QString &languageName) const
 {
+    NativeAppearance::restoreEditorColors(editor);
     LuaExtension::Instance().setEditor(editor);
 
     getLuaState()->setVariable("languageName", languageName);

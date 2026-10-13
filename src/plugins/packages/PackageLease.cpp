@@ -29,7 +29,15 @@ bool PackageLease::lockStore(QLockFile &lock,int waitMs,const std::atomic_bool *
         if(cancel&&cancel->load())return false;
         if(lock.tryLock(0))return true;
         const auto remaining=qint64(budget)-deadline.elapsed();
-        if(lock.error()!=QLockFile::LockFailedError||remaining<=0)return false;
+        bool retryable=lock.error()==QLockFile::LockFailedError;
+#ifdef Q_OS_WIN
+        // Windows can report PermissionError for a temporarily inaccessible
+        // lock path as well as a persistent ACL failure. Keep the same bounded
+        // worker wait: recovered access can proceed, persistent denial still
+        // fails, and zero-wait GUI callers never wait.
+        retryable=retryable||lock.error()==QLockFile::PermissionError;
+#endif
+        if(!retryable||remaining<=0)return false;
         QThread::msleep(qMin<qint64>(10,remaining));
     }
 }

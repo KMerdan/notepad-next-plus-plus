@@ -1,0 +1,44 @@
+{
+  "manifestVersion": 1,
+  "id": "tests.contract-preview",
+  "name": "Contract Preview Fixture",
+  "version": "0.1.0",
+  "list": false,
+  "description": "Host-owned document, panel and restoration contract probe.",
+  "engines": {
+    "notepadnext": ">=0.15.0 <0.16.0",
+    "api": "^0.1.0"
+  },
+  "runtime": {
+    "kind": "node",
+    "entry": "dist/index.js"
+  },
+  "capabilities": {
+    "required": [
+      "commands@1",
+      "documents.read@1",
+      "documents.events@1",
+      "webviews@1",
+      "webviews.restore@1"
+    ],
+    "optional": []
+  },
+  "activationEvents": [
+    "onCommand:tests.contract-preview.open"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "tests.contract-preview.open",
+        "title": "Open Contract Preview"
+      }
+    ],
+    "menus": [
+      {
+        "location": "plugins",
+        "command": "tests.contract-preview.open",
+        "order": 100
+      }
+    ]
+  }
+}

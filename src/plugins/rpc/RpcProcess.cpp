@@ -128,7 +128,7 @@ public:
         process->start();
     }
     void call(const QString &id, const QString &method, const QJsonValue &params, int timeout) {
-        if (!endpoint || stopping || process->state() != QProcess::Running) { emit responseReceived(id, {}, rpcError(1004, QStringLiteral("Plugin is stopping or unavailable."))); return; }
+        if (!endpoint || stopping || process->state() != QProcess::Running) { emit connectionClosing(); emit responseReceived(id, {}, rpcError(1004, QStringLiteral("Plugin is stopping or unavailable."))); return; }
         if (process->bytesToWrite() >= HighWater && method != QStringLiteral("nnp.shutdown") && method != QStringLiteral("nnp.plugin.deactivate")) {
             emit responseReceived(id, {}, rpcError(1007, QStringLiteral("RPC send queue is overloaded."))); return;
         }
@@ -140,7 +140,7 @@ public:
     void setDeadlinePaused(const QString &id, bool paused) { if (endpoint) endpoint->setDeadlinePaused(id, paused); }
     void stop(const QString &message = QString(),FailureKind kind=FailureKind::TransportFailure) {
         if (stopping) return;
-        stopping = true; reason = message;if(!message.isEmpty())failure=kind;
+        stopping = true; emit connectionClosing(); reason = message;if(!message.isEmpty())failure=kind;
         if(failure!=FailureKind::None)emit failureClassified(int(failure));
         if (endpoint) endpoint->close();
         if (!process || process->state() == QProcess::NotRunning) { end(-1, reason); return; }
@@ -150,6 +150,7 @@ public:
         QTimer::singleShot(500, this, [this] { if (!ended) { killTree(true); process->kill(); } });
     }
 signals:
+    void connectionClosing();
     void started(qint64 pid);
     void exited(int exitCode, const QString &reason,int failureKind);
     void failureClassified(int failureKind);
@@ -196,6 +197,9 @@ private:
     }
     void end(int code, const QString &message) {
         if (ended) return; ended = true;
+        // Mark transport closure before resolving its pending calls. The GUI
+        // must distinguish those consequences from independent command faults.
+        emit connectionClosing();
         if(failure!=FailureKind::None)emit failureClassified(int(failure));
         if (endpoint) endpoint->close();
         killTree(true);
@@ -239,7 +243,7 @@ void RpcProcess::start(const QString &program, const QStringList &arguments, con
 {
     if (worker) return;
     wire=std::make_shared<WireCounters>();
-    lastFailure=FailureKind::None;
+    lastFailure=FailureKind::None;closing=false;
     if (!QFileInfo(program).isAbsolute() || !QFileInfo(program).isExecutable()) { lastFailure=FailureKind::RuntimeUnavailable;emit finished(-1, QStringLiteral("Plugin runtime must be an absolute executable path.")); return; }
     auto *thread = new QThread;
     auto *task = new RpcWorker(hostMethods, program, arguments, workingDirectory,lifetime,wire);
@@ -256,6 +260,7 @@ void RpcProcess::start(const QString &program, const QStringList &arguments, con
     connect(task, &RpcWorker::diagnostic, this, &RpcProcess::diagnostic);
     connect(task, &RpcWorker::stderrOutput, this, &RpcProcess::stderrOutput);
     connect(task, &RpcWorker::backpressure, this, &RpcProcess::backpressure);
+    connect(task,&RpcWorker::connectionClosing,this,[this]{closing=true;});
     connect(task,&RpcWorker::failureClassified,this,[this](int kind){lastFailure=FailureKind(kind);});
     connect(task, &RpcWorker::responseReceived, this, [this](const QString &id, const QJsonValue &result, const QJsonObject &error) {
         auto callback = callbacks.take(id);
@@ -264,7 +269,7 @@ void RpcProcess::start(const QString &program, const QStringList &arguments, con
     connect(task, &RpcWorker::exited, this, [exit](int code, const QString &reason,int kind) { *exit = {code, reason,FailureKind(kind)}; });
     connect(thread, &QThread::finished, this, [this, exit] {
         worker.clear();
-        pid=0;
+        pid=0;closing=true;
         lastFailure=exit->failure;
         const auto pending = callbacks; callbacks.clear();
         for (const auto &callback : pending) callback({}, rpcError(1004, QStringLiteral("Plugin connection closed.")));

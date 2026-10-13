@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-12",
+  "platform": "macOS arm64 / Qt 6.10 / Node 24 / Python 3.12",
+  "scope": "Universal managed-plugin panel restoration and local Node HTML/JS service",
+  "checks": {
+    "node": {
+      "passed": true,
+      "log": "hot-update-node.log",
+      "sha256": "c10686969c9310abdbe7d1ca9d33ca16b276cadc718d95e685f974b8866f3e55"
+    },
+    "webviews": {
+      "passed": true,
+      "log": "hot-update-webviews.log",
+      "sha256": "076e4bf76fd1900664be9e9fdaeb210008b558140b24131d63e4cde1fccd8e35"
+    },
+    "panels": {
+      "passed": true,
+      "log": "hot-update-panels.log",
+      "sha256": "8becaed9cd01fd5ac3760739f88cfff992546c1a15fd5815d1ed3c39cee51d22"
+    },
+    "application": {
+      "passed": true,
+      "log": "hot-update-app.log",
+      "sha256": "a1884922b75dc5052f2c7c78232d14165a2d63930489affdcbc0e0e233b65c41"
+    },
+    "disabled": {
+      "passed": true,
+      "log": "hot-update-disabled.log",
+      "sha256": "2104878b3dcc0fb1dc90f6b8142f6902c5f4bae59da1be53205563ce7ecc1626"
+    }
+  },
+  "lifecycleCycles": 100,
+  "nodeSdkWireTests": 301,
+  "fullWebviewTests": 47,
+  "finalPanelRegressionTests": 7,
+  "applicationTests": 14,
+  "exitTests": 8,
+  "bundleTests": 15,
+  "sdk": {
+    "version": "0.1.1",
+    "sha256": "a48be61e806d8808ca7668bf923089c24500d7d55e815dadab77f8df68e6cad0",
+    "steps": 22,
+    "record": "HotUpdateSdkValidation.json"
+  },
+  "markdownRelease": "https://github.com/KMerdan/notepadnext-markdown-preview/releases/tag/v0.1.4",
+  "markdownUpgrade": "0.1.3 -> 0.1.4 through actual manager with automatic floating dock and scroll restoration",
+  "figma": {
+    "file": "cJPphvdJ1ztsU0tzMFIBpD",
+    "updateFrame": "65:12444"
+  },
+  "limits": [
+    "Plugin restoration callback and serializable state required; arbitrary JS/server memory is not migrated.",
+    "Full WebEngine suite ran before final bounded changes; final panel and real-application regressions ran again afterward.",
+    "Native Linux/Windows acceptance remains pending.",
+    "Host application is a local development build; no formal app publication or Developer ID/notarization."
+  ]
+}

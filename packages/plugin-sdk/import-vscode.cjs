@@ -47,6 +47,7 @@ async function importExtension(input,output,{capabilities=['messages@1'],license
   if(!portable(license))throw new Error('Unsafe license path');
   const extra=new Set(capabilities);for(const capability of extra)if(!['messages@1','documents.write@1','webviews@1','webviews.compat@1','storage@1','configuration@1'].includes(capability))throw new Error('Unsupported importer capability: '+capability);
   if(original.contributes?.configuration!==undefined&&!extra.has('configuration@1'))throw new Error('Configuration contributions require explicit configuration@1');
+  if(extra.has('webviews.compat@1'))extra.add('webviews.restore@1');
   if(extra.has('webviews.compat@1')!==extra.has('webviews@1'))throw new Error('Compatible Webviews require both webviews@1 and webviews.compat@1');
   if(!Array.isArray(resources)||resources.length>16)throw new Error('Expected at most 16 explicit resource paths');
   const builtRoot=main.split('/')[0],copyRoots=[builtRoot];

@@ -868,6 +868,12 @@
             "right",
             "bottom"
           ]
+        },
+        "restorationKey": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$",
+          "minLength": 32,
+          "maxLength": 32
         }
       },
       "required": [
@@ -1712,6 +1718,12 @@
             "minLength": 1,
             "maxLength": 512
           }
+        },
+        "restorationKey": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$",
+          "minLength": 32,
+          "maxLength": 32
         }
       },
       "required": [
@@ -1875,6 +1887,166 @@
         "generation",
         "panelId",
         "type"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.restore.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "panels": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "properties": {
+              "panelId": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{32}$",
+                "minLength": 32,
+                "maxLength": 32
+              },
+              "viewType": {
+                "$ref": "#/$defs/key"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "kind": {
+                "enum": [
+                  "fragment",
+                  "html",
+                  "service"
+                ]
+              },
+              "hasState": {
+                "type": "boolean"
+              },
+              "state": {
+                "$ref": "#/$defs/json"
+              },
+              "options": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "enableScripts",
+                  "localResourceRoots"
+                ],
+                "properties": {
+                  "enableScripts": {
+                    "type": "boolean"
+                  },
+                  "localResourceRoots": {
+                    "type": "array",
+                    "maxItems": 16,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  }
+                }
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "active": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "panelId",
+              "viewType",
+              "title",
+              "kind",
+              "hasState",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "panels"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.restore.result": {
+      "type": "null"
+    },
+    "nnp.webviews.createService.params": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "viewType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "restorationKey": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$",
+          "minLength": 32,
+          "maxLength": 32
+        },
+        "endpoint": {
+          "type": "string",
+          "maxLength": 256,
+          "pattern": "^http://127\\.0\\.0\\.1:[0-9]{4,5}/nnp/[a-f0-9]{32}/index\\.html$"
+        },
+        "nonce": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$"
+        }
+      },
+      "required": [
+        "sessionId",
+        "generation",
+        "viewType",
+        "title",
+        "endpoint",
+        "nonce"
+      ],
+      "additionalProperties": false
+    },
+    "nnp.webviews.createService.result": {
+      "type": "object",
+      "properties": {
+        "panelId": {
+          "$ref": "#/$defs/handle"
+        }
+      },
+      "required": [
+        "panelId"
       ],
       "additionalProperties": false
     }

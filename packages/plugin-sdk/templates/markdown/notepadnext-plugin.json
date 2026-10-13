@@ -18,7 +18,8 @@
       "documents.read@1",
       "documents.events@1",
       "commands@1",
-      "webviews@1"
+      "webviews@1",
+      "webviews.restore@1"
     ],
     "optional": []
   },

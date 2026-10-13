@@ -67,6 +67,11 @@ async function deactivate() {
   stopping=(async()=>{ try { if(typeof plugin?.deactivate==='function') await plugin.deactivate(); } finally { await client?.dispose(); } })();
   return stopping;
 }
+register(endpoint,'nnp.webviews.restore',async params=>{
+  validIdentity(params);if(state!=='active')throw new RpcError(1004,'Restoration requires an active plugin');
+  if(!identity.grantedCapabilities.includes('webviews.restore@1'))throw new RpcError(1003,'Panel restoration was not granted');
+  await client.restorePanels(params.panels);await compatibility?.ready();return null;
+});
 register(endpoint,'nnp.plugin.deactivate',async params=>{ validIdentity(params); await deactivate(); return null; });
 register(endpoint,'nnp.health.ping',params=>{ validIdentity(params); return null; });
 register(endpoint,'nnp.shutdown',async params=>{

@@ -28,11 +28,16 @@ public:
     void stop(const QString &reason="disable");
     void forceStop() {process->terminate();}
     QString state() const { return currentState; }
+    bool isTransportClosing() const { return process->isClosing(); }
     QString sessionId() const { return session; }
     PluginDiagnostics::Failure failureCategory() const {return failure;}
     int resourceCount() const;
     void publishResources();
     PluginWebviews::WebviewService *webviews() const { return views; }
+    PluginWebviews::WebviewService *takeWebviewsForRestart(QObject *owner);
+    void setRestoreSource(PluginWebviews::WebviewService *source);
+    void restoreWebviews(std::function<void(const QJsonObject &)> completed);
+    void commitWebviewRestoration();
 signals:
     void panelsChanged();
     void stateChanged(const QString &state);
@@ -62,6 +67,8 @@ private:
     QPointer<QMainWindow> window;
     QPointer<PluginData::Service> data;
     PluginWebviews::WebviewService *views=nullptr;
+    QPointer<PluginWebviews::WebviewService> restoreSource;
+    bool panelsSuspended=false;
     PluginRpc::RpcProcess *process;
     struct Command { QString registrationId,callbackId; };
     QHash<QString,Command> commands;

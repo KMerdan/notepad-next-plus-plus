@@ -4,7 +4,14 @@
 #include <QTimer>
 #include <cstdio>
 #include <cstdlib>
+#ifdef Q_OS_WIN
+#include <fcntl.h>
+#include <io.h>
+#endif
 int main(int argc,char **argv) {
+#ifdef Q_OS_WIN
+    _setmode(_fileno(stdout),_O_BINARY); // Readiness markers have a fixed wire spelling.
+#endif
     QCoreApplication app(argc,argv);
     if(argc!=4)return 2;
     if(QString::fromLocal8Bit(argv[3])=="linger") {

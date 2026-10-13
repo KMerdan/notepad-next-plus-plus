@@ -1,0 +1,54 @@
+{
+  "manifestVersion": 1,
+  "id": "vscode-samples.helloworld-sample",
+  "name": "helloworld-sample",
+  "description": "HelloWorld example for VS Code",
+  "version": "0.0.1",
+  "list": false,
+  "engines": {
+    "notepadnext": ">=0.15.0 <0.16.0",
+    "api": "^0.1.0"
+  },
+  "runtime": {
+    "kind": "node",
+    "entry": "dist/out/extension.js"
+  },
+  "compatibility": {
+    "kind": "vscode",
+    "version": "0.1.0",
+    "api": "1.100.0",
+    "extensionRoot": "dist",
+    "commands": [
+      {
+        "id": "extension.helloWorld",
+        "target": "vscode-samples.helloworld-sample.command0"
+      }
+    ]
+  },
+  "capabilities": {
+    "required": [
+      "commands@1",
+      "documents.read@1",
+      "documents.delta@1",
+      "messages@1"
+    ],
+    "optional": []
+  },
+  "activationEvents": [
+    "onCommand:vscode-samples.helloworld-sample.command0"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "vscode-samples.helloworld-sample.command0",
+        "title": "Hello World"
+      }
+    ],
+    "menus": [
+      {
+        "location": "plugins",
+        "command": "vscode-samples.helloworld-sample.command0"
+      }
+    ]
+  }
+}

@@ -303,7 +303,7 @@ PluginManagerDialog::PluginManagerDialog(RegisteredResourceRegistry *registry, Q
     connect(updateButton,&QPushButton::clicked,this,&PluginManagerDialog::updatePlugin);
     connect(rollbackButton,&QPushButton::clicked,this,[this,installedId] {
         if(!controller||!installed)return;const auto p=installed->plugin(installedId());if(!p.previous)return;
-        PluginLifecycleDialog review(this,"rollbackPluginReview",tr("Restore Previous Version"),tr("Current commands and panels will close. Enablement and data are preserved. Open the preview again after restoring."),tr("Restore"));
+        PluginLifecycleDialog review(this,"rollbackPluginReview",tr("Restore Previous Version"),tr("Open plugin panels, their placement and saved state will be restored automatically. Enablement and data are preserved."),tr("Restore"));
         PluginReview::identity(review,p.previous->package.metadata);PluginReview::fact(review,tr("Version"),p.package.metadata["version"].toString()+" → "+p.previous->package.metadata["version"].toString());review.finish();
         if(review.exec()==QDialog::Accepted)controller->rollback(p.id());
     });
@@ -621,7 +621,7 @@ void PluginManagerDialog::updatePlugin()
     for(const auto &resource:registry->resources())if(resource.id==id&&resource.repository==plugin.package.repository){
         if(resource.repository.startsWith("file:")){
             const auto path=QFileDialog::getExistingDirectory(this,tr("Select Built Plugin Update"));if(path.isEmpty())return;
-            PluginLifecycleDialog review(this,"localUpdateReview",tr("Update Plugin"),tr("Your enabled setting and plugin data are preserved. Open the preview again after updating. Failed activation restores the previous version."),tr("Update"));
+            PluginLifecycleDialog review(this,"localUpdateReview",tr("Update Plugin"),tr("Open plugin panels, their placement and saved state will be restored automatically. Failed activation or restoration keeps the previous version."),tr("Update"));
             PluginReview::identity(review,resource.metadata);PluginReview::fact(review,tr("Version"),plugin.package.metadata["version"].toString()+" → "+resource.metadata["version"].toString());PluginReview::access(review,resource.metadata);review.finish();
             if(review.exec()==QDialog::Accepted){pendingReleaseUpdate=true;if(!installer->updateDirectory(path,resource))status->setText(tr("Another plugin operation is in progress."));}return;
         }
@@ -634,7 +634,7 @@ void PluginManagerDialog::reviewReleases(const QString &id,const QVector<PluginP
     if(pendingReleaseId!=id)return;pendingReleaseId.clear();const bool updating=pendingReleaseUpdate;
     if(assets.isEmpty()){status->setText(tr("No package matches this catalog version and platform. Refresh the source or check its published releases."));return;}
     auto metadata=pendingReleaseMetadata;if(metadata.isEmpty())for(const auto &resource:registry->resources())if(resource.id==id&&resource.repository==assets[0].repository)metadata=resource.metadata;
-    PluginLifecycleDialog review(this,updating?"releaseUpdateReview":"releaseInstallReview",updating?tr("Update Plugin"):tr("Install Plugin"),updating?tr("Your enabled setting and plugin data are preserved. Open the preview again after updating. Failed activation restores the previous version."):tr("The package will be checked and installed disabled. Enable it when you are ready."),updating?tr("Update"):tr("Install"));
+    PluginLifecycleDialog review(this,updating?"releaseUpdateReview":"releaseInstallReview",updating?tr("Update Plugin"):tr("Install Plugin"),updating?tr("Open plugin panels, their placement and saved state will be restored automatically. Failed activation or restoration keeps the previous version."):tr("The package will be checked and installed disabled. Enable it when you are ready."),updating?tr("Update"):tr("Install"));
     PluginReview::identity(review,metadata);
     if(updating)PluginReview::fact(review,tr("Version"),installed->plugin(id).package.metadata["version"].toString()+" → "+metadata["version"].toString());
     PluginReview::fact(review,tr("Repository"),assets[0].repository);

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 'use strict';
 const { randomUUID,createHash } = require('node:crypto');
+const {AsyncLocalStorage}=require('node:async_hooks');
 const { RpcError } = require('./rpc.cjs');
 const {requireValid,register}=require('./wire.cjs');
 class ResourceScope {
@@ -14,6 +15,7 @@ class ResourceScope {
 }
 function createClient(endpoint, identity, manifest, canCall) {
   const scope = new ResourceScope(), commands = new Map(), watches = new Map(), panels = new Map();
+  const restorers=new Map(),restoration=new AsyncLocalStorage();
   const earlyEvents = []; let awaitingWatch = 0;
   const allWatches=new Map(),earlyAllEvents=[];let awaitingAll=0,earlyAllBytes=0,earlyAllFailure;
   const messages=new Map(),earlyMessages=[];let awaitingMessage=0;
@@ -139,7 +141,12 @@ function createClient(endpoint, identity, manifest, canCall) {
     },
     webviews:{
       owner:createHash('sha256').update(identity.sessionId).digest('hex').slice(0,32),
+      registerRestorer(viewType,callback){
+        if(typeof viewType!=='string'||typeof callback!=='function'||restorers.has(viewType))throw new RpcError(-32602,'Invalid or duplicate panel restorer');
+        restorers.set(viewType,callback);return {dispose:()=>restorers.delete(viewType)};
+      },
       async createCompatible(options,listener) {
+        const scope=restoration.getStore(),restored=scope?.active?scope.panel:undefined;if(restored&&restored.viewType===options.viewType)options={...options,restorationKey:restored.panelId};
         const {panelId}=options;const listeners=new Set(listener?[listener]:[]),entry={listeners,handle:null,closed:false};
         if(panels.has(panelId))throw new RpcError(-32602,'Duplicate panel ID');panels.set(panelId,entry);
         try {
@@ -158,8 +165,15 @@ function createClient(endpoint, identity, manifest, canCall) {
           });
         }catch(error){panels.delete(panelId);listeners.clear();throw error;}
       },
+      async createService(options) {
+        const scope=restoration.getStore(),restored=scope?.active?scope.panel:undefined;if(restored?.viewType===options.viewType)options={...options,restorationKey:restored.panelId};
+        const {panelId}=await call('nnp.webviews.createService',options);
+        const listeners=new Set(),handle=resource(panelId,()=>{panels.delete(panelId);listeners.clear();});panels.set(panelId,{listeners,handle});
+        const alive=()=>{if(!panels.has(panelId))throw new RpcError(1004,'Panel closed');};
+        return Object.assign(handle,{panelId,reveal(preserveFocus=false){alive();return call('nnp.webviews.reveal',{panelId,preserveFocus});},postMessage(message){alive();return call('nnp.webviews.postMessage',{panelId,message});},onEvent(listener){alive();listeners.add(listener);return {dispose:()=>listeners.delete(listener)};}});
+      },
       async create(viewType,title,position='right') {
-      const {panelId}=await call('nnp.webviews.create',{viewType,title,position});
+      const scope=restoration.getStore(),restored=scope?.active?scope.panel:undefined;const {panelId}=await call('nnp.webviews.create',{viewType,title,position,...(restored?.viewType===viewType?{restorationKey:restored.panelId}:{})});
       const listeners=new Set(), handle=resource(panelId,()=>{ panels.delete(panelId); listeners.clear(); });
       panels.set(panelId,{listeners,handle});
       const alive = () => { if(!panels.has(panelId)) throw new RpcError(1004,'Panel closed'); };
@@ -175,9 +189,15 @@ function createClient(endpoint, identity, manifest, canCall) {
     storage:{get:key=>call('nnp.storage.get',{key}),update:(key,value)=>call('nnp.storage.update',value===undefined?{key}:{key,value}),compareExchange:(key,expectedValue,value)=>call('nnp.storage.update',value===undefined?{key,expectedValue}:{key,expectedValue,value})},
     configuration:{get:key=>call('nnp.configuration.get',{key}),update:(key,value)=>call('nnp.configuration.update',value===undefined?{key}:{key,value}),compareExchange:(key,expectedValue,value)=>call('nnp.configuration.update',value===undefined?{key,expectedValue}:{key,expectedValue,value})}
   };
-  return { api, async dispose() {
+  return { api,async restorePanels(descriptors){
+    for(const panel of descriptors){const callback=restorers.get(panel.viewType);if(!callback)throw new RpcError(1005,'No restorer registered for '+panel.viewType);
+      const descriptor=Object.freeze({...panel,state:panel.hasState?panel.state:undefined}),scope={panel:descriptor,active:true};
+      try{await restoration.run(scope,()=>callback(descriptor));}finally{scope.active=false;}
+    }
+    return null;
+  },async dispose() {
     for(const resource of api.subscriptions.splice(0).reverse()) { try { await resource.dispose(); } catch {} }
-    await scope.dispose(); commands.clear(); watches.clear();allWatches.clear(); panels.clear();messages.clear();earlyMessages.length=0;earlyEvents.length=0;earlyAllEvents.length=0;earlyAllBytes=0;
+    await scope.dispose();restorers.clear(); commands.clear(); watches.clear();allWatches.clear(); panels.clear();messages.clear();earlyMessages.length=0;earlyEvents.length=0;earlyAllEvents.length=0;earlyAllBytes=0;
   } };
 }
 module.exports={createClient,ResourceScope};

@@ -1,6 +1,6 @@
 # @notepadnext/plugin-sdk
 
-NotepadNext 插件开发包 **0.1.0**。包含 TypeScript API、插件模板、内存测试宿主、本地调试、metadata Schema 和打包工具。开发者使用 **Node 24**，无需在插件项目里编译 Qt/C++。宿主通过 `activate(context)` 注入运行时 API；SDK 根入口用于 `import type`，不需要插件自己实现 JSON-RPC。
+NotepadNext 插件开发包 **0.1.1**。包含 TypeScript API、插件模板、内存测试宿主、本地调试、metadata Schema 和打包工具。开发者使用 **Node 24**，无需在插件项目里编译 Qt/C++。宿主通过 `activate(context)` 注入运行时 API；SDK 根入口用于 `import type`，不需要插件自己实现 JSON-RPC。
 
 SDK 可打成独立 npm 格式的 `.tgz`，在主仓库之外使用。当前采用本地开发包分发。
 
@@ -9,7 +9,7 @@ SDK 可打成独立 npm 格式的 `.tgz`，在主仓库之外使用。当前采�
 将 SDK tgz 放到一个开发目录，解包并创建 Markdown 项目：
 
 ```sh
-tar -xzf notepadnext-plugin-sdk-0.1.0.tgz
+tar -xzf notepadnext-plugin-sdk-0.1.1.tgz
 node ./package/create.cjs ./markdown-demo --template markdown --id demo.markdown-preview --name "Markdown Preview Demo"
 cd markdown-demo
 npm install --ignore-scripts
@@ -26,7 +26,7 @@ npm run debug
 
 | 命令 | 用途 |
 | --- | --- |
-| `nnp-create <新目录> --template hello\|markdown --id publisher.name` | 创建独立项目；不自动安装或运行代码 |
+| `nnp-create <新目录> --template hello\|markdown\|html-service --id publisher.name` | 创建独立项目；不自动安装或运行代码 |
 | `nnp-debug <项目> --input demo.md --output preview.html [--watch]` | 用模拟宿主执行编译后的 CommonJS 插件 |
 | `nnp-package <项目> <新输出目录>` | 从构建结果生成本地可安装目录 |
 | `nnp-archive <安装目录> <新 ZIP 文件>` | 生成安装器使用的 ZIP 格式 |
@@ -40,6 +40,8 @@ npm run debug
 - [快速开始与项目结构](docs/GettingStarted.zh-CN.md)
 - [Markdown：开发 → 本地调试 → 打包 → 安装 → 更新](docs/MarkdownWalkthrough.zh-CN.md)
 - [调试、断点、日志与故障定位](docs/Debugging.zh-CN.md)
+- [通用热更新与窗口恢复](docs/HotUpdate.zh-CN.md)
+- [本地 Node.js HTML 服务插件](docs/HtmlService.zh-CN.md)
 - [API、生命周期与 metadata](docs/API.zh-CN.md)
 - [API 类型](index.d.ts) / [测试宿主类型](testing.d.ts)
 
@@ -56,7 +58,7 @@ npm test
 npm pack --ignore-scripts --pack-destination ../../build/plugin-sdk
 ```
 
-生成 `build/plugin-sdk/notepadnext-plugin-sdk-0.1.0.tgz`。`files` 白名单携带模板、Schema 和文档，排除仓库、测试、构建物及 node_modules。SDK 本身没有运行时 npm 依赖和安装 hooks。
+生成 `build/plugin-sdk/notepadnext-plugin-sdk-0.1.1.tgz`。`files` 白名单携带模板、Schema 和文档，排除仓库、测试、构建物及 node_modules。SDK 本身没有运行时 npm 依赖和安装 hooks。
 
 ### Visual identity
 

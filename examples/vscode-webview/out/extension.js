@@ -16,6 +16,17 @@ function activate(context) {
             CatCodingPanel.currentPanel.doRefactor();
         }
     }));
+    if (vscode.window.registerWebviewPanelSerializer) {
+        // Make sure we register a serializer in activation event
+        vscode.window.registerWebviewPanelSerializer(CatCodingPanel.viewType, {
+            async deserializeWebviewPanel(webviewPanel, state) {
+                console.log(`Got state: ${state}`);
+                // Reset the webview options so we use latest uri for `localResourceRoots`.
+                webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
+                CatCodingPanel.revive(webviewPanel, context.extensionUri);
+            }
+        });
+    }
 }
 function getWebviewOptions(extensionUri) {
     return {

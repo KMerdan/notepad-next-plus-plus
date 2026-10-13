@@ -73,7 +73,10 @@ def sign(app,identity,log):
         profile=root/'Contents/Resources/QtWebEngineProcess.entitlements' if root else None
         if not profile or not profile.is_file():raise ValueError('Missing SDK WebEngine entitlement profile')
         return profile
+    main=app/'Contents/MacOS'/plistlib.loads((app/'Contents/Info.plist').read_bytes())['CFBundleExecutable']
     for file in verifier.machos(app):
+        # The app seal is created below, after all nested code has been sealed.
+        if file==main:continue
         profile=node_profile if file.name=='nnp-node' else helper_profile(file) if file.name=='QtWebEngineProcess' else None
         command(file,profile)
     bundles=[p for p in app.rglob('*') if p.is_dir() and not p.is_symlink() and p.suffix in ['.framework','.app']]

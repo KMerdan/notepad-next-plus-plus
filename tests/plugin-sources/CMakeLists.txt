@@ -26,7 +26,7 @@ target_include_directories(PluginSourceTests PRIVATE ../../src/dialogs)
 target_link_libraries(PluginSourceTests PRIVATE NotepadNextPluginPackages NotepadNextAppearance Qt6::Widgets Qt6::Test)
 target_compile_definitions(PluginSourceTests PRIVATE PLUGIN_FIXTURES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../../doc/plugin-system/examples")
 set_target_properties(PluginSourceTests PROPERTIES AUTOMOC ON AUTORCC ON)
-add_test(NAME PluginSourceTests COMMAND PluginSourceTests)
+add_test(NAME PluginSourceTests COMMAND PluginSourceTests -o -,txt -o "${CMAKE_BINARY_DIR}/PluginSourceTests.qt.txt,txt")
 set_tests_properties(PluginSourceTests PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
 
 add_executable(PluginManagerPreview

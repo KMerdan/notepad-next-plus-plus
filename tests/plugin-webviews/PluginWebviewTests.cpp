@@ -1,3 +1,4 @@
+#include "../PluginTestFilesystem.h"
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "WebviewService.h"
 #include "HtmlPolicy.h"
@@ -14,6 +15,9 @@
 #include <QFile>
 #include <QImage>
 #include <QMainWindow>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkProxy>
 #include <QSignalSpy>
 #include <QSignalBlocker>
 #include <QTemporaryDir>
@@ -76,6 +80,25 @@ PluginSources::RegisteredResource runtimeFixture(const QString &root,const QStri
     if(!PluginSources::PluginMetadata::parse(QJsonDocument(manifest).toJson(),"https://github.com/tests/runtime",{},&source,&error))qFatal("%s",qPrintable(error));
     return source.resources[0];
 }
+class CommandReplies final:public QObject {
+public:
+    explicit CommandReplies(PluginRuntime::PluginEngine *engine) {
+        const auto observe=[this,engine]{
+            for(auto *session:engine->findChildren<PluginRuntime::PluginSession*>()) {
+                if(sessions.contains(session->sessionId()))continue;
+                sessions.insert(session->sessionId());
+                connect(session,&PluginRuntime::PluginSession::commandFinished,this,[this](const QString &command,const QJsonValue &,const QJsonObject &failure){results[command].append(failure);});
+            }
+        };
+        connect(engine,&PluginPackages::PluginController::statusChanged,this,[observe](const QString &){observe();});
+        observe();
+    }
+    qsizetype count(const QString &command) const {return results.value(command).size();}
+    QJsonObject lastError(const QString &command) const {const auto replies=results.value(command);return replies.isEmpty()?QJsonObject{}:replies.last();}
+private:
+    QSet<QString> sessions;
+    QHash<QString,QList<QJsonObject>> results;
+};
 }
 class PluginWebviewTests : public QObject {
     Q_OBJECT
@@ -135,7 +158,7 @@ private slots:
     void compatibleAssetBoundariesCrossPanelAndScriptPolicy() {
         if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
         QTemporaryDir temp;QDir().mkpath(temp.path()+"/dist/media");const auto write=[&](const QString &name,const QByteArray &data){QFile file(temp.path()+name);if(!file.open(QIODevice::WriteOnly)||file.write(data)!=data.size())qFatal("Cannot write compatible boundary fixture");};
-        write("/dist/media/own.js","window.ownRan=true;");write("/dist/media/foreign.js","window.foreignRan=true;");write("/dist/media/中文 space.js","window.unicodeRan=true;");write("/private.js","window.privateRan=true;");write("/dist/media/bad.js",QByteArray::fromHex("c080"));write("/dist/media/large.js",QByteArray(2*1024*1024+1,' '));QVERIFY(QFile::link(temp.path()+"/private.js",temp.path()+"/dist/media/escape.js"));
+        write("/dist/media/own.js","window.ownRan=true;");write("/dist/media/foreign.js","window.foreignRan=true;");write("/dist/media/中文 space.js","window.unicodeRan=true;");write("/private.js","window.privateRan=true;");write("/dist/media/bad.js",QByteArray::fromHex("c080"));write("/dist/media/large.js",QByteArray(2*1024*1024+1,' '));QVERIFY(PluginTest::link(temp.path()+"/private.js",temp.path()+"/dist/media/escape.js"));
         QMainWindow window;PluginDocuments::DocumentBridge documents;WebviewService service("tests.boundaries",temp.path(),&window,&documents);QJsonObject error;const auto a=QString(32,'a'),b=QString(32,'b'),c=QString(32,'c'),d=QString(32,'d');
         QVERIFY(!service.createCompatible(a,"first","First",true,{"dist/media"},&error).isEmpty());QVERIFY(!service.createCompatible(b,"second","Second",true,{"dist/media"},&error).isEmpty());QVERIFY(!service.createCompatible(c,"disabled","Disabled",false,{"dist/media"},&error).isEmpty());QVERIFY(!service.createCompatible(d,"noRoots","No roots",true,{},&error).isEmpty());
         const auto own=service.mapAsset(a,"dist/media/own.js",&error),foreign=service.mapAsset(b,"dist/media/foreign.js",&error),disabled=service.mapAsset(c,"dist/media/own.js",&error),unicode=service.mapAsset(a,"dist/media/中文 space.js",&error);QVERIFY(error.isEmpty());QVERIFY(unicode.endsWith("/%E4%B8%AD%E6%96%87%20space.js"));
@@ -156,7 +179,7 @@ private slots:
     void adaptedVSCodeWebviewInstalledLifecycle() {
         if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
         using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_VSCODE_IMPORTER,PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE,temp.path()+"/input","--webviews","--resource=media"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError());
+        QTemporaryDir temp;QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_LEGACY_STAGER,PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE,temp.path()+"/input","--webviews","--resource=media"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError());
         QFile metadata(temp.path()+"/input/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/microsoft/vscode-extension-samples",{},&source,&error),qPrintable(error));const auto resource=source.resources[0];const auto id=resource.id;const auto aliases=resource.metadata["compatibility"].toObject()["commands"].toArray();const auto start=aliases[0].toObject()["target"].toString(),refactor=aliases[1].toObject()["target"].toString();
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"text");documents.setActive(doc);auto *menu=window.menuBar()->addMenu("Plugins");PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,menu);QSignalSpy installed(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error);
         QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(!index.plugin(id).enabled);QCOMPARE(engine.sessionCount(),0);QVERIFY(engine.setEnabled(id,true,&error));QCOMPARE(engine.sessionCount(),0);QAction *action=nullptr;for(auto *candidate:engine.findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+start)action=candidate;QVERIFY(action);window.show();action->trigger();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QTRY_VERIFY(window.findChild<QWebEngineView*>());QPointer<QWebEnginePage> page=window.findChild<QWebEngineView*>()->page();auto preview=std::make_shared<QJsonObject>();
@@ -171,7 +194,7 @@ private slots:
         QVERIFY(dock);dock->close();QTRY_VERIFY(!window.findChild<QWebEngineView*>());QTRY_COMPARE(engine.resourceCount(),3);QVERIFY(!page);
         // First-use verification rebuilds menu actions. Reacquire the current
         // action rather than retaining the deleted pre-verification pointer.
-        action=nullptr;for(auto *candidate:engine.findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+start)action=candidate;QVERIFY(action);action->trigger();QTRY_VERIFY2_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),qPrintable(engine.pluginLog(id)),10000);QCOMPARE(engine.sessionCount(),1);QTRY_COMPARE_WITH_TIMEOUT(engine.resourceCount(),9,10000);engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QCOMPARE(engine.resourceCount(),3);QVERIFY(!window.findChild<QWebEngineView*>());engine.invoke(id,start);QTRY_VERIFY2_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),qPrintable(engine.pluginLog(id)),10000);QVERIFY(engine.setEnabled(id,false,&error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.resourceCount(),0);QVERIFY(!window.findChild<QWebEngineView*>());QVERIFY(menu->actions().isEmpty());engine.uninstall(id,true);QTRY_VERIFY(index.plugins().isEmpty());QVERIFY2(failures.isEmpty(),qPrintable(engine.pluginLog(id)));documents.detach(doc);window.takeCentralWidget();
+        action=nullptr;for(auto *candidate:engine.findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+start)action=candidate;QVERIFY(action);action->trigger();QTRY_VERIFY2_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),qPrintable(engine.pluginLog(id)),10000);QCOMPARE(engine.sessionCount(),1);QTRY_COMPARE_WITH_TIMEOUT(engine.resourceCount(),9,10000);engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QCOMPARE(engine.resourceCount(),9);QVERIFY(window.findChild<QWebEngineView*>());engine.invoke(id,start);QTRY_VERIFY2_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),qPrintable(engine.pluginLog(id)),10000);QVERIFY(engine.setEnabled(id,false,&error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.resourceCount(),0);QVERIFY(!window.findChild<QWebEngineView*>());QVERIFY(menu->actions().isEmpty());engine.uninstall(id,true);QTRY_VERIFY(index.plugins().isEmpty());QVERIFY2(failures.isEmpty(),qPrintable(engine.pluginLog(id)));documents.detach(doc);window.takeCentralWidget();
     }
     void compatibleNativeCapabilityPair() {
         if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
@@ -198,7 +221,7 @@ private slots:
     }
     void originalVSCodeHelloWorldInstalledLifecycle() {
         using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_VSCODE_IMPORTER,PLUGIN_TEST_VSCODE_SOURCE,temp.path()+"/input"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError());
+        QTemporaryDir temp;QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_LEGACY_STAGER,PLUGIN_TEST_VSCODE_SOURCE,temp.path()+"/input"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError());
         QFile metadata(temp.path()+"/input/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/microsoft/vscode-extension-samples",{},&source,&error),qPrintable(error));const auto resource=source.resources[0];const auto id=resource.id,command=resource.metadata["compatibility"].toObject()["commands"].toArray()[0].toObject()["target"].toString();
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"text");documents.setActive(doc);auto *menu=window.menuBar()->addMenu("Plugins");
@@ -234,7 +257,7 @@ exports.activate=ctx=>{let count=0;ctx.subscriptions.push(vscode.commands.regist
             QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"text");documents.setActive(doc);
             QList<std::shared_ptr<ScintillaEdit>> extras;QStringList extraIds;if(scenario==2)for(int i=0;i<64;++i){auto extra=std::make_shared<ScintillaEdit>();extraIds.append(documents.attach(extra.get(),{},"text"));extras.append(extra);}
             PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);const PluginData::Store data(temp.path()+"/data",resource.repository);
-            QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","result").value.toInt(),scenario==2?1007:1003,5000);QCOMPARE(engine.resourceCount(),1);QVERIFY(errors.isEmpty());
+            QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","result").value.toInt(),scenario==2?1007:1003,5000);QCOMPARE(engine.resourceCount(),1);QVERIFY(errors.isEmpty());
             engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.resourceCount(),0);for(const auto &extra:extraIds)documents.detach(extra);documents.detach(doc);window.takeCentralWidget();
         }
     }
@@ -283,15 +306,16 @@ exports.activate=async ctx=>{
     void pythonInspectorExample() {
         if(QString(PLUGIN_TEST_PYTHON).isEmpty())QSKIP("An explicit Python interpreter was not configured for this build.");
         using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess pack;pack.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_PYTHON_EXAMPLE,temp.path()+"/release"});QVERIFY(pack.waitForFinished(10000));QVERIFY2(pack.exitCode()==0,pack.readAllStandardError().constData());
+        QTemporaryDir temp;QProcess pack;pack.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PYTHON_EXAMPLE,temp.path()+"/release"});QVERIFY(pack.waitForFinished(10000));QVERIFY2(pack.exitCode()==0,pack.readAllStandardError().constData());
         QFile metadata(QString(PLUGIN_TEST_PYTHON_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/python-inspector",{},&source,&error));const auto resource=source.resources[0];const auto id=resource.id;
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("Python sees unsaved 😀中\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);
+        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);CommandReplies replies(&engine);
         QVERIFY(installer.installDirectory(temp.path()+"/release",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(!index.plugin(id).enabled);QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
         QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);QTRY_VERIFY_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),5000);auto *page=window.findChild<QWebEngineView*>()->page();auto text=std::make_shared<QString>();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{page->runJavaScript("document.querySelector('pre')?.textContent",[text](const QVariant &value){*text=value.toString();});return *text==QStringLiteral("Python sees unsaved 😀中\n");})(),5000);
-        const PluginData::Store store(temp.path()+"/data",resource.repository);QTRY_COMPARE_WITH_TIMEOUT(store.access(id,"storage","lastPreview").value.toObject()["text"].toString(),QStringLiteral("Python sees unsaved 😀中\n"),5000);
+        QTRY_COMPARE_WITH_TIMEOUT(replies.count(id+".open"),1,10000);QVERIFY2(replies.lastError(id+".open").isEmpty(),qPrintable(engine.pluginLog(id)));
+        const PluginData::Store store(temp.path()+"/data",resource.repository);QCOMPARE(store.access(id,"storage","lastPreview").value.toObject()["text"].toString(),QStringLiteral("Python sees unsaved 😀中\n"));
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY(window.findChildren<QDockWidget*>().isEmpty());QVERIFY(errors.isEmpty());documents.detach(doc);window.takeCentralWidget();
     }
     void pythonPluginLifecycle() {
@@ -318,7 +342,7 @@ async def activate(ctx):
 )PY",{"commands@1","documents.read@1","storage@1"},"python");
         QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("shared unsaved 😀中\r\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);
+        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);CommandReplies replies(&engine);
         QVERIFY(installer.installDirectory(temp.path()+"/node",native));QTRY_COMPARE(installed.size(),1);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(nodeId,true,&error));engine.invoke(nodeId,nodeId+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(nodeId),QString("active"),5000);
         QPointer<PluginSession> companion=engine.findChild<PluginSession*>();QVERIFY(companion);const auto companionGeneration=companion->sessionId();
         QVERIFY(installer.installDirectory(temp.path()+"/python",python));QTRY_COMPARE(installed.size(),2);QVERIFY(installed[1][1].toString().isEmpty());
@@ -326,13 +350,15 @@ async def activate(ctx):
         auto *list=manager.findChild<QListWidget*>("installedPlugins");QVERIFY(list);for(int i=0;i<list->count();++i)if(list->item(i)->data(Qt::UserRole)==pyId)list->setCurrentRow(i);
         manager.findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(index.plugin(pyId).enabled);manager.findChild<QPushButton*>("runPluginCommand")->click();
         const PluginData::Store nodeData(temp.path()+"/data",native.repository),pyData(temp.path()+"/data",python.repository);
-        QTRY_COMPARE_WITH_TIMEOUT(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("shared unsaved 😀中\r\n"),5000);
-        QTRY_COMPARE_WITH_TIMEOUT(pyData.access(pyId,"storage","processId").value.isDouble(),true,5000);const auto oldPid=pyData.access(pyId,"storage","processId").value.toInteger();ProcessIdentity oldProcess;QVERIFY2(ProcessIdentity::capture(oldPid,&oldProcess,&error),qPrintable(error));
+        QTRY_COMPARE_WITH_TIMEOUT(replies.count(nodeId+".open"),1,10000);QVERIFY2(replies.lastError(nodeId+".open").isEmpty(),qPrintable(engine.pluginLog(nodeId)));
+        QTRY_COMPARE_WITH_TIMEOUT(replies.count(pyId+".open"),1,10000);QVERIFY2(replies.lastError(pyId+".open").isEmpty(),qPrintable(engine.pluginLog(pyId)));
+        QCOMPARE(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("shared unsaved 😀中\r\n"));
+        QCOMPARE(pyData.access(pyId,"storage","processId").value.isDouble(),true);const auto oldPid=pyData.access(pyId,"storage","processId").value.toInteger();ProcessIdentity oldProcess;QVERIFY2(ProcessIdentity::capture(oldPid,&oldProcess,&error),qPrintable(error));
         QCOMPARE(pyData.access(pyId,"storage","snapshot").value,nodeData.access(nodeId,"storage","snapshot").value);QTest::qWait(200);
         editor.setText("new unsaved 😀中\n");manager.findChild<QPushButton*>("reloadPlugin")->click();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(pyId),QString("active"),8000);
         QTRY_COMPARE_WITH_TIMEOUT(oldProcess.state(),ProcessIdentity::State::Exited,3000);QVERIFY(companion);QCOMPARE(companion->sessionId(),companionGeneration);QCOMPARE(companion->state(),QString("active"));
-        manager.findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("new unsaved 😀中\n"),5000);
-        QTRY_VERIFY_WITH_TIMEOUT(pyData.access(pyId,"storage","processId").value.toInteger()!=oldPid,5000);QCOMPARE(engine.sessionCount(),2);QCOMPARE(engine.resourceCount(),2);
+        manager.findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(replies.count(pyId+".open"),2,10000);QVERIFY2(replies.lastError(pyId+".open").isEmpty(),qPrintable(engine.pluginLog(pyId)));QCOMPARE(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("new unsaved 😀中\n"));
+        QVERIFY(pyData.access(pyId,"storage","processId").value.toInteger()!=oldPid);QCOMPARE(engine.sessionCount(),2);QCOMPARE(engine.resourceCount(),2);
         manager.findChild<QPushButton*>("togglePluginEnabled")->click();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(pyId),QString("disabled"),5000);QCOMPARE(companion->state(),QString("active"));QVERIFY(errors.isEmpty());
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);documents.detach(doc);window.takeCentralWidget();
     }
@@ -391,7 +417,7 @@ async def activate(ctx):
         QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("PRIVATE BUFFER IS NOT A LOG RECORD");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);
-        QVERIFY(installer.installDirectory(input,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,5000);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
+        QVERIFY(installer.installDirectory(input,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,5000);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
         QTRY_COMPARE_WITH_TIMEOUT(errors.size(),1,5000);const auto message=errors[0][1].toString();QVERIFY(message.startsWith("large fault"));QVERIFY(message.size()<=2064);QVERIFY(message.endsWith("[truncated]"));QVERIFY(!message.contains(QChar(0xfffd)));QCOMPARE(engine.pluginState(id),QString("active"));
         PluginDiagnostics::Snapshot snapshot;QTRY_VERIFY_WITH_TIMEOUT(([&]{snapshot=PluginDiagnostics::Store(temp.path()+"/diagnostics").read();return snapshot.error.isEmpty()&&snapshot.failures.size()==1;})(),5000);
         QCOMPARE(snapshot.failures[0].toObject()["category"].toString(),QString("command-failed"));QVERIFY(!QJsonDocument(snapshot.events).toJson().contains("PRIVATE BUFFER IS NOT A LOG RECORD"));
@@ -406,7 +432,7 @@ async def activate(ctx):
         QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);bool retried=false;
         connect(&engine,&PluginEngine::error,this,[&](const QString &,const QString &){if(!retried){retried=true;engine.invoke(id,id+".open");}});
-        QVERIFY(installer.installDirectory(input,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,5000);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
+        QVERIFY(installer.installDirectory(input,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,5000);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
         QTRY_VERIFY_WITH_TIMEOUT(retried,5000);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);QCOMPARE(errors.size(),1);QCOMPARE(engine.sessionCount(),1);QCOMPARE(engine.resourceCount(),1);QVERIFY(engine.pluginFailureMessage(id).isEmpty());
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);documents.detach(doc);window.takeCentralWidget();
     }
@@ -472,13 +498,18 @@ exports.activate=async ctx=>{
         QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy done(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error),operations(&engine,&PluginController::operationFinished);
         const PluginData::Store data(temp.path()+"/data",resource.repository);
-        const auto install=[&](int count){QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(done.size(),count,10000);QVERIFY(done.last()[1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");};
-        install(1);QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(1),5000);QVERIFY(data.access(id,"storage","activation").value.isNull());
-        engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(2),5000);
+        CommandReplies replies(&engine);const auto command=id+".open";
+        // A visible write can precede its command acknowledgement. Polling the
+        // file while another RPC write commits also blocks Windows replacement.
+        // Await the public command/lifecycle signals before inspecting storage.
+        const auto install=[&](int count){const auto before=replies.count(command);QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(done.size(),count,10000);QVERIFY(done.last()[1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),before+1,10000);QVERIFY2(replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));};
+        install(1);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(1));QVERIFY(data.access(id,"storage","activation").value.isNull());
+        const auto beforeReload=operations.size();engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(operations.size(),beforeReload+1,10000);QVERIFY2(operations.last()[1].toString().isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(engine.pluginState(id),QString("active"));
+        const auto beforeCommand=replies.count(command);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),beforeCommand+1,10000);QVERIFY2(replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
         engine.uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(2));
-        install(2);QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(3),5000);
+        install(2);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(3));
         engine.uninstall(id,false);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);QVERIFY(!QFileInfo::exists(data.filePath(id)));QVERIFY(data.access(id,"configuration","theme").value.isNull());
-        install(3);QTRY_COMPARE_WITH_TIMEOUT(data.access(id,"storage","count").value,QJsonValue(1),5000);
+        install(3);QCOMPARE(data.access(id,"storage","count").value,QJsonValue(1));
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY(errors.isEmpty());for(const auto &row:operations)QVERIFY(row[1].toString().isEmpty());
         documents.detach(doc);window.takeCentralWidget();
     }
@@ -521,8 +552,8 @@ exports.activate=async ctx=>{
         using namespace PluginPackages;using namespace PluginRuntime;
         QTemporaryDir temp;const auto root=temp.path()+"/recover";const auto counter=temp.path()+"/counter.json";
         auto quoted=QJsonDocument(QJsonArray{counter}).toJson(QJsonDocument::Compact);quoted=quoted.mid(1,quoted.size()-2);
-        const auto recover=runtimeFixture(root,"tests.recover","const fs=require('node:fs');const file="+quoted+";exports.activate=async ctx=>{const n=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):0;fs.writeFileSync(file,JSON.stringify(n+1));await ctx.commands.register('tests.recover.open',()=>null);if(n===0)setTimeout(()=>process.exit(12),50);};\n");
-        const auto repeatedRoot=temp.path()+"/repeated";const auto repeated=runtimeFixture(repeatedRoot,"tests.repeated","exports.activate=async ctx=>{await ctx.commands.register('tests.repeated.open',()=>null);setTimeout(()=>process.exit(12),50);};\n");
+        const auto recover=runtimeFixture(root,"tests.recover","const fs=require('node:fs');const file="+quoted+";exports.activate=async ctx=>{const n=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):0;fs.writeFileSync(file,JSON.stringify(n+1));await ctx.commands.register('tests.recover.open',()=>{if(n!==0)return null;setTimeout(()=>process.exit(12),50);return new Promise(()=>{});});};\n");
+        const auto repeatedRoot=temp.path()+"/repeated";const auto repeated=runtimeFixture(repeatedRoot,"tests.repeated","exports.activate=async ctx=>{await ctx.commands.register('tests.repeated.open',()=>null);setTimeout(()=>process.exit(12),500);};\n");
         QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy done(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error);
@@ -541,32 +572,39 @@ exports.activate=async ctx=>{
     }
     void lifecycleStress100Cycles() {
         using namespace PluginPackages;using namespace PluginSources;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_MARKDOWN,temp.path()+"/package"});QVERIFY(packer.waitForFinished(10000));QVERIFY(packer.exitCode()==0);
-        QFile metadata(QString(PLUGIN_TEST_MARKDOWN)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));SourceSnapshot source;QString error;QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/markdown-preview",{},&source,&error));
+        QTemporaryDir temp;QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PREVIEW,temp.path()+"/package"});QVERIFY(packer.waitForFinished(10000));QVERIFY(packer.exitCode()==0);
+        QFile metadata(QString(PLUGIN_TEST_PREVIEW)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));SourceSnapshot source;QString error;QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/tests/contract-preview",{},&source,&error));
         InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
         QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("# stress unsaved 😀");window.setCentralWidget(&editor);
         PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"markdown");documents.setActive(doc);
         PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});auto *menu=window.menuBar()->addMenu("Plugins");engine.attachWindow(&window,menu);window.show();
-        QSignalSpy done(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error);QVERIFY(installer.installDirectory(temp.path()+"/package",source.resources[0]));QTRY_COMPARE_WITH_TIMEOUT(done.size(),1,10000);QVERIFY(done[0][1].toString().isEmpty());
+        QSignalSpy done(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error),operations(&engine,&PluginController::operationFinished);QVERIFY(installer.installDirectory(temp.path()+"/package",source.resources[0]));QTRY_COMPARE_WITH_TIMEOUT(done.size(),1,10000);QVERIFY(done[0][1].toString().isEmpty());
         const auto id=source.resources[0].id,command=id+".open";QElapsedTimer duration;duration.start();
         const auto initial=lifecycleNativeSample();QJsonObject warm;QJsonArray samples;int exitedIdentities=0;
         for(int cycle=0;cycle<100;++cycle) {
-            QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,command);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);
+            QVERIFY2(engine.setEnabled(id,true,&error),qPrintable(error));engine.invoke(id,command);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);
             QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QWebEngineView*>().size(),1,10000);QTRY_VERIFY_WITH_TIMEOUT(engine.resourceCount()>=3,5000);
             QList<ProcessIdentity> processes;
             for(auto *process:engine.findChildren<PluginRpc::RpcProcess*>())if(process->processId()>0){ProcessIdentity identity;QVERIFY(ProcessIdentity::capture(process->processId(),&identity,&error));processes.append(identity);}
             QVERIFY(!processes.isEmpty());
-            engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);engine.invoke(id,command);
+            const auto beforeReload=operations.size();engine.reload(id);
+            // Active precedes the queued panel-restoration confirmation. Use
+            // the public lifecycle acknowledgement before the next action.
+            QTRY_COMPARE_WITH_TIMEOUT(operations.size(),beforeReload+1,10000);
+            QCOMPARE(operations.last()[0].toString(),id);
+            QVERIFY2(operations.last()[1].toString().isEmpty(),qPrintable(engine.pluginLog(id)));
+            QCOMPARE(engine.pluginState(id),QString("active"));
             QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QWebEngineView*>().size(),1,10000);QTRY_VERIFY_WITH_TIMEOUT(engine.resourceCount()>=3,5000);
             for(auto *process:engine.findChildren<PluginRpc::RpcProcess*>())if(process->processId()>0){ProcessIdentity identity;QVERIFY(ProcessIdentity::capture(process->processId(),&identity,&error));bool known=false;for(const auto &prior:processes)if(prior.pid==identity.pid&&prior.start==identity.start)known=true;if(!known)processes.append(identity);}
             QVERIFY(processes.size()>=2);
-            QVERIFY(engine.setEnabled(id,false,&error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);
+            QVERIFY2(engine.setEnabled(id,false,&error),qPrintable(error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);
             QCOMPARE(engine.resourceCount(),0);QVERIFY(menu->actions().isEmpty());QTRY_VERIFY(window.findChildren<QWebEngineView*>().isEmpty());QTRY_VERIFY(window.findChildren<QDockWidget*>().isEmpty());QTRY_VERIFY(engine.findChildren<PluginSession*>().isEmpty());
             for(const auto &identity:processes){QTRY_VERIFY_WITH_TIMEOUT(identity.state()==ProcessIdentity::State::Exited,5000);++exitedIdentities;}
             const auto snapshot=lifecycleNativeSample();QCOMPARE(snapshot["focusConnections"],initial["focusConnections"]);if(cycle==2)warm=snapshot;
             samples.append(QJsonObject{{"cycle",cycle+1},{"resources",engine.resourceCount()},{"sessions",engine.sessionCount()},{"ownedNodeIdentitiesExited",processes.size()},{"native",snapshot}});
             if(cycle%10==0)qInfo()<<"lifecycle cycle"<<cycle+1<<"owned resources"<<engine.resourceCount();
-            QVERIFY2(duration.elapsed()<180000,"100 lifecycle cycles exceeded the test's overall budget.");
+            // This verifies ownership across all 100 cycles; shared-runner
+            // speed is recorded below. CTest enforces the overall time limit.
         }
         // Let deferred provider cleanup settle; RSS is recorded, not required
         // to equal its allocator/cache baseline. Handles must return after
@@ -579,6 +617,69 @@ exports.activate=async ctx=>{
 #endif
         qInfo()<<"100 lifecycle cycles elapsed ms"<<duration.elapsed();QVERIFY2(failures.isEmpty(),qPrintable(engine.pluginLog(id)));
         engine.shutdown();QTRY_VERIFY(engine.isIdle());documents.detach(doc);window.takeCentralWidget();
+    }
+    void updateDuringInitialActivationDoesNotPreserveHiddenStagedPanels(){
+        using namespace PluginPackages;using namespace PluginRuntime;QTemporaryDir temp;QString error;const QString id="tests.activation-update";
+        const auto initial=runtimeFixture(temp.path()+"/first",id,"exports.activate=async ctx=>{await ctx.commands.register('tests.activation-update.open',()=>null);const p=await ctx.webviews.create('staged','Staged');await p.reveal();await new Promise(r=>setTimeout(r,2000));};",{"commands@1","webviews@1"});
+        auto candidate=runtimeFixture(temp.path()+"/next",id,"exports.activate=async ctx=>{await ctx.commands.register('tests.activation-update.open',()=>null);};",{"commands@1"});candidate.metadata["version"]="1.1.0";QFile file(temp.path()+"/next/notepadnext-plugin.json");QVERIFY(file.open(QIODevice::WriteOnly));file.write(QJsonDocument(candidate.metadata).toJson());file.close();
+        InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());QMainWindow window;PluginDocuments::DocumentBridge documents;PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));
+        QSignalSpy installed(&installer,&InstallationService::finished),operations(&engine,&PluginController::operationFinished);QVERIFY(installer.installDirectory(temp.path()+"/first",initial));QTRY_COMPARE(installed.size(),1);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
+        QTRY_VERIFY_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),10000);QCOMPARE(engine.pluginState(id),QString("activating"));QVERIFY(installer.updateDirectory(temp.path()+"/next",candidate));QTRY_COMPARE_WITH_TIMEOUT(operations.size(),1,10000);QVERIFY(operations[0][1].toString().isEmpty());QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.pluginState(id),QString("ready"));QVERIFY(index.plugin(id).validationDeferred);QTRY_VERIFY(!window.findChild<QWebEngineView*>());engine.shutdown();
+    }
+    void serviceEndpointsRequireOwnedLoopbackPaths(){
+        QTemporaryDir temp;QMainWindow window;PluginDocuments::DocumentBridge documents;WebviewService service("tests.endpoint",temp.path(),&window,&documents);
+        for(const auto &url:QStringList{"https://example.com/index.html","http://localhost:3000/nnp/"+QString(32,'a')+"/index.html","http://127.0.0.1:3000/index.html","http://127.0.0.1:3000/nnp/"+QString(32,'a')+"/index.html?token=x"}) {
+            bool done=false;service.createService("test","Test",QUrl(url),QString(32,'b'),"test-session",{},[&](const QJsonObject &,const QJsonObject &error){done=true;QCOMPARE(error["code"].toInt(),-32602);});QVERIFY(done);QCOMPARE(service.panelCount(),0);
+        }
+    }
+    void universalHotUpdatePreservesPanelsAndDoesNotReplayCommands_data(){QTest::addColumn<bool>("service");QTest::addColumn<bool>("sharedService");QTest::newRow("compatible-html")<<false<<false;QTest::newRow("node-http-service")<<true<<false;QTest::newRow("shared-node-service")<<true<<true;}
+    void universalHotUpdatePreservesPanelsAndDoesNotReplayCommands() {
+        QFETCH(bool,service);QFETCH(bool,sharedService);
+        using namespace PluginPackages;using namespace PluginRuntime;
+        QTemporaryDir temp;QString error;const QString id="tests.universal-reload";
+        const auto makePackage=[&](const QString &version,bool broken=false) {
+            const auto root=temp.path()+"/input-"+version;
+            QByteArray code=R"JS(exports.activate=async ctx=>{
+ const open=async descriptor=>{
+   const p=await ctx.webviews.createCompatible({panelId:require('node:crypto').randomBytes(16).toString('hex'),viewType:'counter',title:descriptor?.title??'Counter',enableScripts:true,localResourceRoots:['dist']});
+   await p.setDocument('<!doctype html><style nonce="test">body{height:4000px}</style><input id="draft" value="initial"><h1>VERSION</h1><script nonce="test">const api=acquireVsCodeApi();window.restored=api.getState();if(window.restored?.draft)document.getElementById(\"draft\").value=window.restored.draft;</script>');await p.reveal(true);
+ };
+ ctx.subscriptions.push(ctx.webviews.registerRestorer('counter',open));
+ await ctx.commands.register('tests.universal-reload.open',async()=>{await ctx.storage.update('runs',(await ctx.storage.get('runs')??0)+1);await open();await open();});
+};)JS";
+            if(service){
+                code.replace("const p=await ctx.webviews.createCompatible({panelId:require('node:crypto').randomBytes(16).toString('hex'),viewType:'counter',title:descriptor?.title??'Counter',enableScripts:true,localResourceRoots:['dist']});\n   await p.setDocument(","const html=(");
+                code.replace("');await p.reveal(true);", "');const server=await require('./local-service.cjs').startLocalService(ctx,(request,response,file)=>{if(file==='api/pid'){response.setHeader('Content-Type','application/json');response.end(JSON.stringify({pid:process.pid}));}else{response.setHeader('Content-Type','text/html');response.end(html);}});const p=await ctx.webviews.createService({viewType:'counter',title:descriptor?.title??'Counter',endpoint:server.endpoint,nonce:server.nonce});await p.reveal(true);");
+            }
+            if(sharedService){code.replace("const open=async descriptor=>{","let sharedServer;const open=async descriptor=>{");code.replace("const server=await require(","const server=sharedServer??await require(");code.replace("const p=await ctx.webviews.createService", "sharedServer=server;const p=await ctx.webviews.createService");}
+            code.replace("VERSION",version.toUtf8());if(broken)code.replace("registerRestorer('counter',open)","registerRestorer('counter',()=>{throw new Error('intentional restore failure');})");
+            auto resource=runtimeFixture(root,id,code,{"commands@1","storage@1","webviews@1","webviews.compat@1","webviews.service@1","webviews.restore@1"});
+            if(service&&!QFile::copy(QString(PLUGIN_TEST_HOST).replace("plugin-host/host.cjs","plugin-sdk/local-service.cjs"),root+"/dist/local-service.cjs"))qFatal("service helper copy");resource.metadata["version"]=version;QFile file(root+"/notepadnext-plugin.json");if(!file.open(QIODevice::WriteOnly))qFatal("fixture");file.write(QJsonDocument(resource.metadata).toJson());return qMakePair(root,resource);
+        };
+        const auto v1=makePackage("1.0.0"),v2=makePackage("1.1.0"),bad=makePackage("1.2.0",true);
+        InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
+        PluginData::Store store(temp.path()+"/data",v1.second.repository);QMainWindow window;PluginDocuments::DocumentBridge documents;prepareWindow(&window);window.resize(1100,700);window.show();const auto nativeId=window.winId();
+        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});auto *menu=window.menuBar()->addMenu("Plugins");engine.attachWindow(&window,menu);
+        QSignalSpy installed(&installer,&InstallationService::finished),operations(&engine,&PluginController::operationFinished);
+        QVERIFY(installer.installDirectory(v1.first,v1.second));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,10000);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
+        QTRY_COMPARE_WITH_TIMEOUT(engine.pluginPanelCount(id),2,10000);QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QWebEngineView*>().size(),2,10000);
+        const auto docks=window.findChildren<QDockWidget*>();QCOMPARE(docks.size(),2);QPointer<QDockWidget> floating=docks[0],docked=docks[1];floating->setFloating(true);floating->resize(600,500);floating->move(180,160);QTest::qWait(100);const auto geometry=floating->geometry();
+        const auto run=[&](QWebEnginePage *page,const QString &script){QVariant result;bool ready=false;page->runJavaScript(script,[&](const QVariant &value){result=value;ready=true;});QElapsedTimer timer;timer.start();while(!ready&&timer.elapsed()<5000)QTest::qWait(10);return result;};
+        QTRY_VERIFY_WITH_TIMEOUT(run(floating->findChild<QWebEngineView*>()->page(),"document.querySelector('h1')?.textContent").toString()=="1.0.0",10000);
+        QVERIFY(run(floating->findChild<QWebEngineView*>()->page(),"document.getElementById('draft').value='unsaved draft'+'x'.repeat(4500);api.setState({count:37,draft:document.getElementById('draft').value});scrollTo(0,420);true").toBool());
+        QTest::qWait(100);const auto oldEndpoint=floating->findChild<QWebEngineView*>()->page()->url();QCOMPARE(store.access(id,"storage","runs").value,QJsonValue(1));
+        QVERIFY(installer.updateDirectory(v2.first,v2.second));QTRY_COMPARE_WITH_TIMEOUT(operations.size(),1,15000);QVERIFY2(operations[0][1].toString().isEmpty(),qPrintable(operations[0][1].toString()));
+        QVERIFY(floating&&docked);QCOMPARE(window.winId(),nativeId);QVERIFY(floating->isFloating());QCOMPARE(floating->geometry(),geometry);QCOMPARE(window.dockWidgetArea(docked),Qt::RightDockWidgetArea);QCOMPARE(engine.pluginPanelCount(id),2);QCOMPARE(store.access(id,"storage","runs").value,QJsonValue(1));
+        auto *page=floating->findChild<QWebEngineView*>()->page();
+        if(service){
+            QVERIFY(page->url()!=oldEndpoint);QNetworkAccessManager probe;probe.setProxy(QNetworkProxy::NoProxy);QNetworkRequest request(oldEndpoint);request.setTransferTimeout(2000);auto *reply=probe.get(request);QTRY_VERIFY_WITH_TIMEOUT(reply->isFinished(),3000);QVERIFY(reply->error()!=QNetworkReply::NoError);
+            QVERIFY(page->url().toString().startsWith("http://127.0.0.1:"));QCOMPARE(run(page,"fetch('api/pid').then(r=>r.json()).then(v=>window.servicePid=v.pid);true").toBool(),true);QTRY_VERIFY(run(page,"window.servicePid>0").toBool());}
+        QCOMPARE(run(page,"document.querySelector('h1').textContent").toString(),QString("1.1.0"));QCOMPARE(run(page,"document.getElementById('draft').value").toString(),QString("unsaved draft")+QString(4500,'x'));QCOMPARE(run(page,"window.restored.count").toInt(),37);QTRY_COMPARE(run(page,"scrollY").toInt(),420);
+        QVERIFY(installer.updateDirectory(bad.first,bad.second));QTRY_VERIFY_WITH_TIMEOUT(operations.size()>=2,15000);QTRY_VERIFY2_WITH_TIMEOUT(engine.pluginState(id)=="active",qPrintable(engine.pluginLog(id)),15000);QCOMPARE(index.plugin(id).package.metadata["version"].toString(),QString("1.1.0"));QVERIFY(floating&&docked);QCOMPARE(floating->geometry(),geometry);QCOMPARE(run(floating->findChild<QWebEngineView*>()->page(),"window.restored.count").toInt(),37);QCOMPARE(store.access(id,"storage","runs").value,QJsonValue(1));
+        docked->close();QTRY_COMPARE(engine.pluginPanelCount(id),1);
+        if(sharedService){auto *remaining=floating->findChild<QWebEngineView*>()->page();QVERIFY(run(remaining,"window.stillConnected=false;fetch('api/pid').then(r=>r.json()).then(v=>window.stillConnected=v.pid>0);true").toBool());QTRY_VERIFY(run(remaining,"window.stillConnected").toBool());}
+        engine.reload(id);QTRY_VERIFY2_WITH_TIMEOUT(engine.pluginState(id)=="active",qPrintable(engine.pluginLog(id)),15000);QCOMPARE(engine.pluginPanelCount(id),1);QVERIFY(floating);QCOMPARE(floating->geometry(),geometry);QCOMPARE(store.access(id,"storage","runs").value,QJsonValue(1));
+        engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCoreApplication::sendPostedEvents(nullptr,QEvent::DeferredDelete);QVERIFY(!floating);QCOMPARE(window.findChildren<QWebEngineView*>().size(),0);
     }
     void updateValidationAndRollback() {
         using namespace PluginPackages;using namespace PluginSources;using namespace PluginRuntime;
@@ -624,13 +725,13 @@ exports.activate=async ctx=>{
     void installedManagerLifecycle() {
         using namespace PluginPackages;using namespace PluginSources;using namespace PluginRuntime;
         QVERIFY(QFileInfo(PLUGIN_TEST_NODE).isExecutable());QTemporaryDir temp;
-        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_PACKER,PLUGIN_TEST_MARKDOWN,temp.path()+"/release"});
+        QProcess packer;packer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PREVIEW,temp.path()+"/release"});
         QVERIFY(packer.waitForFinished(10000));QVERIFY2(packer.exitCode()==0,packer.readAllStandardError().constData());
         RegisteredResourceRegistry sources(temp.path()+"/sources.json");InstalledPluginRegistry installed(temp.path()+"/installed.json",temp.path()+"/store");QString error;
-        QVERIFY(sources.load(&error));QVERIFY(installed.load(&error));SourceSnapshot snapshot;QFile metadata(QString(PLUGIN_TEST_MARKDOWN)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));
-        QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/markdown-preview",{},&snapshot,&error));snapshot.commit=QString(40,'a');QVERIFY(sources.registerSource(snapshot,&error));
+        QVERIFY(sources.load(&error));QVERIFY(installed.load(&error));SourceSnapshot snapshot;QFile metadata(QString(PLUGIN_TEST_PREVIEW)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));
+        QVERIFY(PluginMetadata::parse(metadata.readAll(),"https://github.com/tests/contract-preview",{},&snapshot,&error));snapshot.commit=QString(40,'a');QVERIFY(sources.registerSource(snapshot,&error));
         InstallationService installer(&installed,PluginEngine::packagePolicy());
-        QMainWindow window;window.resize(900,600);ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("# installed unsaved 😀中");window.setCentralWidget(&editor);
+        QMainWindow window;window.resize(900,600);ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("installed unsaved 😀中");window.setCentralWidget(&editor);
         PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"markdown");documents.setActive(doc);
         PluginEngine engine(&installed,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});auto *menu=window.menuBar()->addMenu("Plugins");engine.attachWindow(&window,menu);QSignalSpy errors(&engine,&PluginEngine::error);
         PluginManagerDialog manager(&sources,&window,nullptr,&installed,&installer,&engine);
@@ -677,7 +778,7 @@ exports.activate=async ctx=>{
     void imageContainment() {
         QTemporaryDir root,outside; QVERIFY(root.isValid()); QVERIFY(outside.isValid()); QImage image(10,10,QImage::Format_ARGB32); image.fill(Qt::green);
         QVERIFY(image.save(root.filePath("inside.png"))); QVERIFY(image.save(outside.filePath("outside.png")));
-        QVERIFY(QFile::link(outside.filePath("outside.png"),root.filePath("escape.png")));
+        QVERIFY(PluginTest::link(outside.filePath("outside.png"),root.filePath("escape.png")));
         QByteArray bytes,mime; QString error; QVERIFY(HtmlPolicy::readImage(root.path(),"inside.png",&bytes,&mime,&error)); QCOMPARE(mime,QByteArray("image/png"));
         for(const auto &path:{"../outside.png","/etc/passwd","escape.png","file:///tmp/x.png","sub\\x.png","missing.png"}) QVERIFY(!HtmlPolicy::readImage(root.path(),path,&bytes,&mime,&error));
         QFile fake(root.filePath("fake.png")); QVERIFY(fake.open(QIODevice::WriteOnly)); fake.write("<svg/>"); fake.close(); QVERIFY(!HtmlPolicy::readImage(root.path(),"fake.png",&bytes,&mime,&error));
@@ -830,16 +931,19 @@ exports.activate=async ctx=>{
         service->clear();QCOMPARE(service->resourceCount(),0);QCOMPARE(service->panelCount(),0);
     }
     void realMarkdownImagesAndDocumentStates() {
+        const auto consumer=qEnvironmentVariable("NNP_TEST_CONSUMER_MARKDOWN_PACKAGE");
+        if(consumer.isEmpty())QSKIP("Marketplace consumer acceptance is opt-in; provide an executable Markdown package.");
         QTemporaryDir root;QImage image(24,16,QImage::Format_RGB32);image.fill(Qt::red);QVERIFY(image.save(root.filePath(QStringLiteral("diagram中.png"))));
         QFile onDisk(root.filePath("unsaved.md"));QVERIFY(onDisk.open(QIODevice::WriteOnly));QVERIFY(onDisk.write("# saved disk content\n")>0);onDisk.close();
-        QFile metadata(QStringLiteral(PLUGIN_TEST_MARKDOWN "/notepadnext-plugin.json"));QVERIFY(metadata.open(QIODevice::ReadOnly));
+        QFile metadata(consumer+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));
         QMainWindow window;window.resize(1000,600);ScintillaEdit first,second;first.setCodePage(SC_CP_UTF8);second.setCodePage(SC_CP_UTF8);
         const QByteArray text="# unsaved rich preview 😀中\n\n## Section\n\n- one\n- two\n\n```text\ncode 😀中\n```\n\n![local](diagram%E4%B8%AD.png)\n\n![missing](absent.png)\n\n![remote](https://example.com/remote.png)\n\n<script>window.markdownInjected=true</script>\n";
         first.setText(text.constData());second.setText("# second unsaved buffer\n");
         PluginDocuments::DocumentBridge documents;const auto a=documents.attach(&first,QUrl::fromLocalFile(root.filePath("unsaved.md")),"markdown"),b=documents.attach(&second,QUrl(),"markdown");documents.setActive(a);
-        PluginRuntime::PluginSession session(QJsonDocument::fromJson(metadata.readAll()).object(),QStringLiteral(PLUGIN_TEST_MARKDOWN),QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
+        const auto manifest=QJsonDocument::fromJson(metadata.readAll()).object();
+        PluginRuntime::PluginSession session(manifest,consumer,QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
         QSignalSpy commands(&session,&PluginRuntime::PluginSession::commandFinished),stopped(&session,&PluginRuntime::PluginSession::stopped);
-        session.invoke("notepadnext.markdown-preview.open");QTRY_COMPARE_WITH_TIMEOUT(commands.size(),1,10000);QVERIFY(commands.last()[2].toJsonObject().isEmpty());
+        session.invoke(manifest["id"].toString()+".open");QTRY_COMPARE_WITH_TIMEOUT(commands.size(),1,10000);QVERIFY(commands.last()[2].toJsonObject().isEmpty());
         QPointer<WebviewService> service=session.webviews();QVERIFY(service);QCOMPARE(service->panelCount(),1);auto *view=window.findChild<QWebEngineView*>();QVERIFY(view);QPointer<QWebEnginePage> page=view->page();window.show();
         auto state=std::make_shared<QJsonObject>();
         const auto read=[page,state]{if(page)page->runJavaScript(R"JS((()=>{if(!document.body)return {};const image=document.querySelector('img');return {heading:document.querySelector('h1')?.textContent,subheading:document.querySelector('h2')?.textContent,items:document.querySelectorAll('li').length,code:document.querySelector('pre code')?.textContent,width:image?.naturalWidth,height:image?.naturalHeight,imageSource:image?.src,placeholders:Array.from(document.querySelectorAll('.image-error'),e=>e.textContent),body:document.body.innerText,error:document.querySelector('.preview-error')?.textContent,injected:window.markdownInjected===true};})())JS",[state](const QVariant &value){*state=QJsonObject::fromVariantMap(value.toMap());});};
@@ -864,14 +968,17 @@ exports.activate=async ctx=>{
         session.stop();QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000);QCOMPARE(session.resourceCount(),0);QVERIFY(!service);QTRY_VERIFY(!page);QTRY_VERIFY(window.findChildren<QDockWidget*>().isEmpty());QCOMPARE(first.textRange(0,first.length()),QByteArray("# obsolete document A\n"));QCOMPARE(second.textRange(0,second.length()),QByteArray("# recovered preview\n"));
     }
     void realMarkdownSession() {
-        QFile metadata(QStringLiteral(PLUGIN_TEST_MARKDOWN "/notepadnext-plugin.json")); QVERIFY(metadata.open(QIODevice::ReadOnly));
-        QVERIFY2(QFile::exists(QStringLiteral(PLUGIN_TEST_MARKDOWN "/dist/index.js")),"Build the Markdown example before running integration tests.");
+        const auto consumer=qEnvironmentVariable("NNP_TEST_CONSUMER_MARKDOWN_PACKAGE");
+        if(consumer.isEmpty())QSKIP("Marketplace consumer acceptance is opt-in; provide an executable Markdown package.");
+        QFile metadata(consumer+"/notepadnext-plugin.json"); QVERIFY(metadata.open(QIODevice::ReadOnly));
+        QVERIFY2(QFile::exists(consumer+"/dist/index.js"),"Provide the prebuilt Marketplace Markdown package.");
         QMainWindow window; window.resize(1000,600); ScintillaEdit editor; editor.setCodePage(SC_CP_UTF8); editor.setText("# unsaved preview\n\n- item\n"); window.setCentralWidget(&editor); window.show();
         PluginDocuments::DocumentBridge documents; const auto document=documents.attach(&editor,{},"markdown"); documents.setActive(document);
-        PluginRuntime::PluginSession session(QJsonDocument::fromJson(metadata.readAll()).object(),QStringLiteral(PLUGIN_TEST_MARKDOWN),QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
+        const auto manifest=QJsonDocument::fromJson(metadata.readAll()).object();
+        PluginRuntime::PluginSession session(manifest,consumer,QStringLiteral(PLUGIN_TEST_NODE),QStringLiteral(PLUGIN_TEST_HOST),&window,&documents);
         connect(&session,&PluginRuntime::PluginSession::stderrOutput,this,[](const QByteArray &bytes) { qWarning().noquote()<<QString::fromUtf8(bytes); });
         QSignalSpy commands(&session,&PluginRuntime::PluginSession::commandFinished),stopped(&session,&PluginRuntime::PluginSession::stopped),failures(&session,&PluginRuntime::PluginSession::failed);
-        session.invoke("notepadnext.markdown-preview.open"); session.invoke("notepadnext.markdown-preview.open");
+        session.invoke(manifest["id"].toString()+".open"); session.invoke(manifest["id"].toString()+".open");
         QTRY_COMPARE_WITH_TIMEOUT(commands.size(),1,15000); QVERIFY2(failures.isEmpty(),qPrintable(failures.isEmpty() ? QString() : failures.first()[0].toString())); QVERIFY(commands[0][2].toJsonObject().isEmpty()); QCOMPARE(session.state(),QString("active"));
         auto *service=session.webviews(); QVERIFY(service); QCOMPARE(service->panelCount(),1); auto docks=window.findChildren<QDockWidget*>(); QCOMPARE(docks.size(),1);
         auto *view=docks.first()->findChild<QWebEngineView*>(); QVERIFY(view); auto *page=view->page();
@@ -880,7 +987,7 @@ exports.activate=async ctx=>{
         QTRY_VERIFY_WITH_TIMEOUT(([&]{readHeading();return heading=="unsaved preview";})(),10000);
         editor.setText("# changed buffer\n"); QTRY_VERIFY_WITH_TIMEOUT(([&]{readHeading();return heading=="changed buffer";})(),10000);
         // Closing reclaims the panel and watch, then the command recreates both.
-        docks.first()->close(); QTRY_COMPARE(service->panelCount(),0); const auto before=commands.size(); session.invoke("notepadnext.markdown-preview.open"); QTRY_COMPARE(commands.size(),before+1);
+        docks.first()->close(); QTRY_COMPARE(service->panelCount(),0); const auto before=commands.size(); session.invoke(manifest["id"].toString()+".open"); QTRY_COMPARE(commands.size(),before+1);
         QVERIFY2(commands.last()[2].toJsonObject().isEmpty(),qPrintable(QString::fromUtf8(QJsonDocument(commands.last()[2].toJsonObject()).toJson(QJsonDocument::Compact))));
         QCOMPARE(service->panelCount(),1);
         session.stop(); QCOMPARE(session.resourceCount(),0); QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000); QCOMPARE(session.state(),QString("stopped")); QVERIFY(failures.isEmpty());
