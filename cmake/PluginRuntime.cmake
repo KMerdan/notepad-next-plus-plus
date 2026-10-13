@@ -3,37 +3,19 @@
 set(NOTEPADNEXT_PLUGIN_NODE "" CACHE FILEPATH "Verified pinned Node binary to copy into the application")
 if(NOTEPADNEXT_PLUGINS)
     set(plugin_profile_node false)
-    set(plugin_profile_python false)
     set(plugin_profile_webviews false)
     if(NOTEPADNEXT_PLUGIN_NODE)
         set(plugin_profile_node true)
-    endif()
-    if(NOTEPADNEXT_PLUGIN_PYTHON)
-        set(plugin_profile_python true)
     endif()
     if(NOTEPADNEXT_PLUGIN_WEBVIEWS)
         set(plugin_profile_webviews true)
     endif()
     configure_file("${CMAKE_SOURCE_DIR}/cmake/PluginBuildProfile.json.in"
         "${CMAKE_BINARY_DIR}/generated/plugin-host/build-profile.json" @ONLY)
-    set(plugin_python_files
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/python/host.py"
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/python/nnp_rpc.py"
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/python/nnp_wire.py"
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/python/nnp_client.py")
-    set(plugin_vscode_files
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/documents.cjs"
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/types.cjs"
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/adapter.cjs")
-    list(APPEND plugin_vscode_files "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/webviews.cjs" "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/persistence.cjs")
-    list(APPEND plugin_vscode_files "${CMAKE_SOURCE_DIR}/packages/plugin-host/vscode/configuration.cjs")
     # Host-only edits must refresh the bundle even when no C++ file changed.
     set_property(TARGET NotepadNext APPEND PROPERTY LINK_DEPENDS
         "${CMAKE_BINARY_DIR}/generated/plugin-host/build-profile.json"
         "${CMAKE_SOURCE_DIR}/packages/plugin-host/host.cjs"
-        "${CMAKE_SOURCE_DIR}/packages/plugin-host/python-host.cjs"
-        ${plugin_python_files}
-        ${plugin_vscode_files}
         "${CMAKE_SOURCE_DIR}/packages/plugin-host/client.cjs"
         "${CMAKE_SOURCE_DIR}/packages/plugin-host/parent-watch.cjs"
         "${CMAKE_SOURCE_DIR}/packages/plugin-host/rpc.cjs"
@@ -57,12 +39,12 @@ if(NOTEPADNEXT_PLUGINS)
         endif()
     endif()
     add_custom_command(TARGET NotepadNext POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E rm -rf "${plugin_host_destination}"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${plugin_host_destination}"
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${CMAKE_BINARY_DIR}/generated/plugin-host/build-profile.json"
             "${CMAKE_SOURCE_DIR}/packages/plugin-host/host.cjs"
-            "${CMAKE_SOURCE_DIR}/packages/plugin-host/python-host.cjs"
-            "${CMAKE_SOURCE_DIR}/packages/plugin-host/client.cjs"
+                "${CMAKE_SOURCE_DIR}/packages/plugin-host/client.cjs"
             "${CMAKE_SOURCE_DIR}/packages/plugin-host/parent-watch.cjs"
             "${CMAKE_SOURCE_DIR}/packages/plugin-host/rpc.cjs"
             "${CMAKE_SOURCE_DIR}/packages/plugin-host/protocol-profile.json"
@@ -72,14 +54,6 @@ if(NOTEPADNEXT_PLUGINS)
             "${CMAKE_SOURCE_DIR}/packages/plugin-host/runtime-lock.json"
             "${CMAKE_SOURCE_DIR}/packages/plugin-host/LICENSE"
             "${plugin_host_destination}"
-        VERBATIM)
-    add_custom_command(TARGET NotepadNext POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${plugin_host_destination}/python"
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${plugin_python_files} "${plugin_host_destination}/python"
-        VERBATIM)
-    add_custom_command(TARGET NotepadNext POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${plugin_host_destination}/vscode"
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${plugin_vscode_files} "${plugin_host_destination}/vscode"
         VERBATIM)
     get_property(plugin_uses_bundled_zlib GLOBAL PROPERTY NNP_PLUGIN_BUNDLED_ZLIB)
     if(plugin_uses_bundled_zlib)

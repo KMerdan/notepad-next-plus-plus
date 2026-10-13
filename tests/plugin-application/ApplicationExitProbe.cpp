@@ -54,7 +54,7 @@ QJsonObject read(const QString &path) {
 }
 PluginSources::SourceSnapshot package(const QString &input,const QString &markers,const QString &version,bool hangDeactivate,bool hangActivate) {
     const QJsonObject manifest{{"manifestVersion",1},{"id",Id},{"name","Application exit fixture"},{"version",version},{"list",false},
-        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.1.0"}}},
+        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.3.0"}}},
         {"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.cjs"}}},
         {"capabilities",QJsonObject{{"required",QJsonArray{"commands@1","documents.read@1","documents.events@1","webviews@1","storage@1"}},{"optional",QJsonArray{}}}},
         {"activationEvents",QJsonArray{"onCommand:tests.application-exit.open"}},

@@ -53,7 +53,7 @@ protected:
 };
 PluginSources::RegisteredResource resource(const QString &version="1.2.3") {
     QJsonObject m{{"manifestVersion",1},{"id","tests.release"},{"name","Release Sample"},{"version",version},{"list",false},
-        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.1.0"}}},{"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.js"}}},
+        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.3.0"}}},{"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.js"}}},
         {"capabilities",QJsonObject{{"required",QJsonArray{}},{"optional",QJsonArray{}}}},{"activationEvents",QJsonArray{"onStartup"}}};
     PluginSources::SourceSnapshot s;QString error;if(!PluginSources::PluginMetadata::parse(QJsonDocument(m).toJson(),"https://github.com/tests/release",{},&s,&error))qFatal("%s",qPrintable(error));return s.resources[0];
 }

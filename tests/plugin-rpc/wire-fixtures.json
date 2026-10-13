@@ -11,7 +11,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],
@@ -45,7 +45,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],
@@ -79,7 +79,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],
@@ -107,7 +107,7 @@
     "part": "result",
     "value": {
       "protocolVersion": "0.1",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "capabilities": [
         "commands@1"
       ],
@@ -722,56 +722,74 @@
     "valid": false
   },
   {
-    "name": "nnp.commands.invoke valid params",
-    "method": "nnp.commands.invoke",
+    "name": "nnp.commands.invokeNative valid params",
+    "method": "nnp.commands.invokeNative",
     "part": "params",
     "value": {
       "sessionId": "fixture-session",
       "generation": 1,
       "callbackId": "callback",
-      "args": [
-        {
-          "text": "\ud83d\ude00\u4e2d"
-        }
-      ]
+      "invocation": {
+        "commandId": "tests.native.open",
+        "windowId": "window",
+        "editorId": null,
+        "documentId": null,
+        "args": [
+          {
+            "text": "\ud83d\ude00\u4e2d"
+          }
+        ]
+      }
     },
     "valid": true
   },
   {
-    "name": "nnp.commands.invoke extra param",
-    "method": "nnp.commands.invoke",
+    "name": "nnp.commands.invokeNative extra param",
+    "method": "nnp.commands.invokeNative",
     "part": "params",
     "value": {
       "sessionId": "fixture-session",
       "generation": 1,
       "callbackId": "callback",
-      "args": [
-        {
-          "text": "\ud83d\ude00\u4e2d"
-        }
-      ],
-      "unknownField": true
+      "unknownField": true,
+      "invocation": {
+        "commandId": "tests.native.open",
+        "windowId": "window",
+        "editorId": null,
+        "documentId": null,
+        "args": [
+          {
+            "text": "\ud83d\ude00\u4e2d"
+          }
+        ]
+      }
     },
     "valid": false
   },
   {
-    "name": "nnp.commands.invoke missing identity/field",
-    "method": "nnp.commands.invoke",
+    "name": "nnp.commands.invokeNative missing identity/field",
+    "method": "nnp.commands.invokeNative",
     "part": "params",
     "value": {
       "generation": 1,
       "callbackId": "callback",
-      "args": [
-        {
-          "text": "\ud83d\ude00\u4e2d"
-        }
-      ]
+      "invocation": {
+        "commandId": "tests.native.open",
+        "windowId": "window",
+        "editorId": null,
+        "documentId": null,
+        "args": [
+          {
+            "text": "\ud83d\ude00\u4e2d"
+          }
+        ]
+      }
     },
     "valid": false
   },
   {
-    "name": "nnp.commands.invoke valid result",
-    "method": "nnp.commands.invoke",
+    "name": "nnp.commands.invokeNative valid result",
+    "method": "nnp.commands.invokeNative",
     "part": "result",
     "value": [
       1,
@@ -1394,7 +1412,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],
@@ -1462,7 +1480,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],
@@ -1496,7 +1514,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1",
         "commands@1"
@@ -1531,7 +1549,7 @@
         "0.1"
       ],
       "hostVersion": "0.15.0",
-      "apiVersion": "0.1.0",
+      "apiVersion": "0.3.0",
       "grantedCapabilities": [
         "commands@1"
       ],

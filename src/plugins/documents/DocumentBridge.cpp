@@ -23,7 +23,7 @@ bool validUnicode(const QString &text) {
     return true;
 }
 }
-DocumentBridge::DocumentBridge(QObject *parent) : QObject(parent) {}
+DocumentBridge::DocumentBridge(QObject *parent) : QObject(parent), windowId(QUuid::createUuid().toString(QUuid::WithoutBraces)) {}
 QString DocumentBridge::attach(ScintillaEdit *editor, const QUrl &uri, const QString &language) {
     Q_ASSERT(QThread::currentThread() == thread());
     const auto previous = idFor(editor); if (!previous.isEmpty()) return previous;

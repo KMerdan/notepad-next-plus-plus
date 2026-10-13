@@ -1,7 +1,6 @@
 {
   "schemaVersion": 1,
   "nodeBundled": @plugin_profile_node@,
-  "developerPythonConfigured": @plugin_profile_python@,
   "webviews": @plugin_profile_webviews@,
   "buildType": "@CMAKE_BUILD_TYPE@",
   "qtVersion": "@Qt6_VERSION@",

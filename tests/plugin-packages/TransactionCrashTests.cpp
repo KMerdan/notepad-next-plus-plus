@@ -26,7 +26,7 @@ QByteArray read(const QString &path) {
 }
 QJsonObject metadata(const QString &version) {
     return {{"manifestVersion",1},{"id",PluginId},{"name","Transaction fixture"},{"version",version},{"list",false},
-        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.1.0"}}},
+        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.3.0"}}},
         {"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.cjs"}}},
         {"capabilities",QJsonObject{{"required",QJsonArray{"commands@1"}},{"optional",QJsonArray{}}}},
         {"activationEvents",QJsonArray{"onCommand:tests.transaction.open"}},

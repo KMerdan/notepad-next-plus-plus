@@ -142,18 +142,6 @@ bool validateSemantics(const QJsonObject &metadata, QString *error)
             seen.insert(command);
         }
     }
-    if(metadata.contains(QStringLiteral("compatibility"))) {
-        if(metadata.value("runtime").toObject().value("kind")!="node")return reject(error,message("VS Code compatibility requires a Node package."));
-        QSet<QString> aliases,targets;
-        for(const auto &value:metadata.value("compatibility").toObject().value("commands").toArray()) {
-            const auto alias=value.toObject().value("id").toString(),target=value.toObject().value("target").toString();
-            if(aliases.contains(alias)||targets.contains(target)||!commands.contains(target))return reject(error,message("VS Code aliases must uniquely reference declared commands."));
-            aliases.insert(alias);targets.insert(target);
-        }
-        if(targets!=commands)return reject(error,message("Every command needs a VS Code alias."));
-        for(const QString &capability:{QStringLiteral("commands@1"),QStringLiteral("documents.read@1"),QStringLiteral("documents.delta@1")})
-            if(!capabilities.value("required").toArray().contains(capability))return reject(error,message("VS Code compatibility requires capability: ")+capability);
-    }
     for (const auto &entry : metadata.value(QStringLiteral("activationEvents")).toArray()) {
         const QString event = entry.toString();
         if (event.startsWith(QStringLiteral("onCommand:")) && !commands.contains(event.mid(10))) return reject(error, message("Activation refers to an undeclared command."));

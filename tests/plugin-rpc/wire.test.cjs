@@ -6,7 +6,7 @@ const {createClient}=require('../../packages/plugin-host/client.cjs');
 const fixtures=[...require('./wire-fixtures.json'),...require('../../packages/plugin-sdk/schemas/native-b-fixtures.json')];
 for(const fixture of fixtures)test(fixture.name,()=>assert.equal(validate(fixture.method,fixture.part,fixture.value),fixture.valid));
 test('every negotiated method has positive and negative shared fixtures',()=>{
-  assert.equal(Object.keys(contract.methods).length,69);
+  assert.equal(Object.keys(contract.methods).length,68);
   for(const name of Object.keys(contract.methods)){
     assert.ok(fixtures.some(f=>f.method===name&&f.part==='params'&&f.valid));
     assert.ok(fixtures.some(f=>f.method===name&&f.part==='params'&&!f.valid));
@@ -24,8 +24,8 @@ test('request-only lifecycle notifications perform no mutation',async()=>{
 });
 test('schema guards unsafe JSON and byte budgets before transport',()=>{
   const id={sessionId:'fixture-session',generation:1};
-  assert.equal(validate('nnp.commands.invoke','result',{x:undefined}),false);
-  const cyclic={};cyclic.self=cyclic;assert.equal(validate('nnp.commands.invoke','result',cyclic),false);
+  assert.equal(validate('nnp.commands.invokeNative','result',{x:undefined}),false);
+  const cyclic={};cyclic.self=cyclic;assert.equal(validate('nnp.commands.invokeNative','result',cyclic),false);
   assert.equal(validate('nnp.webviews.setHtml','params',{...id,panelId:'panel',html:'😀'.repeat(1600000),renderContext:{documentId:null,version:null}}),false);
   assert.throws(()=>requireValid('nnp.webviews.setHtml','params',{...id,panelId:'panel',html:'😀'.repeat(1600000),renderContext:{documentId:null,version:null}}),{code:1008});
 });

@@ -19,7 +19,7 @@ namespace PluginWebviews {class WebviewService;}
 namespace PluginRuntime {
 class PluginSession;
 struct RuntimePaths {
-    QString node,hostEntry,python;
+    QString node,hostEntry;
     static RuntimePaths bundled();
 };
 class PluginEngine:public PluginPackages::PluginController {

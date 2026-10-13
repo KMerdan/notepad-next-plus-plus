@@ -12,14 +12,6 @@ test('SDK pin records the actual reviewed submodule version and commit',()=>{
 test('application documentation schemas equal its pinned SDK contract',()=>{
   for(const name of ['manifest.schema.json','release-checksums.schema.json'])assert.equal(fs.readFileSync(path.join(root,'doc/plugin-system',name),'utf8'),fs.readFileSync(path.join(root,'packages/plugin-sdk/schemas',name),'utf8'),'Run scripts/sync-plugin-sdk-contracts.py after updating the SDK pin.');
 });
-test('historical adapter preserves its experimental configuration contract and preserves RPC error codes',()=>{
-  const {configurationDefinitions:sdk}=require('../../packages/plugin-sdk/experimental/vscode/configuration.cjs');
-  const {configurationDefinitions:host}=require('../../packages/plugin-host/vscode/persistence.cjs');
-  const {RpcError}=require('../../packages/plugin-host/rpc.cjs');
-  const valid={properties:{'editor.message':{type:'string',default:'Hi'},'editor.enabled':{type:'boolean'}}};assert.deepEqual(host(valid),sdk(valid));
-  const invalid={properties:{'editor.value':{type:'object',default:{number:Infinity}}}};
-  assert.throws(()=>host(invalid),error=>error instanceof RpcError&&error.code===-32602);
-});
 
 test('application wire contracts match the reviewed SDK and have no native dependency on the VS Code experiment',()=>{
   for(const name of ['wire.schema.json','wire-contract.json'])assert.equal(fs.readFileSync(path.join(root,'packages/plugin-host',name),'utf8'),fs.readFileSync(path.join(root,'packages/plugin-sdk/schemas',name),'utf8'));

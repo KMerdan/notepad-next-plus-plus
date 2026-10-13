@@ -1,9 +1,8 @@
 {
   "schemaVersion": 1,
   "protocolVersion": "0.1",
-  "apiVersion": "0.1.0",
+  "apiVersion": "0.3.0",
   "schemaFile": "wire.schema.json",
-  "compatibility": "API 0.1/0.2 sessions retain existing callbacks and capabilities. API 0.3 is explicit opt-in for Phase B. JSON-RPC and wire profile remain 0.1; native limits are queried separately.",
   "methods": {
     "nnp.initialize": {
       "direction": "hostToPlugin",
@@ -279,29 +278,6 @@
         1008
       ],
       "budget": "Declared commands only; all must register before successful activation."
-    },
-    "nnp.commands.invoke": {
-      "direction": "hostToPlugin",
-      "kind": "request",
-      "paramsSchema": "#/$defs/nnp.commands.invoke.params",
-      "resultSchema": "#/$defs/nnp.commands.invoke.result",
-      "capability": "commands@1",
-      "states": [
-        "activePublished"
-      ],
-      "effect": "pluginCallback",
-      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
-      "errors": [
-        -32602,
-        -32603,
-        1003,
-        1004,
-        1005,
-        1006,
-        1007,
-        1008
-      ],
-      "budget": "One command in flight per activation; activation clicks coalesce. The 5 s execution deadline pauses while this activation owns visible message dialogs, resumes with its remaining budget after the last dialog closes, and remains cancellable. Heartbeat and shutdown deadlines are never paused."
     },
     "nnp.webviews.create": {
       "direction": "pluginToHost",

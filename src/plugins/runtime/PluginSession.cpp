@@ -51,15 +51,8 @@ bool fields(const QJsonObject &params,const QStringList &required,const QStringL
     return true;
 }
 }
-PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,const QString &runtime,const QString &host,QMainWindow *window,PluginDocuments::DocumentBridge *bridge,QObject *parent,bool holdPublication,PluginData::Service *dataService,QString repository,std::shared_ptr<PluginPackages::PackageLease> lease,QString interpreter)
-    : QObject(parent),manifest(metadata),packageLease(std::move(lease)),root(package),node(runtime),hostEntry(host),session(uuid()),dataRepository(std::move(repository)),python(std::move(interpreter)),documents(bridge),window(window),data(dataService),process(new PluginRpc::RpcProcess(capabilities.keys(),this)),publicationHeld(holdPublication) {
-    QString negotiationError;
-    const auto apiRange=manifest["engines"].toObject()["api"].toString();
-    // Broad ranges from pre-0.2 packages keep their positional callback
-    // contract. Native invocation is an explicit opt-in excluding API 0.1.
-    if(manifest["runtime"].toObject()["kind"]!="python" && !PluginPackages::SemVer::satisfies("0.1.0",apiRange,&negotiationError)
-        && PluginPackages::SemVer::satisfies("0.2.0",apiRange,&negotiationError))apiVersion="0.2.0";
-    else if(manifest["runtime"].toObject()["kind"]!="python" && !PluginPackages::SemVer::satisfies("0.1.0",apiRange,&negotiationError) && PluginPackages::SemVer::satisfies("0.3.0",apiRange,&negotiationError))apiVersion="0.3.0";
+PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,const QString &runtime,const QString &host,QMainWindow *window,PluginDocuments::DocumentBridge *bridge,QObject *parent,bool holdPublication,PluginData::Service *dataService,QString repository,std::shared_ptr<PluginPackages::PackageLease> lease)
+    : QObject(parent),manifest(metadata),packageLease(std::move(lease)),root(package),node(runtime),hostEntry(host),session(uuid()),dataRepository(std::move(repository)),documents(bridge),window(window),data(dataService),process(new PluginRpc::RpcProcess(capabilities.keys(),this)),publicationHeld(holdPublication) {
     process->holdLifetime(packageLease);
     stopDeadline.setSingleShot(true); stopDeadline.setInterval(3500);
     heartbeat.setInterval(10000);
@@ -98,7 +91,7 @@ PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,
         if(packageLease&&!packageLease->pinRuntimeProcess(process->processId(),&leaseError)){fail(leaseError,Failure::OwnershipFailure);return;}
         setState("initializing"); QJsonArray capabilities; for(const auto &capability:grants) capabilities.append(capability);
         const QJsonObject params{{"pluginId",manifest["id"]},{"sessionId",session},{"generation",1},{"protocolVersions",QJsonArray{"0.1"}},
-            {"hostVersion","0.15.0"},{"apiVersion",apiVersion},{"grantedCapabilities",capabilities},
+            {"hostVersion",NNP_APPLICATION_VERSION},{"apiVersion",apiVersion},{"grantedCapabilities",capabilities},
             {"limits",PluginRpc::profileLimits()}};
         call("nnp.initialize",params,[this,capabilities](const QJsonValue &value,const QJsonObject &error) {
             if(currentState!="initializing") return;
@@ -118,7 +111,7 @@ PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,
     if(documents) connect(documents,&PluginDocuments::DocumentBridge::deltaEvent,this,&PluginSession::deltaEvent);
     if(documents) connect(documents,&PluginDocuments::DocumentBridge::nativeEvent,this,&PluginSession::nativeEvent);
     if(documents)connect(documents,&PluginDocuments::DocumentBridge::resourceEvent,this,[this](const QString &owner,const QJsonObject &event){
-        if(owner!=session||apiVersion!="0.3.0"||(currentState!="active"&&currentState!="activating"))return;
+        if(owner!=session||(currentState!="active"&&currentState!="activating"))return;
         const auto payload=envelope(event);QString message;int code;if(!PluginRpc::WireContract::validate("nnp.resources.nativeEvent","params",payload,&message,&code)){fail(message,Failure::ProtocolFault);return;}process->notify("nnp.resources.nativeEvent",payload);
     });
     connect(process,&PluginRpc::RpcProcess::requestCancelled,this,[this](const QString &token){if(nativeRequests.contains(token))*nativeRequests[token]=false;});
@@ -153,8 +146,7 @@ void PluginSession::activate(const QString &reason) {
 #endif
     };
     const QStringList phaseBCaps={"documents.native.events@1","editors.selection.events@1","files.read@1","files.write@1","search.read@1","languages.read@1","languages.write@1","bookmarks.read@1","bookmarks.write@1","decorations.write@1"};
-    if(apiVersion=="0.3.0")supported.append(phaseBCaps);
-    if(apiVersion=="0.1.0")for(const auto &cap:QStringList{"editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1","webviews.html@1"})supported.removeAll(cap);
+    supported.append(phaseBCaps);
     if(data)supported.append({"storage@1","configuration@1"});
     for(const auto &required:manifest["capabilities"].toObject()["required"].toArray()) {
         if(!supported.contains(required.toString())) { fail("Required capability is unavailable: "+required.toString(),Failure::CapabilityMissing); return; }
@@ -163,11 +155,6 @@ void PluginSession::activate(const QString &reason) {
     // Optional capabilities are not silently granted. An installation policy
     // can add explicit grants when its permission contract is implemented.
     QStringList arguments{hostEntry,root};
-    if(manifest["runtime"].toObject()["kind"]=="python") {
-        const auto relay=QFileInfo(hostEntry).dir().filePath("python-host.cjs");
-        if(!QFileInfo(python).isAbsolute()||!QFileInfo(python).isExecutable()||!QFileInfo(relay).isFile()){fail("The configured Python runtime is unavailable.",Failure::RuntimeUnavailable);return;}
-        arguments={relay,root,python};
-    }
     activationReason=reason; setState("starting"); process->start(node,arguments,root);
 }
 void PluginSession::invoke(const QString &commandId,const QJsonArray &args,const QJsonObject &invocation) {
@@ -180,13 +167,11 @@ void PluginSession::invoke(const QString &commandId,const QJsonArray &args,const
 }
 void PluginSession::invokePending() {
     if(currentState!="active" || publicationHeld || queuedCommand.isEmpty()) return;
-    const auto id=queuedCommand; const auto args=queuedArgs;const auto target=queuedInvocation; queuedCommand.clear(); queuedArgs={};queuedInvocation={};
+    const auto id=queuedCommand;const auto target=queuedInvocation; queuedCommand.clear(); queuedArgs={};queuedInvocation={};
     if(!commands.contains(id)) { emit commandFinished(id,{},rpcError(-32602,"Plugin did not register the declared command")); return; }
     busy=true;
     QElapsedTimer elapsed;elapsed.start();
-    const auto invokeMethod=apiVersion!="0.1.0"?QStringLiteral("nnp.commands.invokeNative"):QStringLiteral("nnp.commands.invoke");
-    const auto invokeParams=apiVersion!="0.1.0"?QJsonObject{{"callbackId",commands[id].callbackId},{"invocation",target}}:QJsonObject{{"callbackId",commands[id].callbackId},{"args",args}};
-    commandRequest=call(invokeMethod,envelope(invokeParams),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invoke",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error); });
+    commandRequest=call("nnp.commands.invokeNative",envelope({{"callbackId",commands[id].callbackId},{"invocation",target}}),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invokeNative",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error); });
     if(!messages.isEmpty())process->setDeadlinePaused(commandRequest,true);
 }
 void PluginSession::fail(const QString &sourceMessage,Failure category) {
@@ -373,11 +358,8 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
     }
     if((currentState!="active"||publicationHeld)&&(method=="nnp.documents.applyEdits"||method=="nnp.core.execute"||method=="nnp.editors.setSelections")){reject(1004,"Document writes require a validated active plugin.");return;}
     if(!documents) { reject(1002,"Document service is unavailable"); return; }
-    const bool nativeMethod=method=="nnp.documents.list"||method=="nnp.documents.getInfo"||method.startsWith("nnp.editors.")||method.startsWith("nnp.core.")||method=="nnp.webviews.createHtml";
-    if((nativeMethod||params.contains("selectionGuard"))&&apiVersion=="0.1.0"){reject(1005,"This method requires native API 0.2");return;}
     const QSet<QString> phaseB={"nnp.host.getNativeLimits","nnp.documents.readRange","nnp.documents.watchNative","nnp.editors.watchSelections","nnp.editors.activate","nnp.editors.revealRange","nnp.editors.getOptions","nnp.files.create","nnp.files.open","nnp.files.save","nnp.files.saveAs","nnp.files.close","nnp.search.findAll","nnp.search.count","nnp.languages.list","nnp.languages.getKeywords","nnp.languages.set","nnp.documents.convertLineEndings","nnp.bookmarks.list","nnp.bookmarks.set","nnp.decorations.create","nnp.decorations.set"};
     if(phaseB.contains(method)) {
-        if(apiVersion!="0.3.0"){reject(1005,"This method requires native API 0.3");return;}
         const bool mutating=method.startsWith("nnp.files.")||method.startsWith("nnp.decorations.")||method=="nnp.languages.set"||method=="nnp.bookmarks.set"||method=="nnp.documents.convertLineEndings"||method=="nnp.editors.activate"||method=="nnp.editors.revealRange";
         const bool stagedDecoration=method.startsWith("nnp.decorations.");
         if(mutating&&((currentState!="active"&&!stagedDecoration)||(publicationHeld&&!stagedDecoration))){reject(1004,"Native writes require a validated active plugin");return;}
@@ -415,13 +397,10 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         result=documents->capture(params["invocation"].toObject(),&error);
     }else if(method=="nnp.editors.setSelections")result=documents->setSelections(params,&error);
     else if(method=="nnp.core.list") {
-        QJsonArray catalog;const QSet<QString> old={"edit.undo","edit.redo","edit.case.upper","edit.case.lower","edit.comment.toggle","edit.lines.deduplicate","edit.lines.sort","view.fold.all"};
-        for(const auto &item:documents->coreCatalog())if(apiVersion=="0.3.0"||old.contains(item.toObject()["id"].toString()))catalog.append(item);result=catalog;
+        result=documents->coreCatalog();
     }
     else if(method=="nnp.core.execute") {
         const auto command=params["commandId"].toString();
-        const QSet<QString> old={"edit.undo","edit.redo","edit.case.upper","edit.case.lower","edit.comment.toggle","edit.lines.deduplicate","edit.lines.sort","view.fold.all"};
-        if(apiVersion!="0.3.0"&&!old.contains(command)){reject(1005,"This command requires native API 0.3");return;}
         const auto needed=command.startsWith("view.")?QStringLiteral("editors.view.write@1"):QStringLiteral("documents.write@1");
         if(!grants.contains(needed)){reject(1003,"Native operation requires "+needed);return;}
         result=documents->executeCore(command,params["request"].toObject(),&error);

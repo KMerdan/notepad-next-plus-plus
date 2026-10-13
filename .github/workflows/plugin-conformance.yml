@@ -128,9 +128,7 @@ jobs:
                      '-DNOTEPADNEXT_PLUGINS=' + ('OFF' if profile == 'disabled' else 'ON'),
                      '-DNOTEPADNEXT_PLUGIN_WEBVIEWS=' + ('ON' if profile == 'webviews' else 'OFF'),
                      '-DNOTEPADNEXT_TEST_NODE=' + node,
-                     '-DNOTEPADNEXT_TEST_PYTHON=' + interpreter,
-                     '-DNOTEPADNEXT_PLUGIN_NODE=' + ('' if profile == 'disabled' else node),
-                     '-DNOTEPADNEXT_PLUGIN_PYTHON=' + ('' if profile == 'disabled' else interpreter)]
+                     '-DNOTEPADNEXT_PLUGIN_NODE=' + ('' if profile == 'disabled' else node)]
           if platform.system() == 'Darwin':
               options += ['-DCMAKE_OSX_ARCHITECTURES=' + ('x86_64' if os.environ['NODE_ARCH'] == 'x64' else 'arm64'),
                           '-DCMAKE_OSX_DEPLOYMENT_TARGET=13.5']

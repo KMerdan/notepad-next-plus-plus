@@ -4,7 +4,7 @@ const fs=require('node:fs/promises'), os=require('node:os'), path=require('node:
 const {spawn}=require('node:child_process'), {once}=require('node:events');
 const {Endpoint,Framer}=require('../../packages/plugin-host/rpc.cjs');
 const {createClient}=require('../../packages/plugin-host/client.cjs');
-const initialize={pluginId:'test.native',sessionId:'test-session',generation:1,protocolVersions:['0.1'],apiVersion:'0.1.0',hostVersion:'0.15.0',grantedCapabilities:['commands@1','documents.read@1','documents.events@1'],limits:require('../../packages/plugin-host/protocol-profile.json')};
+const initialize={pluginId:'test.native',sessionId:'test-session',generation:1,protocolVersions:['0.1'],apiVersion:'0.3.0',hostVersion:'0.15.0',grantedCapabilities:['commands@1','documents.read@1','documents.events@1'],limits:require('../../packages/plugin-host/protocol-profile.json')};
 const session={sessionId:initialize.sessionId,generation:initialize.generation};
 const document={documentId:'doc',uri:'untitled:doc',languageId:'plaintext',version:1,isDirty:true,isReadonly:false};
 async function nativePackage(source) {
@@ -34,8 +34,8 @@ test('native package lifecycle and bidirectional document read',async()=>{
   try {
     const result=await host.peer.call('nnp.initialize',initialize); assert.equal(result.protocolVersion,'0.1');
     await host.peer.call('nnp.plugin.activate',{...session,reason:'command'}); assert.equal(host.resources.size,2);
-    const snapshot=await host.peer.call('nnp.commands.invoke',{...session,callbackId:host.callback(),args:[]}); assert.equal(snapshot.text,'unsaved 😀中');
-    await assert.rejects(host.peer.call('nnp.commands.invoke',{...session,generation:0,callbackId:host.callback(),args:[]}),{code:-32602});
+    const snapshot=await host.peer.call('nnp.commands.invokeNative',{...session,callbackId:host.callback(),invocation:{commandId:"test.native.read",windowId:"window",editorId:null,documentId:null,args:[]}}); assert.equal(snapshot.text,'unsaved 😀中');
+    await assert.rejects(host.peer.call('nnp.commands.invokeNative',{...session,generation:0,callbackId:host.callback(),invocation:{commandId:"test.native.read",windowId:"window",editorId:null,documentId:null,args:[]}}),{code:-32602});
     await host.peer.call('nnp.plugin.deactivate',{...session,reason:'disable'}); assert.equal(host.resources.size,0);
     await host.peer.call('nnp.shutdown',{...session,reason:'exit'}); const [code]=await host.exited; assert.equal(code,0); host.framer.finish();
     assert.equal(host.fatal(),undefined); assert.match(host.stderr(),/plugin log on stderr/); assert.equal(host.peer.pending.size,0);
@@ -53,7 +53,7 @@ test('command exceptions retain stack diagnostics outside protocol stdout',async
   const root=await nativePackage("exports.activate=async ctx=>{await ctx.commands.register('test.native.read',()=>{throw new Error('command stack fixture');});};");const host=await runHost(root);
   try {
     await host.peer.call('nnp.initialize',initialize);await host.peer.call('nnp.plugin.activate',{...session,reason:'command'});
-    await assert.rejects(host.peer.call('nnp.commands.invoke',{...session,callbackId:host.callback(),args:[]}),{code:-32603,message:'Internal error'});
+    await assert.rejects(host.peer.call('nnp.commands.invokeNative',{...session,callbackId:host.callback(),invocation:{commandId:"test.native.read",windowId:"window",editorId:null,documentId:null,args:[]}}),{code:-32603,message:'Internal error'});
     await host.peer.call('nnp.shutdown',{...session,reason:'exit'});assert.equal((await host.exited)[0],0);
     assert.match(host.stderr(),/command stack fixture/);assert.match(host.stderr(),/index\.cjs:/);assert.equal(host.fatal(),undefined);
   } finally {host.peer.close();host.child.kill('SIGKILL');await fs.rm(root,{recursive:true,force:true});}

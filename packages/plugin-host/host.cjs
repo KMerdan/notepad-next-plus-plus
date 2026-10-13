@@ -19,7 +19,7 @@ const relativeEntry=manifest.runtime.entry;
 if(typeof relativeEntry!=='string' || path.isAbsolute(relativeEntry) || relativeEntry.split(/[\\/]/).includes('..')) throw new Error('Invalid plugin entry');
 const entry=fs.realpathSync(path.join(directory,relativeEntry));
 if(!entry.startsWith(directory+path.sep) || !fs.statSync(entry).isFile()) throw new Error('Plugin entry escapes the package');
-let state='new', identity, client, plugin, stopping, compatibility;
+let state='new', identity, client, plugin, stopping;
 function fatal(error) { console.error(error?.message ?? error); endpoint.close(); process.exitCode=2; process.stdin.destroy(); process.stdout.end(()=>process.exit(2)); }
 const endpoint=new Endpoint(json=>{
   if(process.stdout.writableLength+Buffer.byteLength(json)>32*1024*1024) { fatal(new Error('Plugin output queue exceeds its hard limit')); throw new RpcError(1007,'Overloaded'); }
@@ -32,7 +32,7 @@ register(endpoint,'nnp.initialize',async params=>{
   requireObject(params);
   if(state!=='new') throw new RpcError(-32602,'Already initialized');
   if(params.pluginId!==manifest.id || typeof params.sessionId!=='string' || !params.sessionId || !Number.isSafeInteger(params.generation) || params.generation<1
-    || !Array.isArray(params.protocolVersions) || !params.protocolVersions.includes('0.1') || !['0.1.0','0.2.0','0.3.0'].includes(params.apiVersion)
+    || !Array.isArray(params.protocolVersions) || !params.protocolVersions.includes('0.1') || params.apiVersion!=='0.3.0'
     || !Array.isArray(params.grantedCapabilities) || new Set(params.grantedCapabilities).size!==params.grantedCapabilities.length
     || !params.limits || Object.keys(limits).some(key=>params.limits[key]!==limits[key])) throw new RpcError(-32602,'Incompatible initialize contract');
   const declared=new Set([...(manifest.capabilities?.required ?? []),...(manifest.capabilities?.optional ?? [])]);
@@ -49,14 +49,9 @@ register(endpoint,'nnp.initialize',async params=>{
 register(endpoint,'nnp.plugin.activate',async params=>{
   validIdentity(params); if(state!=='initialized') throw new RpcError(1004,'Plugin cannot activate in this state'); state='activating';
   try {
-    if(manifest.compatibility){
-      compatibility=await require('./vscode/adapter.cjs').createAdapter(client.api,{manifest,root:directory,hostVersion:identity.hostVersion,fault:error=>{if(state!=='stopping'&&state!=='closed')fatal(error);}});
-      compatibility.install();client.api.subscriptions.push(compatibility);
-    }
     const loaded=await import(pathToFileURL(entry).href); plugin=loaded.default ?? loaded;
     if(typeof plugin.activate!=='function') throw new Error('Plugin module must export activate(context)');
-    await plugin.activate(compatibility?.context??client.api);
-    await compatibility?.ready();
+    await plugin.activate(client.api);
     if(state!=='activating') throw new RpcError(1004,'PluginStopping');
     state='active'; return null;
   } catch(error) { state='failed'; await client.dispose(); console.error(error); throw new RpcError(-32603,'Plugin activation failed'); }
@@ -70,7 +65,7 @@ async function deactivate() {
 register(endpoint,'nnp.webviews.restore',async params=>{
   validIdentity(params);if(state!=='active')throw new RpcError(1004,'Restoration requires an active plugin');
   if(!identity.grantedCapabilities.includes('webviews.restore@1'))throw new RpcError(1003,'Panel restoration was not granted');
-  await client.restorePanels(params.panels);await compatibility?.ready();return null;
+  await client.restorePanels(params.panels);return null;
 });
 register(endpoint,'nnp.plugin.deactivate',async params=>{ validIdentity(params); await deactivate(); return null; });
 register(endpoint,'nnp.health.ping',params=>{ validIdentity(params); return null; });

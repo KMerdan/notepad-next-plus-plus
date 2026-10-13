@@ -66,16 +66,16 @@ QJsonObject lifecycleNativeSample() {
 #endif
     return result;
 }
-PluginSources::RegisteredResource runtimeFixture(const QString &root,const QString &id,const QByteArray &code,const QStringList &capabilities={"commands@1"},const QString &kind="node") {
+PluginSources::RegisteredResource runtimeFixture(const QString &root,const QString &id,const QByteArray &code,const QStringList &capabilities={"commands@1"}) {
     QDir().mkpath(root+"/dist");
     QJsonObject manifest{{"manifestVersion",1},{"id",id},{"name",id},{"version","1.0.0"},{"list",false},
-        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.1.0"}}},
-        {"runtime",QJsonObject{{"kind",kind},{"entry",kind=="python"?"dist/index.py":"dist/index.js"}}},
+        {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.3.0"}}},
+        {"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.js"}}},
         {"capabilities",QJsonObject{{"required",QJsonArray::fromStringList(capabilities)},{"optional",QJsonArray{}}}},
         {"activationEvents",QJsonArray{"onCommand:"+id+".open"}},
         {"contributes",QJsonObject{{"commands",QJsonArray{QJsonObject{{"id",id+".open"},{"title","Open"}}}}}}};
     const auto write=[&](const QString &name,const QByteArray &bytes){QFile f(root+'/'+name);if(!f.open(QIODevice::WriteOnly)||f.write(bytes)!=bytes.size())qFatal("Runtime fixture write failed");};
-    write("notepadnext-plugin.json",QJsonDocument(manifest).toJson());write("LICENSE","Test license");write(kind=="python"?"dist/index.py":"dist/index.js",code);
+    write("notepadnext-plugin.json",QJsonDocument(manifest).toJson());write("LICENSE","Test license");write("dist/index.js",code);
     PluginSources::SourceSnapshot source;QString error;
     if(!PluginSources::PluginMetadata::parse(QJsonDocument(manifest).toJson(),"https://github.com/tests/runtime",{},&source,&error))qFatal("%s",qPrintable(error));
     return source.resources[0];
@@ -179,26 +179,6 @@ private slots:
         // QApplication can emit while the empty dock is awaiting deleteLater.
         QVERIFY(QMetaObject::invokeMethod(qApp,"focusChanged",Qt::DirectConnection,Q_ARG(QWidget*,nullptr),Q_ARG(QWidget*,nullptr)));QCoreApplication::sendPostedEvents(nullptr,QEvent::DeferredDelete);QVERIFY(!dock);
     }
-    void adaptedVSCodeWebviewInstalledLifecycle() {
-        if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
-        using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_LEGACY_STAGER,PLUGIN_TEST_VSCODE_WEBVIEW_SOURCE,temp.path()+"/input","--webviews","--resource=media"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError());
-        QFile metadata(temp.path()+"/input/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/microsoft/vscode-extension-samples",{},&source,&error),qPrintable(error));const auto resource=source.resources[0];const auto id=resource.id;const auto aliases=resource.metadata["compatibility"].toObject()["commands"].toArray();const auto start=aliases[0].toObject()["target"].toString(),refactor=aliases[1].toObject()["target"].toString();
-        InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"text");documents.setActive(doc);auto *menu=window.menuBar()->addMenu("Plugins");PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,menu);QSignalSpy installed(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error);
-        QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(!index.plugin(id).enabled);QCOMPARE(engine.sessionCount(),0);QVERIFY(engine.setEnabled(id,true,&error));QCOMPARE(engine.sessionCount(),0);QAction *action=nullptr;for(auto *candidate:engine.findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+start)action=candidate;QVERIFY(action);window.show();action->trigger();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QTRY_VERIFY(window.findChild<QWebEngineView*>());QPointer<QWebEnginePage> page=window.findChild<QWebEngineView*>()->page();auto preview=std::make_shared<QJsonObject>();
-        // The profile retains hidden DOM. Exercise messaging in that state so
-        // focus-driven upstream HTML replacement cannot erase the observer.
-        window.hide();
-        QTRY_VERIFY2_WITH_TIMEOUT(([&]{if(!page)return false;page->runJavaScript("Math.random=()=>1;window.refactorObserved=window.refactorObserved||false;if(!window.testListener){window.testListener=true;window.addEventListener('message',e=>{if(e.data.command==='refactor')window.refactorObserved=true;});}JSON.stringify({count:Number(document.querySelector('#lines-of-code-counter')?.textContent),image:document.querySelector('img')?.naturalWidth,styles:document.styleSheets.length})",[preview](const QVariant &value){*preview=QJsonDocument::fromJson(value.toString().toUtf8()).object();});return (*preview)["count"].toInt()>=8&&(*preview)["image"].toInt()==48&&(*preview)["styles"].toInt()==2;})(),qPrintable(engine.pluginLog(id)),10000);
-        const auto before=(*preview)["count"].toInt();engine.invoke(id,refactor);QTRY_VERIFY2_WITH_TIMEOUT(([&]{if(!page)return false;page->runJavaScript("JSON.stringify({observed:window.refactorObserved,count:Number(document.querySelector('#lines-of-code-counter')?.textContent)})",[preview](const QVariant &value){*preview=QJsonDocument::fromJson(value.toString().toUtf8()).object();});return (*preview)["observed"].toBool();})(),qPrintable(engine.pluginLog(id)),5000);QVERIFY((*preview)["count"].toInt()<=before/2+3);
-        page->runJavaScript("Math.random=()=>0;");QTRY_VERIFY_WITH_TIMEOUT(!window.findChildren<QMessageBox*>().isEmpty(),5000);QVERIFY(window.findChild<QMessageBox*>()->text().startsWith(QString::fromUtf8("🐛")));page->runJavaScript("Math.random=()=>1;");for(auto *message:window.findChildren<QMessageBox*>())message->button(QMessageBox::Ok)->click();
-        QDockWidget *dock=nullptr;
-        for(auto *ancestor=window.findChild<QWebEngineView*>()->parentWidget();ancestor&&!dock;ancestor=ancestor->parentWidget())dock=qobject_cast<QDockWidget*>(ancestor);
-        QVERIFY(dock);dock->close();QTRY_VERIFY(!window.findChild<QWebEngineView*>());QTRY_COMPARE(engine.resourceCount(),3);QVERIFY(!page);
-        // First-use verification rebuilds menu actions. Reacquire the current
-        // action rather than retaining the deleted pre-verification pointer.
-        action=nullptr;for(auto *candidate:engine.findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+start)action=candidate;QVERIFY(action);action->trigger();QTRY_VERIFY2_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),qPrintable(engine.pluginLog(id)),10000);QCOMPARE(engine.sessionCount(),1);QTRY_COMPARE_WITH_TIMEOUT(engine.resourceCount(),9,10000);engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QCOMPARE(engine.resourceCount(),9);QVERIFY(window.findChild<QWebEngineView*>());engine.invoke(id,start);QTRY_VERIFY2_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),qPrintable(engine.pluginLog(id)),10000);QVERIFY(engine.setEnabled(id,false,&error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.resourceCount(),0);QVERIFY(!window.findChild<QWebEngineView*>());QVERIFY(menu->actions().isEmpty());engine.uninstall(id,true);QTRY_VERIFY(index.plugins().isEmpty());QVERIFY2(failures.isEmpty(),qPrintable(engine.pluginLog(id)));documents.detach(doc);window.takeCentralWidget();
-    }
     void compatibleNativeCapabilityPair() {
         if(QT_VERSION<QT_VERSION_CHECK(6,6,0))QSKIP("Compatible HTML requires Qt WebEngine 6.6+");
         using namespace PluginRuntime;
@@ -222,35 +202,6 @@ private slots:
             session.stop();QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000);QCOMPARE(session.resourceCount(),0);QTRY_VERIFY(window.findChildren<QMessageBox*>().isEmpty());QVERIFY(failed.isEmpty());documents.detach(doc);window.takeCentralWidget();
         }
     }
-    void originalVSCodeHelloWorldInstalledLifecycle() {
-        using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess importer;importer.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_LEGACY_STAGER,PLUGIN_TEST_VSCODE_SOURCE,temp.path()+"/input"});QVERIFY(importer.waitForFinished(10000));QVERIFY2(importer.exitCode()==0,importer.readAllStandardError());
-        QFile metadata(temp.path()+"/input/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY2(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/microsoft/vscode-extension-samples",{},&source,&error),qPrintable(error));const auto resource=source.resources[0];const auto id=resource.id,command=resource.metadata["compatibility"].toObject()["commands"].toArray()[0].toObject()["target"].toString();
-        InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
-        QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"text");documents.setActive(doc);auto *menu=window.menuBar()->addMenu("Plugins");
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,menu);QSignalSpy installed(&installer,&InstallationService::finished),failures(&engine,&PluginEngine::error);
-        QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(!index.plugin(id).enabled);QCOMPARE(engine.sessionCount(),0);QVERIFY(menu->actions().isEmpty());
-        QVERIFY(engine.setEnabled(id,true,&error));QCOMPARE(engine.sessionCount(),0);QVERIFY(!menu->actions().isEmpty());QAction *action=nullptr;for(auto *candidate:engine.findChildren<QAction*>())if(candidate->objectName()=="pluginCommand:"+command)action=candidate;QVERIFY(action);action->trigger();
-        QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QMessageBox*>().size(),1,5000);auto *message=window.findChild<QMessageBox*>();QCOMPARE(message->text(),QString("Hello World!"));QCOMPARE(message->textFormat(),Qt::PlainText);QCOMPARE(engine.resourceCount(),3);message->button(QMessageBox::Ok)->click();QTRY_VERIFY(window.findChildren<QMessageBox*>().isEmpty());QTRY_COMPARE(engine.resourceCount(),2);
-        engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),10000);QCOMPARE(engine.sessionCount(),1);engine.invoke(id,command);QTRY_COMPARE(window.findChildren<QMessageBox*>().size(),1);
-        QVERIFY(engine.setEnabled(id,false,&error));QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.resourceCount(),0);QVERIFY(menu->actions().isEmpty());QTRY_VERIFY(window.findChildren<QMessageBox*>().isEmpty());QVERIFY2(failures.isEmpty(),qPrintable(engine.pluginLog(id)));documents.detach(doc);window.takeCentralWidget();
-    }
-    void compatibleEditorTransactionAndHumanMessageWait() {
-        using namespace PluginRuntime;
-        QTemporaryDir temp;const auto root=temp.path()+"/input",id=QString("tests.compat-native");
-        const auto code=R"JS(const vscode=require('vscode');
-exports.activate=ctx=>{let count=0;ctx.subscriptions.push(vscode.commands.registerCommand('extension.edit',async()=>{
-  const editor=vscode.window.activeTextEditor;
-  if(++count===1){const applied=await editor.edit(edit=>{edit.replace(new vscode.Range(0,1,0,3),'X');edit.insert(new vscode.Position(1,2),'!');});if(!applied)throw new Error('edit failed');}
-  const choice=await vscode.window.showInformationMessage('<literal> 😀', 'Accept', 'Cancel');
-  return {choice:choice??null,text:editor.document.getText(),version:editor.document.version};
-}));};)JS";
-        auto resource=runtimeFixture(root,id,code,{"commands@1","documents.read@1","documents.delta@1","documents.write@1","messages@1"});auto manifest=resource.metadata;manifest["compatibility"]=QJsonObject{{"kind","vscode"},{"version","0.1.0"},{"api","1.100.0"},{"extensionRoot","dist"},{"commands",QJsonArray{QJsonObject{{"id","extension.edit"},{"target",id+".open"}}}}};QFile metadata(root+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::WriteOnly));metadata.write(QJsonDocument(manifest).toJson());metadata.close();
-        QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);editor.setText("a😀中\r\né\n");editor.setSavePoint();editor.emptyUndoBuffer();PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"text");documents.setActive(doc);
-        PluginSession session(manifest,root,PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,&window,&documents);QSignalSpy failures(&session,&PluginSession::failed),finished(&session,&PluginSession::commandFinished),stopped(&session,&PluginSession::stopped);session.invoke(id+".open");QTRY_COMPARE_WITH_TIMEOUT(window.findChildren<QMessageBox*>().size(),1,10000);QCOMPARE(editor.textRange(0,editor.length()),QByteArray("aX中\r\né!\n"));QCOMPARE(session.resourceCount(),3);
-        QTest::qWait(5300);QCOMPARE(finished.size(),0);QVERIFY(failures.isEmpty());auto *message=window.findChild<QMessageBox*>();QCOMPARE(message->textFormat(),Qt::PlainText);for(auto *button:message->buttons())if(button->text()=="Accept")button->click();QTRY_COMPARE(finished.size(),1);QVERIFY(finished[0][2].toJsonObject().isEmpty());QCOMPARE(finished[0][1].toJsonValue().toObject()["choice"].toString(),QString("Accept"));QCOMPARE(finished[0][1].toJsonValue().toObject()["text"].toString(),QString::fromUtf8("aX中\r\né!\n"));
-        editor.undo();QCOMPARE(editor.textRange(0,editor.length()),QByteArray("a😀中\r\né\n"));editor.redo();QCOMPARE(editor.textRange(0,editor.length()),QByteArray("aX中\r\né!\n"));QTRY_VERIFY(window.findChildren<QMessageBox*>().isEmpty());session.invoke(id+".open");QTRY_COMPARE(window.findChildren<QMessageBox*>().size(),1);session.stop();QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000);QCOMPARE(session.resourceCount(),0);QTRY_VERIFY(window.findChildren<QMessageBox*>().isEmpty());QVERIFY(failures.isEmpty());documents.detach(doc);window.takeCentralWidget();
-    }
     void nativeDeltaCapabilitiesAndCensusLimit() {
         using namespace PluginPackages;using namespace PluginRuntime;
         for(int scenario=0;scenario<3;++scenario) {
@@ -263,106 +214,6 @@ exports.activate=ctx=>{let count=0;ctx.subscriptions.push(vscode.commands.regist
             QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(id+".open"),1,10000);QVERIFY2(replies.lastError(id+".open").isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(data.access(id,"storage","result").value.toInt(),scenario==2?1007:1003);QCOMPARE(engine.resourceCount(),1);QVERIFY(errors.isEmpty());
             engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.resourceCount(),0);for(const auto &extra:extraIds)documents.detach(extra);documents.detach(doc);window.takeCentralWidget();
         }
-    }
-    void nativeDocumentMirrorLifecycle() {
-        using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;const auto id=QString("tests.document-mirror");
-        const auto module=QJsonDocument(QJsonArray{QString(PLUGIN_TEST_MIRROR)}).toJson(QJsonDocument::Compact).mid(1).chopped(1);
-        const auto code=QByteArray("const {DocumentMirror}=require(")+module+R"JS();
-exports.activate=async ctx=>{
-  const events=[];let count=0;
-  const mirror=await new DocumentMirror(ctx.documents,{onEvent:e=>{const entry={type:e.type};if(e.reason)entry.reason=e.reason;if(e.contentChanges)entry.changes=e.contentChanges.length;events.push(entry);if(events.length>64)events.shift();},fault:e=>console.error(e)}).start();
-  ctx.subscriptions.push(mirror);
-  await ctx.commands.register('tests.document-mirror.open',async()=>{
-    await mirror.flush();
-    const documents=mirror.documents.map(d=>({documentId:d.documentId,uri:d.uri,languageId:d.languageId,version:d.version,isDirty:d.isDirty,text:d.getText(),line0:d.lineAt(0).text,lineCount:d.lineCount}));
-    await ctx.storage.update('snapshot',{count:++count,documents,activeId:mirror.activeDocument?.documentId??null,unsupported:mirror.unsupported,events});
-  });
-};
-)JS";
-        const auto resource=runtimeFixture(temp.path()+"/input",id,code,{"commands@1","documents.read@1","documents.delta@1","storage@1"});
-        QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
-        QMainWindow window;ScintillaEdit first,second,invalid;first.setCodePage(SC_CP_UTF8);second.setCodePage(SC_CP_UTF8);invalid.setCodePage(SC_CP_UTF8);first.setText("a😀中\r\né\n");second.setText("second unsaved");first.emptyUndoBuffer();second.emptyUndoBuffer();window.setCentralWidget(&first);
-        PluginDocuments::DocumentBridge documents;const auto firstId=documents.attach(&first,{},"text"),secondId=documents.attach(&second,{},"text");documents.setActive(firstId);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);
-        CommandReplies replies(&engine);const auto command=id+".open";
-        connect(&engine,&PluginEngine::error,&replies,[&](const QString &plugin,const QString &message){qWarning()<<"Mirror acceptance failure"<<message<<engine.pluginLog(plugin);});
-        const PluginData::Store data(temp.path()+"/data",resource.repository);
-        const auto snapshot=[&]{return data.access(id,"storage","snapshot").value.toObject();};
-        const auto record=[&](const QString &doc){for(const auto &item:snapshot()["documents"].toArray())if(item.toObject()["documentId"]==doc)return item.toObject();return QJsonObject();};
-        const auto eventCount=[&](const QString &type){int count=0;for(const auto &event:snapshot()["events"].toArray())if(event.toObject()["type"]==type)++count;return count;};
-        QVERIFY(installer.installDirectory(temp.path()+"/input",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
-        QTRY_VERIFY_WITH_TIMEOUT(replies.count(command)==1||!errors.isEmpty(),5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),1);QCOMPARE(snapshot()["documents"].toArray().size(),2);QCOMPARE(record(firstId)["text"].toString(),QStringLiteral("a😀中\r\né\n"));QCOMPARE(record(firstId)["line0"].toString(),QStringLiteral("a😀中"));QCOMPARE(snapshot()["activeId"].toString(),firstId);QCOMPARE(engine.resourceCount(),2);QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),1,5000);
-        first.setTargetStart(1);first.setTargetEnd(8);first.replaceTarget(0,"");second.insertText(second.length()," tail");documents.setActive(secondId);engine.invoke(id,id+".open");
-        QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),2,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),2);QCOMPARE(record(firstId)["text"].toString(),QStringLiteral("a\r\né\n"));QCOMPARE(record(secondId)["text"].toString(),"second unsaved tail");QCOMPARE(snapshot()["activeId"].toString(),secondId);QCOMPARE(eventCount("resynchronized"),0);
-        const auto pos=[](int line,int character){return QJsonObject{{"line",line},{"character",character}};};const auto edit=[&](int line,int end,const QString &text){return QJsonObject{{"range",QJsonObject{{"start",pos(line,0)},{"end",pos(line,end)}}},{"text",text}};};
-        QJsonObject editError;const auto changes=eventCount("changed");const auto result=documents.applyEdits(firstId,documents.info(firstId)["version"].toInteger(),{edit(0,1,"B"),edit(1,2,"new")},&editError);QVERIFY2(editError.isEmpty(),QJsonDocument(editError).toJson().constData());engine.invoke(id,id+".open");
-        QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),3,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),3);QCOMPARE(record(firstId)["text"].toString(),QStringLiteral("B\r\nnew\n"));QCOMPARE(record(firstId)["version"].toInteger(),result["version"].toInteger());QCOMPARE(eventCount("changed"),changes+1);QCOMPARE(eventCount("resynchronized"),0);
-        first.undo();engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),4,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),4);QCOMPARE(record(firstId)["text"].toString(),QStringLiteral("a\r\né\n"));QCOMPARE(eventCount("resynchronized"),0);
-        first.redo();documents.updateMetadata(firstId,QUrl::fromLocalFile("/tmp/mirror renamed.md"),"markdown");engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),5,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),5);QCOMPARE(record(firstId)["text"].toString(),QStringLiteral("B\r\nnew\n"));QCOMPARE(record(firstId)["languageId"].toString(),"markdown");QVERIFY(record(firstId)["uri"].toString().contains("mirror%20renamed.md"));QCOMPARE(eventCount("resynchronized"),0);
-        {const QSignalBlocker blocked(&first);first.setText("reset snapshot");}documents.reset(firstId);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),6,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),6);QCOMPARE(record(firstId)["text"].toString(),"reset snapshot");QCOMPARE(eventCount("resynchronized"),1);
-        const char bytes[]={char(0xc3),char(0x28),0};invalid.setText(bytes);const auto invalidId=documents.attach(&invalid,{},"text");documents.detach(secondId);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),7,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),7);QCOMPARE(snapshot()["documents"].toArray().size(),1);QCOMPARE(snapshot()["unsupported"].toArray().size(),1);QCOMPARE(snapshot()["unsupported"].toArray()[0].toObject()["errorCode"].toInt(),1009);QCOMPARE(snapshot()["unsupported"].toArray()[0].toObject()["documentId"].toString(),invalidId);
-        {const QSignalBlocker blocked(&invalid);invalid.setText("supported again");}documents.reset(invalidId);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(replies.count(command),8,5000);QVERIFY2(errors.isEmpty()&&replies.lastError(command).isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(snapshot()["count"].toInt(),8);QVERIFY(snapshot()["unsupported"].toArray().isEmpty());QCOMPARE(record(invalidId)["text"].toString(),"supported again");
-        QVERIFY(engine.setEnabled(id,false,&error));QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("disabled"),5000);QCOMPARE(engine.resourceCount(),0);QVERIFY(errors.isEmpty());engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);documents.detach(firstId);documents.detach(invalidId);window.takeCentralWidget();
-    }
-    void pythonInspectorExample() {
-        if(QString(PLUGIN_TEST_PYTHON).isEmpty())QSKIP("An explicit Python interpreter was not configured for this build.");
-        using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;QProcess pack;pack.start(PLUGIN_TEST_NODE,{PLUGIN_TEST_STAGER,PLUGIN_TEST_PYTHON_EXAMPLE,temp.path()+"/release"});QVERIFY(pack.waitForFinished(10000));QVERIFY2(pack.exitCode()==0,pack.readAllStandardError().constData());
-        QFile metadata(QString(PLUGIN_TEST_PYTHON_EXAMPLE)+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::ReadOnly));PluginSources::SourceSnapshot source;QString error;QVERIFY(PluginSources::PluginMetadata::parse(metadata.readAll(),"https://github.com/notepadnext/python-inspector",{},&source,&error));const auto resource=source.resources[0];const auto id=resource.id;
-        InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
-        QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("Python sees unsaved 😀中\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);CommandReplies replies(&engine);
-        QVERIFY(installer.installDirectory(temp.path()+"/release",resource));QTRY_COMPARE(installed.size(),1);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(!index.plugin(id).enabled);QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
-        QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);QTRY_VERIFY_WITH_TIMEOUT(window.findChild<QWebEngineView*>(),5000);auto *page=window.findChild<QWebEngineView*>()->page();auto text=std::make_shared<QString>();
-        QTRY_VERIFY_WITH_TIMEOUT(([&]{page->runJavaScript("document.querySelector('pre')?.textContent",[text](const QVariant &value){*text=value.toString();});return *text==QStringLiteral("Python sees unsaved 😀中\n");})(),5000);
-        QTRY_COMPARE_WITH_TIMEOUT(replies.count(id+".open"),1,10000);QVERIFY2(replies.lastError(id+".open").isEmpty(),qPrintable(engine.pluginLog(id)));
-        const PluginData::Store store(temp.path()+"/data",resource.repository);QCOMPARE(store.access(id,"storage","lastPreview").value.toObject()["text"].toString(),QStringLiteral("Python sees unsaved 😀中\n"));
-        engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY(window.findChildren<QDockWidget*>().isEmpty());QVERIFY(errors.isEmpty());documents.detach(doc);window.takeCentralWidget();
-    }
-    void pythonPluginLifecycle() {
-        if(QString(PLUGIN_TEST_PYTHON).isEmpty())QSKIP("An explicit Python interpreter was not configured for this build.");
-        using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;const auto nodeId=QString("tests.python-companion"),pyId=QString("tests.python");
-        const auto native=runtimeFixture(temp.path()+"/node",nodeId,"exports.activate=async ctx=>{await ctx.commands.register('tests.python-companion.open',async()=>{const doc=await ctx.documents.getActive();await ctx.storage.update('snapshot',await ctx.documents.getSnapshot(doc.documentId));});};\n",{"commands@1","documents.read@1","storage@1"});
-        const auto python=runtimeFixture(temp.path()+"/python",pyId,R"PY(import asyncio
-import os
-def spin():
-    while True:
-        pass
-async def activate(ctx):
-    async def read():
-        doc = await ctx.documents.get_active()
-        snapshot = await ctx.documents.get_snapshot(doc['documentId'])
-        await ctx.storage.update('snapshot', snapshot)
-        await ctx.storage.update('processId', os.getpid())
-        if await ctx.storage.get('hungOnce') is None:
-            await ctx.storage.update('hungOnce', True)
-            asyncio.get_running_loop().call_later(0.1, spin)
-        return None
-    await ctx.commands.register('tests.python.open', read)
-)PY",{"commands@1","documents.read@1","storage@1"},"python");
-        QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
-        QMainWindow window;ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("shared unsaved 😀中\r\n");window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST,PLUGIN_TEST_PYTHON});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);CommandReplies replies(&engine);
-        QVERIFY(installer.installDirectory(temp.path()+"/node",native));QTRY_COMPARE(installed.size(),1);QVERIFY(installed[0][1].toString().isEmpty());QVERIFY(engine.setEnabled(nodeId,true,&error));engine.invoke(nodeId,nodeId+".open");QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(nodeId),QString("active"),5000);
-        QPointer<PluginSession> companion=engine.findChild<PluginSession*>();QVERIFY(companion);const auto companionGeneration=companion->sessionId();
-        QVERIFY(installer.installDirectory(temp.path()+"/python",python));QTRY_COMPARE(installed.size(),2);QVERIFY(installed[1][1].toString().isEmpty());
-        PluginSources::RegisteredResourceRegistry sources(temp.path()+"/sources.json");QVERIFY(sources.load(&error));PluginManagerDialog manager(&sources,&window,nullptr,&index,&installer,&engine);
-        auto *list=manager.findChild<QListWidget*>("installedPlugins");QVERIFY(list);for(int i=0;i<list->count();++i)if(list->item(i)->data(Qt::UserRole)==pyId)list->setCurrentRow(i);
-        manager.findChild<QPushButton*>("togglePluginEnabled")->click();QVERIFY(index.plugin(pyId).enabled);manager.findChild<QPushButton*>("runPluginCommand")->click();
-        const PluginData::Store nodeData(temp.path()+"/data",native.repository),pyData(temp.path()+"/data",python.repository);
-        QTRY_COMPARE_WITH_TIMEOUT(replies.count(nodeId+".open"),1,10000);QVERIFY2(replies.lastError(nodeId+".open").isEmpty(),qPrintable(engine.pluginLog(nodeId)));
-        QTRY_COMPARE_WITH_TIMEOUT(replies.count(pyId+".open"),1,10000);QVERIFY2(replies.lastError(pyId+".open").isEmpty(),qPrintable(engine.pluginLog(pyId)));
-        QCOMPARE(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("shared unsaved 😀中\r\n"));
-        QCOMPARE(pyData.access(pyId,"storage","processId").value.isDouble(),true);const auto oldPid=pyData.access(pyId,"storage","processId").value.toInteger();ProcessIdentity oldProcess;QVERIFY2(ProcessIdentity::capture(oldPid,&oldProcess,&error),qPrintable(error));
-        QCOMPARE(pyData.access(pyId,"storage","snapshot").value,nodeData.access(nodeId,"storage","snapshot").value);QTest::qWait(200);
-        editor.setText("new unsaved 😀中\n");manager.findChild<QPushButton*>("reloadPlugin")->click();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(pyId),QString("active"),8000);
-        QTRY_COMPARE_WITH_TIMEOUT(oldProcess.state(),ProcessIdentity::State::Exited,3000);QVERIFY(companion);QCOMPARE(companion->sessionId(),companionGeneration);QCOMPARE(companion->state(),QString("active"));
-        manager.findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(replies.count(pyId+".open"),2,10000);QVERIFY2(replies.lastError(pyId+".open").isEmpty(),qPrintable(engine.pluginLog(pyId)));QCOMPARE(pyData.access(pyId,"storage","snapshot").value.toObject()["text"].toString(),QStringLiteral("new unsaved 😀中\n"));
-        QVERIFY(pyData.access(pyId,"storage","processId").value.toInteger()!=oldPid);QCOMPARE(engine.sessionCount(),2);QCOMPARE(engine.resourceCount(),2);
-        manager.findChild<QPushButton*>("togglePluginEnabled")->click();QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(pyId),QString("disabled"),5000);QCOMPARE(companion->state(),QString("active"));QVERIFY(errors.isEmpty());
-        engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(engine.sessionCount(),0);documents.detach(doc);window.takeCentralWidget();
     }
     void collectionPreservesRunningSession() {
         using namespace PluginPackages;using namespace PluginRuntime;
@@ -437,47 +288,6 @@ async def activate(ctx):
         QVERIFY(installer.installDirectory(input,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),1,5000);QVERIFY2(installed[0][1].toString().isEmpty(),qPrintable(installed[0][1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");
         QTRY_VERIFY_WITH_TIMEOUT(retried,5000);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);QCOMPARE(errors.size(),1);QCOMPARE(engine.sessionCount(),1);QCOMPARE(engine.resourceCount(),1);QVERIFY(engine.pluginFailureMessage(id).isEmpty());
         engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);documents.detach(doc);window.takeCentralWidget();
-    }
-    void compatiblePersistenceLifecycle() {
-        using namespace PluginPackages;using namespace PluginRuntime;
-        QTemporaryDir temp;const auto root=temp.path()+"/plugin",id=QString("tests.compat-state");
-        auto resource=runtimeFixture(root,id,R"JS(
-const vscode=require('vscode');
-exports.activate=async context=>{
-  const initialGlobal=context.globalState.get('count',0),initialWorkspace=context.workspaceState.get('count',0);
-  const settings=vscode.workspace.getConfiguration('state');
-  if(!['light','dark'].includes(settings.get('theme')))throw new Error('configuration was not hydrated');
-  let changes=0;context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(event=>{if(event.affectsConfiguration('state.theme')&&!event.affectsConfiguration('other'))++changes;}));
-  for(const write of [()=>context.globalState.update('activation',1),()=>settings.update('theme','dark',vscode.ConfigurationTarget.Global)]){
-    let denied=false;try{await write();}catch(error){denied=error.code===1004;}if(!denied)throw new Error('activation persistence write was allowed');
-  }
-  context.subscriptions.push(vscode.commands.registerCommand('state.run',async()=>{
-    if(context.globalState.get('count',0)!==initialGlobal||context.workspaceState.get('count',0)!==initialWorkspace)throw new Error('activation cache was not stable');
-    await context.globalState.update('count',initialGlobal+1);await context.workspaceState.update('count',initialWorkspace+1);
-    await context.globalState.update('__proto__',null);if(context.globalState.get('__proto__','fallback')!==null)throw new Error('null was lost');
-    await context.globalState.update('temporary',true);await context.globalState.update('temporary',undefined);if(context.globalState.keys().includes('temporary'))throw new Error('deletion was lost');
-    const next=settings.get('theme')==='light'?'dark':'light';await settings.update('theme',next,vscode.ConfigurationTarget.Global);
-    if(changes!==1||settings.inspect('theme').globalValue!==next)throw new Error('configuration event or inspect failed');
-    await context.globalState.update('report',{theme:next,changes,label:'😀中'});return null;
-  }));
-};
-)JS",{"commands@1","documents.read@1","documents.delta@1","storage@1","configuration@1"});
-        resource.metadata.insert("compatibility",QJsonObject{{"kind","vscode"},{"version","0.1.0"},{"api","1.100.0"},{"extensionRoot","dist"},{"commands",QJsonArray{QJsonObject{{"id","state.run"},{"target",id+".open"}}}}});
-        QFile metadata(root+"/notepadnext-plugin.json");QVERIFY(metadata.open(QIODevice::WriteOnly));metadata.write(QJsonDocument(resource.metadata).toJson());metadata.close();
-        QFile declaration(root+"/dist/vscode-package.json");QVERIFY(declaration.open(QIODevice::WriteOnly));declaration.write(R"JSON({"contributes":{"configuration":{"title":"State fixture","properties":{"state.theme":{"type":"string","default":"light","enum":["light","dark"]}}}}})JSON");declaration.close();
-        QString error;InstalledPluginRegistry index(temp.path()+"/installed.json",temp.path()+"/store");QVERIFY(index.load(&error));InstallationService installer(&index,PluginEngine::packagePolicy());
-        QMainWindow window;ScintillaEdit editor;window.setCentralWidget(&editor);PluginDocuments::DocumentBridge documents;const auto doc=documents.attach(&editor,{},"plaintext");documents.setActive(doc);
-        PluginEngine engine(&index,&installer,&documents,{PLUGIN_TEST_NODE,PLUGIN_TEST_HOST});engine.attachWindow(&window,window.menuBar()->addMenu("Plugins"));QSignalSpy installed(&installer,&InstallationService::finished),errors(&engine,&PluginEngine::error);int finished=0;QPointer<PluginSession> observed;
-        connect(&engine,&PluginEngine::statusChanged,this,[&](const QString &){auto *session=engine.findChild<PluginSession*>();if(!session||session==observed)return;observed=session;connect(session,&PluginSession::commandFinished,this,[&](const QString &,const QJsonValue &,const QJsonObject &){++finished;});});
-        const PluginData::Store data(temp.path()+"/data",resource.repository);const auto values=[&](const QString &space,const QString &key){return data.access(id,space,key).value.toObject()["values"].toObject();};
-        const auto assertCount=[&](int count){QCOMPARE(values("storage","_vscode.globalState.v1")["count"].toInt(),count);QCOMPARE(values("storage","_vscode.workspaceState.mainSession.v1")["count"].toInt(),count);QVERIFY(!values("storage","_vscode.globalState.v1").contains("activation"));QCOMPARE(values("storage","_vscode.globalState.v1")["report"].toObject()["label"].toString(),QString("😀中"));};
-        const auto install=[&](int installCount,int commandCount){QVERIFY(installer.installDirectory(root,resource));QTRY_COMPARE_WITH_TIMEOUT(installed.size(),installCount,10000);QVERIFY2(installed.last()[1].toString().isEmpty(),qPrintable(installed.last()[1].toString()));QVERIFY(engine.setEnabled(id,true,&error));engine.invoke(id,id+".open");QTRY_VERIFY_WITH_TIMEOUT(finished==commandCount||!errors.isEmpty(),5000);QVERIFY2(errors.isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(finished,commandCount);};
-        install(1,1);assertCount(1);QCOMPARE(values("configuration","_vscode.configuration.v1")["state.theme"].toString(),QString("dark"));
-        engine.reload(id);QTRY_COMPARE_WITH_TIMEOUT(engine.pluginState(id),QString("active"),5000);engine.invoke(id,id+".open");QTRY_COMPARE_WITH_TIMEOUT(finished,2,5000);assertCount(2);QCOMPARE(values("configuration","_vscode.configuration.v1")["state.theme"].toString(),QString("light"));
-        engine.uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QCOMPARE(index.plugins().size(),0);assertCount(2);
-        install(2,3);assertCount(3);engine.uninstall(id,false);QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY(!QFileInfo::exists(data.filePath(id)));
-        install(3,4);assertCount(1);engine.shutdown();QTRY_VERIFY_WITH_TIMEOUT(engine.isIdle(),5000);QVERIFY2(errors.isEmpty(),qPrintable(engine.pluginLog(id)));QCOMPARE(engine.resourceCount(),0);
-        documents.detach(doc);window.takeCentralWidget();
     }
     void pluginDataLifecycle() {
         using namespace PluginPackages;using namespace PluginRuntime;
@@ -700,7 +510,7 @@ exports.activate=async ctx=>{
         const auto makePackage=[&](const QString &version,const QByteArray &code) {
             const auto root=temp.path()+"/input-"+version;QDir().mkpath(root+"/dist");
             QJsonObject m{{"manifestVersion",1},{"id","tests.update"},{"name","Update Test"},{"version",version},{"list",false},
-                {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.1.0"}}},
+                {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.3.0"}}},
                 {"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.js"}}},
                 {"capabilities",QJsonObject{{"required",QJsonArray{"commands@1"}},{"optional",QJsonArray{}}}},
                 {"activationEvents",QJsonArray{"onCommand:tests.update.open"}},

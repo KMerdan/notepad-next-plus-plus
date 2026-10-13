@@ -393,8 +393,6 @@
         },
         "apiVersion": {
           "enum": [
-            "0.1.0",
-            "0.2.0",
             "0.3.0"
           ]
         },
@@ -431,8 +429,6 @@
         },
         "apiVersion": {
           "enum": [
-            "0.1.0",
-            "0.2.0",
             "0.3.0"
           ]
         },
@@ -813,42 +809,6 @@
         "registrationId"
       ],
       "additionalProperties": false
-    },
-    "nnp.commands.invoke.params": {
-      "type": "object",
-      "properties": {
-        "sessionId": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 128
-        },
-        "generation": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
-        },
-        "callbackId": {
-          "$ref": "#/$defs/handle"
-        },
-        "args": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/json"
-          },
-          "minItems": 0,
-          "maxItems": 256
-        }
-      },
-      "required": [
-        "sessionId",
-        "generation",
-        "callbackId",
-        "args"
-      ],
-      "additionalProperties": false
-    },
-    "nnp.commands.invoke.result": {
-      "$ref": "#/$defs/json"
     },
     "nnp.webviews.create.params": {
       "type": "object",

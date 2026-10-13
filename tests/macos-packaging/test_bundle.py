@@ -89,11 +89,7 @@ class BundleTests(unittest.TestCase):
     def test_unverified_node_archive(self):
         archive=self.case/'unverified.tar.xz';archive.write_bytes(b'not an official Node archive')
         with self.assertRaisesRegex(ValueError,'controlled runtime lock'):packager.checked_node(self.app,archive,self.arch)
-    def test_python_developer_profile_cannot_be_packaged(self):
-        host=self.app/'Contents/Resources/plugin-host';host.mkdir();(host/'build-profile.json').write_text(json.dumps({'nodeBundled':True,'developerPythonConfigured':True}))
-        class Args:pass
-        args=Args();args.app=self.app;args.qt=self.root
-        with self.assertRaisesRegex(ValueError,'developer-only absolute Python'):packager.package(args)
+
     def test_rejected_notarization_does_not_staple(self):
         import io
         response=subprocess.CompletedProcess(['fixture'],0,json.dumps({'status':'Invalid','id':'fixture'}),'')

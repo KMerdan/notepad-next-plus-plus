@@ -2,24 +2,21 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {Endpoint,RpcError}=require('../../packages/plugin-host/rpc.cjs');
 const {createClient}=require('../../packages/plugin-host/client.cjs');
-const identity={pluginId:'test.tools',sessionId:'native-session',generation:1,apiVersion:'0.2.0',hostVersion:'0.15.0',grantedCapabilities:['commands@1','documents.write@1'],limits:require('../../packages/plugin-host/protocol-profile.json')};
+const identity={pluginId:'test.tools',sessionId:'native-session',generation:1,apiVersion:'0.3.0',hostVersion:'0.15.0',grantedCapabilities:['commands@1','documents.write@1'],limits:require('../../packages/plugin-host/protocol-profile.json')};
 const invocation={commandId:'test.tools.upper',windowId:'window',editorId:'editor-a',documentId:'doc-a',args:['payload']};
-function peers(apiVersion='0.2.0'){
+function peers(apiVersion='0.3.0'){
  const caller=new Endpoint(json=>{void host.receive(Buffer.from(json));}),host=new Endpoint(json=>{void caller.receive(Buffer.from(json));});
  const client=createClient(caller,{...identity,apiVersion},{contributes:{commands:[{id:invocation.commandId}]}},()=>true);
  host.register('nnp.commands.register',()=>({registrationId:'registered'}));host.register('nnp.resources.dispose',()=>null);
  return {client,host,caller,async close(){await client.dispose();caller.close();host.close();}};
 }
-test('native callback receives frozen origin, while legacy callbacks retain positional arguments',async()=>{
- for(const apiVersion of ['0.1.0','0.2.0']){
-  const p=peers(apiVersion);let received,callbackId;
-  p.host.register('nnp.commands.register',params=>{callbackId=params.callbackId;return {registrationId:'registered'};});
-  try{await p.client.api.commands.register(invocation.commandId,(...args)=>{received=args;return null;});
-   const base={sessionId:identity.sessionId,generation:1,callbackId};
-   if(apiVersion==='0.2.0') {await p.host.call('nnp.commands.invokeNative',{...base,invocation});assert.deepEqual(received,[invocation]);}
-   else {await p.host.call('nnp.commands.invoke',{...base,args:['payload',42]});assert.deepEqual(received,['payload',42]);}
-  }finally{await p.close();}
- }
+test('native callback receives one frozen invocation; positional method is absent',async()=>{
+ const p=peers();let received,callbackId;
+ p.host.register('nnp.commands.register',params=>{callbackId=params.callbackId;return {registrationId:'registered'};});
+ try {await p.client.api.commands.register(invocation.commandId,origin=>{received=origin;return null;});
+  await p.host.call('nnp.commands.invokeNative',{sessionId:identity.sessionId,generation:1,callbackId,invocation});assert.deepEqual(received,invocation);assert.equal(Object.isFrozen(received),true);
+  await assert.rejects(p.host.call('nnp.commands.invoke',{sessionId:identity.sessionId,generation:1,callbackId,args:[]}),{code:-32601});
+ }finally{await p.close();}
 });
 test('native invocation and selection guard travel over validated wire without retargeting or retries',async()=>{
  const p=peers();let callbackId,target,writes=0;

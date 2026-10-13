@@ -26,21 +26,17 @@ using PluginDiagnostics::Failure;
 namespace PluginRuntime {
 RuntimePaths RuntimePaths::bundled() {
     const auto base=QCoreApplication::applicationDirPath();
-    QString python;
-#ifdef NOTEPADNEXT_PLUGIN_PYTHON_PATH
-    python=QStringLiteral(NOTEPADNEXT_PLUGIN_PYTHON_PATH);
-#endif
 #ifdef Q_OS_MACOS
-    return {QDir::cleanPath(base+"/../Helpers/nnp-node"),QDir::cleanPath(base+"/../Resources/plugin-host/host.cjs"),python};
+    return {QDir::cleanPath(base+"/../Helpers/nnp-node"),QDir::cleanPath(base+"/../Resources/plugin-host/host.cjs")};
 #elif defined(Q_OS_WIN)
-    return {base+"/plugins/runtime/node.exe",base+"/plugins/host/host.cjs",python};
+    return {base+"/plugins/runtime/node.exe",base+"/plugins/host/host.cjs"};
 #else
-    return {base+"/plugins/runtime/node",base+"/plugins/host/host.cjs",python};
+    return {base+"/plugins/runtime/node",base+"/plugins/host/host.cjs"};
 #endif
 }
 PluginPackages::PackagePolicy PluginEngine::packagePolicy() {
     PluginPackages::PackagePolicy policy;
-    policy.apiVersion="0.3.0";policy.compatibleApiVersions={"0.2.0","0.1.0"};
+    policy.applicationVersion=NNP_APPLICATION_VERSION;policy.apiVersion="0.3.0";
     policy.capabilities={"documents.native.events@1","editors.selection.events@1","files.read@1","files.write@1","search.read@1","languages.read@1","languages.write@1","bookmarks.read@1","bookmarks.write@1","decorations.write@1","commands@1","documents.read@1","documents.events@1","documents.delta@1","documents.write@1","messages@1","storage@1","configuration@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"};
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     policy.capabilities.append("webviews@1");policy.capabilities.append("webviews.restore@1");
@@ -213,9 +209,6 @@ void PluginEngine::request(const QString &id,const QString &command,const QStrin
     if(!QFileInfo(paths.node).isExecutable()||!QFileInfo(paths.hostEntry).isFile()||!QDir::isAbsolutePath(paths.node)||!QDir::isAbsolutePath(paths.hostEntry)) {
         const auto message=tr("The bundled Node 24 runtime or plugin host is missing. Repair the application installation.");failures[id]=message;failureCategories[id]=Failure::RuntimeUnavailable;log(id,message.toUtf8(),Failure::RuntimeUnavailable,"failure");emit statusChanged(id);emit error(id,message);if(validating)failUpdate(id,message);return;
     }
-    if(registry->plugin(id).package.metadata["runtime"].toObject()["kind"]=="python"&&(!QDir::isAbsolutePath(paths.python)||!QFileInfo(paths.python).isExecutable()||!QFileInfo(QFileInfo(paths.hostEntry).dir().filePath("python-host.cjs")).isFile())) {
-        const auto message=tr("This build has no configured Python plugin runtime. Configure an absolute Python 3.12 interpreter path.");failures[id]=message;failureCategories[id]=Failure::RuntimeUnavailable;log(id,message.toUtf8(),Failure::RuntimeUnavailable,"failure");emit statusChanged(id);emit error(id,message);if(validating)failUpdate(id,message);return;
-    }
     const auto p=registry->plugin(id);const auto store=registry->packageStorePath();
     auto cancel=std::make_shared<std::atomic_bool>(false);verifying.insert(id,{cancel,command,reason,invocation});emit statusChanged(id);
     struct Outcome {bool ok=false;QString error;std::shared_ptr<PluginPackages::PackageLease> lease;};auto outcome=std::make_shared<Outcome>();
@@ -235,7 +228,7 @@ void PluginEngine::request(const QString &id,const QString &command,const QStrin
 void PluginEngine::startVerified(const QString &id,const QString &command,const QString &reason,const std::shared_ptr<PluginPackages::PackageLease> &lease,const QJsonObject &invocation) {
     if(!window||quitting)return;
     const auto p=registry->plugin(id);
-    auto *session=new PluginSession(p.package.metadata,p.package.root,paths.node,paths.hostEntry,window,documents,this,updating.contains(id)||hasPreservedPanels(id),data,p.package.repository,lease,paths.python);sessions.insert(id,session);
+    auto *session=new PluginSession(p.package.metadata,p.package.root,paths.node,paths.hostEntry,window,documents,this,updating.contains(id)||hasPreservedPanels(id),data,p.package.repository,lease);sessions.insert(id,session);
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     session->setRestoreSource(preservedPanels.value(id));
 #endif

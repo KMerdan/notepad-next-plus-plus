@@ -26,7 +26,7 @@ function createClient(endpoint, identity, manifest, canCall) {
     const payload=envelope(params);
     try {requireValid(method,'params',payload);} catch(error) {return Promise.reject(error);}
     const mutating=method==='nnp.documents.applyEdits'||method==='nnp.core.execute'||method==='nnp.editors.setSelections'||method.startsWith('nnp.files.')||method.startsWith('nnp.decorations.')||method==='nnp.documents.convertLineEndings'||method==='nnp.languages.set'||method==='nnp.bookmarks.set';
-    const nativeOptions=identity.apiVersion==='0.3.0'&&method!=='nnp.resources.dispose'?{...(method.startsWith('nnp.files.')?{timeout:600000}:{}),...options,signal:options?.signal?AbortSignal.any([options.signal,stopping.signal]):stopping.signal}:options;
+    const nativeOptions=method!=='nnp.resources.dispose'?{...(method.startsWith('nnp.files.')?{timeout:600000}:{}),...options,signal:options?.signal?AbortSignal.any([options.signal,stopping.signal]):stopping.signal}:options;
     return endpoint.call(method,payload,nativeOptions).then(value=>{requireValid(method,'result',value);return value;}).catch(error=>{
       error.kind=error.message==='ReadOnlyDocument'?'ReadOnlyDocument':({1001:'VersionConflict',1011:'SelectionConflict',1002:'DocumentClosed',1003:'CapabilityDenied',1004:'PluginStopping',1005:'UnsupportedCapability',1006:error.message.includes('timed out')?'Timeout':'Cancelled',1007:'Overloaded',1008:'ContentTooLarge',1009:'UnsupportedEncoding',1012:'FileIOError'}[error.code]??'InternalError');
       if(mutating)error.outcome=[1004,1006,1012,-32603].includes(error.code)?'unknown':'notCommitted';
@@ -87,17 +87,11 @@ function createClient(endpoint, identity, manifest, canCall) {
     if(params.sessionId!==identity.sessionId||params.generation!==identity.generation)return;
     deliverMessage(params);
   });
-  register(endpoint,'nnp.commands.invoke',async params => {
-    if (params?.sessionId !== identity.sessionId || params?.generation !== identity.generation || !Array.isArray(params?.args)) throw new RpcError(-32602,'Invalid command invocation');
-    if (!canCall('nnp.commands.invoke')) throw new RpcError(1004,'PluginStopping');
-    const callback = commands.get(params.callbackId); if (!callback) throw new RpcError(-32602,'Unknown command callback');
-    try {return await callback(...params.args);}
-    catch(error) {console.error(error);throw error;}
-  });
   register(endpoint,'nnp.commands.invokeNative',async params=>{
-    if(!['0.2.0','0.3.0'].includes(identity.apiVersion)||params.sessionId!==identity.sessionId||params.generation!==identity.generation||!canCall('nnp.commands.invokeNative'))throw new RpcError(1004,'PluginStopping');
+    if(params.sessionId!==identity.sessionId||params.generation!==identity.generation||!canCall('nnp.commands.invokeNative'))throw new RpcError(1004,'PluginStopping');
     const callback=commands.get(params.callbackId);if(!callback)throw new RpcError(-32602,'Unknown command callback');
-    return callback(Object.freeze({...params.invocation,args:Object.freeze([...params.invocation.args])}));
+    try {return await callback(Object.freeze({...params.invocation,args:Object.freeze([...params.invocation.args])}));}
+    catch(error){console.error(error);throw error;}
   });
   const nativeWatches=new Map(),earlyNative=[];let awaitingNative=0,earlyNativeBytes=0;
   function deliverNative(event){const entry=nativeWatches.get(event.subscriptionId);if(!entry){if(awaitingNative){const bytes=Buffer.byteLength(JSON.stringify(event));if(earlyNative.length>=128||earlyNativeBytes+bytes>2*1024*1024)throw new RpcError(1007,'Native subscription handoff overflow');earlyNativeBytes+=bytes;earlyNative.push(event);}return;}if(event.eventSeq<=entry.sequence)return;entry.sequence=event.eventSeq;return entry.listener(event);}

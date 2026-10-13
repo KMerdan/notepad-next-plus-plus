@@ -96,8 +96,8 @@ def notarize(path,profile,log):
 def package(args):
     source=args.app.resolve(strict=True);qt=args.qt.resolve(strict=True)
     profile=json.loads((source/'Contents/Resources/plugin-host/build-profile.json').read_text())
-    if not profile.get('nodeBundled') or profile.get('developerPythonConfigured'):
-        raise ValueError('Portable Node packaging needs a bundled Node and no developer-only absolute Python interpreter; configure a separate release build')
+    if not profile.get('nodeBundled'):
+        raise ValueError('Portable plugin packaging needs a bundled Node runtime')
     runtime=checked_node(source,args.node_archive,args.arch)
     notary_profile=getattr(args,'notary_profile','')
     if notary_profile and args.identity=='-':raise ValueError('Notarization requires a configured Developer ID Application identity')
