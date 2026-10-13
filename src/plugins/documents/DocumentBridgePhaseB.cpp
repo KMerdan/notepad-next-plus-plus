@@ -58,7 +58,10 @@ QJsonObject DocumentBridge::revealRange(const QJsonObject &request,QJsonObject *
 QJsonObject DocumentBridge::editorOptions(const QString &editorId,QJsonObject *error) const {
     *error={};const auto id=documentForEditor(editorId);const auto editor=editorForDocument(id);
     if(!editor){*error=rpcError(1002,"DocumentClosed");return {};}
-    return {{"editorId",editorId},{"tabWidth",qint64(editor->tabWidth())},{"indentWidth",qint64(editor->indent())},{"useTabs",editor->useTabs()}};
+    // Scintilla stores zero as "indent using tab width"; the SDK returns
+    // the effective indentation step rather than that internal sentinel.
+    const auto indent=editor->indent()>0?editor->indent():editor->tabWidth();
+    return {{"editorId",editorId},{"tabWidth",qint64(editor->tabWidth())},{"indentWidth",qint64(indent)},{"useTabs",editor->useTabs()}};
 }
 QJsonObject DocumentBridge::convertLineEndings(const QJsonObject &request,QJsonObject *error) {
     const auto id=request["documentId"].toString();if(!checkVersion(id,request["expectedVersion"].toInteger(),error))return {};

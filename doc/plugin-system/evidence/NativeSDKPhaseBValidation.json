@@ -34,7 +34,7 @@
     "src/plugins/documents/CMakeLists.txt": "60de6191b09d121b0634d63532b6c040bc469128dac232193ea996fa7708536d",
     "src/plugins/documents/DocumentBridge.cpp": "a8bc8c18b7466351e3b7a3acfc9db667ec0afd1f17137017da5881d3e0c07003",
     "src/plugins/documents/DocumentBridge.h": "19ae4e582fd13084725ad7214f80a3d9a5e1399f4a0d4978bd87858669c6fcdf",
-    "src/plugins/documents/DocumentBridgePhaseB.cpp": "9bd09ec8470d5659c1d3b90df8aba726857c735d18f33d6e892820942da5f98a",
+    "src/plugins/documents/DocumentBridgePhaseB.cpp": "92a4ff808b55241d90a83b1b6bf910c46f4d94f62cad9ed225930627eea23a3f",
     "src/plugins/runtime/PluginEngine.cpp": "c95c08626eae34c329531b5d23c598f86a3a36dca7934306ee4b56faa4803966",
     "src/plugins/runtime/PluginSession.cpp": "8a5829b790d04fe9653083fc7113cd90a9895db605e1a9288dda7fa1e5c641b5",
     "src/plugins/runtime/PluginSession.h": "61cb8a00643c2f624b228dad847576577da0019386125bf78469fe44d7f9637d",
@@ -42,8 +42,8 @@
     "tests/fixtures/native-phase-b/LICENSE": "7b2741977b798f285d7dac2c78cec669c9f959ae26c455d2015bcbcc7c0f7f25",
     "tests/fixtures/native-phase-b/dist/index.cjs": "13ab1f7bfd00f67d3f9717dfd34a9ec28e3815f71a2e58fe4ac52a8220873e54",
     "tests/fixtures/native-phase-b/notepadnext-plugin.json": "43eac6d9d9ae3edb3021fd04c0f7304a5d0b92f3da2b9e1a6d02e83d7e9efb26",
-    "tests/plugin-application/PluginApplicationTests.cpp": "ef5e6e7e6a3acee38bed2b54bd3d8110edc89851d5115e0ece06c59ce4a2bfc6",
-    "tests/plugin-documents/PluginDocumentTests.cpp": "6e3b49cbe348e5c6ca03717821e275e2a98ea1a1f99c2c9f15264e52c3ccadbd",
+    "tests/plugin-application/PluginApplicationTests.cpp": "7813549e48cb94d518ee072cb74bdebcd7579131071810131798d0f6510e65be",
+    "tests/plugin-documents/PluginDocumentTests.cpp": "75de6e72c5a2b20822f40898d11d2b2d05e9f8fb36a5e0b7815dbaec0026bbb2",
     "tests/plugin-rpc/CMakeLists.txt": "7153b216d41dfb94cc5c2ba1d709b133383bea23a6ecd1853fcf91785c9652ba",
     "tests/plugin-rpc/PluginRpcTests.cpp": "6cbb5981aea5095913a10109ebad94c4a2c56e94c713326e67351a107db85e09",
     "tests/plugin-rpc/host.test.cjs": "2ab4e27bdc6baa48f03340fe55547c8367cf228a380912429ab289edd2e7d2f7",
@@ -76,7 +76,7 @@
     "ctestFailures": 0,
     "elapsedSeconds": 436.67,
     "rpcCasesPassed": 311,
-    "documentCasesPassed": 24,
+    "documentCasesPassed": 25,
     "phaseBApplicationPassed": 5,
     "phaseBApplicationFailed": 0,
     "webviewPassed": 45,
@@ -91,7 +91,15 @@
     "warmFileDescriptors": 38,
     "finalFileDescriptors": 44,
     "lifecycleQualification": "Real Scintilla/PluginEngine/WebEngine lifecycle. Every owned Node identity, session, panel, Dock and focus connection is checked after each stop. Raw native counts are preserved. macOS non-pipe descriptors must return to the three-cycle warm baseline. Pipe totals include shared Qt event dispatchers that initialize lazily in the unchanged baseline, so they are diagnostic rather than per-plugin ownership proof. No global provider-pool settings are changed. RSS includes shared Qt/provider caches and is not a peak measurement.",
-    "localRunQualification": "The full run after the Windows range-width fix passed 21/22 suites. Its only failure was the shared-provider pipe-total assertion. After correcting that test scope, the complete Webview suite passed on rerun (45 passed / 0 failed / 4 optional skips); all 22 suite results are covered by the full run plus this rerun."
+    "localRunQualification": "The full run after the Windows range-width fix passed 21/22 suites. Its only failure was the shared-provider pipe-total assertion. After correcting that test scope, the complete Webview suite passed on rerun (45 passed / 0 failed / 4 optional skips); all 22 suite results are covered by the full run plus this rerun. The subsequent effective-indent-only change was rechecked with all 25 document tests and six actual application results, without failures or skips.",
+    "effectiveIndentAndLegacyNativeRecheck": {
+      "documentPassed": 25,
+      "applicationPassed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "qualification": "After normalizing the native indent=0 sentinel to the actual tab-width step; real Tab operation plus explicit indent tested. Application recheck includes API 0.2 and Phase B protocol/file/resource cases.",
+      "diagnostics": "Legacy fixture records acknowledged capture/list/info/selection steps for a repeat of the isolated Windows core timeout; its timeout budget remains unchanged."
+    }
   },
   "baselineInvestigation": {
     "baselineCommit": "ef1711879946089fb22e5cc430125c65afadd915",

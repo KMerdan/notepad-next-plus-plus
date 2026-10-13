@@ -13,6 +13,13 @@ QList<QJsonObject> textEvents(const QSignalSpy &events) {QList<QJsonObject> resu
 class PluginDocumentTests : public QObject {
     Q_OBJECT
 private slots:
+    void phaseBOptionsMatchNativeIndentationStep() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("x");editor.setTabWidth(4);editor.setIndent(0);editor.setUseTabs(false);editor.setSelection(0,0);
+        DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");QJsonObject error;
+        auto options=bridge.editorOptions(bridge.editorInfo(id)["editorId"].toString(),&error);QVERIFY(error.isEmpty());QCOMPARE(options["indentWidth"].toInt(),4);
+        editor.tab();QCOMPARE(editor.get_text_range(0,editor.length()),QByteArray("    x"));
+        editor.setIndent(2);options=bridge.editorOptions(bridge.editorInfo(id)["editorId"].toString(),&error);QCOMPARE(options["indentWidth"].toInt(),2);QCOMPARE(options["tabWidth"].toInt(),4);
+    }
     void phaseBRangeReadIsBoundedAndVersioned() {
         ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText((QStringLiteral("a😀中\r\n").toUtf8()+QByteArray(3000000,'x')).constData());
         DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");QJsonObject error;const QJsonValue version=bridge.info(id)["version"];

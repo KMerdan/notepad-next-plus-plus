@@ -141,8 +141,9 @@ private slots:
             while((!app->getInstalledPluginRegistry()->plugin(id).id().isEmpty()||!engine->isIdle())&&deadline.elapsed()<5000)QTest::qWait(10);
         });
         const auto write=[&](const QString &name,const QByteArray &bytes){QFile file(name);if(!file.open(QIODevice::WriteOnly))return false;return file.write(bytes)==bytes.size();};
-        const auto ready=directory+"/native-ready",gate=directory+"/native-gate";
+        const auto ready=directory+"/native-ready",gate=directory+"/native-gate",trace=directory+"/native-trace";
         const auto literal=[](const QString &value){return QJsonDocument(QJsonArray{value}).toJson(QJsonDocument::Compact).mid(1).chopped(1);};
+        const auto diagnostic=[&]{QFile file(trace);file.open(QIODevice::ReadOnly);return engine->pluginLog(id)+"\nNative fixture steps: "+QString::fromUtf8(file.readAll());};
         QJsonObject manifest{{"manifestVersion",1},{"id",id},{"name","Native Text Tools"},{"version","0.1.0"},{"list",false},{"repository","https://github.com/KMerdan/native-sdk-test"},
             {"engines",QJsonObject{{"notepadnext",">=0.15.0 <0.16.0"},{"api","^0.2.0"}}},{"runtime",QJsonObject{{"kind","node"},{"entry","dist/index.cjs"}}},
             {"capabilities",QJsonObject{{"required",QJsonArray{"commands@1","documents.read@1","documents.write@1","editors.selection.read@1","editors.selection.write@1","core.commands@1"
@@ -158,7 +159,7 @@ private slots:
             }}}}};
         QVERIFY(write(package+"/notepadnext-plugin.json",QJsonDocument(manifest).toJson()));QVERIFY(write(package+"/LICENSE","GPL-3.0-or-later native integration fixture\n"));
         QByteArray code="const fs=require('node:fs');exports.activate=async ctx=>{if(ctx.host.apiVersion!=='0.2.0')throw new Error('native negotiation');"
-            "await ctx.commands.register('test.native-tools.upper',async inv=>{const c=await ctx.editors.capture(inv);const list=await ctx.documents.list();const info=await ctx.documents.getInfo(c.document.documentId);if(!list.some(d=>d.documentId===info.documentId)||!Number.isSafeInteger(info.byteLength))throw new Error('native metadata');c.selection=await ctx.editors.setSelections(c.editor.editorId,c.document.version,c.selection.revision,c.selection.selections,c.selection.mainIndex);if((await ctx.core.list()).length!==8)throw new Error('native catalog');fs.writeFileSync("+literal(ready)+",'captured');"
+            "await ctx.commands.register('test.native-tools.upper',async inv=>{const trace="+literal(trace)+";fs.writeFileSync(trace,'entered');const c=await ctx.editors.capture(inv);fs.appendFileSync(trace,' > captured');const list=await ctx.documents.list();fs.appendFileSync(trace,' > listed');const info=await ctx.documents.getInfo(c.document.documentId);fs.appendFileSync(trace,' > info');if(!list.some(d=>d.documentId===info.documentId)||!Number.isSafeInteger(info.byteLength))throw new Error('native metadata');c.selection=await ctx.editors.setSelections(c.editor.editorId,c.document.version,c.selection.revision,c.selection.selections,c.selection.mainIndex);fs.appendFileSync(trace,' > selected');if((await ctx.core.list()).length!==8)throw new Error('native catalog');fs.writeFileSync("+literal(ready)+",'captured');"
             "const deadline=Date.now()+3000;while(!fs.existsSync("+literal(gate)+")){if(Date.now()>deadline)throw new Error('gate timeout');await new Promise(r=>setTimeout(r,5));}"
             "await ctx.documents.applyEdits(c.document.documentId,c.document.version,c.selection.selections.map((s,n)=>({range:s.range,text:c.selectedText[n].toUpperCase()})),{selectionGuard:{editorId:c.editor.editorId,revision:c.selection.revision}});return ctx.host.apiVersion;});"
             "await ctx.commands.register('test.native-tools.deduplicate',async inv=>{const c=await ctx.editors.capture(inv);return ctx.core.execute('edit.lines.deduplicate',{target:{editorId:c.editor.editorId,documentId:c.document.documentId,expectedVersion:c.document.version,selectionRevision:c.selection.revision}});});";
@@ -177,8 +178,8 @@ private slots:
         QSignalSpy commandErrors(engine,&PluginRuntime::PluginEngine::error);
         engine->invoke(id,"test.native-tools.upper");
         window->findChild<QAction*>("actionNew")->trigger();QTRY_VERIFY(window->currentEditor()!=first);auto *second=window->currentEditor();second->setText("keep me");
-        QTRY_VERIFY2_WITH_TIMEOUT(QFileInfo::exists(ready)||!commandErrors.isEmpty(),qPrintable(engine->pluginLog(id)),10000);
-        QVERIFY2(QFileInfo::exists(ready),qPrintable(engine->pluginLog(id)));
+        QTRY_VERIFY2_WITH_TIMEOUT(QFileInfo::exists(ready)||!commandErrors.isEmpty(),qPrintable(diagnostic()),10000);
+        QVERIFY2(QFileInfo::exists(ready),qPrintable(diagnostic()));
         auto *session=engine->findChild<PluginRuntime::PluginSession*>();QVERIFY(session);QSignalSpy finished(session,&PluginRuntime::PluginSession::commandFinished);
         QVERIFY(write(gate,"continue"));QTRY_VERIFY_WITH_TIMEOUT(!finished.isEmpty(),5000);QVERIFY2(finished.last()[2].toJsonObject().isEmpty(),qPrintable(finished.last()[2].toJsonObject()["message"].toString()));
         QCOMPARE(documents->snapshot(documentId,&rpcFailure)["text"].toString(),QStringLiteral("AB😀中\r\nCD\r\n"));QCOMPARE(documents->snapshot(documents->idFor(second),&rpcFailure)["text"].toString(),"keep me");

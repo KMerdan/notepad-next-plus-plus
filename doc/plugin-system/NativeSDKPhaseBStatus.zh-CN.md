@@ -30,7 +30,7 @@
 
 主仓测试只使用通用 API/生命周期 fixtures，不构建 Markdown、HTML 或新示例插件。SDK 自己验证类型、工具与六模板；Marketplace 自己验证业务、metadata list 和独立包。
 
-本地验证已完成：SDK **26 unit tests**；实际 tarball **40 独立步骤**（六模板安装/构建/测试/打包，支持的模拟调试）；C++ RPC **311 passed**；文档桥 **24 passed**；真实应用 Phase B **3 cases + init/cleanup，5 passed / 0 failed / 0 skipped**。真实应用用例覆盖新协议、文件成功/取消/版本变化/停用、嵌入 NUL 文本、书签、两个 owner 高亮隔离、100 次释放循环、配额与最后标签关闭。后续源码修改需复核，不把此快照替代分支 CI。
+本地验证已完成：SDK **26 unit tests**；实际 tarball **40 独立步骤**（六模板安装/构建/测试/打包，支持的模拟调试）；C++ RPC **311 passed**；文档桥 **25 passed**；真实应用 Phase B **3 cases + init/cleanup，5 passed / 0 failed / 0 skipped**。真实应用用例覆盖新协议、文件成功/取消/版本变化/停用、嵌入 NUL 文本、书签、两个 owner 高亮隔离、100 次释放循环、配额与最后标签关闭。后续源码修改需复核，不把此快照替代分支 CI。
 
 宿主 **22 suites 最终均通过**：Windows 搜索位置宽度修复后的完整运行通过 21/22；唯一失败是共享 provider 的管道总数断言，调整其验证范围后完整 Webview suite 复跑 **45 passed / 0 failed / 4 optional skips**。覆盖旧 0.1/0.2、通用 WebEngine 热更新、应用退出与 macOS bundle。禁用插件的编辑器构建通过。全量测试未配置 Python、外部产品包和 live GitHub，因此 Webview/App 分别有 4/5 个明确 opt-in skips；两个新 Marketplace 插件另行真实安装验收 **3 passed / 0 failed / 0 skipped**。
 
@@ -39,3 +39,5 @@
 共享搜索服务采用完整宽度的 Scintilla range，避免 Windows LLP64 对旧 32 位 range 的隐式窄化。旧 Finder carrier 保留明确转换；原生 API 本轮搜索仍有 2 MiB 预算。
 
 规划基线和后续项见 [Phase B 计划](NativeSDKPhaseBPlan.zh-CN.md)。分屏、导出/剪贴板、宏、编码转换、列编辑、大文件写入和 providers 属于计划中的后续/条件项，本轮 B1–B5 未开放。SDK 包的具体版本和原生 API profile 独立演进。
+
+有效缩进 getter 将 Scintilla 的 `indent=0` 哨兵解析成 tab width；以实际 Tab 操作和显式 indent 验证。修正后文档桥 **25 passed**，旧 0.2 与 Phase B 应用复核 **6 passed / 0 failed / 0 skipped**。
