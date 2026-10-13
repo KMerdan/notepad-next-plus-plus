@@ -37,4 +37,10 @@ Notepad Next ++ 的第一方插件由 KMerdan 在同一公开仓库维护：
 
 验证记录见 [MarketplaceValidation.json](evidence/MarketplaceValidation.json)。主应用仍是本地开发构建，本次发布的是插件安装包。
 
-本次三仓拆分及原生 API 0.3 的实现/证据见 [Native SDK 状态](NativeSDKPhaseBStatus.zh-CN.md)。当前四个官方插件均使用 native API 0.3 和正式 SDK 0.3.0 Release；原插件 ID/来源保持一致，旧 API profile 已移除。新工具 Text Inspector / TODO Navigator 也可从同一 URL 安装。
+本次三仓拆分及原生 API 0.3 的实现/证据见 [Native SDK 状态](NativeSDKPhaseBStatus.zh-CN.md)。默认目录仅包含 Markdown Preview 与 HTML Preview，均使用 native API 0.3 与正式 SDK 0.3.2。Text Inspector / TODO Navigator 位于 Marketplace 的 `examples/`，标明为 SDK 开发示例，不属于默认产品目录。
+
+## 来源改名与预览所有权
+
+Marketplace 改名为 `notepadnext-plugin-marketplace`。宿主按来源隔离安装与数据，旧来源不能直接跨源更新；现有旧来源插件需要一次卸载并从新 URL 安装，原数据可以保留，但不会自动搬到新来源。之后从新 URL 注册、安装和更新。
+
+预览需要用户手动 Open，每插件/窗口一个共享 dock；它跟随匹配的活动标签，分别保留各标签的浏览器状态和滚动，遇到非匹配标签时隐藏。用户关闭 dock 或最后一个匹配标签关闭时释放面板和进程；Enabled 状态保留。更新只恢复仍存活的组件，不重放 Open。见 [SDK 生命周期契约](https://github.com/KMerdan/notepadnext-plugin-sdk/blob/main/docs/PluginLifecycle.zh-CN.md)。

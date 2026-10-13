@@ -25,9 +25,9 @@ NotepadNext's original copyright notices are retained. This fork continues under
 | --- | --- |
 | [notepad-next-plus-plus](https://github.com/KMerdan/notepad-next-plus-plus) | Native editor services, Qt UI, JSON-RPC host, plugin install/update/lifecycle and native tests |
 | [notepadnext-plugin-sdk](https://github.com/KMerdan/notepadnext-plugin-sdk) | API types, metadata/wire contracts, templates, debugging/testing/service helpers and packaging tools |
-| [Official Plugin Marketplace](https://github.com/KMerdan/notepadnext-plugin-marketplace) | Markdown/HTML previews, Text Inspector, TODO Navigator, catalog and independent installable releases |
+| [Official Plugin Marketplace](https://github.com/KMerdan/notepadnext-plugin-marketplace) | Markdown/HTML product previews, separate SDK examples, catalog and independent releases |
 
-The SDK is a Git submodule pinned to a reviewed commit. The Marketplace previews and SDK examples consume the immutable SDK 0.3.2 Release tarball with locked integrity. Its original repository URL is retained as our official catalog. Application, SDK and plugin versions are independent.
+The SDK is a Git submodule pinned to a reviewed commit. The Marketplace previews and SDK examples consume the immutable SDK 0.3.2 Release tarball with locked integrity. The catalog now uses the canonical `notepadnext-plugin-marketplace` URL. Existing installs from the previous origin need a one-time reinstall. Application, SDK and plugin versions are independent.
 
 ## Build and validate
 
@@ -50,7 +50,7 @@ Native API 0.3 exposes document/selection primitives, bounded range reads, nativ
 
 Both production previews declare native API 0.3. Register a repository through **Plugin Manager → Add Source…**; then explicitly install from **Discover**, enable in **Installed**, and open its command. Updates restore owned panels; uninstall is separate from removing a source.
 
-The SDK's purpose is to enhance Notepad Next ++. Other editors' plugins may be studied and ported. No VS Code compatibility adapter or old API profile is shipped. Providers, encoding conversion, macros and other conditional extensions remain future work.
+The SDK's purpose is to enhance Notepad Next ++. Other editors' plugins may be studied and ported. No VS Code compatibility adapter or old API profile is shipped. Providers, SDK encoding mutation methods, macros and other conditional extensions remain future work; the editor Encoding menu already handles file decoding and conversion.
 
 Trusted Node/TS/JS plugins run in separate processes. Capabilities govern host RPC; they do not provide an operating-system sandbox. Other language runtimes can implement the same JSON-RPC contract in future.
 
