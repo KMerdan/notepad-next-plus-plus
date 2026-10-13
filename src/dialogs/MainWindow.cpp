@@ -19,6 +19,8 @@
 
 #include "MainWindow.h"
 #include "EditorOperations.h"
+#include "EditorBufferOperations.h"
+#include "FileOperations.h"
 #include "BookMarkDecorator.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
@@ -188,8 +190,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
     connect(ui->actionToggleSingleLineComment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.toggle"); });
-    connectEditorAction(ui->actionSingleLineComment, &ScintillaNext::commentLineSelection);
-    connectEditorAction(ui->actionSingleLineUncomment, &ScintillaNext::uncommentLineSelection);
+    connect(ui->actionSingleLineComment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.add"); });
+    connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.comment.remove"); });
 
     connect(ui->actionBase64Encode, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
@@ -274,18 +276,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionUpperCase, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.case.upper"); });
     connect(ui->actionLowerCase, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.case.lower"); });
 
-    connectEditorAction(ui->actionDuplicateCurrentLine, &ScintillaNext::lineDuplicate);
-    connectEditorAction(ui->actionMoveSelectedLinesUp, &ScintillaNext::moveSelectedLinesUp);
-    connectEditorAction(ui->actionMoveSelectedLinesDown, &ScintillaNext::moveSelectedLinesDown);
+    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.lines.duplicate"); });
+    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.lines.move", {{"direction","up"}}); });
+    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.lines.move", {{"direction","down"}}); });
 
     connect(ui->actionSplitLines, &QAction::triggered, this, [this]() {
-        currentEditor()->targetFromSelection();
-        currentEditor()->linesSplit(0);
+        EditorOperations::execute(currentEditor(), "edit.lines.split");
     });
 
     connect(ui->actionJoinLines, &QAction::triggered, this, [this]()  {
-        currentEditor()->targetFromSelection();
-        currentEditor()->linesJoin();
+        EditorOperations::execute(currentEditor(), "edit.lines.join");
     });
 
     connect(ui->actionRemoveEmptyLines, &QAction::triggered, this, [this]() {
@@ -308,8 +308,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.lines.deduplicate", {{"consecutiveOnly",true}}); });
 
     connect(ui->actionReverseLineOrder, &QAction::triggered, this, [=, this]() {
-        ScintillaSorter scintillaSorter(currentEditor());
-        scintillaSorter.sort(ReverseSorter(Sorter::Direction::Ascending));
+        EditorOperations::execute(currentEditor(), "edit.lines.reverse");
     });
     connect(ui->actionSortLinesAsc, &QAction::triggered, this, [=, this]() {
         EditorOperations::execute(currentEditor(), "edit.lines.sort", {{"order","ascending"},{"compare","caseSensitive"}});
@@ -382,8 +381,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         copyAsFormat(&rtf, "Rich Text Format");
     });
 
-    connectEditorAction(ui->actionIncreaseIndent, &ScintillaNext::tab);
-    connectEditorAction(ui->actionDecreaseIndent, &ScintillaNext::backTab);
+    connect(ui->actionIncreaseIndent, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.indent.increase"); });
+    connect(ui->actionDecreaseIndent, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "edit.indent.decrease"); });
 
     addAction(ui->actionToggleOverType);
     connect(ui->actionToggleOverType, &QAction::triggered, this, [this]() {
@@ -770,25 +769,25 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionFoldAll, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.all", {{"folded",true}}); });
     connect(ui->actionUnfoldAll, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.all", {{"folded",false}}); });
 
-    connectEditorAction(ui->actionFoldLevel1, &ScintillaNext::foldAllLevels, 0);
-    connectEditorAction(ui->actionFoldLevel2, &ScintillaNext::foldAllLevels, 1);
-    connectEditorAction(ui->actionFoldLevel3, &ScintillaNext::foldAllLevels, 2);
-    connectEditorAction(ui->actionFoldLevel4, &ScintillaNext::foldAllLevels, 3);
-    connectEditorAction(ui->actionFoldLevel5, &ScintillaNext::foldAllLevels, 4);
-    connectEditorAction(ui->actionFoldLevel6, &ScintillaNext::foldAllLevels, 5);
-    connectEditorAction(ui->actionFoldLevel7, &ScintillaNext::foldAllLevels, 6);
-    connectEditorAction(ui->actionFoldLevel8, &ScintillaNext::foldAllLevels, 7);
-    connectEditorAction(ui->actionFoldLevel9, &ScintillaNext::foldAllLevels, 8);
+    connect(ui->actionFoldLevel1, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",1},{"folded",true}}); });
+    connect(ui->actionFoldLevel2, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",2},{"folded",true}}); });
+    connect(ui->actionFoldLevel3, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",3},{"folded",true}}); });
+    connect(ui->actionFoldLevel4, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",4},{"folded",true}}); });
+    connect(ui->actionFoldLevel5, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",5},{"folded",true}}); });
+    connect(ui->actionFoldLevel6, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",6},{"folded",true}}); });
+    connect(ui->actionFoldLevel7, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",7},{"folded",true}}); });
+    connect(ui->actionFoldLevel8, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",8},{"folded",true}}); });
+    connect(ui->actionFoldLevel9, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",9},{"folded",true}}); });
 
-    connectEditorAction(ui->actionUnfoldLevel1, &ScintillaNext::unFoldAllLevels, 0);
-    connectEditorAction(ui->actionUnfoldLevel2, &ScintillaNext::unFoldAllLevels, 1);
-    connectEditorAction(ui->actionUnfoldLevel3, &ScintillaNext::unFoldAllLevels, 2);
-    connectEditorAction(ui->actionUnfoldLevel4, &ScintillaNext::unFoldAllLevels, 3);
-    connectEditorAction(ui->actionUnfoldLevel5, &ScintillaNext::unFoldAllLevels, 4);
-    connectEditorAction(ui->actionUnfoldLevel6, &ScintillaNext::unFoldAllLevels, 5);
-    connectEditorAction(ui->actionUnfoldLevel7, &ScintillaNext::unFoldAllLevels, 6);
-    connectEditorAction(ui->actionUnfoldLevel8, &ScintillaNext::unFoldAllLevels, 7);
-    connectEditorAction(ui->actionUnfoldLevel9, &ScintillaNext::unFoldAllLevels, 8);
+    connect(ui->actionUnfoldLevel1, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",1},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel2, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",2},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel3, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",3},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel4, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",4},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel5, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",5},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel6, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",6},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel7, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",7},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel8, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",8},{"folded",false}}); });
+    connect(ui->actionUnfoldLevel9, &QAction::triggered, this, [this] { EditorOperations::execute(currentEditor(), "view.fold.level", {{"level",9},{"folded",false}}); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
@@ -1346,7 +1345,10 @@ void MainWindow::closeFile(ScintillaNext *editor)
         return;
     }
 
-    if (!checkEditorsBeforeClose({editor})) {
+    const auto closeResult=FileOperations::approveClose(editor,this,false);
+    if (closeResult.status != "completed") {
+        if (closeResult.status == "failed")
+            showSaveErrorMessage(editor, closeResult.error);
         return;
     }
 
@@ -1433,23 +1435,19 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (editor->isSavedToDisk())
-        return true;
-
     if (!editor->isFile()) {
         // Switch to the editor and show the saveas dialog
         dockedEditor->switchToEditor(editor);
         return saveCurrentFileAsDialog();
     }
     else {
-        QFileDevice::FileError error = editor->save();
-        if (error == QFileDevice::NoError) {
+        const auto result = FileOperations::save(editor,this,false);
+        if (result.status == "completed" || result.status == "skipped") {
             return true;
         }
-        else {
-            showSaveErrorMessage(editor, error);
-            return false;
-        }
+        if (result.status == "failed")
+            showSaveErrorMessage(editor, result.error);
+        return false;
     }
 }
 
@@ -1482,15 +1480,13 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 {
     qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
 
-    QFileDevice::FileError error = editor->saveAs(fileName);
-
-    if (error == QFileDevice::NoError) {
+    const auto result = FileOperations::save(editor,this,true,fileName);
+    if (result.status == "completed" || result.status == "skipped") {
         return true;
     }
-    else {
-        showSaveErrorMessage(editor, error);
-        return false;
-    }
+    if (result.status == "failed")
+        showSaveErrorMessage(editor, result.error);
+    return false;
 }
 
 bool MainWindow::saveCopyAsDialog()
@@ -1660,14 +1656,19 @@ void MainWindow::convertEOLs(int eolMode)
     ScintillaNext *editor = currentEditor();
 
     // TODO: does convertEOLs trigger SCN_MODIFIED notifications? If so can these be turned off to increase performance?
-    editor->convertEOLs(eolMode);
-    editor->setEOLMode(eolMode);
+    EditorBufferOperations::convertLineEndings(editor,eolMode);
 
     updateEOLBasedUi(editor);
 
     // There's no simple Scintilla notification that the EOL mode has changed
     // So tell the status bar to refresh its info
     ui->statusBar->refresh(editor);
+}
+
+void MainWindow::refreshEditorMetadata(ScintillaNext *editor)
+{
+    if(!editor||editor!=currentEditor())return;
+    updateEOLBasedUi(editor);ui->statusBar->refresh(editor);
 }
 
 void MainWindow::showFindReplaceDialog(int index)

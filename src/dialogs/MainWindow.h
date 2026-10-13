@@ -62,6 +62,7 @@ public:
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
+    void refreshEditorMetadata(ScintillaNext *editor);
     DockedEditor *getDockedEditor() const { return dockedEditor; }
 
 public slots:

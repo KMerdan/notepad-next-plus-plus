@@ -31,6 +31,7 @@ public:
     void disableRange(int start, int end);
 
     int requestResource(const QString name);
+    bool releaseResource(const QString &name);
 
 private:
     QBitArray resource;

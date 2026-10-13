@@ -26,6 +26,11 @@ namespace PluginRuntime {
 namespace {
 QString uuid() { return QUuid::createUuid().toString(QUuid::WithoutBraces); }
 const QHash<QString,QString> capabilities={
+    {"nnp.host.getNativeLimits","documents.read@1"},{"nnp.documents.readRange","documents.read@1"},{"nnp.documents.watchNative","documents.native.events@1"},
+    {"nnp.editors.watchSelections","editors.selection.events@1"},{"nnp.editors.activate","editors.view.write@1"},{"nnp.editors.revealRange","editors.view.write@1"},{"nnp.editors.getOptions","editors.selection.read@1"},
+    {"nnp.files.create","files.write@1"},{"nnp.files.open","files.read@1"},{"nnp.files.save","files.write@1"},{"nnp.files.saveAs","files.write@1"},{"nnp.files.close","files.write@1"},
+    {"nnp.search.findAll","search.read@1"},{"nnp.search.count","search.read@1"},{"nnp.languages.list","languages.read@1"},{"nnp.languages.getKeywords","languages.read@1"},{"nnp.languages.set","languages.write@1"},
+    {"nnp.documents.convertLineEndings","documents.write@1"},{"nnp.bookmarks.list","bookmarks.read@1"},{"nnp.bookmarks.set","bookmarks.write@1"},{"nnp.decorations.create","decorations.write@1"},{"nnp.decorations.set","decorations.write@1"},
     {"nnp.documents.list","documents.read@1"},{"nnp.documents.getInfo","documents.read@1"},
     {"nnp.editors.getActive","editors.selection.read@1"},{"nnp.editors.getSelections","editors.selection.read@1"},{"nnp.editors.capture","editors.selection.read@1"},{"nnp.editors.setSelections","editors.selection.write@1"},
     {"nnp.core.list","core.commands@1"},{"nnp.core.execute","core.commands@1"},{"nnp.webviews.createHtml","webviews.html@1"},
@@ -54,6 +59,7 @@ PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,
     // contract. Native invocation is an explicit opt-in excluding API 0.1.
     if(manifest["runtime"].toObject()["kind"]!="python" && !PluginPackages::SemVer::satisfies("0.1.0",apiRange,&negotiationError)
         && PluginPackages::SemVer::satisfies("0.2.0",apiRange,&negotiationError))apiVersion="0.2.0";
+    else if(manifest["runtime"].toObject()["kind"]!="python" && !PluginPackages::SemVer::satisfies("0.1.0",apiRange,&negotiationError) && PluginPackages::SemVer::satisfies("0.3.0",apiRange,&negotiationError))apiVersion="0.3.0";
     process->holdLifetime(packageLease);
     stopDeadline.setSingleShot(true); stopDeadline.setInterval(3500);
     heartbeat.setInterval(10000);
@@ -110,6 +116,12 @@ PluginSession::PluginSession(const QJsonObject &metadata,const QString &package,
     });
     if(documents) connect(documents,&PluginDocuments::DocumentBridge::event,this,&PluginSession::documentEvent);
     if(documents) connect(documents,&PluginDocuments::DocumentBridge::deltaEvent,this,&PluginSession::deltaEvent);
+    if(documents) connect(documents,&PluginDocuments::DocumentBridge::nativeEvent,this,&PluginSession::nativeEvent);
+    if(documents)connect(documents,&PluginDocuments::DocumentBridge::resourceEvent,this,[this](const QString &owner,const QJsonObject &event){
+        if(owner!=session||apiVersion!="0.3.0"||(currentState!="active"&&currentState!="activating"))return;
+        const auto payload=envelope(event);QString message;int code;if(!PluginRpc::WireContract::validate("nnp.resources.nativeEvent","params",payload,&message,&code)){fail(message,Failure::ProtocolFault);return;}process->notify("nnp.resources.nativeEvent",payload);
+    });
+    connect(process,&PluginRpc::RpcProcess::requestCancelled,this,[this](const QString &token){if(nativeRequests.contains(token))*nativeRequests[token]=false;});
 }
 PluginSession::~PluginSession() { revoke(); process->terminate(); }
 QJsonObject PluginSession::envelope(QJsonObject params) const { params["sessionId"]=session; params["generation"]=1; return params; }
@@ -129,6 +141,8 @@ void PluginSession::setState(const QString &state) {
 }
 void PluginSession::activate(const QString &reason) {
     if(currentState!="idle") return;
+    QString rangeError;
+    if(!PluginPackages::SemVer::satisfies(apiVersion,manifest["engines"].toObject()["api"].toString(),&rangeError)){fail("The configured runtime cannot negotiate this plugin API profile.",Failure::CapabilityMissing);return;}
     if(!documents || !window || !QFileInfo(node).isAbsolute() || !QFileInfo(hostEntry).isAbsolute() || !QFileInfo(hostEntry).isFile()) { fail("The controlled plugin runtime is unavailable.",Failure::RuntimeUnavailable); return; }
     QStringList supported={"documents.read@1","documents.events@1","documents.delta@1","documents.write@1","commands@1","messages@1","editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1"
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
@@ -138,6 +152,8 @@ void PluginSession::activate(const QString &reason) {
 #endif
 #endif
     };
+    const QStringList phaseBCaps={"documents.native.events@1","editors.selection.events@1","files.read@1","files.write@1","search.read@1","languages.read@1","languages.write@1","bookmarks.read@1","bookmarks.write@1","decorations.write@1"};
+    if(apiVersion=="0.3.0")supported.append(phaseBCaps);
     if(apiVersion=="0.1.0")for(const auto &cap:QStringList{"editors.selection.read@1","editors.selection.write@1","editors.view.write@1","core.commands@1","webviews.html@1"})supported.removeAll(cap);
     if(data)supported.append({"storage@1","configuration@1"});
     for(const auto &required:manifest["capabilities"].toObject()["required"].toArray()) {
@@ -168,8 +184,8 @@ void PluginSession::invokePending() {
     if(!commands.contains(id)) { emit commandFinished(id,{},rpcError(-32602,"Plugin did not register the declared command")); return; }
     busy=true;
     QElapsedTimer elapsed;elapsed.start();
-    const auto invokeMethod=apiVersion=="0.2.0"?QStringLiteral("nnp.commands.invokeNative"):QStringLiteral("nnp.commands.invoke");
-    const auto invokeParams=apiVersion=="0.2.0"?QJsonObject{{"callbackId",commands[id].callbackId},{"invocation",target}}:QJsonObject{{"callbackId",commands[id].callbackId},{"args",args}};
+    const auto invokeMethod=apiVersion!="0.1.0"?QStringLiteral("nnp.commands.invokeNative"):QStringLiteral("nnp.commands.invoke");
+    const auto invokeParams=apiVersion!="0.1.0"?QJsonObject{{"callbackId",commands[id].callbackId},{"invocation",target}}:QJsonObject{{"callbackId",commands[id].callbackId},{"args",args}};
     commandRequest=call(invokeMethod,envelope(invokeParams),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invoke",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error); });
     if(!messages.isEmpty())process->setDeadlinePaused(commandRequest,true);
 }
@@ -209,6 +225,9 @@ void PluginSession::stop(const QString &reason) {
     },2000);
 }
 void PluginSession::revoke() {
+    for(const auto &request:nativeRequests)*request=false;nativeRequests.clear();
+    if(documents){for(int n=0;n<nativeWatches.size()+selectionWatches.size();++n)documents->releaseNativeStream();documents->releaseOwner(session);}
+    nativeWatches.clear();selectionWatches.clear();
     watches.clear(); commands.clear();
     const auto oldMessages=messages;messages.clear();
     process->setDeadlinePaused(commandRequest,false);
@@ -220,7 +239,7 @@ void PluginSession::revoke() {
 }
 void PluginSession::publishResources() {
     if(currentState!="active")return;
-    publicationHeld=false;
+    publicationHeld=false;if(documents)documents->publishOwner(session);
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     if(views)views->setPublished(true);
 #endif
@@ -264,7 +283,7 @@ void PluginSession::restoreWebviews(std::function<void(const QJsonObject &)> com
 #endif
 }
 int PluginSession::resourceCount() const {
-    return watches.size()+deltaWatches.size()+commands.size()+messages.size()
+    return watches.size()+deltaWatches.size()+nativeWatches.size()+selectionWatches.size()+commands.size()+messages.size()+(documents?documents->ownedResourceCount(session):0)
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
         +(views ? views->panelCount()+views->resourceCount() : 0)
 #endif
@@ -284,6 +303,13 @@ void PluginSession::deltaEvent(const QJsonObject &event,qint64 sequence) {
         process->notify("nnp.documents.delta",payload);
     }
 }
+void PluginSession::nativeEvent(const QJsonObject &event,qint64 sequence) {
+    if(currentState!="active"&&currentState!="activating")return;
+    QSet<QString> recipients;
+    if(event["type"]!="selectionChanged")recipients=nativeWatches;
+    for(auto it=selectionWatches.begin();it!=selectionWatches.end();++it)if(event["editorId"]==it.value()&&(event["type"]=="selectionChanged"||event["type"]=="closed"||event["type"]=="reset"))recipients.insert(it.key());
+    for(const auto &id:recipients){auto payload=event;payload["subscriptionId"]=id;payload["eventSeq"]=sequence;payload=envelope(payload);QString message;int code;if(!PluginRpc::WireContract::validate("nnp.documents.nativeEvent","params",payload,&message,&code)){fail(message,Failure::ProtocolFault);return;}process->notify("nnp.documents.nativeEvent",payload);}
+}
 void PluginSession::dispatch(const QString &method,const QJsonValue &value,const QString &token) {
     // Requests only. A notification cannot mutate host resources through a
     // method whose contract requires an acknowledged result.
@@ -296,7 +322,9 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
     if(method=="nnp.resources.dispose") {
         if(currentState!="activating"&&currentState!="active"&&currentState!="stopping"&&currentState!="failed") {reject(1004,"Resources require an initialized plugin");return;}
         if(!fields(params,{"resourceId"}) || !string(params,"resourceId")) { reject(-32602,"Invalid resource handle"); return; }
-        const auto id=params["resourceId"].toString(); watches.remove(id);if(deltaWatches.remove(id)&&documents)documents->releaseDeltaStream();
+        const auto id=params["resourceId"].toString();
+        if(documents) {const QPointer<PluginSession> safe=this;documents->extension(method,params,window,session,[safe]{return bool(safe);},&error);if(!error.isEmpty()&&error["code"]!=1005){process->respond(token,{},error);return;}}
+        const bool nativeRemoved=nativeWatches.remove(id)||selectionWatches.remove(id);if(nativeRemoved&&documents)documents->releaseNativeStream();watches.remove(id);if(deltaWatches.remove(id)&&documents)documents->releaseDeltaStream();
         if(auto message=messages.take(id)){message->disconnect(this);message->close();message->deleteLater();}
         if(messages.isEmpty())process->setDeadlinePaused(commandRequest,false);
         for(auto it=commands.begin();it!=commands.end();) { if(it->registrationId==id) it=commands.erase(it); else ++it; }
@@ -346,7 +374,38 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
     if((currentState!="active"||publicationHeld)&&(method=="nnp.documents.applyEdits"||method=="nnp.core.execute"||method=="nnp.editors.setSelections")){reject(1004,"Document writes require a validated active plugin.");return;}
     if(!documents) { reject(1002,"Document service is unavailable"); return; }
     const bool nativeMethod=method=="nnp.documents.list"||method=="nnp.documents.getInfo"||method.startsWith("nnp.editors.")||method.startsWith("nnp.core.")||method=="nnp.webviews.createHtml";
-    if((nativeMethod||params.contains("selectionGuard"))&&apiVersion!="0.2.0"){reject(1005,"This method requires native API 0.2");return;}
+    if((nativeMethod||params.contains("selectionGuard"))&&apiVersion=="0.1.0"){reject(1005,"This method requires native API 0.2");return;}
+    const QSet<QString> phaseB={"nnp.host.getNativeLimits","nnp.documents.readRange","nnp.documents.watchNative","nnp.editors.watchSelections","nnp.editors.activate","nnp.editors.revealRange","nnp.editors.getOptions","nnp.files.create","nnp.files.open","nnp.files.save","nnp.files.saveAs","nnp.files.close","nnp.search.findAll","nnp.search.count","nnp.languages.list","nnp.languages.getKeywords","nnp.languages.set","nnp.documents.convertLineEndings","nnp.bookmarks.list","nnp.bookmarks.set","nnp.decorations.create","nnp.decorations.set"};
+    if(phaseB.contains(method)) {
+        if(apiVersion!="0.3.0"){reject(1005,"This method requires native API 0.3");return;}
+        const bool mutating=method.startsWith("nnp.files.")||method.startsWith("nnp.decorations.")||method=="nnp.languages.set"||method=="nnp.bookmarks.set"||method=="nnp.documents.convertLineEndings"||method=="nnp.editors.activate"||method=="nnp.editors.revealRange";
+        const bool stagedDecoration=method.startsWith("nnp.decorations.");
+        if(mutating&&((currentState!="active"&&!stagedDecoration)||(publicationHeld&&!stagedDecoration))){reject(1004,"Native writes require a validated active plugin");return;}
+        if(method=="nnp.host.getNativeLimits")result=PluginDocuments::DocumentBridge::nativeLimits();
+        else if(method=="nnp.documents.readRange")result=documents->readRange(params,&error);
+        else if(method=="nnp.editors.getOptions")result=documents->editorOptions(params["editorId"].toString(),&error);
+        else if(method=="nnp.editors.revealRange")result=documents->revealRange(params,&error);
+        else if(method=="nnp.documents.convertLineEndings")result=documents->convertLineEndings(params,&error);
+        else if(method=="nnp.documents.watchNative"||method=="nnp.editors.watchSelections") {
+            if(!grants.contains("documents.read@1")){reject(1003,"Native subscriptions require documents.read@1");return;}
+            if(watches.size()+deltaWatches.size()+nativeWatches.size()+selectionWatches.size()>=64||documents->nativeList().size()>64){reject(1007,"Native subscription budget exceeded");return;}
+            documents->flushNativeEvents();const auto id=uuid();
+            if(method=="nnp.documents.watchNative") {nativeWatches.insert(id);documents->retainNativeStream();result=QJsonObject{{"subscriptionId",id},{"documents",documents->nativeList()},{"editors",documents->editorList()},{"eventSeq",documents->nativeSequence()}};}
+            else {const auto editor=params["editorId"].toString();const auto selection=documents->boundedSelections(editor,&error);if(error.isEmpty()){selectionWatches[id]=editor;documents->retainNativeStream();result=QJsonObject{{"subscriptionId",id},{"selection",selection},{"eventSeq",documents->nativeSequence()}};}}
+        }else {
+            const auto live=std::make_shared<bool>(true);nativeRequests[token]=live;const QPointer<PluginSession> safe=this;
+            const auto allowed=[safe,live,mutating,stagedDecoration]{return safe&&*live&&(safe->currentState=="active"||((!mutating||stagedDecoration)&&safe->currentState=="activating"))&&(!mutating||stagedDecoration||!safe->publicationHeld);};
+            if(method.startsWith("nnp.search.")) {
+                documents->search(params,method=="nnp.search.count",allowed,[safe,token](const QJsonValue &result,const QJsonObject &error){if(!safe)return;safe->nativeRequests.remove(token);QString detail;int code;if(error.isEmpty()&&!PluginRpc::WireContract::validate("nnp.search.findAll","result",result,&detail,&code))safe->process->respond(token,{},rpcError(code,detail));else safe->process->respond(token,result,error);});return;
+            }
+            if(method.startsWith("nnp.files."))process->setDeadlinePaused(commandRequest,true);
+            result=documents->extension(method,params,window,session,allowed,&error);
+            if(!safe)return;
+            nativeRequests.remove(token);if(method.startsWith("nnp.files."))process->setDeadlinePaused(commandRequest,false);
+        }
+        QString detail;int code;if(error.isEmpty()&&!PluginRpc::WireContract::validate(method,"result",result,&detail,&code))error=rpcError(code,detail);
+        process->respond(token,result,error);return;
+    }
     if(method=="nnp.documents.list")result=documents->nativeList();
     else if(method=="nnp.documents.getInfo") {result=documents->nativeInfo(params["documentId"].toString());if(result.toObject().isEmpty())error=rpcError(1002,"DocumentClosed");}
     else if(method=="nnp.editors.getActive")result=documents->activeEditor();
@@ -355,9 +414,14 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         if(!grants.contains("documents.read@1")){reject(1003,"Capture requires documents.read@1");return;}
         result=documents->capture(params["invocation"].toObject(),&error);
     }else if(method=="nnp.editors.setSelections")result=documents->setSelections(params,&error);
-    else if(method=="nnp.core.list")result=documents->coreCatalog();
+    else if(method=="nnp.core.list") {
+        QJsonArray catalog;const QSet<QString> old={"edit.undo","edit.redo","edit.case.upper","edit.case.lower","edit.comment.toggle","edit.lines.deduplicate","edit.lines.sort","view.fold.all"};
+        for(const auto &item:documents->coreCatalog())if(apiVersion=="0.3.0"||old.contains(item.toObject()["id"].toString()))catalog.append(item);result=catalog;
+    }
     else if(method=="nnp.core.execute") {
         const auto command=params["commandId"].toString();
+        const QSet<QString> old={"edit.undo","edit.redo","edit.case.upper","edit.case.lower","edit.comment.toggle","edit.lines.deduplicate","edit.lines.sort","view.fold.all"};
+        if(apiVersion!="0.3.0"&&!old.contains(command)){reject(1005,"This command requires native API 0.3");return;}
         const auto needed=command.startsWith("view.")?QStringLiteral("editors.view.write@1"):QStringLiteral("documents.write@1");
         if(!grants.contains(needed)){reject(1003,"Native operation requires "+needed);return;}
         result=documents->executeCore(command,params["request"].toObject(),&error);
@@ -367,11 +431,11 @@ void PluginSession::dispatch(const QString &method,const QJsonValue &value,const
         if(!fields(params,{"documentId"}) || !string(params,"documentId")) { reject(-32602,"Invalid document handle"); return; } result=documents->snapshot(params["documentId"].toString(),&error);
     } else if(method=="nnp.documents.watch") {
         if(!fields(params,{"target","mode"}) || params["target"]!="active" || params["mode"]!="invalidate") { reject(-32602,"Invalid document subscription"); return; }
-        if(watches.size()+deltaWatches.size()>=64) { reject(1007,"Subscription limit reached"); return; }
+        if(watches.size()+deltaWatches.size()+nativeWatches.size()+selectionWatches.size()>=64) { reject(1007,"Subscription limit reached"); return; }
         const auto id=uuid(); watches.insert(id); const auto active=documents->active(); lastActiveDocument=active.toObject()["documentId"].toString();
         result=QJsonObject{{"subscriptionId",id},{"document",active},{"eventSeq",documents->eventSequence()}};
     } else if(method=="nnp.documents.watchAll") {
-        const auto list=documents->list();if(list.size()>64||watches.size()+deltaWatches.size()>=64){reject(1007,"Document mirror or subscription limit reached");return;}
+        const auto list=documents->list();if(list.size()>64||watches.size()+deltaWatches.size()+nativeWatches.size()+selectionWatches.size()>=64){reject(1007,"Document mirror or subscription limit reached");return;}
         const auto id=uuid();deltaWatches.insert(id);documents->retainDeltaStream();
         const auto active=documents->active();result=QJsonObject{{"subscriptionId",id},{"documents",list},{"activeDocumentId",active.isNull()?QJsonValue(QJsonValue::Null):active.toObject()["documentId"]},{"eventSeq",documents->deltaSequence()},{"maxDocuments",64},{"maxTotalUtf8Bytes",4194304}};
     } else if(method=="nnp.documents.getMirrorSnapshot") {

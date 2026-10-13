@@ -17,6 +17,7 @@
  */
 
 #include "Finder.h"
+#include "SearchService.h"
 
 #include "UndoAction.h"
 
@@ -43,6 +44,12 @@ bool Finder::isRegexSearch() const
 Sci_CharacterRange Finder::searchTarget(Sci_Position start, Sci_Position end)
 {
     const QByteArray searchText = find_options.text.toUtf8();
+    if(!isRegexSearch()) {
+        const auto match=SearchService::findLiteral(editor,searchText,searchFlags(),start,end,false);
+        // Finder keeps its existing legacy range carrier. The shared service
+        // retains full-width positions for native SDK callers on Windows too.
+        return {static_cast<Sci_PositionCR>(match.cpMin),static_cast<Sci_PositionCR>(match.cpMax)};
+    }
 
     editor->setTargetRange(start, end);
 

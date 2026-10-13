@@ -2,6 +2,8 @@
 
 **2026-10-12 的验证快照。** 此文件定义本次阶段 A 的范围；完整设计的 B/C 仍待实施。实际公开契约由 SDK `native.d.ts` / `schemas` 和应用测试验证，设计目录中的候选声明不是可安装 API。
 
+Phase B 的当前实现见 [API 0.3 实施状态](NativeSDKPhaseBStatus.zh-CN.md)；[Phase B 开发计划](NativeSDKPhaseBPlan.zh-CN.md)保留实施前的源码盘点。本文仍记录阶段 A 的范围和历史验证快照。
+
 已实现 native host API **0.2.0**，同时保留 **0.1.0** 会话。SDK **0.2.1** 的根类型提供旧 API，`./native` 提供新 API。JSON-RPC 2.0、wire profile 0.1、manifestVersion 1 保持不变。Python prototype 仍为 API 0.1；0.2 首批开发入口是 TS/JS。
 
 | 阶段 A | 验证/边界 |

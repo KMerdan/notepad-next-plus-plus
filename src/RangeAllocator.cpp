@@ -44,7 +44,13 @@ int RangeAllocator::requestResource(const QString name)
         }
     }
 
-    Q_ASSERT(false);
     return -1;
+}
+
+bool RangeAllocator::releaseResource(const QString &name)
+{
+    const auto it=allocation.find(name);
+    if(it==allocation.end())return false;
+    resource[it.value()]=false;allocation.erase(it);return true;
 }
 

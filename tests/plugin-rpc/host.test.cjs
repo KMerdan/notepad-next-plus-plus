@@ -96,7 +96,7 @@ test('delta startup overflow fails explicitly and releases the acquired watch',a
 test('incompatible version and limits reject before module import',async()=>{
   const root=await nativePackage("throw new Error('module imported');");const host=await runHost(root);
   try {
-    for(const patch of [{apiVersion:'0.3.0'},{protocolVersions:['0.2']},{limits:{...initialize.limits,maxPendingRequests:65}}])
+    for(const patch of [{apiVersion:'0.4.0'},{protocolVersions:['0.2']},{limits:{...initialize.limits,maxPendingRequests:65}}])
       await assert.rejects(host.peer.call('nnp.initialize',{...initialize,...patch}),{code:-32602});
     assert.doesNotMatch(host.stderr(),/module imported/);
     const result=await host.peer.call('nnp.initialize',{...initialize,protocolVersions:['0.2','0.1']});assert.equal(result.protocolVersion,'0.1');

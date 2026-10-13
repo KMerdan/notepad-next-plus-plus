@@ -1,0 +1,15 @@
+{
+  "manifestVersion": 1,
+  "id": "test.native-b",
+  "name": "Native Phase B Contract Fixture",
+  "version": "0.1.0",
+  "list": false,
+  "engines": {"notepadnext": ">=0.15.0 <0.16.0", "api": "^0.3.0"},
+  "runtime": {"kind": "node", "entry": "dist/index.cjs"},
+  "capabilities": {
+    "required": ["commands@1", "documents.read@1", "documents.write@1", "documents.native.events@1", "editors.selection.read@1", "editors.selection.events@1", "editors.view.write@1", "core.commands@1", "files.read@1", "files.write@1", "search.read@1", "languages.read@1", "languages.write@1", "bookmarks.read@1", "bookmarks.write@1", "decorations.write@1"],
+    "optional": []
+  },
+  "activationEvents": ["onStartup", "onCommand:test.native-b.run"],
+  "contributes": {"commands": [{"id": "test.native-b.run", "title": "Verify native Phase B"}]}
+}

@@ -181,6 +181,11 @@ int ScintillaNext::allocateIndicator(const QString &name)
     return indicatorResources.requestResource(name);
 }
 
+bool ScintillaNext::releaseIndicator(const QString &name)
+{
+    return indicatorResources.releaseResource(name);
+}
+
 void ScintillaNext::goToRange(const Sci_CharacterRange &range)
 {
     qInfo(Q_FUNC_INFO);

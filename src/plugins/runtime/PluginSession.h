@@ -55,6 +55,7 @@ private:
     void dispatch(const QString &method,const QJsonValue &params,const QString &token);
     void documentEvent(const QString &type,const QJsonValue &document,qint64 sequence);
     void deltaEvent(const QJsonObject &event,qint64 sequence);
+    void nativeEvent(const QJsonObject &event,qint64 sequence);
     void invokePending();
     void fail(const QString &message,PluginDiagnostics::Failure category=PluginDiagnostics::Failure::ActivationFailed);
     void revoke();
@@ -76,6 +77,9 @@ private:
     QHash<QString,Command> commands;
     QSet<QString> watches;
     QSet<QString> deltaWatches;
+    QSet<QString> nativeWatches;
+    QHash<QString,QString> selectionWatches;
+    QHash<QString,std::shared_ptr<bool>> nativeRequests;
     QHash<QString,QPointer<QMessageBox>> messages;
     QString lastActiveDocument;
     QString commandRequest;

@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-backed-planning-inventory",
+  "status": "design-only-not-released",
+  "date": "2026-10-13",
+  "applicationHead": "ef1711879946089fb22e5cc430125c65afadd915",
+  "sdkPin": "2cc40cf6bbb81b97ec1b203b8c9acaf3b33a02b4",
+  "sdkPackageVersion": "0.2.1",
+  "currentNativeApi": "0.2.0",
+  "legacyApi": "0.1.0",
+  "draftNativeApi": "0.3 (proposal)",
+  "scope": "Enhance native Notepad Next ++ editing; no VS Code compatibility objective.",
+  "plan": "../NativeSDKPhaseBPlan.zh-CN.md",
+  "authority": [
+    "packages/plugin-sdk/native.d.ts",
+    "packages/plugin-sdk/index.d.ts",
+    "doc/plugin-system/NativeSDKStatus.zh-CN.md"
+  ],
+  "interpretation": "draftApi entries are proposed names/descriptions, not SDK exports; sourceRefs use source-key:anchor-key. Hashes and lines apply only to this source snapshot.",
+  "baseline": {
+    "documents": [
+      "list",
+      "getInfo",
+      "getActive",
+      "getSnapshot",
+      "watch",
+      "watchAll",
+      "applyEdits"
+    ],
+    "editors": [
+      "getActive",
+      "capture",
+      "getSelections",
+      "setSelections (stream/zero virtual space)"
+    ],
+    "core": [
+      "edit.undo",
+      "edit.redo",
+      "edit.case.upper",
+      "edit.case.lower",
+      "edit.comment.toggle",
+      "edit.lines.deduplicate",
+      "edit.lines.sort",
+      "view.fold.all"
+    ],
+    "panels": "fragment/full HTML/local service; generic owned panel restoration",
+    "limits": {
+      "maxSnapshotUtf8Bytes": 2097152,
+      "editPreflightUsesFullSnapshot": true,
+      "maxEdits": 256,
+      "maxSelections": 256
+    }
+  },
+  "increments": [
+    {
+      "id": "B1",
+      "priority": "P0",
+      "dependsOn": [
+        "A"
+      ],
+      "effort": "M",
+      "title": "events, bounded reads, navigation"
+    },
+    {
+      "id": "B2",
+      "priority": "P0",
+      "dependsOn": [
+        "B1"
+      ],
+      "effort": "L",
+      "title": "file lifecycle"
+    },
+    {
+      "id": "B3",
+      "priority": "P1",
+      "dependsOn": [
+        "B1"
+      ],
+      "effort": "M-L",
+      "title": "literal search, shared core operations"
+    },
+    {
+      "id": "B4",
+      "priority": "P1",
+      "dependsOn": [
+        "B1"
+      ],
+      "effort": "M",
+      "title": "language, EOL, options, bookmarks"
+    },
+    {
+      "id": "B5",
+      "priority": "P1",
+      "dependsOn": [
+        "B1"
+      ],
+      "effort": "L",
+      "title": "owned decorations",
+      "demonstrationDependsOn": [
+        "B3"
+      ]
+    }
+  ],
+  "nextImplementation": "B1",
+  "sources": {
+    "nativeTypes": {
+      "path": "packages/plugin-sdk/native.d.ts",
+      "anchors": {
+        "context": {
+          "text": "export interface PluginContext",
+          "line": 37
+        },
+        "core": {
+          "text": "export interface CoreCommandMap",
+          "line": 23
+        },
+        "selections": {
+          "text": "export interface SelectionState",
+          "line": 14
+        }
+      },
+      "sha256": "be37356d4944c7de55e0eb4eae60881bbc86c463251ba86e38939348fa2d3dac"
+    },
+    "legacyTypes": {
+      "path": "packages/plugin-sdk/index.d.ts",
+      "anchors": {
+        "events": {
+          "text": "export interface DocumentEvent",
+          "line": 9
+        },
+        "delta": {
+          "text": "export type DeltaEvent",
+          "line": 11
+        },
+        "watchAll": {
+          "text": "watchAll(listener:",
+          "line": 59
+        }
+      },
+      "sha256": "bb500c45e68c47c9beff8bc8d1d8a92f41bf931e2dfed8c032d0e72cc3fcea20"
+    },
+    "documentBridge": {
+      "path": "src/plugins/documents/DocumentBridge.cpp",
+      "anchors": {
+        "attach": {
+          "text": "QString DocumentBridge::attach(",
+          "line": 26
+        },
+        "selectionRevision": {
+          "text": "void DocumentBridge::refreshSelection(",
+          "line": 151
+        },
+        "snapshot": {
+          "text": "QJsonObject DocumentBridge::snapshot(",
+          "line": 288
+        },
+        "bytePosition": {
+          "text": "bool DocumentBridge::bytePosition(",
+          "line": 299
+        },
+        "applyEdits": {
+          "text": "QJsonObject DocumentBridge::applyEdits(",
+          "line": 314
+        },
+        "nativeInfo": {
+          "text": "QJsonObject DocumentBridge::nativeInfo(",
+          "line": 121
+        }
+      },
+      "sha256": "2dc5e2f9a022e630bd83b287cbf8696c30c7fc15af02ca90bb852173ef7c1e4f"
+    },
+    "bridgeHeader": {
+      "path": "src/plugins/documents/DocumentBridge.h",
+      "anchors": {
+        "limits": {
+          "text": "MaxSnapshotBytes =",
+          "line": 19
+        },
+        "events": {
+          "text": "void deltaEvent(",
+          "line": 58
+        }
+      },
+      "sha256": "3d0ef27ff89b8abc683e4977a36b2c7870a349a16c131cd1bb0f5d4a78d00949"
+    },
+    "operations": {
+      "path": "src/EditorOperations.cpp",
+      "anchors": {
+        "execute": {
+          "text": "bool execute(",
+          "line": 20
+        }
+      },
+      "sha256": "2b5b364d6af9384f9fd3e950d82413f52f558141b5900712f60cd1c81a03bc39"
+    },
+    "main": {
+      "path": "src/dialogs/MainWindow.cpp",
+      "anchors": {
+        "close": {
+          "text": "void MainWindow::closeFile(",
+          "line": 1342
+        },
+        "save": {
+          "text": "bool MainWindow::saveFile(",
+          "line": 1434
+        },
+        "saveDialog": {
+          "text": "bool MainWindow::saveCurrentFileAsDialog(",
+          "line": 1456
+        },
+        "reload": {
+          "text": "void MainWindow::reloadFile(",
+          "line": 1321
+        },
+        "eol": {
+          "text": "void MainWindow::convertEOLs(",
+          "line": 1658
+        },
+        "lines": {
+          "text": "connectEditorAction(ui->actionDuplicateCurrentLine",
+          "line": 277
+        },
+        "reverse": {
+          "text": "connect(ui->actionReverseLineOrder",
+          "line": 310
+        },
+        "empty": {
+          "text": "connect(ui->actionRemoveEmptyLines",
+          "line": 291
+        },
+        "clipboard": {
+          "text": "connectEditorAction(ui->actionCopy,",
+          "line": 348
+        },
+        "transforms": {
+          "text": "connect(ui->actionBase64Encode",
+          "line": 194
+        },
+        "view": {
+          "text": "connect(ui->actionWordWrap",
+          "line": 735
+        },
+        "zoom": {
+          "text": "connect(ui->actionZoomIn",
+          "line": 738
+        },
+        "fold": {
+          "text": "connectEditorAction(ui->actionFoldLevel1",
+          "line": 773
+        }
+      },
+      "sha256": "54302d1549d8dbfa11f07790ac2a8253c36aa8b7998e5cf044fd7debba6ad0ee"
+    },
+    "editorManager": {
+      "path": "src/EditorManager.h",
+      "anchors": {
+        "create": {
+          "text": "createEditor(",
+          "line": 37
+        },
+        "open": {
+          "text": "createEditorFromFile(",
+          "line": 38
+        }
+      },
+      "sha256": "b2649606927ce9aee0a703e62e07c5fb24a013dbc9a34be62a5dda36ca3cdbff"
+    },
+    "scintilla": {
+      "path": "src/ScintillaNext.cpp",
+      "anchors": {
+        "indicator": {
+          "text": "int ScintillaNext::allocateIndicator(",
+          "line": 179
+        },
+        "reveal": {
+          "text": "void ScintillaNext::goToRange(",
+          "line": 184
+        },
+        "reserved": {
+          "text": "indicatorResources.disableRange(0, 7)",
+          "line": 119
+        }
+      },
+      "sha256": "bd402f5034cb31af96d74658416bebf17d91ba5e43c08aa02fee6f57c196c8f1"
+    },
+    "scintillaHeader": {
+      "path": "src/ScintillaNext.h",
+      "anchors": {
+        "bom": {
+          "text": "BomType bom() const",
+          "line": 120
+        },
+        "bomStorage": {
+          "text": "BomType bomType =",
+          "line": 167
+        },
+        "saved": {
+          "text": "void saved();",
+          "line": 153
+        },
+        "reload": {
+          "text": "void reloaded();",
+          "line": 158
+        },
+        "language": {
+          "text": "void lexerChanged();",
+          "line": 157
+        }
+      },
+      "sha256": "01404f884a21bef0cd61a89f90fc339e2ea86c7d4ba35383f17de81a955cf665"
+    },
+    "dock": {
+      "path": "src/DockedEditor.cpp",
+      "anchors": {
+        "activate": {
+          "text": "void DockedEditor::switchToEditor(",
+          "line": 133
+        },
+        "right": {
+          "text": "void DockedEditor::splitToRight(",
+          "line": 255
+        },
+        "bottom": {
+          "text": "void DockedEditor::splitToBottom(",
+          "line": 268
+        }
+      },
+      "sha256": "f0bff312da7f54af6ac194a8d55296c4e3500c08f2dbe0b9211590c36a7bf094"
+    },
+    "finder": {
+      "path": "src/Finder.cpp",
+      "anchors": {
+        "search": {
+          "text": "Sci_CharacterRange Finder::searchTarget(",
+          "line": 43
+        },
+        "count": {
+          "text": "int Finder::count(",
+          "line": 113
+        },
+        "replace": {
+          "text": "int Finder::replaceAll(",
+          "line": 161
+        }
+      },
+      "sha256": "a01f4b2d7425460da22a31cdf4467f670759ae966022f2ef08d5d6d8784bf1fd"
+    },
+    "regex": {
+      "path": "src/QRegexSearch.cpp",
+      "anchors": {
+        "search": {
+          "text": "QRegexSearch::FindText(",
+          "line": 43
+        },
+        "match": {
+          "text": "QRegularExpressionMatch m = re.match(",
+          "line": 87
+        }
+      },
+      "sha256": "08682a424522a603f048595b3549012b67f104e684bf291442e08e8509a98f7a"
+    },
+    "languages": {
+      "path": "src/NotepadNextApplication.cpp",
+      "anchors": {
+        "list": {
+          "text": "QStringList NotepadNextApplication::getLanguages()",
+          "line": 326
+        },
+        "set": {
+          "text": "void NotepadNextApplication::setEditorLanguage(",
+          "line": 337
+        },
+        "keywords": {
+          "text": "QStringList NotepadNextApplication::getLanguageKeywords(",
+          "line": 367
+        }
+      },
+      "sha256": "3ca506ec25510b87ef0e032a85850c0ec882deb89b5bbdf93da72e0d8b59edba"
+    },
+    "editorConfig": {
+      "path": "src/decorators/EditorConfigAppDecorator.cpp",
+      "anchors": {
+        "indentation": {
+          "text": "void EditorConfigAppDecorator::doEditorConfig(",
+          "line": 53
+        },
+        "trim": {
+          "text": "void EditorConfigAppDecorator::trimTrailingWhitespace()",
+          "line": 107
+        },
+        "newline": {
+          "text": "void EditorConfigAppDecorator::ensureFinalNewline()",
+          "line": 119
+        }
+      },
+      "sha256": "189758eb46659ee2a88ab108e7009e46829de9ee231756e653f5743c53c25ecd"
+    },
+    "bookmarks": {
+      "path": "src/decorators/BookMarkDecorator.h",
+      "anchors": {
+        "list": {
+          "text": "QList<int> bookMarkedLines() const;",
+          "line": 42
+        },
+        "add": {
+          "text": "void addBookmark(int line);",
+          "line": 33
+        },
+        "remove": {
+          "text": "void removeBookmark(int line);",
+          "line": 34
+        },
+        "next": {
+          "text": "int nextBookmarkAfter(int line);",
+          "line": 37
+        }
+      },
+      "sha256": "93c1fb94b51cf4eb563f7cf36f7f191dd8dc21dc83e6085ed9efea9dfab5249b"
+    },
+    "markers": {
+      "path": "src/decorators/MarkerAppDecorator.cpp",
+      "anchors": {
+        "allocate": {
+          "text": "allocateIndicator(",
+          "line": 41
+        }
+      },
+      "sha256": "c82539d9292a056351b1693dca2de45bab81eea09dd2d870ad24cedfc5a978b2"
+    },
+    "allocator": {
+      "path": "src/RangeAllocator.cpp",
+      "anchors": {
+        "allocate": {
+          "text": "int RangeAllocator::requestResource(",
+          "line": 32
+        },
+        "exhaustion": {
+          "text": "Q_ASSERT(false);",
+          "line": 47
+        }
+      },
+      "sha256": "e67d9194a048f1bebd83f575db8024d58b0a61deca9bc1c45ac596944eb39b16"
+    },
+    "allocatorHeader": {
+      "path": "src/RangeAllocator.h",
+      "anchors": {
+        "publicMethods": {
+          "text": "int requestResource(",
+          "line": 33
+        }
+      },
+      "sha256": "f7d8f0b4d8ff094c31046690a9d3e7989156d178554da5fcb0e99d1831dd8d37"
+    },
+    "converter": {
+      "path": "src/Converter.h",
+      "anchors": {
+        "range": {
+          "text": "virtual void convertRange(",
+          "line": 32
+        }
+      },
+      "sha256": "b90ae6d14e5898bb1dc0b642124eca0f73dc7d62e2f3e71a0cdb752205999d26"
+    },
+    "html": {
+      "path": "src/HtmlConverter.cpp",
+      "anchors": {
+        "convert": {
+          "text": "HtmlConverter::convertRange(",
+          "line": 72
+        }
+      },
+      "sha256": "87a29d5b41100709a6773f48ebc0eadf6aea7be26546dcc8ac1f76d11c34c047"
+    },
+    "rtf": {
+      "path": "src/RtfConverter.cpp",
+      "anchors": {
+        "convert": {
+          "text": "RtfConverter::convertRange(",
+          "line": 54
+        }
+      },
+      "sha256": "23a17ec387f3c38eadffb2fb112736740cb6ef2b9e8fdc51cd92e501324d0e00"
+    },
+    "macroManager": {
+      "path": "src/MacroManager.h",
+      "anchors": {
+        "list": {
+          "text": "QVector<Macro *> &availableMacros()",
+          "line": 36
+        }
+      },
+      "sha256": "061fe091303a092a354abe9d8406804a2427c104096b8aa12eb0c71d1cef562a"
+    },
+    "macro": {
+      "path": "src/Macro.cpp",
+      "anchors": {
+        "run": {
+          "text": "void Macro::replay(",
+          "line": 64
+        },
+        "untilEOF": {
+          "text": "void Macro::replayTillEndOfFile(",
+          "line": 81
+        }
+      },
+      "sha256": "8a638f321e7092ae35f1201ae69c9fd48d923b0b1fe34a14394678c0954e0c56"
+    },
+    "macroStep": {
+      "path": "src/MacroStep.h",
+      "anchors": {
+        "message": {
+          "text": "Scintilla::Message",
+          "line": 28
+        },
+        "replay": {
+          "text": "void replay(",
+          "line": 34
+        }
+      },
+      "sha256": "58be60da9a2a61fda9ea265a0ff6b005bda2075d84a27580c871406be86d6b0e"
+    },
+    "folder": {
+      "path": "src/docks/FolderAsWorkspaceDock.h",
+      "anchors": {
+        "root": {
+          "text": "QString rootPath() const;",
+          "line": 38
+        }
+      },
+      "sha256": "3874fa341ad9d8d92973259ce47181f4fa5c5fc36d5c9e6653b4f645bc491ce6"
+    },
+    "column": {
+      "path": "src/dialogs/ColumnEditorDialog.cpp",
+      "anchors": {
+        "insert": {
+          "text": "void ColumnEditorDialog::insertTextStartingAtCurrentColumn(",
+          "line": 78
+        },
+        "virtualSpace": {
+          "text": "setTargetStartVirtualSpace(",
+          "line": 118
+        }
+      },
+      "sha256": "9a63e47395f9526fe75c4a0234ab02dedbd29636a7999f8267ae9a868489f71f"
+    },
+    "completion": {
+      "path": "src/decorators/AutoCompletion.cpp",
+      "anchors": {
+        "show": {
+          "text": "void AutoCompletion::showAutoCompletion()",
+          "line": 53
+        },
+        "notification": {
+          "text": "void AutoCompletion::notify(",
+          "line": 43
+        }
+      },
+      "sha256": "1b91450bf04fe2b8b9e9395c53adac553a5a35ad22628e5cb8ce3416f352d04b"
+    }
+  },
+  "capabilities": [
+    {
+      "id": "native-events",
+      "priority": "P0",
+      "batch": "B1",
+      "nativeWork": "extend-existing-bridge",
+      "sourceRefs": [
+        "legacyTypes:events",
+        "legacyTypes:delta",
+        "documentBridge:attach",
+        "documentBridge:selectionRevision",
+        "scintillaHeader:saved",
+        "scintillaHeader:reload"
+      ],
+      "draftApi": [
+        "native document subscription",
+        "editors.watchSelections"
+      ],
+      "notes": "已有 watch/watchAll/delta/reset；补丰富 metadata 与选区，保存/重载语义完成于 B2。保留旧类型并协商新格式。",
+      "acceptance": [
+        "snapshot/event handoff",
+        "bounded/coalesced notification",
+        "dispose and generation cleanup"
+      ]
+    },
+    {
+      "id": "bounded-read",
+      "priority": "P0",
+      "batch": "B1",
+      "nativeWork": "extend-existing-bridge",
+      "sourceRefs": [
+        "documentBridge:snapshot",
+        "documentBridge:bytePosition",
+        "documentBridge:applyEdits",
+        "bridgeHeader:limits"
+      ],
+      "draftApi": [
+        "documents.readRange"
+      ],
+      "notes": "bytePosition 已使用原生行/code-unit 查询。范围读取不得全文 snapshot 后 slice；超长行扫描需要预算，不解除写预检上限。",
+      "acceptance": [
+        "UTF-16/CRLF and stale version",
+        "large document small read without full copy",
+        "oversized range/line rejected"
+      ]
+    },
+    {
+      "id": "navigation",
+      "priority": "P0",
+      "batch": "B1",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "dock:activate",
+        "scintilla:reveal",
+        "nativeTypes:selections"
+      ],
+      "draftApi": [
+        "editors.activate",
+        "editors.revealRange"
+      ],
+      "notes": "goToRange 会改变选区；滚动与 setSelections 分开，焦点行为显式。",
+      "acceptance": [
+        "target persists across tab switch",
+        "selection unchanged by reveal",
+        "preserve focus"
+      ]
+    },
+    {
+      "id": "file-lifecycle",
+      "priority": "P0",
+      "batch": "B2",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "main:close",
+        "main:save",
+        "main:saveDialog",
+        "editorManager:create",
+        "editorManager:open",
+        "scintillaHeader:saved"
+      ],
+      "draftApi": [
+        "files.create",
+        "files.open",
+        "files.save",
+        "files.saveAs",
+        "files.close"
+      ],
+      "notes": "提取共享 FileOperations；取消与失败混淆，最后标签可能关闭窗口；弹窗返回重新验证目标/version/generation，保留原生 aboutToSave。",
+      "acceptance": [
+        "completed/cancelled/skipped/error",
+        "dirty and last-tab close",
+        "dialog-time target/version changes",
+        "IO failure and saved metadata"
+      ]
+    },
+    {
+      "id": "file-maintenance",
+      "priority": "P2",
+      "batch": "later",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "main:reload",
+        "scintillaHeader:reload"
+      ],
+      "draftApi": [
+        "files.reload",
+        "files.saveCopy",
+        "files.rename",
+        "files.moveToTrash"
+      ],
+      "notes": "文件服务稳定后逐项开放；重载优先，分别定义数据保留、磁盘失败、冲突及事件。",
+      "acceptance": [
+        "prompt/ifClean reload and reset",
+        "disk failure/cancel/conflict and data retention"
+      ]
+    },
+    {
+      "id": "literal-search",
+      "priority": "P1",
+      "batch": "B3",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "finder:search",
+        "finder:count",
+        "finder:replace",
+        "documentBridge:applyEdits"
+      ],
+      "draftApi": [
+        "search.findAll",
+        "search.count"
+      ],
+      "notes": "独立 SearchService 有范围/版本/结果预算与取消；隔离或恢复 flags/target。首版字面量及现有文档预算，替换经 guarded edits。",
+      "acceptance": [
+        "limits and cancellation",
+        "no user search-state change",
+        "versioned UTF-16 ranges and atomic replacement"
+      ]
+    },
+    {
+      "id": "regex-search",
+      "priority": "P2",
+      "batch": "conditional",
+      "nativeWork": "new-scheduling-service",
+      "sourceRefs": [
+        "regex:search",
+        "regex:match",
+        "main:empty",
+        "editorConfig:trim"
+      ],
+      "draftApi": [
+        "regex extension for search"
+      ],
+      "notes": "同步 QRegularExpression::match 不会因 Promise/AbortSignal 中断；先证明隔离/可中断与硬预算。清理空白可另用有界算法。",
+      "acceptance": [
+        "pathological patterns have bounded cost",
+        "termination and stale-result rejection"
+      ]
+    },
+    {
+      "id": "core-command-expansion",
+      "priority": "P1",
+      "batch": "B3",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "nativeTypes:core",
+        "operations:execute",
+        "main:lines",
+        "main:reverse",
+        "main:fold"
+      ],
+      "draftApi": [
+        "core stable IDs for duplicate/move/join/split/reverse lines",
+        "explicit comment/uncomment",
+        "indent/outdent",
+        "fold/unfold level"
+      ],
+      "notes": "现有目录只有八项；扩展白名单并共用服务，不开放任意 QAction/SCI 消息。新增命令名待定。",
+      "acceptance": [
+        "native menu/RPC parity",
+        "selection semantics and one undo",
+        "readonly/grants rejection"
+      ]
+    },
+    {
+      "id": "languages",
+      "priority": "P1",
+      "batch": "B4",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "languages:list",
+        "languages:set",
+        "languages:keywords",
+        "editorConfig:indentation",
+        "scintillaHeader:language"
+      ],
+      "draftApi": [
+        "languages.list",
+        "languages.set",
+        "languages.getKeywords"
+      ],
+      "notes": "验证已登记 ID；保持 Text/HTML 等现有名称的兼容映射。lexer 切换可能应用缩进默认值，保留 EditorConfig 优先级。",
+      "acceptance": [
+        "unknown ID rejected",
+        "EditorConfig precedence",
+        "metadata/options events"
+      ]
+    },
+    {
+      "id": "line-endings",
+      "priority": "P1",
+      "batch": "B4",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "main:eol",
+        "editorConfig:indentation",
+        "documentBridge:nativeInfo"
+      ],
+      "draftApi": [
+        "documents.convertLineEndings"
+      ],
+      "notes": "丰富 metadata 已可读。转换正文与后续输入 EOL mode 分开；目标、undo、事件明确。",
+      "acceptance": [
+        "mixed EOL and undo",
+        "version/readonly guards",
+        "metadata independent of incidental text signals"
+      ]
+    },
+    {
+      "id": "editor-options",
+      "priority": "P1",
+      "batch": "B4",
+      "nativeWork": "extend-existing-bridge",
+      "sourceRefs": [
+        "editorConfig:indentation",
+        "languages:set",
+        "main:view",
+        "main:zoom"
+      ],
+      "draftApi": [
+        "editors.getOptions"
+      ],
+      "notes": "先读有效 tabWidth/indentWidth/useTabs。wrap/zoom/可见字符写入延后，当前有全局/多编辑器效果，需要定义作用域。",
+      "acceptance": [
+        "effective options match editor",
+        "language and EditorConfig interaction"
+      ]
+    },
+    {
+      "id": "user-bookmarks",
+      "priority": "P1",
+      "batch": "B4",
+      "nativeWork": "extend-existing-bridge",
+      "sourceRefs": [
+        "bookmarks:list",
+        "bookmarks:add",
+        "bookmarks:remove",
+        "bookmarks:next"
+      ],
+      "draftApi": [
+        "bookmarks.list",
+        "bookmarks.set"
+      ],
+      "notes": "用户书签与插件临时标记分开；明确增/删指定行，导航复用 reveal。",
+      "acceptance": [
+        "line/version validation",
+        "native movement after edits",
+        "disable retains user bookmarks"
+      ]
+    },
+    {
+      "id": "plugin-decorations",
+      "priority": "P1",
+      "batch": "B5",
+      "nativeWork": "new-resource-service",
+      "sourceRefs": [
+        "markers:allocate",
+        "scintilla:indicator",
+        "scintilla:reserved",
+        "allocator:allocate",
+        "allocator:exhaustion",
+        "allocatorHeader:publicMethods"
+      ],
+      "draftApi": [
+        "decorations.create",
+        "decorations.set",
+        "decorations.dispose"
+      ],
+      "notes": "当前有限 indicator 分配器无 release；新增 owner/generation、配额、释放和耗尽错误。首版仅范围高亮/下划线。",
+      "acceptance": [
+        "two-plugin isolation",
+        "stale version/generation rejected",
+        "100 reload/dispose cycles return usage to baseline",
+        "quota exhaustion without crash"
+      ]
+    },
+    {
+      "id": "split-existing-view",
+      "priority": "P2",
+      "batch": "later",
+      "nativeWork": "extend-existing-bridge",
+      "sourceRefs": [
+        "dock:right",
+        "dock:bottom"
+      ],
+      "draftApi": [
+        "editors.moveToSplit"
+      ],
+      "notes": "移动已有 dock；不承诺 shared-buffer clone 或多宿主窗口。",
+      "acceptance": [
+        "document/editor identity retained",
+        "selection and panel state unaffected"
+      ]
+    },
+    {
+      "id": "styled-export",
+      "priority": "P2",
+      "batch": "later",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "converter:range",
+        "html:convert",
+        "rtf:convert"
+      ],
+      "draftApi": [
+        "exports.render"
+      ],
+      "notes": "有界 HTML/RTF 返回内容；写盘与剪贴板单独 grants/结果。",
+      "acceptance": [
+        "range/version/output limits",
+        "native style parity"
+      ]
+    },
+    {
+      "id": "clipboard",
+      "priority": "P2",
+      "batch": "later",
+      "nativeWork": "new-host-service",
+      "sourceRefs": [
+        "main:clipboard"
+      ],
+      "draftApi": [
+        "clipboard.read/write"
+      ],
+      "notes": "原生复制/剪切/粘贴存在，系统剪贴板有全局效果，需要独立 grants 与格式/大小契约。",
+      "acceptance": [
+        "permission and format/payload limits",
+        "no hidden clipboard effects in read APIs"
+      ]
+    },
+    {
+      "id": "macros",
+      "priority": "P2",
+      "batch": "conditional",
+      "nativeWork": "new-scheduling-service",
+      "sourceRefs": [
+        "macroManager:list",
+        "macro:run",
+        "macro:untilEOF",
+        "macroStep:message",
+        "macroStep:replay"
+      ],
+      "draftApi": [
+        "macros.list",
+        "macros.run"
+      ],
+      "notes": "当前 Macro 指针列表与 raw SCI steps；稳定 ID、步骤分类及执行预算先于 SDK，不直接开放 replayTillEndOfFile。",
+      "acceptance": [
+        "fixed target and stable IDs",
+        "bounded steps/repetitions",
+        "no raw pointer/message contract"
+      ]
+    },
+    {
+      "id": "folder-root",
+      "priority": "P2",
+      "batch": "demand-driven",
+      "nativeWork": "extend-existing-bridge",
+      "sourceRefs": [
+        "folder:root"
+      ],
+      "draftApi": [
+        "folders.getRoot"
+      ],
+      "notes": "只读当前文件夹视图根目录，不引入 IDE workspace。",
+      "acceptance": [
+        "no folder returns null",
+        "matches native displayed root"
+      ]
+    },
+    {
+      "id": "column-selection",
+      "priority": "P2",
+      "batch": "later",
+      "nativeWork": "bridge-with-refactor",
+      "sourceRefs": [
+        "column:insert",
+        "column:virtualSpace",
+        "nativeTypes:selections",
+        "nativeTypes:context"
+      ],
+      "draftApi": [
+        "rectangular/virtual-space setter or column operation"
+      ],
+      "notes": "可读取矩形模式；当前 setter 仅 stream、零 virtual space。视觉列、tab 与 UTF-16 分开定义。",
+      "acceptance": [
+        "tab/wide Unicode/virtual-space behavior",
+        "all ranges preflight and one undo"
+      ]
+    },
+    {
+      "id": "encoding-write",
+      "priority": "P2",
+      "batch": "conditional",
+      "nativeWork": "new-native-feature",
+      "sourceRefs": [
+        "scintillaHeader:bom",
+        "scintillaHeader:bomStorage",
+        "documentBridge:nativeInfo"
+      ],
+      "draftApi": [
+        "encoding/BOM conversion service"
+      ],
+      "notes": "已有检测/保存与 metadata，没有公共 BOM setter；通用编码写入先补原生服务。",
+      "acceptance": [
+        "unrepresentable characters",
+        "save failure and dirty state",
+        "encoding metadata correctness"
+      ]
+    },
+    {
+      "id": "text-transformation-recipes",
+      "priority": "available",
+      "batch": "SDK recipes",
+      "nativeWork": "no-new-native-api",
+      "sourceRefs": [
+        "main:transforms",
+        "editorConfig:newline",
+        "nativeTypes:context"
+      ],
+      "draftApi": [
+        "existing editors.capture/documents.applyEdits"
+      ],
+      "notes": "纯文本 Base64/URL/格式化插件可先用现有 SDK。保存前拦截是另一项 provider 工作。",
+      "acceptance": [
+        "Unicode conversion",
+        "selection/version guards",
+        "one undo"
+      ]
+    },
+    {
+      "id": "advanced-providers",
+      "priority": "deferred",
+      "batch": "C",
+      "nativeWork": "new-scheduling-service",
+      "sourceRefs": [
+        "completion:show",
+        "completion:notification",
+        "editorConfig:indentation"
+      ],
+      "draftApi": [
+        "completion/format-on-save providers",
+        "editor context menu contributions"
+      ],
+      "notes": "原生补全/保存钩子已有；通用 provider 需要调度、顺序、取消与资源归属，按实际插件需求设计。",
+      "acceptance": [
+        "concrete need before contract",
+        "bounded dispatch and disposal"
+      ]
+    }
+  ]
+}

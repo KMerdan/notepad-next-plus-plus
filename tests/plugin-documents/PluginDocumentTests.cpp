@@ -13,6 +13,59 @@ QList<QJsonObject> textEvents(const QSignalSpy &events) {QList<QJsonObject> resu
 class PluginDocumentTests : public QObject {
     Q_OBJECT
 private slots:
+    void phaseBOptionsMatchNativeIndentationStep() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("x");editor.setTabWidth(4);editor.setIndent(0);editor.setUseTabs(false);editor.setSelection(0,0);
+        DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");QJsonObject error;
+        auto options=bridge.editorOptions(bridge.editorInfo(id)["editorId"].toString(),&error);QVERIFY(error.isEmpty());QCOMPARE(options["indentWidth"].toInt(),4);
+        editor.tab();QCOMPARE(editor.get_text_range(0,editor.length()),QByteArray("    x"));
+        editor.setIndent(2);options=bridge.editorOptions(bridge.editorInfo(id)["editorId"].toString(),&error);QCOMPARE(options["indentWidth"].toInt(),2);QCOMPARE(options["tabWidth"].toInt(),4);
+    }
+    void phaseBRangeReadIsBoundedAndVersioned() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText((QStringLiteral("a😀中\r\n").toUtf8()+QByteArray(3000000,'x')).constData());
+        DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");QJsonObject error;const QJsonValue version=bridge.info(id)["version"];
+        bridge.snapshot(id,&error);QCOMPARE(error["code"].toInt(),1008);
+        const QJsonObject range{{"start",position(0,1)},{"end",position(0,4)}};
+        const auto read=bridge.readRange({{"documentId",id},{"expectedVersion",version},{"range",range}},&error);
+        QVERIFY(error.isEmpty());QCOMPARE(read["text"].toString(),QStringLiteral("😀中"));QCOMPARE(read["version"],version);
+        bridge.readRange({{"documentId",id},{"expectedVersion",version},{"range",QJsonObject{{"start",position(1,0)},{"end",position(1,1)}}}},&error);QCOMPARE(error["code"].toInt(),1008);
+        bridge.readRange({{"documentId",id},{"expectedVersion",version},{"range",range},{"maxBytes",1}},&error);QCOMPARE(error["code"].toInt(),1008);
+        editor.insertText(0,"b");bridge.readRange({{"documentId",id},{"expectedVersion",version},{"range",range}},&error);QCOMPARE(error["code"].toInt(),1001);
+    }
+    void phaseBNativeEventsCoalesceAndCloseWithRichMetadata() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("one\ntwo\n");DocumentBridge bridge;bridge.setWindowId("window");
+        const auto id=bridge.attach(&editor,{},"text");bridge.retainNativeStream();QSignalSpy events(&bridge,&DocumentBridge::nativeEvent);
+        bridge.updateMetadata(id,QUrl::fromLocalFile("/tmp/first.txt"),"text");bridge.updateMetadata(id,QUrl::fromLocalFile("/tmp/final.txt"),"text");
+        bridge.flushNativeEvents();QCOMPARE(events.size(),1);QCOMPARE(events[0][0].toJsonObject()["document"].toObject()["name"].toString(),"final.txt");
+        QJsonObject error;const auto editorId=bridge.editorInfo(id)["editorId"].toString();editor.setSelection(2,0);bridge.selections(editorId,&error);
+        QTRY_VERIFY(([&]{for(const auto &entry:events)if(entry[0].toJsonObject()["type"]=="selectionChanged")return true;return false;})());
+        const QJsonValue nativeId=bridge.editorInfo(id)["editorId"];bridge.detach(id);
+        const auto closed=events.last()[0].toJsonObject();QCOMPARE(closed["type"].toString(),"closed");QCOMPARE(closed["editorId"],nativeId);
+        QVERIFY(closed["document"].toObject().contains("byteLength"));QVERIFY(!bridge.editorForDocument(id));
+        qint64 previous=0;for(const auto &entry:events){QVERIFY(entry[1].toLongLong()>previous);previous=entry[1].toLongLong();}
+    }
+    void phaseBRevealLeavesSelectionsAndNativeSearchStateUnchanged() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText(QStringLiteral("a😀 foo\r\nfoo food FOO\n").toUtf8().constData());editor.setSelection(1,0);
+        editor.setSearchFlags(SCFIND_REGEXP);editor.setTargetRange(2,5);DocumentBridge bridge;bridge.setWindowId("window");const auto id=bridge.attach(&editor,{},"text");const auto editorId=bridge.editorInfo(id)["editorId"].toString();QJsonObject error;
+        const auto selection=bridge.selections(editorId,&error);bridge.revealRange({{"editorId",editorId},{"expectedDocumentVersion",bridge.info(id)["version"]},{"range",QJsonObject{{"start",position(1,0)},{"end",position(1,3)}}}},&error);
+        QVERIFY(error.isEmpty());QCOMPARE(bridge.selections(editorId,&error),selection);
+        QJsonValue result;bool done=false;bridge.search({{"documentId",id},{"expectedVersion",bridge.info(id)["version"]},{"text","foo"},{"wholeWord",true},{"matchCase",false},{"maxResults",2}},false,[]{return true;},[&](const auto &value,const auto &failure){result=value;error=failure;done=true;});
+        QTRY_VERIFY(done);QVERIFY(error.isEmpty());QCOMPARE(result.toObject()["count"].toInt(),2);QVERIFY(!result.toObject()["complete"].toBool());
+        QCOMPARE(result.toObject()["matches"].toArray()[0].toObject()["start"].toObject(),position(0,4));
+        QCOMPARE(editor.searchFlags(),sptr_t(SCFIND_REGEXP));QCOMPARE(editor.targetStart(),sptr_t(2));QCOMPARE(editor.targetEnd(),sptr_t(5));QCOMPARE(bridge.selections(editorId,&error),selection);
+        const QJsonValue next=result.toObject()["next"];done=false;bridge.search({{"documentId",id},{"expectedVersion",bridge.info(id)["version"]},{"text","foo"},{"wholeWord",true},{"cursor",next}},true,[]{return true;},[&](const auto &value,const auto &failure){result=value;error=failure;done=true;});
+        QTRY_VERIFY(done);QVERIFY(error.isEmpty());QCOMPARE(result.toObject()["count"].toInt(),1);QVERIFY(result.toObject()["complete"].toBool());QVERIFY(result.toObject()["matches"].toArray().isEmpty());
+    }
+    void phaseBSearchCancellationAndVersionConflict() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("foo foo");DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");QJsonObject error;bool done=false;
+        auto request=QJsonObject{{"documentId",id},{"expectedVersion",bridge.info(id)["version"]},{"text","foo"}};
+        bridge.search(request,false,[]{return false;},[&](const auto &,const auto &failure){error=failure;done=true;});QTRY_VERIFY(done);QCOMPARE(error["code"].toInt(),1006);
+        done=false;bridge.search(request,false,[]{return true;},[&](const auto &,const auto &failure){error=failure;done=true;});editor.insertText(0,"changed");QTRY_VERIFY(done);QCOMPARE(error["code"].toInt(),1001);
+    }
+    void phaseBLineEndingConversionHasOneTextUndoAndReadonlyGuard() {
+        ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);editor.setText("a\nb\r\nc\r");editor.emptyUndoBuffer();DocumentBridge bridge;const auto id=bridge.attach(&editor,{},"text");QJsonObject error;
+        auto request=QJsonObject{{"documentId",id},{"expectedVersion",bridge.info(id)["version"]},{"lineEnding","lf"}};bridge.convertLineEndings(request,&error);QVERIFY(error.isEmpty());QCOMPARE(bridge.snapshot(id,&error)["text"].toString(),"a\nb\nc\n");editor.undo();QCOMPARE(bridge.snapshot(id,&error)["text"].toString(),"a\nb\r\nc\r");
+        editor.setReadOnly(true);request["expectedVersion"]=bridge.info(id)["version"];bridge.convertLineEndings(request,&error);QCOMPARE(error["code"].toInt(),1003);
+    }
     void nativeCaptureBoundsEscapedResponse() {
         ScintillaEdit editor;editor.setCodePage(SC_CP_UTF8);const QByteArray text(1100*1024,'\x01');editor.setText(text.constData());editor.selectAll();
         DocumentBridge bridge;bridge.setWindowId("window");bridge.setActive(bridge.attach(&editor,{},"text"));QJsonObject error;

@@ -1,4 +1,4 @@
-add_library(NotepadNextPluginDocuments STATIC DocumentBridge.cpp DocumentBridge.h)
+add_library(NotepadNextPluginDocuments STATIC DocumentBridge.cpp DocumentBridgePhaseB.cpp DocumentBridge.h)
 target_link_libraries(NotepadNextPluginDocuments PUBLIC NotepadNextPluginRpc scintilla)
 target_include_directories(NotepadNextPluginDocuments PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 set_target_properties(NotepadNextPluginDocuments PROPERTIES AUTOMOC ON)

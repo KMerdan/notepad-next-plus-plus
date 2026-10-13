@@ -25,10 +25,11 @@ function createClient(endpoint, identity, manifest, canCall) {
     if (!canCall(method)) return Promise.reject(new RpcError(1004,'PluginStopping'));
     const payload=envelope(params);
     try {requireValid(method,'params',payload);} catch(error) {return Promise.reject(error);}
-    const mutating=method==='nnp.documents.applyEdits'||method==='nnp.core.execute'||method==='nnp.editors.setSelections';
-    return endpoint.call(method,payload,options).then(value=>{requireValid(method,'result',value);return value;}).catch(error=>{
-      error.kind=error.message==='ReadOnlyDocument'?'ReadOnlyDocument':({1001:'VersionConflict',1011:'SelectionConflict',1002:'DocumentClosed',1003:'CapabilityDenied',1004:'PluginStopping',1005:'UnsupportedCapability',1006:error.message.includes('timed out')?'Timeout':'Cancelled',1007:'Overloaded',1008:'ContentTooLarge',1009:'UnsupportedEncoding'}[error.code]??'InternalError');
-      if(mutating)error.outcome=[1004,1006,-32603].includes(error.code)?'unknown':'notCommitted';
+    const mutating=method==='nnp.documents.applyEdits'||method==='nnp.core.execute'||method==='nnp.editors.setSelections'||method.startsWith('nnp.files.')||method.startsWith('nnp.decorations.')||method==='nnp.documents.convertLineEndings'||method==='nnp.languages.set'||method==='nnp.bookmarks.set';
+    const nativeOptions=identity.apiVersion==='0.3.0'&&method!=='nnp.resources.dispose'?{...(method.startsWith('nnp.files.')?{timeout:600000}:{}),...options,signal:options?.signal?AbortSignal.any([options.signal,stopping.signal]):stopping.signal}:options;
+    return endpoint.call(method,payload,nativeOptions).then(value=>{requireValid(method,'result',value);return value;}).catch(error=>{
+      error.kind=error.message==='ReadOnlyDocument'?'ReadOnlyDocument':({1001:'VersionConflict',1011:'SelectionConflict',1002:'DocumentClosed',1003:'CapabilityDenied',1004:'PluginStopping',1005:'UnsupportedCapability',1006:error.message.includes('timed out')?'Timeout':'Cancelled',1007:'Overloaded',1008:'ContentTooLarge',1009:'UnsupportedEncoding',1012:'FileIOError'}[error.code]??'InternalError');
+      if(mutating)error.outcome=[1004,1006,1012,-32603].includes(error.code)?'unknown':'notCommitted';
       throw error;
     });
   };
@@ -94,18 +95,38 @@ function createClient(endpoint, identity, manifest, canCall) {
     catch(error) {console.error(error);throw error;}
   });
   register(endpoint,'nnp.commands.invokeNative',async params=>{
-    if(identity.apiVersion!=='0.2.0'||params.sessionId!==identity.sessionId||params.generation!==identity.generation||!canCall('nnp.commands.invokeNative'))throw new RpcError(1004,'PluginStopping');
+    if(!['0.2.0','0.3.0'].includes(identity.apiVersion)||params.sessionId!==identity.sessionId||params.generation!==identity.generation||!canCall('nnp.commands.invokeNative'))throw new RpcError(1004,'PluginStopping');
     const callback=commands.get(params.callbackId);if(!callback)throw new RpcError(-32602,'Unknown command callback');
     return callback(Object.freeze({...params.invocation,args:Object.freeze([...params.invocation.args])}));
+  });
+  const nativeWatches=new Map(),earlyNative=[];let awaitingNative=0,earlyNativeBytes=0;
+  function deliverNative(event){const entry=nativeWatches.get(event.subscriptionId);if(!entry){if(awaitingNative){const bytes=Buffer.byteLength(JSON.stringify(event));if(earlyNative.length>=128||earlyNativeBytes+bytes>2*1024*1024)throw new RpcError(1007,'Native subscription handoff overflow');earlyNativeBytes+=bytes;earlyNative.push(event);}return;}if(event.eventSeq<=entry.sequence)return;entry.sequence=event.eventSeq;return entry.listener(event);}
+  register(endpoint,'nnp.documents.nativeEvent',params=>{if(params.sessionId!==identity.sessionId||params.generation!==identity.generation)return;return deliverNative(params);});
+  async function watchNative(method,params,listener){
+    if(typeof listener!=='function')throw new RpcError(-32602,'Invalid native listener');++awaitingNative;let handle;
+    try{const result=await call(method,params);handle=resource(result.subscriptionId,()=>nativeWatches.delete(result.subscriptionId));nativeWatches.set(result.subscriptionId,{listener,sequence:result.eventSeq});
+      for(let n=0;n<earlyNative.length;)if(earlyNative[n].subscriptionId===result.subscriptionId){const event=earlyNative.splice(n,1)[0];earlyNativeBytes-=Buffer.byteLength(JSON.stringify(event));await deliverNative(event);}else ++n;
+      return Object.assign(handle,result);
+    }catch(error){try{await handle?.dispose();}catch{}throw error;}finally{if(--awaitingNative===0){earlyNative.length=0;earlyNativeBytes=0;}}
+  }
+  const nativeDecorations=new Map(),earlyDisposed=new Set();let awaitingDecoration=0;
+  register(endpoint,'nnp.resources.nativeEvent',event=>{
+    if(event.sessionId!==identity.sessionId||event.generation!==identity.generation)return;
+    const entry=nativeDecorations.get(event.resourceId);if(entry){entry.invalidate();scope.resources.delete(entry.handle);nativeDecorations.delete(event.resourceId);}else if(awaitingDecoration){if(earlyDisposed.size>=64)throw new RpcError(1007,'Resource event handoff overflow');earlyDisposed.add(event.resourceId);}
   });
   const api = {
     pluginId:identity.pluginId, sessionId:identity.sessionId, generation:identity.generation,
     capabilities:Object.freeze([...identity.grantedCapabilities]), subscriptions:[],stopping:stopping.signal,
     host:Object.freeze({product:'Notepad Next ++',applicationVersion:identity.hostVersion,apiVersion:identity.apiVersion,
       platform:process.platform==='darwin'?'macos':process.platform==='win32'?'windows':'linux',capabilities:Object.freeze([...identity.grantedCapabilities]),
-      limits:Object.freeze({...identity.limits,maxEditsPerTransaction:256,maxPanelStateBytes:65536}),supports:capability=>identity.grantedCapabilities.includes(capability)}),
+      limits:Object.freeze({...identity.limits,maxEditsPerTransaction:256,maxPanelStateBytes:65536}),getNativeLimits:options=>call('nnp.host.getNativeLimits',{},options),supports:capability=>identity.grantedCapabilities.includes(capability)}),
     log:Object.freeze(Object.fromEntries(['debug','info','warn','error'].map(level=>[level,(message,details)=>console[level](message,...(details===undefined?[]:[details]))]))),
-    editors:{getActive:options=>call('nnp.editors.getActive',{},options),capture:(invocation,options)=>call('nnp.editors.capture',{invocation},options),getSelections:(editorId,options)=>call('nnp.editors.getSelections',{editorId},options),
+    editors:{
+      watchSelections:(editorId,listener)=>watchNative('nnp.editors.watchSelections',{editorId},listener),
+      activate:(editorId,expectedDocumentVersion,options={})=>call('nnp.editors.activate',{editorId,expectedDocumentVersion,preserveFocus:options.preserveFocus??false},options),
+      revealRange:(editorId,expectedDocumentVersion,range,options)=>call('nnp.editors.revealRange',{editorId,expectedDocumentVersion,range},options),
+      getOptions:(editorId,options)=>call('nnp.editors.getOptions',{editorId},options),
+      getActive:options=>call('nnp.editors.getActive',{},options),capture:(invocation,options)=>call('nnp.editors.capture',{invocation},options),getSelections:(editorId,options)=>call('nnp.editors.getSelections',{editorId},options),
       setSelections:(editorId,expectedDocumentVersion,expectedRevision,selections,mainIndex)=>call('nnp.editors.setSelections',{editorId,expectedDocumentVersion,expectedRevision,selections,mainIndex})},
     core:{list:()=>call('nnp.core.list'),execute:(commandId,request,options)=>call('nnp.core.execute',{commandId,request},options)},
     commands:{ async register(commandId,callback) {
@@ -125,7 +146,15 @@ function createClient(endpoint, identity, manifest, canCall) {
         return selected;
       }finally{if(--awaitingMessage===0)earlyMessages.length=0;}
     }},
+    files:{create:(options={},callOptions)=>call('nnp.files.create',options,callOptions),open:(uri,options={},callOptions)=>call('nnp.files.open',{uri,...options},callOptions),save:(documentId,expectedVersion,options)=>call('nnp.files.save',{documentId,expectedVersion},options),saveAs:(documentId,expectedVersion,uri,options)=>call('nnp.files.saveAs',{documentId,expectedVersion,...(uri===undefined?{}:{uri})},options),close:(documentId,expectedVersion,policy='prompt',options)=>call('nnp.files.close',{documentId,expectedVersion,policy},options)},
+    search:{findAll:(documentId,expectedVersion,query,options)=>call('nnp.search.findAll',{documentId,expectedVersion,...query},options),count:(documentId,expectedVersion,query,options)=>call('nnp.search.count',{documentId,expectedVersion,...query},options)},
+    languages:{list:options=>call('nnp.languages.list',{},options),getKeywords:(languageId,options)=>call('nnp.languages.getKeywords',{languageId},options),set:(documentId,expectedVersion,languageId,options)=>call('nnp.languages.set',{documentId,expectedVersion,languageId},options)},
+    bookmarks:{list:(documentId,options)=>call('nnp.bookmarks.list',{documentId},options),set:(documentId,expectedVersion,lines,marked,options)=>call('nnp.bookmarks.set',{documentId,expectedVersion,lines,marked},options)},
+    decorations:{async create(documentId,style,options){if(options?.signal?.aborted)throw new RpcError(1006,'Cancelled');++awaitingDecoration;try{const {resourceId}=await call('nnp.decorations.create',{documentId,...style},options?{timeout:options.timeout}:undefined);let disposed=false;const handle=resource(resourceId,()=>{disposed=true;nativeDecorations.delete(resourceId);});const dispose=handle.dispose.bind(handle);nativeDecorations.set(resourceId,{handle,invalidate:()=>{disposed=true;}});handle.dispose=async()=>{if(disposed)return;await dispose();};if(earlyDisposed.delete(resourceId)){disposed=true;scope.resources.delete(handle);nativeDecorations.delete(resourceId);}if(options?.signal?.aborted){await handle.dispose();throw new RpcError(1006,'Cancelled');}return Object.assign(handle,{resourceId,set(expectedVersion,ranges,options){if(disposed)throw new RpcError(1004,'Decoration disposed');return call('nnp.decorations.set',{resourceId,expectedVersion,ranges},options);}});}finally{if(--awaitingDecoration===0)earlyDisposed.clear();}}},
     documents:{
+      readRange:(documentId,expectedVersion,range,options={})=>call('nnp.documents.readRange',{documentId,expectedVersion,range,...(options.maxBytes===undefined?{}:{maxBytes:options.maxBytes})},options),
+      watchNative:listener=>watchNative('nnp.documents.watchNative',{},listener),
+      convertLineEndings:(documentId,expectedVersion,lineEnding,options)=>call('nnp.documents.convertLineEndings',{documentId,expectedVersion,lineEnding},options),
       getActive: options=>call('nnp.documents.getActive',{},options),
       list:options=>call('nnp.documents.list',{},options),getInfo:(documentId,options)=>call('nnp.documents.getInfo',{documentId},options),
       getSnapshot: (documentId,options)=>call('nnp.documents.getSnapshot',{documentId},options),
@@ -218,7 +247,7 @@ function createClient(endpoint, identity, manifest, canCall) {
   },beginStopping(){stopping.abort();},async dispose() {
     stopping.abort();
     for(const resource of api.subscriptions.splice(0).reverse()) { try { await resource.dispose(); } catch {} }
-    await scope.dispose();restorers.clear(); commands.clear(); watches.clear();allWatches.clear(); panels.clear();messages.clear();earlyMessages.length=0;earlyEvents.length=0;earlyAllEvents.length=0;earlyAllBytes=0;
+    await scope.dispose();nativeDecorations.clear();earlyDisposed.clear();nativeWatches.clear();earlyNative.length=0;restorers.clear(); commands.clear(); watches.clear();allWatches.clear(); panels.clear();messages.clear();earlyMessages.length=0;earlyEvents.length=0;earlyAllEvents.length=0;earlyAllBytes=0;
   } };
 }
 module.exports={createClient,ResourceScope};
