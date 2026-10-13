@@ -79,6 +79,7 @@ private:
 #include "PluginManagerDialog.h"
 #include "SourceEntryResolver.h"
 #include "DocumentBridge.h"
+#include "WireContract.h"
 #include <QJsonDocument>
 #include <QListWidget>
 #include <QProcess>
@@ -305,6 +306,12 @@ private slots:
         QTemporaryDir dir;const auto file=dir.filePath("encoding.txt");{QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("original");}
         std::unique_ptr<ScintillaNext> editor(ScintillaNext::fromFile(file));QVERIFY(editor);
         QVERIFY(editor->convertEncoding("Windows-1252",&error));QVERIFY(editor->modify());
+#ifdef NOTEPADNEXT_PLUGINS
+        auto *documents=app->getPluginDocumentBridge();const auto doc=documents->attach(editor.get(),QUrl::fromLocalFile(file),"plaintext");
+        const auto encodingOwner=qScopeGuard([&]{documents->detach(doc);});
+        QCOMPARE(documents->nativeInfo(doc)["encoding"].toString(),QString("windows-1252"));
+        QString contractError;int contractCode;QVERIFY2(PluginRpc::WireContract::validate("nnp.documents.getInfo","result",documents->nativeInfo(doc),&contractError,&contractCode),qPrintable(contractError));
+#endif
         editor->appendText(4,"\xf0\x9f\x98\x80");
         QVERIFY(editor->save()!=QFileDevice::NoError);QVERIFY(editor->modify());QVERIFY(editor->encodingError().contains("cannot represent"));
         {QFile f(file);QVERIFY(f.open(QIODevice::ReadOnly));QCOMPARE(f.readAll(),QByteArray("original"));}

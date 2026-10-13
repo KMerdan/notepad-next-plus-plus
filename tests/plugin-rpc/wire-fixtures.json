@@ -3107,5 +3107,125 @@
       }
     },
     "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo Western code page",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "windows-1252",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo Japanese code page",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "shift_jis",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo Chinese code page",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "gb18030",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo empty encoding",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo unbounded encoding",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo non-string encoding",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": 42,
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": false
   }
 ]

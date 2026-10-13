@@ -27,7 +27,7 @@ NotepadNext's original copyright notices are retained. This fork continues under
 | [notepadnext-plugin-sdk](https://github.com/KMerdan/notepadnext-plugin-sdk) | API types, metadata/wire contracts, templates, debugging/testing/service helpers and packaging tools |
 | [Official Plugin Marketplace](https://github.com/KMerdan/notepadnext-plugin-marketplace) | Markdown/HTML previews, Text Inspector, TODO Navigator, catalog and independent installable releases |
 
-The SDK is a Git submodule pinned to a reviewed commit. The Marketplace previews and SDK examples consume the immutable SDK 0.3.1 Release tarball with locked integrity. Its original repository URL is retained as our official catalog. Application, SDK and plugin versions are independent.
+The SDK is a Git submodule pinned to a reviewed commit. The Marketplace previews and SDK examples consume the immutable SDK 0.3.2 Release tarball with locked integrity. Its original repository URL is retained as our official catalog. Application, SDK and plugin versions are independent.
 
 ## Build and validate
 
