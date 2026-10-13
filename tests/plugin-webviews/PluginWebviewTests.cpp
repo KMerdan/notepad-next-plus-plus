@@ -842,7 +842,7 @@ exports.activate=async ctx=>{
         documents.setActive(b);first.setText("# obsolete document A\n");
         QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return (*state)["heading"]=="second unsaved buffer";})(),10000);QCOMPARE(service->panelCount(),1);
         documents.updateMetadata(b,QUrl(),"plaintext");
-        QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return !(*state)["heading"].isString()&&(*state)["body"].toString().contains("Open a Markdown document");})(),10000);
+        QTRY_VERIFY_WITH_TIMEOUT(window.findChild<QDockWidget*>()&&!window.findChild<QDockWidget*>()->isVisible(),10000);
         documents.updateMetadata(b,QUrl(),"markdown");second.setText("\xffinvalid UTF-8\n");
         QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return (*state)["error"].toString().contains("cannot be decoded as UTF-8");})(),10000);
         const QByteArray tooLarge(PluginDocuments::DocumentBridge::MaxSnapshotBytes+1,'x');second.setText(tooLarge.constData());
@@ -853,6 +853,7 @@ exports.activate=async ctx=>{
         QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return !(*state)["heading"].isString()&&(*state)["body"].toString().contains("Open a Markdown document");})(),10000);
         documents.setActive(a);
         QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return (*state)["heading"]=="obsolete document A";})(),10000);
+        QVERIFY(window.findChild<QDockWidget*>()->isVisible());
         session.stop();QTRY_COMPARE_WITH_TIMEOUT(stopped.size(),1,5000);QCOMPARE(session.resourceCount(),0);QVERIFY(!service);QTRY_VERIFY(!page);QTRY_VERIFY(window.findChildren<QDockWidget*>().isEmpty());QCOMPARE(first.textRange(0,first.length()),QByteArray("# obsolete document A\n"));QCOMPARE(second.textRange(0,second.length()),QByteArray("# recovered preview\n"));
     }
     void realMarkdownSession() {
