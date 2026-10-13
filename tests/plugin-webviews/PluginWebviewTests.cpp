@@ -850,7 +850,7 @@ exports.activate=async ctx=>{
         second.setText("# recovered preview\n");
         QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return (*state)["heading"]=="recovered preview";})(),10000);QVERIFY(!(*state)["error"].isString());
         documents.detach(b);
-        QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return !(*state)["heading"].isString()&&(*state)["body"].toString().contains("Open a Markdown document");})(),10000);
+        QTRY_VERIFY_WITH_TIMEOUT(window.findChild<QDockWidget*>()&&!window.findChild<QDockWidget*>()->isVisible(),10000);
         documents.setActive(a);
         QTRY_VERIFY_WITH_TIMEOUT(([&]{read();return (*state)["heading"]=="obsolete document A";})(),10000);
         QVERIFY(window.findChild<QDockWidget*>()->isVisible());
