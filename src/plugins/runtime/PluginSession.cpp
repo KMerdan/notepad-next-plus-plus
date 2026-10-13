@@ -172,7 +172,7 @@ void PluginSession::invokePending() {
     if(!commands.contains(id)) { emit commandFinished(id,{},rpcError(-32602,"Plugin did not register the declared command")); return; }
     busy=true;
     QElapsedTimer elapsed;elapsed.start();
-    commandRequest=call("nnp.commands.invokeNative",envelope({{"callbackId",commands[id].callbackId},{"invocation",target}}),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invokeNative",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error); });
+    commandRequest=call("nnp.commands.invokeNative",envelope({{"callbackId",commands[id].callbackId},{"invocation",target}}),[this,id,elapsed](const QJsonValue &result,const QJsonObject &error) { commandRequest.clear();busy=false;emit operationMeasured("nnp.commands.invokeNative",elapsed.elapsed(),error.isEmpty());emit commandFinished(id,result,error);stopUnusedPreview(); });
     if(!messages.isEmpty())process->setDeadlinePaused(commandRequest,true);
 }
 void PluginSession::fail(const QString &sourceMessage,Failure category) {
@@ -230,9 +230,12 @@ void PluginSession::publishResources() {
     if(views)views->setPublished(true);
 #endif
     invokePending();
+    stopUnusedPreview();
+}
+void PluginSession::stopUnusedPreview() {
 #ifdef NOTEPADNEXT_PLUGIN_WEBVIEWS
     if(manifest["category"]=="editor-preview")QTimer::singleShot(0,this,[this]{
-        if(currentState=="active"&&!busy&&queuedCommand.isEmpty()&&(!views||!views->panelCount()||!hasPreviewDocuments(manifest["preview"].toObject(),documents)))stop("preview-ended");
+        if(currentState=="active"&&!publicationHeld&&!busy&&queuedCommand.isEmpty()&&(!views||!views->panelCount()||!hasPreviewDocuments(manifest["preview"].toObject(),documents)))stop("preview-ended");
     });
 #endif
 }

@@ -184,7 +184,7 @@ struct WebviewService::Private {
         QString sourceDocument;
         QHash<QString,QJsonObject> documentStates;
         quint64 sourceSequence=0;
-        bool sourceNeedsReload=false;
+        bool sourceNeedsReload=false,sourceAnnounced=false;
         QPointer<QWidget> container;
         bool claimed=false,uiRestored=false,preservedPlacement=false;
         QPointer<QWidget> contextBar;
@@ -259,6 +259,8 @@ void WebviewService::reloadSource(const QString &id,const QJsonObject &source,st
             const auto bytes=value.toString().toUtf8();panel.browserState=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
             const auto state=panel.browserState["snapshot"].toObject();panel.state=state["hasState"].toBool()?state["state"]:QJsonValue(QJsonValue::Undefined);
         }
+        if(panel.sourceNeedsReload){const auto state=panel.browserState["snapshot"].toObject();panel.state=state["hasState"].toBool()?state["state"]:QJsonValue(QJsonValue::Undefined);}
+        panel.revision=token();
         QJsonObject error;if(!safe->installCompatibleBridge(id,&error)){completed(error);return;}
         panel.sourceNeedsReload=false;panel.loaded=false;panel.page->load(panel.url);completed({});
     };
@@ -442,7 +444,7 @@ void WebviewService::createService(const QString &viewType,const QString &title,
         if(d->suspended||!valid){completed({},rpcError(1003,"Local service ownership verification failed"));return;}
         QJsonObject error;const auto result=createCompatible(token(),viewType,title,true,{},&error,restorationKey);
         if(!error.isEmpty()){completed({},error);return;}
-        const auto id=result["panelId"].toString();auto &panel=d->panels[id];panel.service=true;panel.revision=token();panel.url=endpoint;panel.page->allowed=endpoint;panel.page->servicePrefix=prefix;
+        const auto id=result["panelId"].toString();auto &panel=d->panels[id];panel.service=true;panel.sourceNeedsReload=!d->previewPolicy.isEmpty();panel.revision=token();panel.url=endpoint;panel.page->allowed=endpoint;panel.page->servicePrefix=prefix;
         {const QMutexLocker lock(&d->interceptor->mutex);++d->interceptor->services[prefix];}
         if(!installCompatibleBridge(id,&error)){dispose(id);completed({},error);return;}
         if(d->published||!panel.restoreId.isEmpty())panel.page->load(endpoint);completed(result,{});
@@ -553,6 +555,7 @@ void WebviewService::viewState(const QString &id) {
 bool WebviewService::reveal(const QString &id,bool preserveFocus,QJsonObject *error) {
     *error={}; if(!d->panels.contains(id) || !d->panels[id].dock) { *error=rpcError(1004,"Panel closed"); return false; }
     d->panels[id].requestedVisible=true;d->panels[id].preserveFocus=preserveFocus;
+    if(!d->previewPolicy.isEmpty()&&!d->panels[id].sourceAnnounced){d->panels[id].sourceAnnounced=true;QTimer::singleShot(0,this,[this]{refreshPreviewSource();});}
     if(!d->published||(!d->panels[id].restoreId.isEmpty()&&d->restoreSource))return true;
     if(!d->previewPolicy.isEmpty()&&PluginRuntime::previewSource(d->previewPolicy,d->documents).isNull())return true;
     auto *dock=d->panels[id].dock.data(); dock->show(); dock->raise(); if(!preserveFocus) dock->widget()->setFocus(); return true;
@@ -573,7 +576,7 @@ QJsonObject WebviewService::renderContextError(const QString &id,const QJsonObje
     if(!d->panels.contains(id)||!d->panels[id].page||!d->documents)return rpcError(1004,"Panel closed");
     if(d->panels[id].compatible)return rpcError(1005,"Compatible panels require setDocument");
     if(context.size()!=2||!context.contains("documentId")||!context.contains("version"))return rpcError(-32602,"Invalid render context");
-    const auto active=d->documents->active();
+    const auto active=d->previewPolicy.isEmpty()?d->documents->active():PluginRuntime::previewSource(d->previewPolicy,d->documents);
     if(context["documentId"].isNull()) {
         if(!context["version"].isNull()||!active.isNull())return rpcError(1001,"VersionConflict");
     } else {
