@@ -292,7 +292,14 @@ void WebviewService::refreshPreviewSource() {
         const auto finish=[safe,id,selected,old,source,sequence](const QVariant &value) {
             if(!safe||!safe->d->panels.contains(id))return;
             auto &panel=safe->d->panels[id];if(panel.sourceSequence!=sequence||safe->d->suspended||PluginRuntime::previewSource(safe->d->previewPolicy,safe->d->documents).toObject()["documentId"].toString()!=selected)return;
-            const auto bytes=value.toString().toUtf8();const auto snapshot=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
+            const auto bytes=value.toString().toUtf8();auto snapshot=bytes.size()<=128*1024?QJsonDocument::fromJson(bytes).object():QJsonObject{};
+            // A target page may still be loading, or its replacement may not
+            // have started. Retain that tab's cached state rather than capture
+            // the previous tab's page or erase state with an empty result.
+            if(!snapshot.contains("snapshot")) {
+                snapshot=panel.browserState;
+                snapshot["snapshot"]=QJsonObject{{"hasState",!panel.state.isUndefined()},{"state",panel.state.isUndefined()?QJsonValue(QJsonValue::Null):panel.state}};
+            }
             if(!old.isEmpty()&&PluginRuntime::previewMatches(safe->d->previewPolicy,safe->d->documents->info(old))) {
                 // Bounded ephemeral state. It never becomes persistent plugin data.
                 if(panel.documentStates.size()>=32&&!panel.documentStates.contains(old))panel.documentStates.erase(panel.documentStates.begin());
@@ -304,7 +311,9 @@ void WebviewService::refreshPreviewSource() {
             // explicitly; fragment/HTML pages receive it on their next load.
             emit safe->event(id,"sourceChanged",QJsonObject{{"document",source},{"hasState",!panel.state.isUndefined()},{"state",panel.state.isUndefined()?QJsonValue(QJsonValue::Null):panel.state}});
         };
-        if(!panel.page||!panel.loaded){finish(QString());continue;}
+        // The bootstrap can hold state before loadFinished (for example while
+        // a subresource loads). Only capture a page belonging to this source.
+        if(!panel.page||panel.sourceNeedsReload||!panel.page->owns(panel.page->url())){finish(QString());continue;}
         panel.page->runJavaScript(QStringLiteral(R"JS((()=>{const snapshot=window[Symbol.for('NotepadNext.compatWebviewBootstrap')]?.snapshot?.();const r={scrollX,scrollY,snapshot,fields:[]};for(const [i,n] of Array.from(document.querySelectorAll('input:not([type=password]):not([type=file]),textarea,select')).slice(0,128).entries()){if(n.value.length>4096)continue;r.fields.push({i,id:n.id,tag:n.tagName,type:n.type,value:n.value,checked:n.checked,selected:n.selectedIndex});if(new TextEncoder().encode(JSON.stringify(r)).length>120*1024){r.fields.pop();break;}}return JSON.stringify(r);})())JS"),finish);
     }
 }
@@ -413,6 +422,7 @@ bool WebviewService::setDocument(const QString &id,const QString &html,QJsonObje
     const auto csp="default-src 'none'; img-src 'self'; style-src "+style+"; script-src "+script+"; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none';";
     if(!panel.url.isEmpty())d->handler->resources.remove(panel.url.path());panel.outgoing.clear();panel.outgoingBytes=0;panel.revision=token();panel.loaded=false;panel.url=QUrl("nnp-plugin://"+d->owner+"/"+id+"/page-"+panel.revision+".html");panel.page->allowed=panel.url;
     if(!installCompatibleBridge(id,error))return false;
+    panel.sourceNeedsReload=false;
     d->handler->resources.insert(panel.url.path(),{bytes,"text/html",id,csp.toUtf8()});if(d->published||!panel.restoreId.isEmpty())panel.page->load(panel.url);return true;
 }
 bool WebviewService::installCompatibleBridge(const QString &id,QJsonObject *error) {
@@ -589,7 +599,7 @@ QJsonObject WebviewService::renderContextError(const QString &id,const QJsonObje
 void WebviewService::publishHtml(const QString &id,const QByteArray &document,const QString &revision) {
     auto &panel=d->panels[id];
     if(!panel.url.isEmpty())d->handler->resources.remove(panel.url.path());
-    panel.revision=revision;panel.loaded=false;panel.url=QUrl("nnp-plugin://"+d->owner+"/"+id+"/page-"+revision+".html");panel.page->allowed=panel.url;
+    panel.revision=revision;panel.loaded=false;panel.sourceNeedsReload=false;panel.url=QUrl("nnp-plugin://"+d->owner+"/"+id+"/page-"+revision+".html");panel.page->allowed=panel.url;
     d->handler->resources.insert(panel.url.path(),{document,"text/html",id});panel.page->load(panel.url);
 }
 bool WebviewService::setHtml(const QString &id,const QString &html,const QJsonObject &context,QJsonObject *error) {

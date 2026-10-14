@@ -127,14 +127,22 @@ private slots:
         service.configurePreview({{"viewType","html-preview"},{"languages",QJsonArray{"html"}},{"extensions",QJsonArray{".html"}}});
         QJsonObject error;const auto panel=QString(32,'a');QVERIFY(!service.createCompatible(panel,"html-preview","HTML Preview",true,{},&error).isEmpty());
         const auto render=[&]{QVERIFY(service.setDocument(panel,"<!doctype html><html><body><h1>Preview</h1></body></html>",&error));QTRY_VERIFY(service.page(panel)->url()==service.pageUrl(panel));};
+        // Reproduce a page whose bootstrap is ready before loadFinished reaches
+        // the host, as happens with a slow subresource on the Intel runner.
+        QSignalBlocker loading(service.page(panel));
         render();auto result=std::make_shared<QVariant>();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("typeof acquireNotepadNextApi",[result](auto v){*result=v;});return result->toString()=="function";})(),5000);
-        service.page(panel)->runJavaScript("(window.testApi??=acquireNotepadNextApi()).setState({counter:3});scrollTo(0,0);");QTest::qWait(50);
+        *result=QVariant();service.page(panel)->runJavaScript("(window.testApi??=acquireNotepadNextApi()).setState({counter:3});scrollTo(0,0);testApi.getState().counter",[result](auto v){*result=v;});
+        QTRY_COMPARE(result->toInt(),3);loading.unblock();
         QSignalSpy events(&service,&WebviewService::event);documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();
         *result=QVariant();QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState()??null)",[result](auto v){*result=v;});return result->toString()=="null";})(),5000);
         service.page(panel)->runJavaScript("(window.testApi??=acquireNotepadNextApi()).setState({counter:9});");QTest::qWait(50);
         events.clear();documents.setActive(a);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();*result=QVariant();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("3");})(),5000);
+        // Switching away before B renders must retain B's cached state, rather
+        // than store the still-loaded A page under B's document ID.
+        events.clear();documents.setActive(b);QTRY_VERIFY(!events.isEmpty());
+        events.clear();documents.setActive(a);QTRY_VERIFY(!events.isEmpty());render();
         events.clear();documents.setActive(b);QTRY_VERIFY(!events.isEmpty());QTest::qWait(50);render();*result=QVariant();
         QTRY_VERIFY_WITH_TIMEOUT(([&]{service.page(panel)->runJavaScript("JSON.stringify((window.testApi??=acquireNotepadNextApi()).getState())",[result](auto v){*result=v;});return result->toString().contains("9");})(),5000);
         // A browser snapshot is asynchronous. A->B->A must invalidate the
