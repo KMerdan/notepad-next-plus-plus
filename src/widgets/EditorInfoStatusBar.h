@@ -61,6 +61,7 @@ private:
     QLabel *eolFormat;
     QLabel *overType;
 
+    QMetaObject::Connection encodingConnection;
     QMetaObject::Connection editorUiUpdated;
     QMetaObject::Connection documentLexerChanged;
 };

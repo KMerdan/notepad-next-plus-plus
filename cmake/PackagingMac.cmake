@@ -13,6 +13,7 @@ set_target_properties(NotepadNext PROPERTIES
 set(APP_ICON_MACOS ${CMAKE_SOURCE_DIR}/icon/NotepadNext.icns)
 
 set_source_files_properties(${APP_ICON_MACOS}
+    TARGET_DIRECTORY NotepadNext
     PROPERTIES MACOSX_PACKAGE_LOCATION "Resources"
 )
 

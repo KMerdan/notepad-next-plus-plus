@@ -119,6 +119,13 @@ public:
     };
 
     BomType bom() const { return bomType; }
+    QString textEncoding() const {return encodingName;}
+    QString encodingError() const {return lastEncodingError;}
+    bool convertEncoding(const QString &encoding,QString *error);
+    bool reloadEncoding(const QString &encoding,QString *error);
+    void restoreEncodingPreference(const QString &encoding,bool dirty);
+    bool modify() const {return ScintillaEdit::modify()||QObject::property("encodingDirty").toBool();}
+    void setSavePoint() {QObject::setProperty("encodingDirty",false);ScintillaEdit::setSavePoint();}
 
     bool isTemporary() const { return temporary; }
     void setTemporary(bool temp);
@@ -150,6 +157,7 @@ public slots:
     void removeConsecutiveDuplicateLines();
 
 signals:
+    void encodingChanged();
     void aboutToSave();
     void saved();
     void closed();
@@ -166,6 +174,7 @@ private:
     QString name;
     BufferType bufferType = BufferType::New;
     BomType bomType = BomType::None;
+    QString encodingName="UTF-8",lastEncodingError;
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;

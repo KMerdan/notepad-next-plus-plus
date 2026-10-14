@@ -12,7 +12,7 @@ if(CMAKE_HOST_APPLE AND NOTEPADNEXT_PLUGIN_NODE AND (NOT DEFINED NOTEPADNEXT_PLU
 endif()
 
 project(NotepadNext
-    VERSION 0.15.1
+    VERSION 0.15.2
     DESCRIPTION "Cross-platform text editor"
     LANGUAGES CXX
 )

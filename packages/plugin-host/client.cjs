@@ -140,6 +140,7 @@ function createClient(endpoint, identity, manifest, canCall) {
         return selected;
       }finally{if(--awaitingMessage===0)earlyMessages.length=0;}
     }},
+    previews:{getSource:options=>call("nnp.previews.getSource",{},options)},
     files:{create:(options={},callOptions)=>call('nnp.files.create',options,callOptions),open:(uri,options={},callOptions)=>call('nnp.files.open',{uri,...options},callOptions),save:(documentId,expectedVersion,options)=>call('nnp.files.save',{documentId,expectedVersion},options),saveAs:(documentId,expectedVersion,uri,options)=>call('nnp.files.saveAs',{documentId,expectedVersion,...(uri===undefined?{}:{uri})},options),close:(documentId,expectedVersion,policy='prompt',options)=>call('nnp.files.close',{documentId,expectedVersion,policy},options)},
     search:{findAll:(documentId,expectedVersion,query,options)=>call('nnp.search.findAll',{documentId,expectedVersion,...query},options),count:(documentId,expectedVersion,query,options)=>call('nnp.search.count',{documentId,expectedVersion,...query},options)},
     languages:{list:options=>call('nnp.languages.list',{},options),getKeywords:(languageId,options)=>call('nnp.languages.getKeywords',{languageId},options),set:(documentId,expectedVersion,languageId,options)=>call('nnp.languages.set',{documentId,expectedVersion,languageId},options)},
@@ -213,7 +214,7 @@ function createClient(endpoint, identity, manifest, canCall) {
         const {panelId}=await call('nnp.webviews.createService',options);
         const listeners=new Set(),handle=resource(panelId,()=>{panels.delete(panelId);listeners.clear();});panels.set(panelId,{listeners,handle});
         const alive=()=>{if(!panels.has(panelId))throw new RpcError(1004,'Panel closed');};
-        return Object.assign(handle,{panelId,reveal(preserveFocus=false){alive();return call('nnp.webviews.reveal',{panelId,preserveFocus});},postMessage(message){alive();return call('nnp.webviews.postMessage',{panelId,message});},onEvent(listener){alive();listeners.add(listener);return {dispose:()=>listeners.delete(listener)};}});
+        return Object.assign(handle,{panelId,reloadSource(source){alive();return call('nnp.webviews.reloadSource',{panelId,source});},reveal(preserveFocus=false){alive();return call('nnp.webviews.reveal',{panelId,preserveFocus});},postMessage(message){alive();return call('nnp.webviews.postMessage',{panelId,message});},onEvent(listener){alive();listeners.add(listener);return {dispose:()=>listeners.delete(listener)};}});
       },
       async create(viewType,title,position='right') {
       const scope=restoration.getStore(),restored=scope?.active?scope.panel:undefined;const {panelId}=await call('nnp.webviews.create',{viewType,title,position,...(restored?.viewType===viewType?{restorationKey:restored.panelId}:{})});

@@ -73,6 +73,10 @@ def qt_config(app):
 def inspect(app,arch,require_signatures=True,require_node=True):
     app=app.resolve(strict=True);info=plistlib.loads((app/'Contents/Info.plist').read_bytes())
     executable=info['CFBundleExecutable']
+    icon=info.get('CFBundleIconFile','')
+    if not re.fullmatch(r'[A-Za-z0-9_.-]+',icon):raise ValueError('Missing or unsafe bundle icon declaration')
+    icon_file=app/'Contents/Resources'/icon
+    if not icon_file.is_file() or icon_file.read_bytes()[:4]!=b'icns':raise ValueError('Declared application icon is missing or invalid')
     if not re.fullmatch(r'[A-Za-z0-9_.-]+',executable):raise ValueError('Unsafe executable name')
     main=app/'Contents/MacOS'/executable;minimum=info['LSMinimumSystemVersion'];version(minimum)
     if not info.get('CFBundleShortVersionString') or not info.get('CFBundleVersion'):raise ValueError('Missing bundle version')

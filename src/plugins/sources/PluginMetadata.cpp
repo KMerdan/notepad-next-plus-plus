@@ -142,6 +142,12 @@ bool validateSemantics(const QJsonObject &metadata, QString *error)
             seen.insert(command);
         }
     }
+    const auto preview=metadata.value("preview").toObject();
+    if(metadata.value("category")=="editor-preview") {
+        if(preview.isEmpty() || (preview["languages"].toArray().isEmpty() && preview["extensions"].toArray().isEmpty()))return reject(error,message("Editor previews must declare a view type and supported file types."));
+        if(!capabilities["required"].toArray().contains("webviews.document@1") || !capabilities["required"].toArray().contains("documents.read@1"))return reject(error,message("Editor previews require webviews.document@1 and documents.read@1."));
+        for(const auto &event:metadata["activationEvents"].toArray())if(!event.toString().startsWith("onCommand:"))return reject(error,message("Editor previews must open explicitly through a command."));
+    }else if(metadata.contains("preview"))return reject(error,message("Preview policy is only valid for editor-preview plugins."));
     for (const auto &entry : metadata.value(QStringLiteral("activationEvents")).toArray()) {
         const QString event = entry.toString();
         if (event.startsWith(QStringLiteral("onCommand:")) && !commands.contains(event.mid(10))) return reject(error, message("Activation refers to an undeclared command."));

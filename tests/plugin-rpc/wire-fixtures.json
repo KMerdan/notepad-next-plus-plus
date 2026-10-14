@@ -3016,5 +3016,216 @@
       ]
     },
     "valid": false
+  },
+  {
+    "name": "nnp.documents.getActive valid params",
+    "method": "nnp.previews.getSource",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getActive extra param",
+    "method": "nnp.previews.getSource",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "unknownField": true
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getActive missing identity/field",
+    "method": "nnp.previews.getSource",
+    "part": "params",
+    "value": {
+      "generation": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getActive valid result",
+    "method": "nnp.previews.getSource",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "untitled:test",
+      "languageId": "markdown",
+      "version": 1,
+      "isDirty": true,
+      "isReadonly": false
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getActive invalid result",
+    "method": "nnp.previews.getSource",
+    "part": "result",
+    "value": {
+      "unexpected": true
+    },
+    "valid": false
+  },
+  {
+    "name": "reload-preview-source",
+    "method": "nnp.webviews.reloadSource",
+    "part": "params",
+    "value": {
+      "sessionId": "fixture-session",
+      "generation": 1,
+      "panelId": "panel",
+      "source": {
+        "documentId": null,
+        "version": null
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "reload-preview-result",
+    "method": "nnp.webviews.reloadSource",
+    "part": "result",
+    "value": null,
+    "valid": true
+  },
+  {
+    "name": "reload-preview-rejects-unknown-source-fields",
+    "method": "nnp.webviews.reloadSource",
+    "part": "params",
+    "value": {
+      "sessionId": "s",
+      "generation": 1,
+      "panelId": "panel",
+      "source": {
+        "documentId": "doc",
+        "version": null,
+        "unexpected": true
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo Western code page",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "windows-1252",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo Japanese code page",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "shift_jis",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo Chinese code page",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "gb18030",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "nnp.documents.getInfo empty encoding",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo unbounded encoding",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "nnp.documents.getInfo non-string encoding",
+    "method": "nnp.documents.getInfo",
+    "part": "result",
+    "value": {
+      "documentId": "doc",
+      "uri": "file:///text.txt",
+      "languageId": "plaintext",
+      "version": 1,
+      "isDirty": false,
+      "isReadonly": false,
+      "name": "text.txt",
+      "lineEnding": "lf",
+      "encoding": 42,
+      "bom": false,
+      "byteLength": 1,
+      "lineCount": 1
+    },
+    "valid": false
   }
 ]

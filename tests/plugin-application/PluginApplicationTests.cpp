@@ -2,6 +2,7 @@
 #include "NotepadNextApplication.h"
 #include "MainWindow.h"
 #include "ScintillaNext.h"
+#include "TextEncoding.h"
 #include "SessionManager.h"
 #include <QAction>
 #include <QFile>
@@ -78,6 +79,7 @@ private:
 #include "PluginManagerDialog.h"
 #include "SourceEntryResolver.h"
 #include "DocumentBridge.h"
+#include "WireContract.h"
 #include <QJsonDocument>
 #include <QListWidget>
 #include <QProcess>
@@ -289,6 +291,36 @@ private slots:
 #else
         QSKIP("Native HTML panels unavailable");
 #endif
+    }
+    void nativeTextEncodingRoundTripsAndLossProtection() {
+        const QString unicode=QString::fromUtf8("日本語 中文 😀 café\r\n");
+        for(const auto &encoding:QStringList{"UTF-8","UTF-8 BOM","UTF-16LE","UTF-16LE BOM","UTF-16BE","UTF-16BE BOM"}) {
+            QByteArray bytes;QString text,error;QVERIFY2(TextEncoding::encode(unicode,encoding,&bytes,&error),qPrintable(error));
+            QVERIFY2(TextEncoding::decode(bytes,encoding,&text,&error),qPrintable(error));QCOMPARE(text,unicode);
+        }
+        for(const auto &sample:QList<QPair<QString,QString>>{{"Shift_JIS",QString::fromUtf8("日本語")},{"Windows-1252",QString::fromUtf8("café €")},{"GB18030",QString::fromUtf8("中文")}}) {
+            QByteArray bytes;QString text,error;QVERIFY2(TextEncoding::encode(sample.second,sample.first,&bytes,&error),qPrintable(error));
+            QVERIFY(TextEncoding::decode(bytes,sample.first,&text,&error));QCOMPARE(text,sample.second);
+        }
+        QString text,error;QVERIFY(!TextEncoding::decode(QByteArray::fromHex("eda080"),"UTF-8",&text,&error));
+        QTemporaryDir dir;const auto file=dir.filePath("encoding.txt");{QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("original");}
+        std::unique_ptr<ScintillaNext> editor(ScintillaNext::fromFile(file));QVERIFY(editor);
+        QVERIFY(editor->convertEncoding("Windows-1252",&error));QVERIFY(editor->modify());
+#ifdef NOTEPADNEXT_PLUGINS
+        auto *documents=app->getPluginDocumentBridge();const auto doc=documents->attach(editor.get(),QUrl::fromLocalFile(file),"plaintext");
+        const auto encodingOwner=qScopeGuard([&]{documents->detach(doc);});
+        QCOMPARE(documents->nativeInfo(doc)["encoding"].toString(),QString("windows-1252"));
+        QString contractError;int contractCode;QVERIFY2(PluginRpc::WireContract::validate("nnp.documents.getInfo","result",documents->nativeInfo(doc),&contractError,&contractCode),qPrintable(contractError));
+#endif
+        editor->appendText(4,"\xf0\x9f\x98\x80");
+        QVERIFY(editor->save()!=QFileDevice::NoError);QVERIFY(editor->modify());QVERIFY(editor->encodingError().contains("cannot represent"));
+        {QFile f(file);QVERIFY(f.open(QIODevice::ReadOnly));QCOMPARE(f.readAll(),QByteArray("original"));}
+        const auto before=QByteArray((char*)editor->characterPointer(),editor->textLength());
+        {QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write(QByteArray::fromHex("eda080"));}
+        QVERIFY(!editor->reloadEncoding("UTF-8",&error));QCOMPARE(QByteArray((char*)editor->characterPointer(),editor->textLength()),before);
+        QVERIFY(editor->convertEncoding("UTF-16LE BOM",&error));QVERIFY(editor->save()==QFileDevice::NoError);QVERIFY(!editor->modify());
+        std::unique_ptr<ScintillaNext> reopened(ScintillaNext::fromFile(file));QVERIFY(reopened);QCOMPARE(reopened->textEncoding(),QString("UTF-16LE BOM"));
+        QCOMPARE(QByteArray((char*)reopened->characterPointer(),reopened->textLength()),before);
     }
     void editorOpenSaveReloadAndClose() {
         const auto file=directory+"/sample.md";QFile f(file);QVERIFY(f.open(QIODevice::WriteOnly));f.write("# saved 😀中\n");f.close();
@@ -503,11 +535,11 @@ private slots:
         manager->findChild<QPushButton*>("togglePluginEnabled")->click();QCOMPARE(engine->sessionCount(),0);manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),10000);QTRY_VERIFY_WITH_TIMEOUT(window->findChild<QWebEngineView*>(),10000);
         QPointer<QDockWidget> dock;for(auto *candidate:window->findChildren<QDockWidget*>())if(candidate->findChild<QWebEngineView*>())dock=candidate;QVERIFY(dock);dock->setFloating(true);dock->resize(700,680);dock->move(160,140);QTest::qWait(100);const auto geometry=dock->geometry();
         const auto read=[&](const QString &script){auto result=std::make_shared<QVariant>();auto ready=std::make_shared<bool>(false);dock->findChild<QWebEngineView*>()->page()->runJavaScript(script,[result,ready](const QVariant &value){*result=value;*ready=true;});QElapsedTimer timer;timer.start();while(!*ready&&timer.elapsed()<5000)QTest::qWait(10);return *result;};
-        QTRY_VERIFY_WITH_TIMEOUT(read("document.getElementById('source')?.value.includes('Unsaved HTML')").toBool(),10000);QTRY_COMPARE(read("window.previewExecuted").toInt(),42);
-        QVERIFY(read("document.getElementById('counter').click();document.getElementById('counter').click();document.getElementById('source').value='<h2>Draft HTML survives reload</h2>';document.getElementById('source').dispatchEvent(new Event('input'));document.getElementById('run').click();true").toBool());
+        QTRY_VERIFY_WITH_TIMEOUT(read("document.querySelector('h1')?.textContent==='Unsaved HTML'").toBool(),10000);QTRY_COMPARE(read("window.previewExecuted").toInt(),42);
+        QVERIFY(read("window.testApi=acquireNotepadNextApi();window.testApi.setState({counter:2});true").toBool());
         QVERIFY(saveDialogPreview(dock,"html-service-before-reload"));engine->reload(id);QTRY_VERIFY2_WITH_TIMEOUT(engine->pluginState(id)=="active",qPrintable(engine->pluginLog(id)),15000);
-        QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);QCOMPARE(read("document.getElementById('counter').textContent").toString(),QString("Counter: 2"));QVERIFY(read("document.getElementById('source').value.includes('Draft HTML survives reload')").toBool());QCOMPARE(read("document.querySelector('#preview h2').textContent").toString(),QString("Draft HTML survives reload"));
-        QVERIFY(read("fetch('api/document').then(r=>r.json()).then(v=>window.backendPid=v.pid);true").toBool());QTRY_VERIFY(read("window.backendPid>0").toBool());QVERIFY(saveDialogPreview(dock,"html-service-after-reload"));
+        QVERIFY(dock);QCOMPARE(dock->geometry(),geometry);QCOMPARE(window->winId(),nativeWindow);QTRY_COMPARE(read("(window.testApi??=acquireNotepadNextApi()).getState()?.counter").toInt(),2);QCOMPARE(read("document.querySelector('h1').textContent").toString(),QString("Unsaved HTML"));QCOMPARE(read("window.previewExecuted").toInt(),42);
+        QVERIFY(!read("document.querySelector('textarea')").isValid());QVERIFY(saveDialogPreview(dock,"html-service-after-reload"));
         engine->uninstall(id,true);QTRY_VERIFY_WITH_TIMEOUT(engine->isIdle(),10000);QTRY_VERIFY(!dock);QVERIFY(!window->findChild<QWebEngineView*>());QCOMPARE(editor->textRange(0,editor->length()),QByteArray("<h1>Unsaved HTML</h1><script>window.previewExecuted=42;</script>"));editor->setText("");editor->setSavePoint();manager->close();
 #endif
     }
@@ -529,22 +561,23 @@ private slots:
             dialog->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();
         });driver.start(15);const auto guard=qScopeGuard([&]{driver.stop();});
         QTimer::singleShot(0,manager,[&]{auto *entry=qobject_cast<QDialog*>(QApplication::activeModalWidget());QVERIFY(entry);entry->findChild<QLineEdit*>("repositoryInput")->setText(repository);entry->findChild<QLineEdit*>("sourceRefInput")->clear();entry->findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->click();});
-        auto *registerButton=manager->findChild<QPushButton*>("registerResources");QVERIFY(registerButton);registerButton->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);tabs->setCurrentIndex(1);QTRY_COMPARE(catalog->count(),4);
+        auto *registerButton=manager->findChild<QPushButton*>("registerResources");QVERIFY(registerButton);registerButton->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.contains("registerSourceReview"),35000);tabs->setCurrentIndex(1);QTRY_COMPARE(catalog->count(),2);
         const auto select=[](QListWidget *list,const QString &id){for(int n=0;n<list->count();++n)if(list->item(n)->data(Qt::UserRole).toString()==id){list->setCurrentRow(n);return true;}return false;};
-        auto *editor=window->currentEditor();editor->setText("TODO native Marketplace\nTODO second result\n");editor->setSelection(0,4);editor->setSavePoint();const auto nativeWindow=window->winId();
-        const QStringList ids{"kmerdan.text-inspector","kmerdan.todo-navigator"};
+        const auto nativeWindow=window->winId();QList<ScintillaNext*> previewEditors;
+        const QStringList ids{"kmerdan.markdown-preview","kmerdan.html-preview"};
         const auto cleanup=qScopeGuard([&]{for(const auto &id:ids)if(!installed->plugin(id).id().isEmpty())engine->uninstall(id,true);});
         for(const auto &id:ids){
             tabs->setCurrentIndex(1);QVERIFY(select(catalog,id));const auto installs=dialogs.count("releaseInstallReview");manager->findChild<QPushButton*>("installPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("releaseInstallReview")>installs,35000);QTRY_VERIFY_WITH_TIMEOUT(!installed->plugin(id).id().isEmpty(),35000);
-            QCOMPARE(installed->plugin(id).package.metadata["engines"].toObject()["api"].toString(),"^0.3.0");QCOMPARE(installed->plugin(id).package.metadata["version"].toString(),"0.1.0");QVERIFY(engine->setEnabled(id,true,&error));
+            QCOMPARE(installed->plugin(id).package.metadata["engines"].toObject()["api"].toString(),"^0.3.0");QCOMPARE(installed->plugin(id).package.metadata["category"].toString(),"editor-preview");QVERIFY(engine->setEnabled(id,true,&error));
+            window->newFile();auto *editor=window->currentEditor();previewEditors.append(editor);const bool html=id.endsWith("html-preview");editor->setText(html?"<h1>Native Marketplace</h1>":"# Native Marketplace\n");app->setEditorLanguage(editor,html?"HTML":"Markdown");editor->setSavePoint();
             window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("runPluginCommand")->click();QTRY_COMPARE_WITH_TIMEOUT(engine->pluginState(id),QString("active"),15000);
             QTRY_VERIFY_WITH_TIMEOUT(([&]{for(auto *dock:window->findChildren<QDockWidget*>())if(dock->objectName().contains(id)&&dock->findChild<QWebEngineView*>())return true;return false;})(),10000);
             window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));const auto upToDate=dialogs.count("pluginUpToDate");manager->findChild<QPushButton*>("updatePlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(dialogs.count("pluginUpToDate")>upToDate,35000);
         }
         QCOMPARE(engine->sessionCount(),2);QCOMPARE(window->winId(),nativeWindow);QVERIFY(saveDialogPreview(manager,"native-marketplace-installed"));
         for(const auto &id:ids){window->showPluginManager();tabs->setCurrentIndex(0);QVERIFY(select(local,id));manager->findChild<QPushButton*>("uninstallPlugin")->click();QTRY_VERIFY_WITH_TIMEOUT(installed->plugin(id).id().isEmpty(),10000);}
-        QTRY_VERIFY(engine->isIdle());QCOMPARE(catalog->count(),4);QCOMPARE(window->winId(),nativeWindow);manager->close();editor->setText("");editor->setSavePoint();
-        qInfo()<<"Live native Marketplace: default repo URL, four entries, two checksummed release installs, API 0.3 activation, panels, independent up-to-date checks and uninstall; window retained.";
+        QTRY_VERIFY(engine->isIdle());QCOMPARE(catalog->count(),2);QCOMPARE(window->winId(),nativeWindow);manager->close();for(auto *editor:previewEditors)window->closeFile(editor);
+        qInfo()<<"Live native Marketplace: canonical repo URL, two product previews, checksummed release installs, explicit activation, panels, independent up-to-date checks and uninstall; window retained.";
 #endif
     }
     void productionManagerAndExit() {

@@ -109,6 +109,8 @@ qt_add_executable(NotepadNext
 	RtfConverter.cpp
 	SciIFaceTable.cpp
 	ScintillaCommenter.cpp
+	TextEncoding.cpp
+	TextEncoding.h
 	ScintillaNext.cpp
 	SearchResultHighlighterDelegate.cpp
 	SearchResultsCollector.cpp

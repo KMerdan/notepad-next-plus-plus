@@ -1811,6 +1811,54 @@
       "cancellation": "Session revocation stops delivery.",
       "errors": [],
       "budget": "Owned decoration handles only"
+    },
+    "nnp.previews.getSource": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.previews.getSource.params",
+      "resultSchema": "#/$defs/nnp.previews.getSource.result",
+      "capability": "webviews.document@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "read",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
+    },
+    "nnp.webviews.reloadSource": {
+      "direction": "pluginToHost",
+      "kind": "request",
+      "paramsSchema": "#/$defs/nnp.webviews.reloadSource.params",
+      "resultSchema": "#/$defs/nnp.webviews.reloadSource.result",
+      "capability": "webviews.document@1",
+      "states": [
+        "activating",
+        "active"
+      ],
+      "effect": "stagedPresentation",
+      "cancellation": "Caller stops waiting; already committed effects are not reversed.",
+      "errors": [
+        -32602,
+        -32603,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008
+      ],
+      "budget": "profile frame and pending limits"
     }
   },
   "errors": {

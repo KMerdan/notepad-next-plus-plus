@@ -359,7 +359,6 @@
     <property name="title">
      <string>Encoding</string>
     </property>
-    <addaction name="actionThis_is_not_currently_implemented"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -1118,14 +1117,7 @@
     <string>Edit Macros...</string>
    </property>
   </action>
-  <action name="actionThis_is_not_currently_implemented">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>This is not currently implemented</string>
-   </property>
-  </action>
+
   <action name="actionColumnMode">
    <property name="text">
     <string>Column Mode...</string>

@@ -1,40 +1,34 @@
 # 官方插件 Marketplace
 
-Notepad Next ++ 的第一方插件由 KMerdan 在同一公开仓库维护：
+Notepad Next ++ 的第一方目录由 KMerdan 维护，注册 URL：
 
-**https://github.com/KMerdan/notepadnext-markdown-preview**
+**https://github.com/KMerdan/notepadnext-plugin-marketplace**
 
-此 URL 从原 Markdown 插件仓库升级而来，保留地址以维持已安装插件的更新来源和按来源隔离的数据；它是本 fork 的官方目录，不代表上游 NotepadNext。GitHub 的仓库说明和 README 已改为官方 Marketplace。旧 Markdown Release 和 `kmerdan.markdown-preview` ID 保留。
+它是本 fork 的官方目录，不代表上游 NotepadNext。应用 0.15.2、SDK 0.3.2、插件版本分别维护。
 
-## 注册和使用
+## 注册、安装与使用
 
-使用本次构建的插件版开发应用，进入 Plugins → Plugin Manager → Add Source…，输入上述 URL，Git ref 留空。确认目录中两项元数据后，它们出现在 **Discover**。注册不安装、不启动插件。
+在 Plugins → Plugin Manager → Add Source… 输入 URL，Git ref 留空。确认后资源进入 **Discover**；注册只读取 metadata，不安装或启动代码。默认产品目录包含：
 
-- **Markdown Preview**：`kmerdan.markdown-preview`，当前版本 **0.1.6**。
-- **HTML Preview**：`kmerdan.html-preview`，当前版本 **0.1.2**，承载本地 Node.js HTTP 服务、HTML、JavaScript 和同服务 fetch。
+- **Markdown Preview 0.1.8**：`kmerdan.markdown-preview`，渲染未保存的 Markdown 与受控的相对图片。
+- **HTML Preview 0.1.4**：`kmerdan.html-preview`，Node 服务直接渲染未保存的 HTML/JS 与受控相对资源，不插入源码编辑框、计数器或进程信息。
 
-分别选择 Install，确认包与权限；安装完成后在 Installed 启用并执行对应 Open 命令。HTML 插件读取当前 HTML 语言的未保存缓冲区，也可以在预览内编辑源码并 Run preview。安装包包含服务 helper 和静态资源，不需用户另外 npm install 或手动启动服务器。
+分别选择 Install，审阅包和权限；安装后在 **Installed** 启用，再于匹配标签执行 Open。无需系统 Node/npm。Text Inspector 和 TODO Navigator 位于 Marketplace 的 `examples/`，标明为 SDK 开发示例；它们展示选区、原生搜索、定位、高亮等 API，不在默认产品目录内。
 
-已有公开 Markdown 插件的用户只需刷新相同来源。原来本地示例的 `notepadnext.*` ID 与公开 `kmerdan.*` 插件不同，选择公开版本时可禁用旧示例。
+## 组件生命周期
 
-## 独立发布和更新
+预览由用户手动打开，每插件/窗口一个共享 dock。它跟随匹配的活动标签，分别保存各标签的浏览器状态与滚动；切到非匹配标签时隐藏。关闭某个标签后遵循编辑器选择的下一个活动标签。用户关闭 dock 或最后一个匹配标签关闭时释放面板和进程，插件仍保持 Installed/Enabled；以后切换或打开文件不会自动重开。
 
-统一 metadata 合约保持不变：根对象的 `list` 是完整插件元数据数组；各插件自身的 `list` 是 `false`。两个条目可以指向同一发布仓库，版本互相独立。
+更新、Reload 和回滚只恢复仍存活的 dock、位置、源映射与有界的逐标签状态，不重放 Open。进程和服务 endpoint 重新建立；任意 JS heap 或 Node 内存不迁移。详细分类、限额和所有权见 [SDK 生命周期契约](https://github.com/KMerdan/notepadnext-plugin-sdk/blob/main/docs/PluginLifecycle.zh-CN.md)。
 
-单插件旧版使用 `v<version>`。Marketplace 使用 **`<plugin-id>/v<version>`**，例如 `kmerdan.html-preview/v0.1.2`。每个 Release 内仍只有自己的 `notepadnext-plugin.zip` 和 `notepadnext-plugin-checksums.json`。安装器识别选中插件的 namespace，优先于同版本旧 tag；其他插件的 namespace 不进入候选列表。旧 tag 兼容保留。最终安装仍核对 manifest 的 ID、版本、来源、声明、实际文件和 SHA-256。
+## 来源改名与更新
 
-刷新目录后在 Installed 单独更新插件。HTML 更新不替换 Markdown 包、不重启主应用；通用热更新协议恢复支持 restorer 的已打开窗口，保留位置、滚动、预览源码和 JSON 状态，失败时恢复前一版本。Node 进程和服务 endpoint 会重新建立；任意后端内存不会迁移。
+仓库从 `notepadnext-markdown-preview` 改名为 `notepadnext-plugin-marketplace`。宿主按来源隔离包与数据；旧来源的安装需要一次卸载并从新 URL 安装。卸载时可以保留原数据，但不会自动搬到新来源。之后统一从新 URL 注册、安装和更新。
 
-卸载某项只移除该插件，目录仍可再次安装；默认保留数据。删除来源不卸载现有插件。
+根 metadata 的 `list` 是完整插件 metadata 数组，单插件的 `list` 是 `false`。插件各自发布 `<plugin-id>/v<version>`，Release 包含 ZIP 与 SHA-256 sidecar。安装/更新验证 ID、版本、来源、声明和文件。刷新目录后在 Installed 单独更新；失败恢复前一包。卸载不会删除目录资源，删除来源也不卸载已装插件。
 
-## 仓库开发
+## 开发与验证职责
 
-仓库独立于 Qt 项目：`plugins/markdown-preview`、`plugins/html-preview`，使用独立 SDK **0.2.1** 的固定 Release URL/lockfile 和 `tools/marketplace.cjs`，不复制 SDK 源码。`npm run ci` 锁定安装、构建和测试两项，并确认根目录的完整条目等于插件 manifest。`npm run catalog` 同步目录；插件版本与 package.json 必须一致。
+Marketplace 锁定正式 SDK Release URL 与 npm integrity，不复制 SDK 源码。`npm run ci` 构建测试两个产品和两个开发示例，并验证默认目录只列产品。按插件 tag 的 CI 构建该包并生成 draft，验收实际 asset 后公开，历史资产不可覆盖。开发说明见 [Marketplace README](https://github.com/KMerdan/notepadnext-plugin-marketplace)。
 
-按插件 tag 的 GitHub Actions 只构建该插件，先生成 draft，核对实际 asset 后公开；禁止覆盖历史版本。SDK `nnp-release` 同时接受旧 tag 和该插件自己的 namespaced tag。
-
-一次完整更新演示：Git ref 指定 `marketplace/v0.1.0` 时目录包含 Markdown 0.1.5、HTML 0.1.0；安装打开后注册默认分支，更新 HTML 到 0.1.1。常规使用不需要填写 ref。
-
-验证记录见 [MarketplaceValidation.json](evidence/MarketplaceValidation.json)。主应用仍是本地开发构建，本次发布的是插件安装包。
-
-本次三仓拆分及原生 API 0.3 的实现/证据见 [Native SDK 状态](NativeSDKPhaseBStatus.zh-CN.md)。当前四个官方插件均使用 native API 0.3 和正式 SDK 0.3.0 Release；原插件 ID/来源保持一致，旧 API profile 已移除。新工具 Text Inspector / TODO Navigator 也可从同一 URL 安装。
+业务渲染测试属于 Marketplace，类型/模板属于 SDK，方法和组件所有权契约属于主仓 CI。真实编辑器验收是可选外部消费者验证，不作为主仓 CI 的业务依赖。旧证据文件记录对应历史版本，当前行为以源码与上述合约为准。

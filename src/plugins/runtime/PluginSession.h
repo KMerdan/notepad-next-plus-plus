@@ -57,6 +57,7 @@ private:
     void deltaEvent(const QJsonObject &event,qint64 sequence);
     void nativeEvent(const QJsonObject &event,qint64 sequence);
     void invokePending();
+    void stopUnusedPreview();
     void fail(const QString &message,PluginDiagnostics::Failure category=PluginDiagnostics::Failure::ActivationFailed);
     void revoke();
     QJsonObject manifest;

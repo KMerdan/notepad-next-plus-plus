@@ -158,7 +158,7 @@ bool NotepadNextApplication::init(QNetworkAccessManager *network)
         },[](ScintillaEdit *widget){
             const auto editor=qobject_cast<ScintillaNext*>(widget);if(!editor)return QJsonObject{};
             const auto bom=editor->bom();return QJsonObject{{"name",editor->getName()},{"bom",bom!=ScintillaNext::BomType::None},
-                {"encoding",bom==ScintillaNext::BomType::Utf16LE?"utf-16le":bom==ScintillaNext::BomType::Utf16BE?"utf-16be":editor->codePage()==SC_CP_UTF8?"utf-8":"unknown"}};
+                {"encoding",editor->textEncoding().remove(" BOM").toLower()}};
         });
     // EditorManager's earlier connections have already applied these styles.
     connect(settings,&ApplicationSettings::fontNameChanged,pluginDocumentBridge,&PluginDocuments::DocumentBridge::refreshAppearance);
