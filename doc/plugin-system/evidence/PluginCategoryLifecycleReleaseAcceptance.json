@@ -1,0 +1,355 @@
+{
+  "sourceHead": "ac5c620224daa10f91c9d210b39de3c8232d413d",
+  "sdk": "0.3.2",
+  "categories": [
+    "command",
+    "editor-tool",
+    "editor-preview",
+    "window-tool",
+    "background-service"
+  ],
+  "previewRules": [
+    "manualOpen",
+    "oneSharedDockPerPluginWindow",
+    "followMatchingActiveTab",
+    "independentBoundedStatePerDocument",
+    "hideOnUnmatchedTab",
+    "disposeOnManualCloseOrLastMatchingDocument",
+    "restoreOnlyLiveComponentsDuringUpdate"
+  ],
+  "localChecks": [
+    {
+      "name": "WebView ownership and generic hot update",
+      "passed": 43,
+      "failed": 0,
+      "skippedOptionalConsumers": 2,
+      "log": "preview-loading-suites.log"
+    },
+    {
+      "name": "Loading race and switch before next render",
+      "passed": true,
+      "log": "preview-loading.log"
+    },
+    {
+      "name": "Production HTML rendering, script execution and hot reload",
+      "passed": true,
+      "log": "html-loading-final.log"
+    }
+  ],
+  "pending": [],
+  "mergedMain": {
+    "app": "fa7991ed9a2f19ea60b1a1aaba562a72072cfa17",
+    "marketplace": "5d115e8cd9fa7c75c719d7edc8e482aba4ec17b4"
+  },
+  "hostChecks": {
+    "headRefOid": "ac5c620224daa10f91c9d210b39de3c8232d413d",
+    "state": "MERGED",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:00:15Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713540/job/115621440499",
+        "name": "build (macos-15, darwin, arm64, arm64)",
+        "startedAt": "2026-10-14T00:53:50Z",
+        "status": "COMPLETED",
+        "workflowName": "Build plugin-enabled binaries"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T00:53:56Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713550/job/115621439865",
+        "name": "Check for spelling errors",
+        "startedAt": "2026-10-14T00:53:43Z",
+        "status": "COMPLETED",
+        "workflowName": "Codespell"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T00:53:48Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492710816/job/115621432304",
+        "name": "label",
+        "startedAt": "2026-10-14T00:53:42Z",
+        "status": "COMPLETED",
+        "workflowName": "Labeler"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:03:59Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633747185",
+        "name": "linux-x64 / webviews",
+        "startedAt": "2026-10-14T00:53:44Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:04:58Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713540/job/115621440442",
+        "name": "build (macos-15-intel, darwin, x64, x86_64)",
+        "startedAt": "2026-10-14T00:53:44Z",
+        "status": "COMPLETED",
+        "workflowName": "Build plugin-enabled binaries"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:02:36Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633739039",
+        "name": "linux-x64 / core",
+        "startedAt": "2026-10-14T00:53:43Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:05:36Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713540/job/115621440345",
+        "name": "build (windows-2022, win, x64)",
+        "startedAt": "2026-10-14T00:53:44Z",
+        "status": "COMPLETED",
+        "workflowName": "Build plugin-enabled binaries"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T00:59:34Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633702971",
+        "name": "linux-x64 / disabled",
+        "startedAt": "2026-10-14T00:53:43Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T00:58:48Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713540/job/115621440512",
+        "name": "build (ubuntu-24.04, linux, x64)",
+        "startedAt": "2026-10-14T00:53:43Z",
+        "status": "COMPLETED",
+        "workflowName": "Build plugin-enabled binaries"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:07:22Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633729150",
+        "name": "windows-x64 / webviews",
+        "startedAt": "2026-10-14T00:53:43Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:13:30Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633703694",
+        "name": "windows-x64 / core",
+        "startedAt": "2026-10-14T00:59:36Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:14:45Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633746735",
+        "name": "windows-x64 / disabled",
+        "startedAt": "2026-10-14T01:02:38Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:18:07Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633703327",
+        "name": "macos-arm64 / webviews",
+        "startedAt": "2026-10-14T01:04:06Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:15:26Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633703757",
+        "name": "macos-arm64 / core",
+        "startedAt": "2026-10-14T01:07:31Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:21:00Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633736195",
+        "name": "macos-arm64 / disabled",
+        "startedAt": "2026-10-14T01:13:39Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:35:31Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633746196",
+        "name": "macos-x64 / webviews",
+        "startedAt": "2026-10-14T01:14:47Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:27:34Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633704666",
+        "name": "macos-x64 / core",
+        "startedAt": "2026-10-14T01:15:30Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:56:51Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713533/job/115633703195",
+        "name": "macos-x64 / disabled",
+        "startedAt": "2026-10-14T01:36:12Z",
+        "status": "COMPLETED",
+        "workflowName": "Plugin conformance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-14T01:05:37Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://github.com/KMerdan/notepad-next-plus-plus/actions/runs/38492713540/job/115624888482",
+        "name": "Prepare binary Release",
+        "startedAt": "2026-10-14T01:05:37Z",
+        "status": "COMPLETED",
+        "workflowName": "Build plugin-enabled binaries"
+      }
+    ]
+  },
+  "pluginAssets": [
+    {
+      "id": "kmerdan.markdown-preview",
+      "version": "0.1.8",
+      "sha256": "517553c1602c283104293aceafb7a1620fd8f0fc550c54bbbd096bde6639c5de",
+      "bytes": 838885,
+      "category": "editor-preview",
+      "entries": 137
+    },
+    {
+      "id": "kmerdan.html-preview",
+      "version": "0.1.4",
+      "sha256": "30cd8489e20c868e6acad64f498e177d4b373e4dbb5c787b9010151ae261daa1",
+      "bytes": 16055,
+      "category": "editor-preview",
+      "entries": 7
+    },
+    {
+      "id": "kmerdan.text-inspector",
+      "version": "0.1.1",
+      "sha256": "f6875fd0405c8d84769ceee7ea93e9459a678f250353dc33a71cd12bf7984b18",
+      "bytes": 19386,
+      "category": "editor-tool",
+      "entries": 10
+    },
+    {
+      "id": "kmerdan.todo-navigator",
+      "version": "0.1.1",
+      "sha256": "f86316265855399af217d23df4e4cd3591a5ddee367c3c82a37039f2ac822b90",
+      "bytes": 20915,
+      "category": "editor-tool",
+      "entries": 11
+    }
+  ],
+  "nativeMarketplace": {
+    "repository": "https://github.com/KMerdan/notepadnext-plugin-marketplace",
+    "passed": 3,
+    "failed": 0,
+    "defaultCatalogCount": 2,
+    "verified": [
+      "registrationReview",
+      "releaseInstallReview",
+      "enable",
+      "explicitOpen",
+      "upToDateCheck",
+      "uninstall",
+      "nativeWindowRetained"
+    ],
+    "durationMs": 6498,
+    "log": "build/live-marketplace-0152.qt.txt",
+    "screenshots": "build/live-marketplace-0152-ui"
+  },
+  "applicationRelease": {
+    "version": "0.15.2",
+    "url": "https://github.com/KMerdan/notepad-next-plus-plus/releases/tag/v0.15.2",
+    "workflowRun": 38498457587,
+    "assets": [
+      {
+        "name": "NotepadNextPlusPlus-0.15.2-linux-x86_64.AppImage",
+        "sha256": "7918061e435b776250087009510f03dfd7d866bbb51df989fcac77e1eabe1a62",
+        "bytes": 197118456
+      },
+      {
+        "name": "NotepadNextPlusPlus-0.15.2-macos-arm64.dmg",
+        "sha256": "e3f6022b40db5b481f5e6bdd13d0ba3578199ae2ddf99519690d7a9cf2873f19",
+        "bytes": 312123275
+      },
+      {
+        "name": "NotepadNextPlusPlus-0.15.2-macos-x86_64.dmg",
+        "sha256": "e78372e3a58b13b4a16bdff5cc452462013d0bdb392f726bc25daff8ac0da75d",
+        "bytes": 314465349
+      },
+      {
+        "name": "NotepadNextPlusPlus-0.15.2-windows-x86_64-installer.exe",
+        "sha256": "ee7ea121993fdd1101a3b43c403ef1009f43b34bb84d139c331579b6c96530a7",
+        "bytes": 153315417
+      },
+      {
+        "name": "NotepadNextPlusPlus-0.15.2-windows-x86_64.zip",
+        "sha256": "4299bfe3044f69a910eea7558083c329c14331e6f1ccd6dfd32be440224bc3cb",
+        "bytes": 197574552
+      }
+    ]
+  },
+  "macOSPackages": [
+    {
+      "architecture": "arm64",
+      "version": "0.15.2",
+      "iconFile": "NotepadNext.icns",
+      "iconBytes": 546384,
+      "iconSha256": "4e327c1199edfefe6070d5570aef0c9ad402c8fde3b6c6303a53045424483f08",
+      "dmgSha256": "e3f6022b40db5b481f5e6bdd13d0ba3578199ae2ddf99519690d7a9cf2873f19"
+    },
+    {
+      "architecture": "x86_64",
+      "version": "0.15.2",
+      "iconFile": "NotepadNext.icns",
+      "iconBytes": 546384,
+      "iconSha256": "4e327c1199edfefe6070d5570aef0c9ad402c8fde3b6c6303a53045424483f08",
+      "runtimeAudit": "native Intel CI; binary not executed on the ARM host"
+    }
+  ],
+  "sdkRelease": {
+    "version": "0.3.2",
+    "url": "https://github.com/KMerdan/notepadnext-plugin-sdk/releases/tag/v0.3.2",
+    "tarballSha256": "43ce19f94da9bb3adf0eafcd13b7ad897033decb009885023b20bd0e429c8dc6"
+  },
+  "homebrew": {
+    "version": "0.15.2",
+    "style": "passed: one file, no offenses",
+    "fetch": "passed for arm64 and x86_64 published DMGs",
+    "temporaryTapRemoved": true,
+    "appInstalledByThisValidation": false
+  },
+  "recordedAt": "2026-10-14"
+}

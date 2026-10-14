@@ -1,9 +1,9 @@
 cask "notepad-next-plus-plus" do
   arch arm: "arm64", intel: "x86_64"
 
-  version "0.15.1"
-  sha256 arm:   "7fa6a88547715dc59ec3efc2b29b9107938a15a4a64a317639405a37b2440499",
-         intel: "32b9aa41c573fa23220a810cde5a4ba699b23bd0c1a1a9b3f06cb003293f8b88"
+  version "0.15.2"
+  sha256 arm:   "e3f6022b40db5b481f5e6bdd13d0ba3578199ae2ddf99519690d7a9cf2873f19",
+         intel: "e78372e3a58b13b4a16bdff5cc452462013d0bdb392f726bc25daff8ac0da75d"
 
   url "https://github.com/KMerdan/notepad-next-plus-plus/releases/download/v#{version}/NotepadNextPlusPlus-#{version}-macos-#{arch}.dmg"
   name "Notepad Next ++"
